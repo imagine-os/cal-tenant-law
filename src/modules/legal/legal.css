@@ -1,0 +1,57 @@
+/* K-10..K-13 legal memory. The banner must read as a warning at 360 px and from ten feet on a 4K screen. */
+.legal-banner {
+  display: flex; gap: var(--sp-3); align-items: flex-start;
+  padding: var(--sp-4); border: 2px solid var(--color-warn); border-left-width: 6px;
+  border-radius: var(--r-card); background: var(--color-warn-bg); color: var(--color-text);
+}
+.legal-banner.is-clear { border-color: var(--color-success); background: var(--color-success-bg); }
+.legal-banner-icon { flex: 0 0 auto; color: var(--color-warn); }
+.legal-banner.is-clear .legal-banner-icon { color: var(--color-success); }
+.legal-banner-title { display: block; font-size: var(--fs-md); color: var(--color-heading); }
+.legal-banner p { margin: 4px 0 0; }
+
+.legal-h2 { margin: 0; font-size: var(--fs-md); }
+.legal-tiles { margin-top: var(--sp-2); }
+.legal-citation { font-family: var(--font-mono); font-size: var(--fs-xs); background: var(--color-surface-2); padding: 1px 5px; border-radius: 3px; white-space: normal; overflow-wrap: anywhere; }
+.legal-rule { white-space: normal; max-width: 70ch; }
+
+.legal-queue { list-style: none; margin: var(--sp-2) 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.legal-queue-row { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; padding: var(--sp-2) var(--sp-3); border: 1px solid var(--color-border); border-radius: var(--r-sm); background: var(--color-surface); }
+.legal-queue-row p { margin: 2px 0 0; }
+/* Dense inline links still need a 24 px target (WCAG 2.5.8). */
+.legal-queue-row a, .legal-dl dd a, .legal-related a, .legal-topic-list a { display: inline-flex; align-items: center; min-height: 24px; }
+
+.legal-topics { display: grid; grid-template-columns: 1fr; gap: var(--sp-3); }
+@media (min-width: 700px) { .legal-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1280px) { .legal-topics { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 2400px) { .legal-topics { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+.legal-topic-card { display: flex; flex-direction: column; gap: 6px; }
+.legal-topic-title { margin: 0; font-size: var(--fs-md); text-transform: capitalize; }
+.legal-topic-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+
+.legal-timeline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+.legal-timeline-item { display: flex; gap: var(--sp-3); }
+.legal-timeline-rail { position: relative; width: 14px; flex: 0 0 14px; }
+.legal-timeline-rail::before { content: ''; position: absolute; left: 6px; top: 20px; bottom: -20px; width: 2px; background: var(--color-border); }
+.legal-timeline-item:last-child .legal-timeline-rail::before { display: none; }
+.legal-timeline-dot { position: absolute; left: 0; top: 12px; width: 14px; height: 14px; border-radius: 50%; background: var(--color-warn); border: 2px solid var(--color-surface); }
+.legal-timeline-dot.is-verified { background: var(--color-success); }
+
+.legal-dl { display: grid; gap: 6px var(--sp-3); margin: var(--sp-2) 0; }
+.legal-dl > div { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: var(--sp-2); align-items: baseline; }
+.legal-dl dd { margin: 0; gap: 6px; }
+/* A change row's "effective" value can be a sentence ("2020-01-01 (sunset 2030-01-01, verify)"), so it wraps as text
+   instead of riding in a nowrap Badge that would push the card past a 360 px screen. */
+.legal-effective { white-space: normal; overflow-wrap: anywhere; }
+
+.legal-topic-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-5); align-items: start; }
+@media (min-width: 1100px) { .legal-topic-layout { grid-template-columns: minmax(0, 1fr) minmax(280px, 380px); } }
+.legal-topic-body { min-width: 0; }
+.legal-topic-aside { position: static; }
+@media (min-width: 1100px) { .legal-topic-aside { position: sticky; top: var(--sp-3); } }
+.legal-related { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.legal-related li { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; padding-bottom: var(--sp-2); border-bottom: 1px solid var(--color-border); }
+.legal-related li:last-child { border-bottom: 0; }
+.legal-related p { margin: 2px 0 0; flex: 1 1 100%; }
+
+@media (max-width: 600px) { .legal-dl > div { grid-template-columns: 1fr; } }

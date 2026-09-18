@@ -1,6 +1,6 @@
 # Operations manual (CTL OS)
 
-How California Tenant Law runs, per role, in person and in the software. Rendered in the app at `/#/manual` (M-01 cover with reading paths per role, one route per chapter, `/#/manual/pending` for decisions, captures and drafts; task T-048). Source of truth: `docs/ops-manual/en/NN-slug.md` (English source, D-031); `docs/ops-manual/es/NN-slug.md` mirrors the **same file names** in Spanish (Spanish fill is a pass, never a blocker; a missing `es` chapter falls back to `en` with a banner).
+How California Tenant Law runs, per role, in person and in the software. Rendered in the app at `/#/manual` (M-01 cover with the role filter and reading progress), one route per chapter at `/#/manual/<lang>/<slug>` (M-02, with live blocks and the read / in-person / in-CTL-OS buttons) and `/#/manual/decisions` for the pending decisions and the captures the manual still asks for (M-03; task T-048). Source of truth: `docs/ops-manual/en/NN-slug.md` (English source, D-031); `docs/ops-manual/es/NN-slug.md` mirrors the **same file names** in Spanish (Spanish fill is a pass, never a blocker; a missing `es` chapter falls back to `en` with a banner).
 
 ## Parts
 
@@ -16,7 +16,18 @@ How California Tenant Law runs, per role, in person and in the software. Rendere
 | VIII | Marketing | marketing, owner | 80 leads and the funnel · 81 content calendar · 82 city pages · 83 reviews |
 | IX | Using CTL OS | all staff | 90 the hub, roles and dev mode · 91 annotations: how to report a bug or ask for a change · 92 languages · 93 the appliance |
 
-Chapter `00-introduction.md` (this pass) is the cover text. Chapters 10+ are written in Pass 5 (T-109 en, T-110 es) with drafts from module workers in `en/_pending/<module>.md` from Pass 2.
+## Chapters that exist today (Pass 1, T-048)
+
+| File (in `en/` and `es/`) | Part | Role | What it teaches |
+| --- | --- | --- | --- |
+| `00-introduction.md` / `es/00-introduccion.md` | I | all staff | What CTL OS is, the nine parts, how a lesson works, practising as a demo user |
+| `01-front-desk-day.md` | I | front desk, all staff | The shift end to end: opening the day, the call, the intake, booking and paying for a consultation, handing the case over |
+| `02-case-by-board-stage.md` | III | attorney, paralegal | The ten board phases and the four-step pattern the team repeats at each one |
+| `09-using-ctl-os.md` | IX | all staff | Roles and view-as, dev mode, annotations (how to report a bug or ask for a change), languages |
+
+These four are numbered by part (`00`, `01`, `02`, `09`) so the manual is demonstrable in Pass 1; the per-part numbering above (10, 11, 20, ...) is the plan for the full set. Numbering is append-only: a new chapter takes the next free number in its part and never renumbers an existing one. Chapter `00` is the cover text; the rest of the planned chapters are written in Pass 5 (T-109 en, T-110 es) with drafts from module workers in `en/_pending/<module>.md` from Pass 2.
+
+The English and Spanish files share a slug (`01-front-desk-day.md` in both). The introduction pair predates that rule (`00-introduction.md` / `00-introduccion.md`), so the viewer matches a language pair by **chapter number** when the slugs differ, and falls back to the English source with a notice when a Spanish mirror is missing.
 
 ## Writing a chapter
 
@@ -55,6 +66,8 @@ Every chapter has a `## In person` and a `## In CTL OS` section; the reader reco
 | `> NOTE:` `> TIP:` `> WARNING:` `> DECISION NEEDED:` `> IN PERSON:` `> IN CTL OS:` | callouts; `DECISION NEEDED` also lists on `/#/manual/pending` |
 
 A `{{...}}` directive sits alone on its line. **No price, deadline, statute text, office address, status name or rule is ever typed into a chapter**: the block reads the system, so the manual is never older than the data. Unknown directives explain themselves instead of breaking the page.
+
+Wired today by the `LiveBlock` organism (M-02, T-048): `{{roles}}`, `{{routes:<surface>}}`, `{{tables}}`, `{{table:<name>}}`, `{{rules}}` / `{{rules:<category>}}`, `{{offices}}`, `{{demo-users}}`. Everything else in the table above — `{{pricing:*}}`, `{{permissions:*}}`, `{{stats}}`, `{{board:*}}`, `{{deadline:*}}`, `{{statute:*}}`, `{{templates:*}}` — renders as a `Placeholder` that names itself and says which pass wires it, so a chapter may already be written against it.
 
 ## Resumen en español
 

@@ -75,10 +75,14 @@ export function screenshotGroups(): { code: string; files: { path: string; name:
   return [...out.entries()].sort(([a], [b]) => a.localeCompare(b)).map(([code, files]) => ({ code, files: files.sort((a, b) => a.name.localeCompare(b.name)) }));
 }
 
-/** Route for a docs path: 'docs/reference/surfaces.md' -> '/docs/reference/surfaces'. Manual chapters go to their own viewer. */
+/**
+ * Route for a docs path: 'docs/reference/surfaces.md' -> '/docs/reference/surfaces'. Manual chapters and the manual
+ * README go to the ops-manual viewer (M-01 / M-02), which keeps the language in the URL so a link is shareable.
+ */
 export function docsRoute(path: string): string | undefined {
-  const manual = path.match(/^docs\/ops-manual\/(?:es|en)\/([^/]+)\.md$/);
-  if (manual) return `/manual/${manual[1]}`;
+  const manual = path.match(/^docs\/ops-manual\/(es|en)\/([^/]+)\.md$/);
+  if (manual) return `/manual/${manual[1]}/${manual[2]}`;
+  if (path === 'docs/ops-manual/README.md') return '/manual';
   if (path.startsWith('docs/')) return `/docs/${path.slice(5).replace(/\.md$/, '')}`;
   return undefined;
 }
