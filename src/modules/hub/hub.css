@@ -116,7 +116,8 @@
 /* ---- testing hub row ---- */
 .hub-group-tools { padding-top: 0; }
 .hub-tools-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); }
-.hub-tool { --hue: 214; display: flex; align-items: center; gap: var(--sp-4); min-height: var(--target-min); }
+.hub-tools-grid .hub-tool { --hue: 214; display: flex; flex-direction: row; align-items: center; gap: var(--sp-4); min-height: var(--target-min); text-align: left; }
+.hub-tools-grid .hub-tool.card-p-md { padding: var(--sp-4) var(--sp-5); }
 .hub-tool.is-interactive:hover { box-shadow: var(--shadow-raised-hover); }
 .hub-medallion-sm { width: 44px; height: 44px; border-radius: 12px; flex: 0 0 auto; }
 .hub-tool-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }

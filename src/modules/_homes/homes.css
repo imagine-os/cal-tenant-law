@@ -20,7 +20,7 @@
 
 .homes-link { color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: var(--sp-1); min-height: var(--target-min); }
 .homes-link:hover .homes-item-title, .homes-link:focus-visible .homes-item-title { text-decoration: underline; }
-.homes-link-inline { color: var(--color-primary); text-decoration: none; font-weight: var(--fw-medium); }
+.homes-link-inline { color: var(--color-primary); text-decoration: none; font-weight: var(--fw-medium); display: inline-flex; align-items: center; min-height: 24px; padding: 1px 0; }
 .homes-link-inline:hover { text-decoration: underline; }
 
 .homes-late { color: var(--color-danger); font-weight: var(--fw-semibold); }
