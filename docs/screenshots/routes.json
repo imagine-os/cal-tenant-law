@@ -3495,7 +3495,7 @@
    "name": "Testing hub",
    "purpose": "First screen for the team: open any surface family as the right demo role, switch demo user and view-as, toggle language, brand, theme and the builder tool; see the counts of what the system holds. Not customer-facing.",
    "layout": [
-    "HubHeader (BrandMark lockup, LangToggle, brand cycle, theme, dev mode) on the ink hero band",
+    "HubHeader (BrandMark lockup, LangToggle, visual-direction SegmentedControl Clear sky / Board game / Courthouse, theme, dev mode) on the hero band",
     "Hero (eyebrow, display title, promise, tagline, clearing-sky art, floating session bar with RoleSwitcher)",
     "SurfaceGrid grouped by audience (Outside the firm / Firm staff / Build & test): one card per family (P, C, GB, X, F, L, S, O, A, MK, PM, M, K, D) with hue medallion, built / in-progress / planned chip from the manifest, purpose, live preview of the family home as its demo role, \"Enter as <demo user>\" with role and path",
     "TestingHub (canvas, simulator, plan, board, proposal, docs, manual, legal memory, dev tools)",
@@ -3521,7 +3521,7 @@
     "Each card carries a live preview of its home page running as that family’s demo role: an iframe whose hash carries ?as=&dev=&lang=&theme= (src/modules/showcase/frameSession.ts applies it inside the frame only, so the preview never changes your own session).",
     "Previews load only when they scroll into view (IntersectionObserver) and at most six are live at once; inside a frame the hub shows the drawn phone / a static icon instead, so frames never nest.",
     "Status chips (built / in progress / planned) come from the route manifest: a path with no route yet is a Placeholder, not a dead link.",
-    "Dev toggle renders only for super_admin; theme, brand and language persist in localStorage (ctl.theme carries theme and brand, ctl.lang the language). Developer codes render only in dev mode.",
+    "Dev toggle renders only for super_admin; theme, brand and language persist in localStorage (ctl.theme carries theme and brand, ctl.lang the language); `?brand=clearsky|boardgame|courthouse` on the hash sets the direction on load (same seam as ?theme=). The hero art follows the direction (sky / board / ledger). Developer codes render only in dev mode.",
     "Counts come from getRoutes(), tables, rules, componentLibrary, listActions() and docs/plan/tasks.json (imported as JSON)."
    ],
    "integrations": [],
@@ -3531,6 +3531,7 @@
     "Toggle",
     "RoleSwitcher",
     "LangToggle",
+    "SegmentedControl",
     "Badge",
     "Icon",
     "IconButton",
@@ -3588,6 +3589,14 @@
      "id": "hub.toggleTheme",
      "label": "Theme",
      "intent": "switch between light and dark"
+    },
+    {
+     "id": "hub.setBrand",
+     "label": "Visual direction",
+     "intent": "switch the visual direction (clear sky, board game or courthouse)",
+     "params": {
+      "brand": "enum:clearsky,boardgame,courthouse"
+     }
     },
     {
      "id": "hub.cycleBrand",
