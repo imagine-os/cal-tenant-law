@@ -47,7 +47,8 @@
    "logic": [
     "Stage picker is a single-select chip group; the selected stage renders its \"where you are\", \"what we do\" and the services indexed under it. \"Open this stage\" now links into the services menu at /site/services?stage=<board phase> (P-10).",
     "Services list SKU numbers and prices exactly as last indexed from the current site, behind an \"unverified\" badge and a note; nothing is presented as a confirmed 2026 price (D-025).",
-    "Offices come from the tenants table (kind = office, ordered by sort_order); names are fictional demo offices until the firm confirms the real network (D-023).",
+    "Offices come from the tenants table (kind = office, ordered by sort_order): the eight real offices, cities and coverage as posted on caltenantlaw.com on 2026-09-18 (docs/data/offices.json, D-044); attorney names stay out until the firm confirms (D-023).",
+    "Stage-picker prices are read from the services table (the live catalog), never from the hand-typed list; the hero poster, the Game Board poster and the three how-it-works tiles are the firm’s own artwork from the illustrations table (D-042).",
     "Video cards come from the curriculum preview in siteData.ts; play opens the tracked lesson in the client app once the learning module ships (C-40, Pass 2)."
    ],
    "integrations": [
@@ -2195,7 +2196,8 @@
    ],
    "data": [
     "service_categories",
-    "services"
+    "services",
+    "illustrations"
    ],
    "roles": [
     "super_admin",
@@ -2209,7 +2211,8 @@
     "public"
    ],
    "logic": [
-    "Categories render in the store’s own order (service_categories.sort_order); a category with no active service in the current filter is hidden.",
+    "Categories render in the store’s own /store menu order (the 20 visible service_categories rows; the hidden legacy stage rows are P-13’s business); a category with no active service in the current filter is hidden. Each category header shows the firm’s own category tile and store description when the scrape has them.",
+    "Inside a category the cards follow services.store_order, the position the store lists the product at.",
     "A service belongs to a stage if its own phase matches or any of its stage_node_ids sits in that phase, so one SKU can appear under several stages exactly as it does in the store.",
     "Services with no board square at all (deposit kit, break-your-lease kit, hotline, hourly top-ups) group under \"Any stage / other matters\" rather than being filed under a square they do not belong to (RULE-CATALOG-02).",
     "The stage is addressable: /site/services?stage=<phase> deep-links from P-01’s stage picker and from the board, and the chip group writes the parameter back.",
@@ -2339,7 +2342,7 @@
     "10-foot (>= 2560)"
    ],
    "notes": [
-    "Catalog data is docs/data/services-catalog.json, reconstructed from indexed search results because the live site is unreachable from the build environment. Every price is \"as listed on the current site\" with an unknown crawl date and renders unverified until an attorney confirms it (D-025, RULE-CATALOG-01).",
+    "Catalog data is docs/data/services-catalog.json, a live scrape of caltenantlaw.com taken on 2026-09-18 (prompt 0004: the /all-services list plus the Ecwid storefront API, 96 products + hotline + hourly, 20 menu categories + the firm's 28 hidden stage categories). Every price renders \"as listed on caltenantlaw.com on 2026-09-18 · unverified\" until an attorney sets services.verified (D-038, D-040, RULE-CATALOG-01). Icons and category tiles are the firm's own store artwork from docs/data/illustrations.json (D-042).",
     "Pulls T-079 (store SKU catalog by board stage) forward from Pass 2, plus the cost half of T-074. The cart, checkout and payments (T-080) stay in Pass 2 and are Placeholders here.",
     "Prices with no indexed figure show \"price not listed\"; the firm confirms them and A-10 sets verified."
    ],
@@ -2373,17 +2376,18 @@
   "spec": {
    "code": "P-13",
    "name": "Services outline",
-   "purpose": "The whole catalog as one collapsible outline — category, sub-category, service — with the SKU, the price, the time expectation, what the client has to provide and what they receive on every row. The view to read top to bottom, expand one branch at a time, or print and mark up.",
+   "purpose": "The whole catalog as one collapsible outline, exactly as the store files it — the 20 menu categories with their products in store order, or, with one switch, the firm’s older four-level stage map that is still attached to every product — with the SKU, the price, the time expectation, what the client has to provide and what they receive on every row. The view to read top to bottom, expand one branch at a time, or print and mark up.",
    "layout": [
     "SiteLayout",
-    "Hero (what the outline is, counts)",
-    "Tools (expand all, collapse all, print)",
-    "OutlineTree (category > sub-category > service)",
+    "Hero (what the outline is, counts, scrape date)",
+    "Tools (Store menu / Firm’s stage map switch, expand all, collapse all, print)",
+    "OutlineTree (store: category > product; stages: Consultation / I’m Being Evicted... / Legal Papers / Sue Your Landlord > ... > product)",
     "PrintNote"
    ],
    "data": [
     "service_categories",
-    "services"
+    "services",
+    "illustrations"
    ],
    "roles": [
     "super_admin",
@@ -2398,8 +2402,9 @@
    ],
    "logic": [
     "A real ARIA tree with roving focus: Up / Down move, Right opens a branch or steps into it, Left closes it or steps out, Home / End jump, Enter opens the service detail. Exactly one row is in the tab order at a time.",
-    "Categories nest through service_categories.parent_id; three grouping parents (talk to an attorney, free and do-it-yourself, discovery) are a CTL OS grouping of the store’s flat categories and say so in their description.",
-    "Root categories are open on first load so the page reads as a table of contents; expand-all and collapse-all switch the whole tree.",
+    "Two trees, one switch (?view=store | stages, action catalog.outlineView). \"Store menu\" is the top level the firm shows today: the 20 visible service_categories in /store menu order, each with its products in services.store_order (two levels, no visible sub-categories on the live store). \"Firm’s stage map\" is the hidden legacy Ecwid tree (service_categories.hidden, nested through parent_id, four levels) with a product under every hidden leaf it is filed in (services.legacy_category_ids) and a trailing \"Store menu only\" branch for the products the old tree never filed (D-041).",
+    "Every row carries the firm’s own store icon or category tile from the illustrations table when the scrape has one, otherwise a library glyph (D-042).",
+    "Root categories are open on first load and whenever the view switches, so the page reads as a table of contents; expand-all and collapse-all switch the whole tree.",
     "A service row shows icon, SKU (or \"no SKU listed\"), title, price with the unverified badge, time expectation, what you receive and what you provide. Anything the firm has not told us renders \"to be confirmed\", never a plausible value (D-025).",
     "An empty category still renders with a count of zero: an empty shelf in the store is a fact about the store.",
     "Print styles collapse the page chrome and let every row wrap, so the outline prints as a list the firm can mark up."
@@ -2453,6 +2458,15 @@
      "label": "Print",
      "intent": "print the whole services outline",
      "permission": "store.read"
+    },
+    {
+     "id": "catalog.outlineView",
+     "label": "Store menu / stage map",
+     "intent": "switch the outline between the store menu and the firm’s stage map",
+     "permission": "store.read",
+     "params": {
+      "view": "enum:store,stages"
+     }
     }
    ],
    "rules": [
@@ -2461,7 +2475,8 @@
     "RULE-CATALOG-06"
    ],
    "states": [
-    "roots open (default)",
+    "store menu, roots open (default)",
+    "firm’s stage map (?view=stages)",
     "fully expanded",
     "fully collapsed",
     "a row focused by keyboard",
@@ -2471,9 +2486,9 @@
     "10-foot (>= 2560)"
    ],
    "notes": [
-    "Catalog data is docs/data/services-catalog.json, reconstructed from indexed search results because the live site is unreachable from the build environment. Every price is \"as listed on the current site\" with an unknown crawl date and renders unverified until an attorney confirms it (D-025, RULE-CATALOG-01).",
+    "Catalog data is docs/data/services-catalog.json, a live scrape of caltenantlaw.com taken on 2026-09-18 (prompt 0004: the /all-services list plus the Ecwid storefront API, 96 products + hotline + hourly, 20 menu categories + the firm's 28 hidden stage categories). Every price renders \"as listed on caltenantlaw.com on 2026-09-18 · unverified\" until an attorney sets services.verified (D-038, D-040, RULE-CATALOG-01). Icons and category tiles are the firm's own store artwork from docs/data/illustrations.json (D-042).",
     "Pulls T-079 (store SKU catalog by board stage) forward from Pass 2, plus the cost half of T-074. The cart, checkout and payments (T-080) stay in Pass 2 and are Placeholders here.",
-    "time_expectation, client_inputs and deliverable_format are null on the services the current site does not describe; those rows say \"to be confirmed\" and the live-scrape pass fills them."
+    "time_expectation (69 of 98), client_inputs (94) and deliverable_format (98) were read from each product's own store description in the live scrape; the rows the store does not describe say \"to be confirmed\" (RULE-CATALOG-06)."
    ],
    "checkedAt": [
     360,
@@ -2520,7 +2535,8 @@
    ],
    "data": [
     "service_categories",
-    "services"
+    "services",
+    "illustrations"
    ],
    "roles": [
     "super_admin",
@@ -2538,7 +2554,7 @@
     "The board excerpt lists each square this service is filed on and the moves the board draws out of it, read straight from docs/game-board/nodes.json - no legal advice is generated here.",
     "Related services are the other active services that share a stage, cheapest first, with the same service excluded.",
     "How to order is the firm’s funnel (RULE-CATALOG-03): free videos, intake form, 101 consultation, then this document. A document SKU never presents itself as step one.",
-    "The sources block lists the store URLs the facts were indexed from and whether each was quoted or reconstructed (D-025).",
+    "The sources block lists the live store URLs the facts were read from and the date (evidence scraped-live, D-038); \"Not included\" shows what the store says the item does not cover when the description states it.",
     "\"Before you order\" lists client_inputs: what the client has to hand over before the work can start. An empty list reads \"nothing - buy it and download it\"; a null list reads \"to be confirmed\" (RULE-CATALOG-06).",
     "Time expectation and \"you receive\" come from time_expectation and deliverable_format; both render \"to be confirmed\" when the current site does not state them, never a plausible value."
    ],
@@ -2613,7 +2629,7 @@
     "dark"
    ],
    "notes": [
-    "Catalog data is docs/data/services-catalog.json, reconstructed from indexed search results because the live site is unreachable from the build environment. Every price is \"as listed on the current site\" with an unknown crawl date and renders unverified until an attorney confirms it (D-025, RULE-CATALOG-01).",
+    "Catalog data is docs/data/services-catalog.json, a live scrape of caltenantlaw.com taken on 2026-09-18 (prompt 0004: the /all-services list plus the Ecwid storefront API, 96 products + hotline + hourly, 20 menu categories + the firm's 28 hidden stage categories). Every price renders \"as listed on caltenantlaw.com on 2026-09-18 · unverified\" until an attorney sets services.verified (D-038, D-040, RULE-CATALOG-01). Icons and category tiles are the firm's own store artwork from docs/data/illustrations.json (D-042).",
     "Pulls T-079 (store SKU catalog by board stage) forward from Pass 2, plus the cost half of T-074. The cart, checkout and payments (T-080) stay in Pass 2 and are Placeholders here.",
     "Ordering is a Placeholder: the cart and payments are T-080 (Pass 2)."
    ],
@@ -2743,7 +2759,7 @@
     "10-foot (>= 2560)"
    ],
    "notes": [
-    "Catalog data is docs/data/services-catalog.json, reconstructed from indexed search results because the live site is unreachable from the build environment. Every price is \"as listed on the current site\" with an unknown crawl date and renders unverified until an attorney confirms it (D-025, RULE-CATALOG-01).",
+    "Catalog data is docs/data/services-catalog.json, a live scrape of caltenantlaw.com taken on 2026-09-18 (prompt 0004: the /all-services list plus the Ecwid storefront API, 96 products + hotline + hourly, 20 menu categories + the firm's 28 hidden stage categories). Every price renders \"as listed on caltenantlaw.com on 2026-09-18 · unverified\" until an attorney sets services.verified (D-038, D-040, RULE-CATALOG-01). Icons and category tiles are the firm's own store artwork from docs/data/illustrations.json (D-042).",
     "The intake form and the scheduler are Pass 2 (F-10, F-11); their buttons here are Placeholders."
    ],
    "checkedAt": [
@@ -2910,7 +2926,7 @@
     "dark"
    ],
    "notes": [
-    "Catalog data is docs/data/services-catalog.json, reconstructed from indexed search results because the live site is unreachable from the build environment. Every price is \"as listed on the current site\" with an unknown crawl date and renders unverified until an attorney confirms it (D-025, RULE-CATALOG-01).",
+    "Catalog data is docs/data/services-catalog.json, a live scrape of caltenantlaw.com taken on 2026-09-18 (prompt 0004: the /all-services list plus the Ecwid storefront API, 96 products + hotline + hourly, 20 menu categories + the firm's 28 hidden stage categories). Every price renders \"as listed on caltenantlaw.com on 2026-09-18 · unverified\" until an attorney sets services.verified (D-038, D-040, RULE-CATALOG-01). Icons and category tiles are the firm's own store artwork from docs/data/illustrations.json (D-042).",
     "Deleting a service is deliberately absent: a SKU the firm stops selling is set inactive so old invoices still resolve."
    ],
    "checkedAt": [
@@ -3033,22 +3049,25 @@
    "purpose": "The firm’s free curriculum as a path: the videos in order, what the tenant has already watched, and which one matters at their square of the board right now.",
    "layout": [
     "PageHeader",
-    "NextUp",
-    "CurriculumList (progress per lesson)"
+    "Progress (watched / total, hours of video)",
+    "NextUp (thumbnail, group, length, play / YouTube / mark watched)",
+    "GroupSections (Legal Videos, Winning Your Eviction Series, The Game Board Series, embedded only) with a row per lesson (thumbnail, length, square, progress)"
    ],
    "data": [
     "cases",
     "lessons",
-    "lesson_progress"
+    "lesson_progress",
+    "illustrations"
    ],
    "roles": [
     "client",
     "super_admin"
    ],
    "logic": [
-    "Lessons ordered by `order`; progress joined by client_user_id + lesson_id.",
-    "Next up = lowest-order unfinished lesson, lessons mapped to my square first.",
-    "Marking a lesson watched writes watched_pct = 100 and completed_at through the provider (insert when there is no row yet)."
+    "Lessons are the firm’s real library: 33 videos of caltenantlaw.com/pre-consultation-videos in the page’s order and three groups plus three embedded-only videos (docs/data/videos.json, live scrape 2026-09-18, D-043); ordered by `order`, grouped by `group`; progress joined by client_user_id + lesson_id.",
+    "Next up = lowest-order unfinished lesson, lessons that teach my square (teaches_stage_node_ids) first.",
+    "Marking a lesson watched writes watched_pct = 100 and completed_at through the provider (insert when there is no row yet).",
+    "Play opens the YouTube video in a new tab (client.playLesson) until the in-app player with watched state lands (T-078); thumbnails are the firm’s own from the illustrations table."
    ],
    "integrations": [
     "YouTube (the player is Pass 2, T-078)"
@@ -3780,6 +3799,115 @@
    "notes": [
     "dev module (foundation)",
     "Add rule / change status are Placeholders until the settings-rules module ships."
+   ]
+  }
+ },
+ {
+  "path": "/dev/illustrations",
+  "code": "D-23",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin"
+  ],
+  "spec": {
+   "code": "D-23",
+   "name": "Illustrations",
+   "purpose": "The firm's illustrations as a browsable assets database: every image on caltenantlaw.com and in its store (docs/data/illustrations.json, live scrape 2026-09-18, D-042) with alt text, source page, subject tags, style family, size and the SKU / board node / video / article / office it illustrates - grouped by style family or by suggested use, searchable, each opening a detail drawer with the rights line. The store icons on P-10 / P-13, the category tiles, the C-03 thumbnails and the P-01 hero and Game Board poster all come from here.",
+   "layout": [
+    "PageHeader (what the database is, counts, rights)",
+    "FamilyTiles (five style families, click to filter)",
+    "Toolbar (search, group by family / use, use-kind chips)",
+    "GroupSections (grid of cards: thumbnail, alt, key, size, uses)",
+    "DetailDrawer (preview, file, source, pages, tags, style, size, suggested use with links, rights, evidence)"
+   ],
+   "data": [
+    "illustrations"
+   ],
+   "roles": [
+    "super_admin"
+   ],
+   "logic": [
+    "Rows come from the illustrations table (seeded from docs/data/illustrations.json; the seven attorney portraits are skipped, D-023). Files resolve to bundled URLs through src/data/illustrationAssets.ts (a Vite glob over reference/site-scrape/assets/, portraits excluded).",
+    "Style family is derived from the scrape's style_note into the five families the file names; suggested use is the JSON's own list (brand, store-category:<slug>, service:<sku>, game-board:<node>, video:<slug>, article:<slug>, office:<slug>, nav-tile:<name>).",
+    "A service, board node, category or video use links to the page that shows the image (P-11, GB-01 ?node=, P-10, C-03).",
+    "Nothing here is used in the product beyond what suggested_use allows, and every row is verified: false until the firm confirms the use."
+   ],
+   "integrations": [
+    "docs/data/illustrations.json",
+    "reference/site-scrape/assets/ (bundled at build time)"
+   ],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "Section",
+    "SearchInput",
+    "SegmentedControl",
+    "Chip",
+    "Badge",
+    "Drawer",
+    "Button"
+   ],
+   "actions": [
+    {
+     "id": "dev.searchIllustrations",
+     "label": "Search",
+     "intent": "search the illustrations by key, alt text, tag or page",
+     "params": {
+      "q": "string"
+     }
+    },
+    {
+     "id": "dev.groupIllustrations",
+     "label": "Group by",
+     "intent": "group the illustrations by style family or by suggested use",
+     "params": {
+      "by": "enum:family,use"
+     }
+    },
+    {
+     "id": "dev.filterIllustrations",
+     "label": "Filter",
+     "intent": "show one style family or one kind of suggested use",
+     "params": {
+      "family": "enum:all,flat-circle-icons,outline-cartoon-tiles,video-thumbnails,pleading-thumbnails,photos-and-art",
+      "kind": "enum:all,brand,store-category,service,game-board,video,article,office,nav-tile"
+     }
+    },
+    {
+     "id": "dev.openIllustration",
+     "label": "Open",
+     "intent": "open one illustration and everything known about it",
+     "params": {
+      "key": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "grouped by family (default)",
+    "grouped by use",
+    "one family selected",
+    "one use kind selected",
+    "searched",
+    "detail drawer open",
+    "dark",
+    "10-foot (>= 2560)"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)",
+    "Assets are the firm's own (© Kenneth H. Carlson / Carlson Law Office), copied for the proposal to the firm; rights stay with the firm and the gallery says so on every row."
    ]
   }
  },

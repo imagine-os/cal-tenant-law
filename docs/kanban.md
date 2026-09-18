@@ -26,9 +26,7 @@ Mirrors `docs/plan/tasks.json` (statuses `done | doing | todo | blocked`); one l
 - T-074 CORE Cost model: typical cost bands per board node and edge (from SKUs), if / then scenarios along the board, probability-free ranges (fable)
 - T-075 C-30 Cost calendar and "what to pay next" (C-30 calendar of potential costs by scenario, C-31 next payment with why) (opus-5)
 - T-076 GB-03 Game board cost / if-then overlay for real and GB-04 3D object view (three.js objects per node kind, path tubes) (opus-5)
-- T-077 CORE Curriculum data: videos (Winning Your Eviction 1-7, Eviction Series, 2025 refresh, topics), articles, kits, prerequisites, board-node mapping (fable)
 - T-078 C-40 Learning: C-40 home (what to watch next by board position), player with watched state, C-41 journey drip rules, L-40 "what my client has watched" (opus-5)
-- T-079 P-10 Store redesign: SKU catalog by board stage (data), P-10 store, product pages, bundles (kits), plain-language "what this buys you" (opus-5)
 - T-080 C-50 Checkout and payments (C-50 cart / pay, C-51 receipts, hourly top-ups replaced by time tracking), PaymentProvider seam (Stripe later) (opus-5)
 - T-081 O-20 Owner revenue and operations dashboards: revenue by SKU / stage / attorney, consultations, conversion from videos to consults, network offices (opus-5)
 - T-082 MK-01 CRM: leads (form fills, calls, city pages), funnel stages (visitor -> video -> intake -> consult -> client), follow-ups (opus-5)
@@ -70,7 +68,8 @@ Mirrors `docs/plan/tasks.json` (statuses `done | doing | todo | blocked`); one l
 
 ### Awaiting Justin
 - Pages: confirm Settings > Pages > Source = GitHub Actions is enabled on imagine-os/cal-tenant-law (the workflow token cannot create the site; D-024)
-- Real site access: resolved 2026-09-18 (prompt 0004): the site was scraped live (98 pages, 96 store products, 33 videos, 8 offices; `docs/reference/site-scrape/pages.md`). Still for Justin: confirm the firm is happy with `public/brand/observed/` being used in the proposal (their copyrighted assets)
+- Real site access: resolved 2026-09-18 (prompt 0004): the site was scraped live (98 pages, 96 store products, 36 videos, 8 offices, 202 illustrations; `docs/reference/site-scrape/pages.md`). Still for Justin: confirm the firm is happy with its own artwork (`public/brand/observed/`, `reference/site-scrape/assets/`, the `illustrations` table) appearing in the proposal and in the product where `suggested_use` says (store icons, category tiles, video thumbnails, the landing hero and Game Board poster; D-042). The seven attorney portraits are in the data but never shown (D-023)
+- Visual direction: pick Clear sky, Board game or Courthouse from the switch in any top bar or `docs/screenshots/directions/compare-*.jpg`; the other two are then retired (D-039)
 - Pricing confirmation: store prices and rates are now as posted on 2026-09-18 ($165 consult, $330/h, $60 per 10 min hotline, 96 SKUs in `docs/data/services-catalog.json`, `verified: false`); an attorney or Justin confirms before P-10 / C-30 show them as facts (D-038). Six copy inconsistencies for the firm are in `docs/legal/law-change-log.md` LC-008..LC-013
 - Attorney names: seed data uses fictional demo users (D-023); confirm whether the network attorneys' real names may appear in the proposal (P-02) and the offices page
 - Company-OS timing: stays a seam (D-016) until Justin says otherwise; say when to open it and whether Supabase is the interim or the long-term backend
@@ -135,6 +134,12 @@ Mirrors `docs/plan/tasks.json` (statuses `done | doing | todo | blocked`); one l
 - T-051 QA Pass 1 screenshots and responsive QA (360..3840, light / dark), promote target-size to error (sonnet-5)
 - T-052 QA Pass 1 Spanish fill (module strings, hub, PM, proposal, game board labels) (sonnet-5)
 - T-053 CORE Release 0.1.0: version bump, changelog, kanban, tasks.json statuses, Pages deploy verified (fable)
+- T-077 CORE Curriculum data: videos (Winning Your Eviction 1-7, Eviction Series, 2025 refresh, topics), articles, kits, prerequisites, board-node mapping (fable)
+- T-079 P-10 Store redesign: SKU catalog by board stage (data), P-10 store, product pages, bundles (kits), plain-language "what this buys you" (opus-5)
+- T-114 DOC Live scrape of caltenantlaw.com: services catalog with prices and both store hierarchies, videos, articles, offices, FAQ, brand, illustrations, statutes cited (fable)
+- T-115 HUB-01 Three switchable visual directions (clearsky, boardgame, courthouse) with a brand switch in every bar and ?brand= (fable)
+- T-116 D-23 0.1.1 data reconciliation: catalog reads the live scrape, P-13 store menu / stage map, firm icons, C-03 from videos.json, real offices, illustrations table + D-23 gallery, landing artwork (fable)
+- T-117 CORE Release 0.1.1: merges (scrape, catalog, directions), regeneration, full QA matrix, screenshots, changelogs 0011-0014, surfaces, plan, decisions, Pages deploy verified (fable)
 
 ## Resumen en español
 

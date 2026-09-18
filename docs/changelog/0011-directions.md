@@ -1,3 +1,5 @@
+# 0011 - Three visual directions (clearsky, boardgame, courthouse)
+
 version: 0.1.1
 date: 2026-09-18
 prompt: 0003
@@ -32,3 +34,7 @@ codes: HUB-01 D-01
 - Justin picks a direction; then retire the other two from the picker (D-039) and fold `brands.css` rules into component CSS where they become the only skin.
 - Spanish fill for the direction names is done (`Cielo despejado`, `Tablero`, `Tribunal`); nothing else new to translate.
 - D-01 tokens page: show brand `extra` colours and statics per brand (today it shows ramp + semantic roles).
+
+## Integration notes (0.1.1, Fable)
+
+Folded from `_pending/directions.md` at release 0.1.1 (changelog 0014). Merged as `mod/directions` (f938511 + 2905281) after `mod/scrape` and `mod/catalog`; the only conflict was `docs/decisions.md`, where both this branch and the scrape had written a D-038: the scrape's row landed first, so the directions decision is **D-039** (references in `docs/design/directions.md`, prompt 0003 and this entry were renumbered). The `BrandSwitch` molecule is confirmed present in the hub header, the staff `TopBar`, the public `SiteLayout` header and the client `PhoneShell`; the catalog's "Services" / "How it works" nav entries and the brand switch coexist in `SiteLayout`. The three brands were re-checked on the merged 0.1.1 build at 360 and 3840 on `/`, `/counsel` and `/site/services` (changelog 0014). Justin still has to pick one; the picker stays until he does (D-039).

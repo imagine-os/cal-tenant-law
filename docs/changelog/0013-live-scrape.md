@@ -1,3 +1,5 @@
+# 0013 - Live scrape of caltenantlaw.com: services, videos, articles, offices, brand, illustrations
+
 version: 0.1.1
 date: 2026-09-18
 prompt: 0003
@@ -6,8 +8,6 @@ decision: Crawl politely (sequential, ~1 req/s, browser UA, no logins or forms) 
 rejected: Playwright screen-scraping of the Ecwid widget (the storefront API returns full descriptions, order fields and category paths directly; Playwright was used only once to discover the API endpoints); downloading the 27 PDFs (binaries, listed in pages.md instead); copying attorney portraits into public/brand (real people, D-023; logo, favicon, hero, icons only); rewriting the existing statute rows from the site's wording (they stay "as understood" with the site rows added separately so an attorney can compare); creating docs/prompts/0003 here (the parent session owns that number; 0004 is this rescrape).
 files: reference/site-scrape/raw/** (98 pages, Ecwid JSON, CSS, videos chunk, YouTube meta), reference/site-scrape/assets/** (202 images), docs/data/illustrations.json, docs/reference/site-scrape/pages.md, docs/data/{services-catalog,videos,articles,offices,faq}.json, docs/reference/{services-catalog,firm-site-digest,brand-observed}.md, public/brand/observed/*, docs/legal/{statute-index,law-change-log}.md, docs/decisions.md (D-038, D-025 superseded), docs/kanban.md, docs/prompts/0004-rescrape.md, docs/changelog/_pending/scrape.md
 codes: P-10, P-02, C-30, C-40, GB-01, K-10, K-11, K-12
-
-# Live scrape of caltenantlaw.com (0.1.1 draft)
 
 Model: Fable 5.1 (judgment: mapping the firm's menu to the board, legal currency flags, brand read; the crawl itself is mechanical).
 
@@ -52,3 +52,7 @@ Model: Fable 5.1 (judgment: mapping the firm's menu to the board, legal currency
 - T-0xx curriculum data (videos / articles) can seed from `videos.json` / `articles.json`; mark 2023 videos with the AB 2347 currency flag (LC-008).
 - Attorney verification pass over `docs/legal/` rows sourced from the live site (51 rows) and the six LC candidates.
 - Awaiting Justin: kanban lines "Real site access" and "Pricing confirmation" updated (site reachable; prices scraped, still to be confirmed by the firm as facts).
+
+## Integration notes (0.1.1, Fable)
+
+Folded from `_pending/scrape.md` at release 0.1.1 (changelog 0014). Merged as `mod/scrape` (27e4f9a, then the second pass c3c883f) before the other two branches; the only conflicts were the two `services-catalog` files against the catalog module's reconstruction, resolved in favour of the scrape (the live data is the source of truth, D-040). What the product now reads from this data: the services catalog (changelog 0012), the C-03 curriculum from `videos.json` (36 lessons with groups, lengths and thumbnails, D-043), the eight offices from `offices.json` into the `tenants` seed (names, cities, coverage, addresses; no attorney names, D-023 / D-044) and the `illustrations` table + D-23 gallery from `illustrations.json` (195 of 202 rows seeded: the seven attorney portraits stay in the JSON and are neither seeded nor bundled, D-023). The 51 statute rows and LC-008..LC-013 stay "needs attorney check". Follow-ups: `articles.json` and `faq.json` are data only until T-077's article pass.
