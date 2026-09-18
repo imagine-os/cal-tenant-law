@@ -1,3 +1,5 @@
+# 0007 - Role home dashboards (T-040..T-046)
+
 version: 0.1.0
 date: 2026-09-18
 prompt: 0002
@@ -81,3 +83,8 @@ New tables (11): `cases`, `deadlines`, `assignments`, `consultations`, `intakes`
 - `counsel.approveDocument` writes `status = filed`; approving and filing are the same step only until T-066 / e-filing splits them. `assist.fileClientUpload` uses `filed` to mean "filed into the binder" for the same reason.
 - No chart anywhere: the dataviz pass owns them (O-01 carries the numbers in tables and labelled bars).
 - `SEED_VERSION` was **not** bumped and does not need to be: `MockProvider` already invalidates a cached database when a table it does not know about appears.
+
+
+---
+
+Folded from `docs/changelog/_pending/` into this numbered entry at Pass 1 integration (changelog 0010, release 0.1.0). Where the text above says `_pending`, read this file.

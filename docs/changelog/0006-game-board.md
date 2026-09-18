@@ -1,4 +1,4 @@
-# Game board module (Pass 1, group D)
+# 0006 - Game board GB-01..GB-03 (T-037..T-039)
 
 version: 0.1.0
 date: 2026-09-18
@@ -95,3 +95,8 @@ The old stub's `board.selectSquare` and `board.placeCase` ids disappear with the
 3. Consider a `board-normal` tone in `src/design/tokens.ts` (`boardHues` has positive / negative / neutral / jump / document / hearing but no `normal`); the board currently draws the normal path with `--color-warn`.
 4. When the cases module (T-055) lands, make `board_positions.case_id` a reference to `cases.id` and link L-10's board tab to `/board/case/:caseId`.
 5. The build plan's deliverable paths for T-037..T-039 say `src/modules/game-board/`; the module shipped as `src/modules/board/` (surface, nav group and action namespace `board`). Either update the plan or rename in the integration pass — a rename touches the action ids, so updating the plan is cheaper.
+
+
+---
+
+Folded from `docs/changelog/_pending/` into this numbered entry at Pass 1 integration (changelog 0010, release 0.1.0). Where the text above says `_pending`, read this file.

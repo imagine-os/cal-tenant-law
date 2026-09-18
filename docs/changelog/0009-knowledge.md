@@ -1,3 +1,5 @@
+# 0009 - Knowledge: docs viewer, ops manual, legal memory (T-047..T-049)
+
 version: 0.1.0
 date: 2026-09-18
 prompt: 0001
@@ -68,3 +70,8 @@ New table: `manual_progress` (group `people`). No new `DataProvider` method, no 
 - `npm run qa:bundle`: js 340 kB gzip total, main chunk 208 kB gzip; every doc, chapter and legal file is its own lazy chunk (bodies never enter the main bundle).
 - `npm run qa:responsive -- --only=/docs,/manual,/legal`: 10 routes x 360/390/768/1280/1920/2560/3840 x light + dark = **140 cells, 0 failing, 0 a11y findings**. Fixed on the way: two narrow-width overflows (the statute citation cell in the DataTable card layout, and the long "effective" value in a law-change card header), 24 px hit areas for dense inline links (WCAG 2.5.8), two heading-order jumps (the plan-log card title and the chapter picker), and live tables now scroll inside their own frame on a phone instead of squeezing a role label to one letter per line.
 - `npm run screenshots -- --codes=K-01,K-02,K-03,M-01,M-02,M-03,K-10,K-11,K-12,K-13`: 20 files, no console errors.
+
+
+---
+
+Folded from `docs/changelog/_pending/` into this numbered entry at Pass 1 integration (changelog 0010, release 0.1.0). Where the text above says `_pending`, read this file.

@@ -1,6 +1,6 @@
 # Build plan: the order of operations
 
-Started 2026-09-18 on Justin's CTL OS brief (prompt 0001). Pass 0 (discovery) is done in this turn; the Pass 1 foundation is being built by a parallel worker; everything else is planned here and in `docs/plan/tasks.json` (same tasks, machine-readable, read by the PM viewer at `/#/plan`). **Units are dependency ticks, not calendar days** (D-013): a task starts the moment every task it depends on is done, so the plan's length is its longest dependency chain (29 ticks), not a number of weeks. Every task names its model (D-012). The kanban (`docs/kanban.md`) mirrors statuses.
+Started 2026-09-18 on Justin's CTL OS brief (prompt 0001). Pass 0 (discovery) and Pass 1 (foundation, first modules, release 0.1.0; changelogs 0002-0010) are done; everything else is planned here and in `docs/plan/tasks.json` (same tasks, machine-readable, read by the PM viewer at `/#/plan`). **Units are dependency ticks, not calendar days** (D-013): a task starts the moment every task it depends on is done, so the plan's length is its longest dependency chain (29 ticks), not a number of weeks. Every task names its model (D-012). The kanban (`docs/kanban.md`) mirrors statuses.
 
 ## Passes at a glance
 
@@ -76,52 +76,52 @@ Roles (D-004): `super_admin, owner, attorney, paralegal, front_desk, marketing, 
 
 | Id | Code | Task | Lane | Depends on | Model | Status | Size | Tick | Group |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| T-008 | CORE | Scaffold: Vite 5 + React 18 + TS strict, HashRouter, base "./", package.json scripts, tsconfig, index.html | Foundation | T-006 | fable | doing | M | 3 | - |
-| T-009 | CORE | Registry, shells, navGroups, manifest (window.__ctl.routes) | Foundation | T-008 | fable | doing | M | 4 | - |
-| T-010 | D-01 | Design tokens, light / dark, second proof brand, --scale band at >= 2560, focus-ring token | Foundation | T-008 | fable | doing | M | 4 | - |
-| T-011 | D-02 | Component library core with metas (atoms, molecules, organisms, templates) | Foundation | T-008 | fable | doing | L | 4 | - |
-| T-012 | D-03 | PageSpec, defineSpec, specCompleteness, code-family regex (HUB, P, C, F, L, S, O, A, X, GB, PM, M, K, D, MK) | Foundation | T-008 | fable | doing | S | 4 | - |
-| T-013 | D-20 | Actions manifest on PageSpec, actions bus, /#/dev/actions | Foundation | T-008 | fable | doing | M | 4 | - |
-| T-014 | HUB-01 | Session, roles, permissions, fictional demo users, RequireRole, RoleSwitcher, HUB-01 base, HUB-02 no-access | Foundation | T-008 | fable | doing | M | 4 | - |
-| T-015 | D-04 | DataProvider, MockProvider, schema registry (id, tenant_id, created_at, updated_at, version), seeds, gen-sql | Foundation | T-008 | fable | doing | L | 4 | - |
-| T-016 | CORE | i18n: StringTable { en, es? }, useT, EN / ES toggle, English default | Foundation | T-008 | fable | doing | S | 4 | - |
-| T-017 | D-02 | Placeholder atom (tooltip, "not wired yet" toast, dev-mode outline, data-placeholder) and PageStub on it | Foundation | T-008 | fable | doing | S | 4 | - |
-| T-018 | A-05 | Annotations: feedback table with kind, element_path, component, viewport, theme, screenshot_url, triage columns; FeedbackButton; inbox A-05; triage doc | Foundation | T-008 | fable | doing | M | 4 | - |
-| T-019 | D-05 | Dev tools D-01..D-07 (tokens, components, specs, tables, rules, docs, knowledge) and DevTools inspector (Ctrl+.) | Foundation | T-008 | fable | doing | L | 4 | - |
-| T-020 | CORE | GitHub Pages CI, README, CLAUDE.md (module contract), .gitignore, package-lock | Foundation | T-008 | fable | doing | S | 4 | - |
-| T-021 | D-12 | QA scripts: screenshots, qa-responsive (360..3840 + legibility >= 16 px at >= 1920), qa-bundle, gen-specs, surfaces.md | Foundation | T-008 | fable | doing | M | 4 | - |
-| T-022 | STUB | Stub homes for every role and surface (C-01, F-01, L-01, S-01, O-01, A-01, X-01, GB-01, PM-01, P-01, K-01, M-01) on Placeholder | Foundation | T-008 | fable | doing | S | 4 | - |
-| T-023 | CORE | Foundation gate: build green, HUB-01 opens every role, CLAUDE.md contract published, release 0.0.1 | Foundation | T-008, T-009, T-010, T-011, T-012, T-013, T-014, T-015, T-016, T-017, T-018, T-019, T-020, T-021, T-022 | fable | doing | S | 5 | - |
-| T-024 | HUB-01 | HUB-01 enrichment: role cards with live previews, per-role buttons, counts footer, canvas / simulator / plan entries | Hub & Dev tools | T-023 | opus-5 | todo | M | 6 | A |
-| T-025 | D-21 | Canvas: every page laid out on a zoomable, pannable surface, each page live and usable inside its frame | Hub & Dev tools | T-023 | opus-5 | todo | L | 6 | A |
-| T-026 | D-22 | Demo simulator: phone and desktop device frames with presets (360, 390, 768, 1280, 1920, 3840), role and language switches | Hub & Dev tools | T-023 | opus-5 | todo | M | 6 | A |
-| T-027 | PM | PM data: build-time import of docs/plan/tasks.json, tick computation, npm run plan:check (ids, deps, kanban mirror) | PM | T-023 | opus-5 | todo | S | 6 | B |
-| T-028 | PM-01 | PM-01 kanban: Backlog / Doing / Blocked / Done by lane, filters (pass, model, lane), keyboard "move to" | PM | T-027 | opus-5 | todo | M | 7 | B |
-| T-029 | PM-02 | PM-02 list view: sortable, groupable table of every task with search | PM | T-027 | opus-5 | todo | S | 7 | B |
-| T-030 | PM-03 | PM-03 timeline: tasks on dependency ticks with dependency lines, critical path, parallel groups | PM | T-027 | opus-5 | todo | L | 7 | B |
-| T-031 | PM-04 | PM-04 dependency graph as an object view (icons per lane, previews per deliverable), radial and lanes layouts | PM | T-027 | opus-5 | todo | L | 7 | B |
-| T-032 | PM-05 | PM-05 task detail and passes overview (goal, gate, progress per pass, per model) | PM | T-027 | opus-5 | todo | M | 7 | B |
-| T-033 | P-01 | Public site landing concept: educate-first funnel (videos, game board, consultation), en / es, store entry | Proposal & Site | T-023 | opus-5 | todo | M | 6 | C |
-| T-034 | P-02 | Proposal: the full-stack view of CTL OS (departments x features x roles) for the firm | Proposal & Site | T-023 | opus-5 | todo | L | 6 | C |
-| T-035 | P-03 | Replacement map: what the firm stops paying for (WordPress, Ecwid, PayPal, Teams, VoiceStamps, scheduler, forms, YouTube gating, WordPerfect) | Proposal & Site | T-023 | opus-5 | todo | M | 6 | C |
-| T-036 | P-04 | Client-facing roadmap: passes, what ships when (in ticks), how to give feedback (annotations) | Proposal & Site | T-023 | opus-5 | todo | S | 6 | C |
-| T-037 | GB-01 | Game board 2D: interactive SVG board from nodes.json, phases, five path types, node detail panel | Game board | T-023 | opus-5 | todo | L | 6 | D |
-| T-038 | GB-02 | Game board "where am I": case mode highlighting the current node, visited path and possible next moves | Game board | T-037 | opus-5 | todo | M | 7 | D |
-| T-039 | GB-03 | Game board cost / if-then overlay stub: per-node typical cost band and deadline rule from nodes.json (null today) with Placeholder | Game board | T-037 | opus-5 | todo | S | 7 | D |
-| T-040 | C-01 | Client home: my case position on the board, next steps, what to watch, what to pay next, my binder (seed data) | Client | T-023 | opus-5 | todo | M | 6 | E |
-| T-041 | F-01 | Front desk home: today's consultations, intake queue, calls to return, payments pending (seed data) | Front desk | T-023 | opus-5 | todo | M | 6 | E |
-| T-042 | L-01 | Attorney home: my cases, deadlines this week, running late, discovery due, documents to review (seed data) | Legal team | T-023 | opus-5 | todo | M | 6 | E |
-| T-043 | S-01 | Paralegal / assistant home: assignments, documents to prepare by board stage, filings due, client uploads to file (seed data) | Legal team | T-023 | opus-5 | todo | M | 6 | E |
-| T-044 | O-01 | Owner home: late-work radar, caseload by attorney, revenue by SKU, network offices (seed data) | Owner/Admin | T-023 | opus-5 | todo | M | 6 | E |
-| T-045 | A-01 | Admin home: users and roles, tables, feedback inbox link, settings, rules (seed data) | Owner/Admin | T-023 | opus-5 | todo | S | 6 | E |
-| T-046 | X-01 | Opposing counsel home: cases where they are served, documents served to them, meet-and-confer requests (seed data) | Opposition | T-023 | opus-5 | todo | S | 6 | E |
-| T-047 | K-01 | Docs viewer K-01 and knowledge search K-02: renders docs/** at build time (docmeta plugin, ?raw bodies) | Hub & Dev tools | T-023 | opus-5 | todo | M | 6 | F |
-| T-048 | M-01 | Ops manual cover and chapter routes from docs/ops-manual/{en,es}, LiveBlock directives, decisions page | Hub & Dev tools | T-047 | opus-5 | todo | M | 7 | F |
-| T-049 | K-10 | Legal memory viewer: statute index with verified_on, law-change log timeline, topic pages, "unverified" banner | Legal memory | T-047 | opus-5 | todo | M | 7 | F |
-| T-050 | CORE | Pass 1 integration: merge _pending changelogs, resolve route / component / table collisions, regenerate data-model and specs | QA & Docs | T-024, T-025, T-026, T-028, T-029, T-030, T-031, T-032, T-033, T-034, T-035, T-036, T-037, T-038, T-039, T-040, T-041, T-042, T-043, T-044, T-045, T-046, T-047, T-048, T-049 | fable | todo | M | 8 | - |
-| T-051 | QA | Pass 1 screenshots and responsive QA (360..3840, light / dark), promote target-size to error | QA & Docs | T-050 | sonnet-5 | todo | M | 9 | - |
-| T-052 | QA | Pass 1 Spanish fill (module strings, hub, PM, proposal, game board labels) | QA & Docs | T-050 | sonnet-5 | todo | M | 9 | - |
-| T-053 | CORE | Release 0.1.0: version bump, changelog, kanban, tasks.json statuses, Pages deploy verified | QA & Docs | T-051, T-052 | fable | todo | S | 10 | - |
+| T-008 | CORE | Scaffold: Vite 5 + React 18 + TS strict, HashRouter, base "./", package.json scripts, tsconfig, index.html | Foundation | T-006 | fable | done | M | 3 | - |
+| T-009 | CORE | Registry, shells, navGroups, manifest (window.__ctl.routes) | Foundation | T-008 | fable | done | M | 4 | - |
+| T-010 | D-01 | Design tokens, light / dark, second proof brand, --scale band at >= 2560, focus-ring token | Foundation | T-008 | fable | done | M | 4 | - |
+| T-011 | D-02 | Component library core with metas (atoms, molecules, organisms, templates) | Foundation | T-008 | fable | done | L | 4 | - |
+| T-012 | D-03 | PageSpec, defineSpec, specCompleteness, code-family regex (HUB, P, C, F, L, S, O, A, X, GB, PM, M, K, D, MK) | Foundation | T-008 | fable | done | S | 4 | - |
+| T-013 | D-20 | Actions manifest on PageSpec, actions bus, /#/dev/actions | Foundation | T-008 | fable | done | M | 4 | - |
+| T-014 | HUB-01 | Session, roles, permissions, fictional demo users, RequireRole, RoleSwitcher, HUB-01 base, HUB-02 no-access | Foundation | T-008 | fable | done | M | 4 | - |
+| T-015 | D-04 | DataProvider, MockProvider, schema registry (id, tenant_id, created_at, updated_at, version), seeds, gen-sql | Foundation | T-008 | fable | done | L | 4 | - |
+| T-016 | CORE | i18n: StringTable { en, es? }, useT, EN / ES toggle, English default | Foundation | T-008 | fable | done | S | 4 | - |
+| T-017 | D-02 | Placeholder atom (tooltip, "not wired yet" toast, dev-mode outline, data-placeholder) and PageStub on it | Foundation | T-008 | fable | done | S | 4 | - |
+| T-018 | A-05 | Annotations: feedback table with kind, element_path, component, viewport, theme, screenshot_url, triage columns; FeedbackButton; inbox A-05; triage doc | Foundation | T-008 | fable | done | M | 4 | - |
+| T-019 | D-05 | Dev tools D-01..D-07 (tokens, components, specs, tables, rules, docs, knowledge) and DevTools inspector (Ctrl+.) | Foundation | T-008 | fable | done | L | 4 | - |
+| T-020 | CORE | GitHub Pages CI, README, CLAUDE.md (module contract), .gitignore, package-lock | Foundation | T-008 | fable | done | S | 4 | - |
+| T-021 | D-12 | QA scripts: screenshots, qa-responsive (360..3840 + legibility >= 16 px at >= 1920), qa-bundle, gen-specs, surfaces.md | Foundation | T-008 | fable | done | M | 4 | - |
+| T-022 | STUB | Stub homes for every role and surface (C-01, F-01, L-01, S-01, O-01, A-01, X-01, GB-01, PM-01, P-01, K-01, M-01) on Placeholder | Foundation | T-008 | fable | done | S | 4 | - |
+| T-023 | CORE | Foundation gate: build green, HUB-01 opens every role, CLAUDE.md contract published, release 0.0.1 | Foundation | T-008, T-009, T-010, T-011, T-012, T-013, T-014, T-015, T-016, T-017, T-018, T-019, T-020, T-021, T-022 | fable | done | S | 5 | - |
+| T-024 | HUB-01 | HUB-01 enrichment: role cards with live previews, per-role buttons, counts footer, canvas / simulator / plan entries | Hub & Dev tools | T-023 | opus-5 | done | M | 6 | A |
+| T-025 | D-21 | Canvas: every page laid out on a zoomable, pannable surface, each page live and usable inside its frame | Hub & Dev tools | T-023 | opus-5 | done | L | 6 | A |
+| T-026 | D-22 | Demo simulator: phone and desktop device frames with presets (360, 390, 768, 1280, 1920, 3840), role and language switches | Hub & Dev tools | T-023 | opus-5 | done | M | 6 | A |
+| T-027 | PM | PM data: build-time import of docs/plan/tasks.json, tick computation, npm run plan:check (ids, deps, kanban mirror) | PM | T-023 | opus-5 | done | S | 6 | B |
+| T-028 | PM-01 | PM-01 kanban: Backlog / Doing / Blocked / Done by lane, filters (pass, model, lane), keyboard "move to" | PM | T-027 | opus-5 | done | M | 7 | B |
+| T-029 | PM-02 | PM-02 list view: sortable, groupable table of every task with search | PM | T-027 | opus-5 | done | S | 7 | B |
+| T-030 | PM-03 | PM-03 timeline: tasks on dependency ticks with dependency lines, critical path, parallel groups | PM | T-027 | opus-5 | done | L | 7 | B |
+| T-031 | PM-04 | PM-04 dependency graph as an object view (icons per lane, previews per deliverable), radial and lanes layouts | PM | T-027 | opus-5 | done | L | 7 | B |
+| T-032 | PM-05 | PM-05 task detail and passes overview (goal, gate, progress per pass, per model) | PM | T-027 | opus-5 | done | M | 7 | B |
+| T-033 | P-01 | Public site landing concept: educate-first funnel (videos, game board, consultation), en / es, store entry | Proposal & Site | T-023 | opus-5 | done | M | 6 | C |
+| T-034 | P-02 | Proposal: the full-stack view of CTL OS (departments x features x roles) for the firm | Proposal & Site | T-023 | opus-5 | done | L | 6 | C |
+| T-035 | P-03 | Replacement map: what the firm stops paying for (WordPress, Ecwid, PayPal, Teams, VoiceStamps, scheduler, forms, YouTube gating, WordPerfect) | Proposal & Site | T-023 | opus-5 | done | M | 6 | C |
+| T-036 | P-04 | Client-facing roadmap: passes, what ships when (in ticks), how to give feedback (annotations) | Proposal & Site | T-023 | opus-5 | done | S | 6 | C |
+| T-037 | GB-01 | Game board 2D: interactive SVG board from nodes.json, phases, five path types, node detail panel | Game board | T-023 | opus-5 | done | L | 6 | D |
+| T-038 | GB-02 | Game board "where am I": case mode highlighting the current node, visited path and possible next moves | Game board | T-037 | opus-5 | done | M | 7 | D |
+| T-039 | GB-03 | Game board cost / if-then overlay stub: per-node typical cost band and deadline rule from nodes.json (null today) with Placeholder | Game board | T-037 | opus-5 | done | S | 7 | D |
+| T-040 | C-01 | Client home: my case position on the board, next steps, what to watch, what to pay next, my binder (seed data) | Client | T-023 | opus-5 | done | M | 6 | E |
+| T-041 | F-01 | Front desk home: today's consultations, intake queue, calls to return, payments pending (seed data) | Front desk | T-023 | opus-5 | done | M | 6 | E |
+| T-042 | L-01 | Attorney home: my cases, deadlines this week, running late, discovery due, documents to review (seed data) | Legal team | T-023 | opus-5 | done | M | 6 | E |
+| T-043 | S-01 | Paralegal / assistant home: assignments, documents to prepare by board stage, filings due, client uploads to file (seed data) | Legal team | T-023 | opus-5 | done | M | 6 | E |
+| T-044 | O-01 | Owner home: late-work radar, caseload by attorney, revenue by SKU, network offices (seed data) | Owner/Admin | T-023 | opus-5 | done | M | 6 | E |
+| T-045 | A-01 | Admin home: users and roles, tables, feedback inbox link, settings, rules (seed data) | Owner/Admin | T-023 | opus-5 | done | S | 6 | E |
+| T-046 | X-01 | Opposing counsel home: cases where they are served, documents served to them, meet-and-confer requests (seed data) | Opposition | T-023 | opus-5 | done | S | 6 | E |
+| T-047 | K-01 | Docs viewer K-01 and knowledge search K-02: renders docs/** at build time (docmeta plugin, ?raw bodies) | Hub & Dev tools | T-023 | opus-5 | done | M | 6 | F |
+| T-048 | M-01 | Ops manual cover and chapter routes from docs/ops-manual/{en,es}, LiveBlock directives, decisions page | Hub & Dev tools | T-047 | opus-5 | done | M | 7 | F |
+| T-049 | K-10 | Legal memory viewer: statute index with verified_on, law-change log timeline, topic pages, "unverified" banner | Legal memory | T-047 | opus-5 | done | M | 7 | F |
+| T-050 | CORE | Pass 1 integration: merge _pending changelogs, resolve route / component / table collisions, regenerate data-model and specs | QA & Docs | T-024, T-025, T-026, T-028, T-029, T-030, T-031, T-032, T-033, T-034, T-035, T-036, T-037, T-038, T-039, T-040, T-041, T-042, T-043, T-044, T-045, T-046, T-047, T-048, T-049 | fable | done | M | 8 | - |
+| T-051 | QA | Pass 1 screenshots and responsive QA (360..3840, light / dark), promote target-size to error | QA & Docs | T-050 | sonnet-5 | done | M | 9 | - |
+| T-052 | QA | Pass 1 Spanish fill (module strings, hub, PM, proposal, game board labels) | QA & Docs | T-050 | sonnet-5 | done | M | 9 | - |
+| T-053 | CORE | Release 0.1.0: version bump, changelog, kanban, tasks.json statuses, Pages deploy verified | QA & Docs | T-051, T-052 | fable | done | S | 10 | - |
 
 <details><summary>Definition of done per task (Pass 1)</summary>
 
@@ -142,8 +142,8 @@ Roles (D-004): `super_admin, owner, attorney, paralegal, front_desk, marketing, 
 - **T-022** Stub homes for every role and surface (C-01, F-01, L-01, S-01, O-01, A-01, X-01, GB-01, PM-01, P-01, K-01, M-01) on Placeholder: Every role lands somewhere from the hub; stubs name the task that replaces them. _Deliverables_: src/modules/_stubs/.
 - **T-023** Foundation gate: npm run build green; every stub reachable; module workers can start in disjoint folders. _Deliverables_: docs/changelog/0002-foundation.md, CLAUDE.md.
 - **T-024** HUB-01 enrichment: Every surface opens as any demo user; dev-mode toggle; language and theme controls; counts from registry. _Deliverables_: src/modules/hub/, docs/pages/HUB-01.md.
-- **T-025** Canvas: Zoom with buttons and wheel; filter by surface / role; click into a frame to use the page; keyboard reachable. _Deliverables_: src/modules/dev-canvas/, docs/pages/D-21.md.
-- **T-026** Demo simulator: Any route renders in any frame; rotate; dark mode; shareable hash. _Deliverables_: src/modules/dev-simulator/, docs/pages/D-22.md.
+- **T-025** Canvas: Zoom with buttons and wheel; filter by surface / role; click into a frame to use the page; keyboard reachable. _Deliverables_: src/modules/showcase/ (canvas), docs/pages/D-21.md.
+- **T-026** Demo simulator: Any route renders in any frame; rotate; dark mode; shareable hash. _Deliverables_: src/modules/showcase/ (simulator), docs/pages/D-22.md.
 - **T-027** PM data: plan:check fails on a missing dependency id or a kanban mismatch; ticks computed. _Deliverables_: src/modules/plan/data.ts, scripts/plan-check.mjs.
 - **T-028** PM-01 kanban: Cards show id, code, model, size, dependents count; move writes through the provider (plan_tasks table seeded from JSON). _Deliverables_: src/modules/plan/KanbanPage.tsx, docs/pages/PM-01.md.
 - **T-029** PM-02 list view: DataTable from the library; group by pass / lane / model; export CSV. _Deliverables_: src/modules/plan/ListPage.tsx, docs/pages/PM-02.md.
@@ -151,22 +151,22 @@ Roles (D-004): `super_admin, owner, attorney, paralegal, front_desk, marketing, 
 - **T-031** PM-04 dependency graph as an object view (icons per lane, previews per deliverable), radial and lanes layouts: Nodes identifiable by icon; click opens PM-05; layouts switchable; keyboard navigation between nodes. _Deliverables_: src/modules/plan/GraphPage.tsx, docs/pages/PM-04.md.
 - **T-032** PM-05 task detail and passes overview (goal, gate, progress per pass, per model): Detail shows deps and dependents as links, deliverables as page-code chips, acceptance; passes page shows counts. _Deliverables_: src/modules/plan/TaskPage.tsx, src/modules/plan/PassesPage.tsx, docs/pages/PM-05.md.
 - **T-033** Public site landing concept: Renders the firm's positioning without unverified facts marked as facts; CTA to consultation and videos; 360-3840. _Deliverables_: src/modules/site/, docs/pages/P-01.md.
-- **T-034** Proposal: Every module and role experience shown with status (built / planned) read from tasks.json; printable. _Deliverables_: src/modules/proposal/OverviewPage.tsx, docs/pages/P-02.md.
-- **T-035** Replacement map: Each current tool mapped to the CTL OS module and pass that replaces it; unknown vendors marked unverified. _Deliverables_: src/modules/proposal/ReplacementPage.tsx, docs/pages/P-03.md.
-- **T-036** Client-facing roadmap: Reads passes from tasks.json; explains ticks vs days; links to the annotation workflow. _Deliverables_: src/modules/proposal/RoadmapPage.tsx, docs/pages/P-04.md.
-- **T-037** Game board 2D: Every node and edge from nodes.json rendered; keyboard moves between connected nodes; zoom buttons; legend = key. _Deliverables_: src/modules/game-board/BoardPage.tsx, src/modules/game-board/layout.ts, docs/pages/GB-01.md.
-- **T-038** Game board "where am I": Given a case (seed) the board shows position and history; next moves list documents per node. _Deliverables_: src/modules/game-board/CaseBoardPage.tsx, docs/pages/GB-02.md.
-- **T-039** Game board cost / if-then overlay stub: Overlay toggles; null fields show "filled in Pass 2 from docs/legal"; no fabricated numbers. _Deliverables_: src/modules/game-board/CostOverlay.tsx, docs/pages/GB-03.md.
+- **T-034** Proposal: Every module and role experience shown with status (built / planned) read from tasks.json; printable. _Deliverables_: src/modules/site/ProposalPage.tsx, docs/pages/P-02.md.
+- **T-035** Replacement map: Each current tool mapped to the CTL OS module and pass that replaces it; unknown vendors marked unverified. _Deliverables_: src/modules/site/ReplacesPage.tsx, docs/pages/P-03.md.
+- **T-036** Client-facing roadmap: Reads passes from tasks.json; explains ticks vs days; links to the annotation workflow. _Deliverables_: src/modules/site/RoadmapPage.tsx, docs/pages/P-04.md.
+- **T-037** Game board 2D: Every node and edge from nodes.json rendered; keyboard moves between connected nodes; zoom buttons; legend = key. _Deliverables_: src/modules/board/BoardPage.tsx, src/components/organism/GameBoard/layout.ts, docs/pages/GB-01.md.
+- **T-038** Game board "where am I": Given a case (seed) the board shows position and history; next moves list documents per node. _Deliverables_: src/modules/board/CaseBoardPage.tsx, docs/pages/GB-02.md.
+- **T-039** Game board cost / if-then overlay stub: Overlay toggles; null fields show "filled in Pass 2 from docs/legal"; no fabricated numbers. _Deliverables_: src/modules/board/OverlayPage.tsx, docs/pages/GB-03.md.
 - **T-040** Client home: PhoneShell; every tile reads seed tables; Pass 2 controls on Placeholder. _Deliverables_: src/modules/client/HomePage.tsx, docs/pages/C-01.md.
 - **T-041** Front desk home: DesktopShell; lists from seed; legible at 3840 on a wall screen. _Deliverables_: src/modules/frontdesk/HomePage.tsx, docs/pages/F-01.md.
-- **T-042** Attorney home: Dense multi-column at >= 1920 without losing legibility; every tile keyboard-reachable. _Deliverables_: src/modules/attorney/HomePage.tsx, docs/pages/L-01.md.
-- **T-043** Paralegal / assistant home: Reads assignments and document_tasks seeds. _Deliverables_: src/modules/paralegal/HomePage.tsx, docs/pages/S-01.md.
+- **T-042** Attorney home: Dense multi-column at >= 1920 without losing legibility; every tile keyboard-reachable. _Deliverables_: src/modules/counsel/HomePage.tsx, docs/pages/L-01.md.
+- **T-043** Paralegal / assistant home: Reads assignments and document_tasks seeds. _Deliverables_: src/modules/assist/HomePage.tsx, docs/pages/S-01.md.
 - **T-044** Owner home: Charts from the library (dataviz rules); works as a 10-foot dashboard. _Deliverables_: src/modules/owner/HomePage.tsx, docs/pages/O-01.md.
 - **T-045** Admin home: Links to D-04 tables, A-05 inbox, rules registry. _Deliverables_: src/modules/admin/HomePage.tsx, docs/pages/A-01.md.
 - **T-046** Opposing counsel home: Strictly scoped by party; no internal data leaks; Placeholder on Pass 2 actions. _Deliverables_: src/modules/opposition/HomePage.tsx, docs/pages/X-01.md.
 - **T-047** Docs viewer K-01 and knowledge search K-02: Adding a doc needs no code; prompts split on ## Response; search across headings. _Deliverables_: scripts/lib/docmeta.mjs, src/modules/docs/, docs/pages/K-01.md, docs/pages/K-02.md.
-- **T-048** Ops manual cover and chapter routes from docs/ops-manual/{en,es}, LiveBlock directives, decisions page: Chapters from front matter; en / es switch keeps the chapter; {{directives}} render from tables. _Deliverables_: src/modules/ops-manual/, docs/pages/M-01.md.
-- **T-049** Legal memory viewer: Every row shows verification state; filter by topic; change log newest first; banner cannot be dismissed while any row is unverified. _Deliverables_: src/modules/legal-memory/, docs/pages/K-10.md.
+- **T-048** Ops manual cover and chapter routes from docs/ops-manual/{en,es}, LiveBlock directives, decisions page: Chapters from front matter; en / es switch keeps the chapter; {{directives}} render from tables. _Deliverables_: src/modules/manual/, docs/pages/M-01.md.
+- **T-049** Legal memory viewer: Every row shows verification state; filter by topic; change log newest first; banner cannot be dismissed while any row is unverified. _Deliverables_: src/modules/legal/, docs/pages/K-10.md.
 - **T-050** Pass 1 integration: One numbered changelog per module; build green; no duplicate routes. _Deliverables_: docs/changelog/00nn-*.md, docs/data-model.md, docs/specs.md.
 - **T-051** Pass 1 screenshots and responsive QA (360..3840, light / dark), promote target-size to error: Every built route captured at 390 + 1280 (dark + 3840 for key pages); matrix green or issues filed as annotations. _Deliverables_: docs/screenshots/**, docs/qa/responsive-report.md.
 - **T-052** Pass 1 Spanish fill (module strings, hub, PM, proposal, game board labels): es side present for every key; legal terms keep the English term of art in parentheses. _Deliverables_: src/modules/*/strings.ts.
@@ -242,7 +242,7 @@ Roles (D-004): `super_admin, owner, attorney, paralegal, front_desk, marketing, 
 - **T-073** Discovery tracker: Mirrors the board's Discovery phase; deadlines from the engine; documents from templates; opposing counsel sees served items in X-10. _Deliverables_: src/modules/discovery/, docs/pages/L-30.md.
 - **T-074** Cost model: Given a position and chosen paths, returns a dated range of potential costs; every band cites a SKU; unverified prices flagged. _Deliverables_: src/domain/costs.ts, docs/game-board/nodes.json (typical_cost_band), scripts/test-costs.mjs.
 - **T-075** Cost calendar and "what to pay next" (C-30 calendar of potential costs by scenario, C-31 next payment with why): Scenario switches re-render the calendar; next payment links to checkout (Placeholder until C-50). _Deliverables_: src/modules/costs/, docs/pages/C-30.md, docs/pages/C-31.md.
-- **T-076** Game board cost / if-then overlay for real and GB-04 3D object view (three.js objects per node kind, path tubes): Overlay reads costmodel; 3D view has a 2D fallback and keyboard navigation; objects identifiable by shape. _Deliverables_: src/modules/game-board/CostOverlay.tsx, src/modules/game-board/Board3DPage.tsx, docs/pages/GB-03.md, docs/pages/GB-04.md.
+- **T-076** Game board cost / if-then overlay for real and GB-04 3D object view (three.js objects per node kind, path tubes): Overlay reads costmodel; 3D view has a 2D fallback and keyboard navigation; objects identifiable by shape. _Deliverables_: src/modules/board/OverlayPage.tsx, src/modules/game-board/Board3DPage.tsx, docs/pages/GB-03.md, docs/pages/GB-04.md.
 - **T-077** Curriculum data: Every video and article from the firm digest is a row with URL, series, order (unverified), board nodes; watched_state table. _Deliverables_: src/data/schema/learning.ts, src/data/seed/learning.ts.
 - **T-078** Learning: Watched state persists per user; drip rule engine picks content by position; attorney sees completion before a consultation; TV-remote friendly player. _Deliverables_: src/modules/learning/, docs/pages/C-40.md, docs/pages/C-41.md, docs/pages/L-40.md.
 - **T-079** Store redesign: Every SKU from the firm digest present with as-indexed price flagged unverified; browse by board node; cart. _Deliverables_: src/data/schema/catalog.ts, src/modules/store/, docs/pages/P-10.md.
@@ -345,7 +345,7 @@ Roles (D-004): `super_admin, owner, attorney, paralegal, front_desk, marketing, 
 - **T-109** Ops manual complete in English: Every part has chapters per role; no system-owned number typed by hand. _Deliverables_: docs/ops-manual/en/*.md.
 - **T-110** Ops manual Spanish mirror: Same file names as en; front matter complete. _Deliverables_: docs/ops-manual/es/*.md.
 - **T-111** Full QA matrices: Every cell green or annotated; data-placeholder count is zero on shipped surfaces. _Deliverables_: docs/qa/.
-- **T-112** Proposal polish: No unverified flag remains on the proposal; printable and shareable. _Deliverables_: src/modules/proposal/, docs/pages/P-02.md.
+- **T-112** Proposal polish: No unverified flag remains on the proposal; printable and shareable. _Deliverables_: src/modules/site/, docs/pages/P-02.md.
 - **T-113** Release 1.0.0: Deployed; appliance image published; proposal final. _Deliverables_: docs/changelog/00nn-release-1.0.0.md.
 
 </details>
@@ -354,14 +354,14 @@ Roles (D-004): `super_admin, owner, attorney, paralegal, front_desk, marketing, 
 
 | Group | Worker (Opus 5) | Folders | Tasks |
 | --- | --- | --- | --- |
-| A | Hub, canvas, simulator | `src/modules/hub`, `src/modules/dev-canvas`, `src/modules/dev-simulator` | T-024, T-025, T-026 |
+| A | Hub, canvas, simulator | `src/modules/hub`, `src/modules/showcase` | T-024, T-025, T-026 |
 | B | PM viewer | `src/modules/plan`, `scripts/plan-check.mjs` | T-027, T-028, T-029, T-030, T-031, T-032 |
-| C | Proposal and public site | `src/modules/site`, `src/modules/proposal` | T-033, T-034, T-035, T-036 |
-| D | Game board | `src/modules/game-board` | T-037, T-038, T-039 |
-| E | Role homes | `src/modules/{client,frontdesk,attorney,paralegal,owner,admin,opposition}` | T-040, T-041, T-042, T-043, T-044, T-045, T-046 |
-| F | Docs, manual, legal memory | `scripts/lib/docmeta.mjs`, `src/modules/{docs,ops-manual,legal-memory}` | T-047, T-048, T-049 |
+| C | Proposal and public site | `src/modules/site` (one module, D-037) | T-033, T-034, T-035, T-036 |
+| D | Game board | `src/modules/board`, `src/components/organism/GameBoard` | T-037, T-038, T-039 |
+| E | Role homes | `src/modules/{client,frontdesk,counsel,assist,owner,admin,opposition}`, `src/modules/_homes` (shared helpers) | T-040, T-041, T-042, T-043, T-044, T-045, T-046 |
+| F | Docs, manual, legal memory | `scripts/lib/docmeta.mjs`, `src/modules/{docs,manual,legal}` | T-047, T-048, T-049 |
 
-Shared files (`registry.ts`, `App.tsx`, `shells.tsx`, `navGroups.ts`, `schema/index.ts`, `seed/index.ts`) are never edited by a group: modules register by glob (module contract in `CLAUDE.md`). Each group adds its own `src/data/schema/<module>.ts`, `src/data/seed/<module>.ts`, `src/rules/<module>.ts`, `docs/pages/<CODE>.md` and `docs/changelog/_pending/<module>.md`.
+Folder names above are the ones that shipped (updated at Pass 1 integration; the planned `dev-canvas` / `dev-simulator`, `proposal`, `game-board`, `attorney` / `paralegal`, `ops-manual` / `legal-memory` names were not used - see D-033 and D-037; task ids are unchanged). Shared files (`registry.ts`, `App.tsx`, `shells.tsx`, `navGroups.ts`, `schema/index.ts`, `seed/index.ts`) are never edited by a group: modules register by glob (module contract in `CLAUDE.md`). Each group adds its own `src/data/schema/<module>.ts`, `src/data/seed/<module>.ts`, `src/rules/<module>.ts`, `docs/pages/<CODE>.md` and `docs/changelog/_pending/<module>.md`.
 
 ## Tasks with the most dependents (the critical spine, excluding done tasks)
 

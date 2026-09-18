@@ -1,3 +1,5 @@
+# 0004 - Project-management viewer PM-01..PM-05 (T-027..T-032)
+
 version: 0.1.0
 date: 2026-09-18
 prompt: 0001
@@ -45,3 +47,8 @@ npm scripts: `plan:check` (`node scripts/plan-check.mjs [--quiet]`), `plan:sync`
 Tables: `plan_tasks`, `plan_passes`, `plan_lanes` (group `projects`, tenant `ten_network`). `supabase/schema.sql` and `docs/data-model.md` are **not** regenerated here - the Pass 1 integration task (T-050) runs `npm run sql` once for every module.
 
 No `DataProvider` method changed. `docs/reference/surfaces.md` is the integrator's file (T-050); this section is the delta to merge into it.
+
+
+---
+
+Folded from `docs/changelog/_pending/` into this numbered entry at Pass 1 integration (changelog 0010, release 0.1.0). Where the text above says `_pending`, read this file.

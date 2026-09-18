@@ -1,3 +1,5 @@
+# 0002 - Foundation (Pass 1 base, T-008..T-023)
+
 version: 0.1.0
 date: 2026-09-18
 prompt: 0001
@@ -34,3 +36,8 @@ Empty repository -> foundation; screenshots come with the screenshot pass (`npm 
 ## Open items
 
 See the handback: docs viewer / manual / project modules are other workers'; Spanish fill of dev pages is a pass; `dev.filterTier` / `dev.jumpToComponent` handlers land in the next dev pass.
+
+
+---
+
+Folded from `docs/changelog/_pending/` into this numbered entry at Pass 1 integration (changelog 0010, release 0.1.0). Where the text above says `_pending`, read this file.

@@ -1,10 +1,12 @@
+# 0008 - Showcase: hub enrichment, canvas, simulator (T-024..T-026)
+
 version: 0.1.0
 date: 2026-09-18
 prompt: 0002
 intent: T-024 HUB-01 enrichment (role cards with live previews, per-role entry, testing-hub row, counts footer), T-025 D-21 canvas (every page laid out on a zoomable, pannable surface, live and usable inside its frame), T-026 D-22 demo simulator (phone to 4K TV frames, role / language / theme / builder-tool switches, present mode, scripted tour, shareable URL).
 decision: Give a frame its own role without editing any shared file: the iframe hash carries `as` / `dev` / `lang` / `theme` and a new `src/modules/showcase/frameSession.ts` shadows `ctl.session` / `ctl.lang` / `ctl.theme` inside that iframe's own realm (each window has its own `Storage.prototype`), swallowing writes so a frame can never push a session back to the parent. Pan the canvas with the viewport's own scroll instead of a transform offset, so drag, arrow keys, scrollbars, trackpad inertia and the minimap are all the same mechanism. Cap live frames (default 12, chosen by position via IntersectionObserver) and show a "Load this page" card for the rest. Shape the canvas world for a wide, short viewport (width = sqrt(area x 1.35 x 2.4)) so "fit all" is as large as possible. The three pages that lay out other pages detect `isFramed()` and degrade (hub -> static tiles, canvas -> list, simulator -> "open the full page"), so frames never nest.
 rejected: Writing the frame role into localStorage (shared across same-origin frames: it would hijack the parent's session); editing SessionProvider / App.tsx to read hash params (shared files, other workers' territory, and the contract forbids it); postMessage handshakes (the frame would boot as the wrong role first and flicker); transform-based panning with a custom scrollbar (re-implements what the browser does and breaks keyboard and trackpad); a drag-only canvas (P-03); rasterising the framed page for the screenshot button (a page cannot rasterise a same-origin iframe - left as a Placeholder for the screenshot pass); putting canvas layout state in a table (per-viewer view preference, so localStorage `ctl.canvas`).
-files: src/modules/showcase/{index.ts,CanvasPage.tsx,SimulatorPage.tsx,specs.ts,strings.ts,frameSession.ts,canvasLayout.ts,useNarrow.ts,showcase.css}, src/modules/hub/{HubPage.tsx,specs.ts,strings.ts,hub.css}, docs/pages/{HUB-01,D-21,D-22}.md, docs/changelog/_pending/showcase.md, docs/screenshots/{HUB-01,D-21,D-22}
+files: src/modules/showcase/{index.ts,CanvasPage.tsx,SimulatorPage.tsx,specs.ts,strings.ts,frameSession.ts,canvasLayout.ts,useNarrow.ts,showcase.css}, src/modules/hub/{HubPage.tsx,specs.ts,strings.ts,hub.css}, docs/pages/{HUB-01,D-21,D-22}.md, docs/changelog/0008-showcase.md, docs/screenshots/{HUB-01,D-21,D-22}
 codes: HUB-01, D-21, D-22
 
 # Showcase: hub enrichment, canvas and demo simulator (T-024, T-025, T-026)
@@ -54,3 +56,8 @@ Before: the hub listed 14 surface families as clickable cards and you could open
 - `docs/reference/surfaces.md`, `docs/kanban.md` and `docs/plan/tasks.json` (T-024/025/026 -> done) are shared files this wave: the Surfaces delta above is written for whoever integrates Pass 1.
 - Layout arrangements are not saved per user yet (`page_layouts` is declared in both specs for when they are), and the canvas has no "arrange by hand" mode.
 - Spanish is filled for all chrome in this module; the framed pages are as Spanish as their own modules are.
+
+
+---
+
+Folded from `docs/changelog/_pending/` into this numbered entry at Pass 1 integration (changelog 0010, release 0.1.0). Where the text above says `_pending`, read this file.

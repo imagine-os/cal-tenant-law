@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updated_at": "2026-09-18T18:30:00Z",
+  "updated_at": "2026-09-18T23:30:00Z",
   "units": "dependency ticks, not calendar days",
   "lanes": [
     "Foundation",
@@ -222,7 +222,7 @@
         "T-006"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "package.json",
@@ -234,7 +234,7 @@
       ],
       "acceptance": "npm run build green on an empty hub; __APP_VERSION__ defined; data-theme / data-brand / data-skin on <html>.",
       "notes": "Adapted from petrock (D-001).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-009",
@@ -246,7 +246,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/app/registry.ts",
@@ -256,7 +256,7 @@
       ],
       "acceptance": "Modules register by glob; a built route beats a stub at the same path; manifest exposes specs to scripts.",
       "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-010",
@@ -268,7 +268,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/design/tokens.ts",
@@ -278,7 +278,7 @@
       ],
       "acceptance": "D-01 shows every token; body text >= 16 px at >= 1920; ring >= 3 px.",
       "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-011",
@@ -290,7 +290,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "L",
       "deliverables": [
         "src/components/**",
@@ -299,7 +299,7 @@
       ],
       "acceptance": "Every component has a .meta.ts with props, states, usages, a11y; D-02 renders them; 44 px targets by default.",
       "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-012",
@@ -311,7 +311,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/specs/types.ts",
@@ -320,7 +320,7 @@
       ],
       "acceptance": "Unknown code prefixes warn in DEV; completeness includes actions and checkedAt.",
       "notes": "D-003.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-013",
@@ -332,7 +332,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/actions/bus.ts",
@@ -341,7 +341,7 @@
       ],
       "acceptance": "D-20 lists every action with page, permission, live handler; run(id, params) works from the console.",
       "notes": "This registry is the WebMCP surface (P-05, D-007).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-014",
@@ -353,7 +353,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/auth/roles.ts",
@@ -365,7 +365,7 @@
       ],
       "acceptance": "Nine roles (D-004) each with a demo user and a home; super admin view-as and dev mode; guards real, identity mocked.",
       "notes": "No real attorney names (D-023).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-015",
@@ -377,7 +377,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "L",
       "deliverables": [
         "src/data/provider.ts",
@@ -390,7 +390,7 @@
       ],
       "acceptance": "useTable re-renders from subscribe; every table has the base columns; SQL draft with RLS helpers generated.",
       "notes": "D-006.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-016",
@@ -402,14 +402,14 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/i18n/"
       ],
       "acceptance": "Missing es falls back to en; toggle on every shell; document lang updates.",
       "notes": "D-010, D-011.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-017",
@@ -421,7 +421,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/components/atom/Placeholder/",
@@ -429,7 +429,7 @@
       ],
       "acceptance": "A click on any unwired control toasts; D-09 counts data-placeholder.",
       "notes": "D-008.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-018",
@@ -441,7 +441,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/data/schema/feedback.ts",
@@ -451,7 +451,7 @@
       ],
       "acceptance": "A tester can annotate any staff page; rows carry every column; triage workflow documented.",
       "notes": "D-009.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-019",
@@ -463,7 +463,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "L",
       "deliverables": [
         "src/modules/dev/",
@@ -473,7 +473,7 @@
       ],
       "acceptance": "Dev mode shows the SpecChip and inspector on every page with spec, tables, rules, actions, completeness.",
       "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-020",
@@ -485,7 +485,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "S",
       "deliverables": [
         ".github/workflows/pages.yml",
@@ -496,7 +496,7 @@
       ],
       "acceptance": "Workflow green on push to main; README lead is one sentence with the live URL; CLAUDE.md points at platform-principles.",
       "notes": "Justin must enable Pages once (D-024).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-021",
@@ -508,7 +508,7 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "scripts/screenshots.mjs",
@@ -520,7 +520,7 @@
       ],
       "acceptance": "All seven widths in the matrix; report written to docs/qa/; surfaces.md lists routes, provider methods, scripts, actions.",
       "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-022",
@@ -532,14 +532,14 @@
         "T-008"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/modules/_stubs/"
       ],
       "acceptance": "Every role lands somewhere from the hub; stubs name the task that replaces them.",
       "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-023",
@@ -565,7 +565,7 @@
         "T-022"
       ],
       "model": "fable",
-      "status": "doing",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "docs/changelog/0002-foundation.md",
@@ -573,7 +573,7 @@
       ],
       "acceptance": "npm run build green; every stub reachable; module workers can start in disjoint folders.",
       "notes": "Everything below depends on this.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-024",
@@ -585,15 +585,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/hub/",
         "docs/pages/HUB-01.md"
       ],
       "acceptance": "Every surface opens as any demo user; dev-mode toggle; language and theme controls; counts from registry.",
-      "notes": "Group A (one worker with canvas + simulator).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group A (one worker with canvas + simulator). Shipped in src/modules/hub (design pass + showcase enrichment combined at integration, changelog 0010).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-025",
@@ -605,15 +605,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "L",
       "deliverables": [
         "src/modules/dev-canvas/",
         "docs/pages/D-21.md"
       ],
       "acceptance": "Zoom with buttons and wheel; filter by surface / role; click into a frame to use the page; keyboard reachable.",
-      "notes": "Group A. Justin: \"open all the individual pages and lay them out\".",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group A. Justin: \"open all the individual pages and lay them out\". Module folder is src/modules/showcase (D-21 + D-22 in one module), not dev-canvas.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-026",
@@ -625,15 +625,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/dev-simulator/",
         "docs/pages/D-22.md"
       ],
       "acceptance": "Any route renders in any frame; rotate; dark mode; shareable hash.",
-      "notes": "Group A.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group A. Module folder is src/modules/showcase, not dev-simulator. Simulator state is addressable by URL (D-034).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-027",
@@ -645,7 +645,7 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/modules/plan/data.ts",
@@ -653,7 +653,7 @@
       ],
       "acceptance": "plan:check fails on a missing dependency id or a kanban mismatch; ticks computed.",
       "notes": "Group B (one worker for PM-01..PM-05).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-028",
@@ -665,7 +665,7 @@
         "T-027"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/plan/KanbanPage.tsx",
@@ -673,7 +673,7 @@
       ],
       "acceptance": "Cards show id, code, model, size, dependents count; move writes through the provider (plan_tasks table seeded from JSON).",
       "notes": "Group B.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-029",
@@ -685,7 +685,7 @@
         "T-027"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/modules/plan/ListPage.tsx",
@@ -693,7 +693,7 @@
       ],
       "acceptance": "DataTable from the library; group by pass / lane / model; export CSV.",
       "notes": "Group B.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-030",
@@ -705,7 +705,7 @@
         "T-027"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "L",
       "deliverables": [
         "src/modules/plan/TimelinePage.tsx",
@@ -713,7 +713,7 @@
       ],
       "acceptance": "Tick axis (not days); hover / focus shows deps; critical path highlighted; readable at 360 and 3840.",
       "notes": "Group B.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-031",
@@ -725,7 +725,7 @@
         "T-027"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "L",
       "deliverables": [
         "src/modules/plan/GraphPage.tsx",
@@ -733,7 +733,7 @@
       ],
       "acceptance": "Nodes identifiable by icon; click opens PM-05; layouts switchable; keyboard navigation between nodes.",
       "notes": "Group B. graph-gallery lanes / radial patterns (docs/reference/graph-gallery-views.md).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-032",
@@ -745,7 +745,7 @@
         "T-027"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/plan/TaskPage.tsx",
@@ -754,7 +754,7 @@
       ],
       "acceptance": "Detail shows deps and dependents as links, deliverables as page-code chips, acceptance; passes page shows counts.",
       "notes": "Group B.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-033",
@@ -766,7 +766,7 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/site/",
@@ -774,7 +774,7 @@
       ],
       "acceptance": "Renders the firm's positioning without unverified facts marked as facts; CTA to consultation and videos; 360-3840.",
       "notes": "Group C (one worker for P-01..P-04). Firm brand visuals unverified (D-025).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-034",
@@ -786,15 +786,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "L",
       "deliverables": [
         "src/modules/proposal/OverviewPage.tsx",
         "docs/pages/P-02.md"
       ],
       "acceptance": "Every module and role experience shown with status (built / planned) read from tasks.json; printable.",
-      "notes": "Group C.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group C. One site module (src/modules/site) holds P-01..P-04 (D-037).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-035",
@@ -806,15 +806,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/proposal/ReplacementPage.tsx",
         "docs/pages/P-03.md"
       ],
       "acceptance": "Each current tool mapped to the CTL OS module and pass that replaces it; unknown vendors marked unverified.",
-      "notes": "Group C.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group C. In src/modules/site (D-037).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-036",
@@ -826,15 +826,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/modules/proposal/RoadmapPage.tsx",
         "docs/pages/P-04.md"
       ],
       "acceptance": "Reads passes from tasks.json; explains ticks vs days; links to the annotation workflow.",
-      "notes": "Group C.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group C. In src/modules/site (D-037).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-037",
@@ -846,7 +846,7 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "L",
       "deliverables": [
         "src/modules/game-board/BoardPage.tsx",
@@ -854,8 +854,8 @@
         "docs/pages/GB-01.md"
       ],
       "acceptance": "Every node and edge from nodes.json rendered; keyboard moves between connected nodes; zoom buttons; legend = key.",
-      "notes": "Group D (one worker for GB-01..GB-03).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group D (one worker for GB-01..GB-03). Module folder is src/modules/board (surface, nav group and action namespace `board`). 18 reconstructed edges await attorney confirmation (RULE-BOARD-02).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-038",
@@ -867,15 +867,15 @@
         "T-037"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/game-board/CaseBoardPage.tsx",
         "docs/pages/GB-02.md"
       ],
       "acceptance": "Given a case (seed) the board shows position and history; next moves list documents per node.",
-      "notes": "Group D. Reads case_board_positions seed until Pass 2 cases land.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group D. Reads case_board_positions seed until Pass 2 cases land. In src/modules/board; seed adds case_01 (the ops demo client) so C-01 links land on a real position.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-039",
@@ -887,15 +887,15 @@
         "T-037"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/modules/game-board/CostOverlay.tsx",
         "docs/pages/GB-03.md"
       ],
       "acceptance": "Overlay toggles; null fields show \"filled in Pass 2 from docs/legal\"; no fabricated numbers.",
-      "notes": "Group D.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group D. In src/modules/board; a `normal` (amber) board tone was added to boardHues at integration.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-040",
@@ -907,15 +907,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/client/HomePage.tsx",
         "docs/pages/C-01.md"
       ],
       "acceptance": "PhoneShell; every tile reads seed tables; Pass 2 controls on Placeholder.",
-      "notes": "Group E (one worker for all seven homes).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group E (one worker for all seven homes). Also shipped C-02 binder, C-03 learn, C-04 pay on the provisional ops schema (D-035; T-054 supersedes).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-041",
@@ -927,7 +927,7 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/frontdesk/HomePage.tsx",
@@ -935,7 +935,7 @@
       ],
       "acceptance": "DesktopShell; lists from seed; legible at 3840 on a wall screen.",
       "notes": "Group E.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-042",
@@ -947,15 +947,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/attorney/HomePage.tsx",
         "docs/pages/L-01.md"
       ],
       "acceptance": "Dense multi-column at >= 1920 without losing legibility; every tile keyboard-reachable.",
-      "notes": "Group E.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group E. Module folder is src/modules/counsel (surface `counsel`).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-043",
@@ -967,15 +967,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/paralegal/HomePage.tsx",
         "docs/pages/S-01.md"
       ],
       "acceptance": "Reads assignments and document_tasks seeds.",
-      "notes": "Group E.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group E. Module folder is src/modules/assist (surface `assist`).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-044",
@@ -987,7 +987,7 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/owner/HomePage.tsx",
@@ -995,7 +995,7 @@
       ],
       "acceptance": "Charts from the library (dataviz rules); works as a 10-foot dashboard.",
       "notes": "Group E.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-045",
@@ -1007,15 +1007,15 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/modules/admin/HomePage.tsx",
         "docs/pages/A-01.md"
       ],
       "acceptance": "Links to D-04 tables, A-05 inbox, rules registry.",
-      "notes": "Group E.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group E. Also shipped A-05 feedback inbox with triage writes.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-046",
@@ -1027,7 +1027,7 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "src/modules/opposition/HomePage.tsx",
@@ -1035,7 +1035,7 @@
       ],
       "acceptance": "Strictly scoped by party; no internal data leaks; Placeholder on Pass 2 actions.",
       "notes": "Group E.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-047",
@@ -1047,7 +1047,7 @@
         "T-023"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "scripts/lib/docmeta.mjs",
@@ -1056,8 +1056,8 @@
         "docs/pages/K-02.md"
       ],
       "acceptance": "Adding a doc needs no code; prompts split on ## Response; search across headings.",
-      "notes": "Group F (one worker for K-01, K-02, M-01, K-10).",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group F (one worker for K-01, K-02, M-01, K-10). Module folder is src/modules/docs; K-03 plan log added.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-048",
@@ -1069,15 +1069,15 @@
         "T-047"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/ops-manual/",
         "docs/pages/M-01.md"
       ],
       "acceptance": "Chapters from front matter; en / es switch keeps the chapter; {{directives}} render from tables.",
-      "notes": "Group F.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group F. Module folder is src/modules/manual (not ops-manual); three real chapters en + es.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-049",
@@ -1089,15 +1089,15 @@
         "T-047"
       ],
       "model": "opus-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/legal-memory/",
         "docs/pages/K-10.md"
       ],
       "acceptance": "Every row shows verification state; filter by topic; change log newest first; banner cannot be dismissed while any row is unverified.",
-      "notes": "Group F.",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Group F. Module folder is src/modules/legal (not legal-memory); rides the docs surface; K-11..K-13 sub-pages.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-050",
@@ -1133,7 +1133,7 @@
         "T-049"
       ],
       "model": "fable",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "docs/changelog/00nn-*.md",
@@ -1141,8 +1141,8 @@
         "docs/specs.md"
       ],
       "acceptance": "One numbered changelog per module; build green; no duplicate routes.",
-      "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Seven branches merged (changelog 0010); HubPage combined from mod/design and mod/showcase; sql / specs / tokens regenerated; 50 routes, 49 built.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-051",
@@ -1154,15 +1154,15 @@
         "T-050"
       ],
       "model": "sonnet-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "docs/screenshots/**",
         "docs/qa/responsive-report.md"
       ],
       "acceptance": "Every built route captured at 390 + 1280 (dark + 3840 for key pages); matrix green or issues filed as annotations.",
-      "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Full matrix 50 routes x 7 widths x light / dark run at integration (docs/qa/responsive-report.md); screenshots for every code at 390 + 1280, dark and 3840 for key pages. target-size stays a warning (D-21 frame buttons under zoom).",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-052",
@@ -1174,14 +1174,14 @@
         "T-050"
       ],
       "model": "sonnet-5",
-      "status": "todo",
+      "status": "done",
       "size": "M",
       "deliverables": [
         "src/modules/*/strings.ts"
       ],
       "acceptance": "es side present for every key; legal terms keep the English term of art in parentheses.",
-      "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Every strings.ts has an es side for every key (16 tables, 0 gaps). Still English: the long feature descriptions in src/modules/site/proposalData.ts and the poster-quoted square labels on the board (a native review pass is due). Partially done by design: data, not chrome.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-053",
@@ -1194,15 +1194,15 @@
         "T-052"
       ],
       "model": "fable",
-      "status": "todo",
+      "status": "done",
       "size": "S",
       "deliverables": [
         "docs/changelog/00nn-release-0.1.0.md",
         "package.json"
       ],
       "acceptance": "Live URL answers; counts in the release note; open questions for Justin listed.",
-      "notes": "",
-      "updated_at": "2026-09-18T18:30:00Z"
+      "notes": "Release 0.1.0: package.json 0.1.0, changelog 0010, kanban and statuses synced, Pages deploy checked from the pushed SHA.",
+      "updated_at": "2026-09-18T23:30:00Z"
     },
     {
       "id": "T-054",

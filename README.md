@@ -2,7 +2,7 @@
 
 CTL OS is the operations system for California Tenant Law (caltenantlaw.com): public website, tenant app, staff and attorney dashboards, the eviction game board, ops manual, docs and dev tools in one codebase, live at https://imagine-os.github.io/cal-tenant-law/.
 
-**Status:** foundation 0.1.0 (2026-09-18): scaffold, design system (light / dark, brands `ctl` and `clearsky`, `--scale` bands to 4K), component library with metas, data layer (mock provider, tenant-scoped schema, generated SQL with RLS), actions bus, rules registry, testing hub and dev tools. Feature modules land next. Mock data only; Supabase and Stripe are seams.
+**Version 0.1.0** (Pass 1, 2026-09-18): foundation (scaffold, paper / ink / sky / amber design system light / dark with `--scale` bands to 4K, 54-component library with metas, mock data layer with tenant-scoped schema and generated RLS SQL, actions bus, rules registry, en / es), the testing hub with live role previews, the D-21 canvas and D-22 simulator, the PM viewer (kanban, list, tick timeline, dependency graph, passes), the public site and proposal, the Unlawful Detainer game board (explore, case mode, cost / if-then overlay), seven role homes, the docs viewer, the ops manual with live blocks and the legal memory viewer: 50 routes, 49 built. Mock data only; Supabase, Stripe and Company-OS are seams. Release notes: `docs/changelog/0010-pass-1-integration-and-release-0.1.0.md`.
 
 **Live:** https://imagine-os.github.io/cal-tenant-law/ deploys from `main` by `.github/workflows/pages.yml` once Pages is enabled (Settings > Pages > Source = "GitHub Actions"; the workflow token cannot create the site). The hub at `/#/` opens every surface with demo users per role. Locally `npm run build && npm run preview` serves the same build at `http://localhost:4173/#/`.
 
@@ -18,30 +18,33 @@ npm run specs          # docs/specs.md from the route manifest (after screenshot
 npm run screenshots    # Playwright captures into docs/screenshots (needs a build)
 npm run qa:responsive  # 360 / 390 / 768 / 1280 / 1920 / 2560 / 3840 x light / dark -> docs/qa
 npm run qa:bundle      # bundle sizes -> docs/qa
+npm run plan:check     # validate docs/plan/tasks.json and the kanban mirror
+npm run plan:sync      # regenerate docs/kanban.md task lines from tasks.json
 ```
 
 ## Surfaces
 
 | Surface | Route | Codes | Who |
 | --- | --- | --- | --- |
-| Testing hub | `/#/` | HUB | everyone |
-| Public website + proposal | `/#/site` | P | visitors |
-| Client (tenant) app | `/#/app` (PhoneShell) | C | clients |
-| Front desk | `/#/desk` | F | front desk |
-| Attorneys | `/#/counsel` | L | attorneys |
-| Assistants / paralegals | `/#/assist` | S | paralegals |
-| Owner | `/#/owner` | O | owner |
-| Admin / settings | `/#/admin` | A | owner, super admin |
-| Opposing counsel portal | `/#/opposition` | X | opposing counsel |
-| Game board | `/#/board` | GB | everyone |
-| Project management | `/#/plan` | PM | staff |
-| Ops manual | `/#/manual` | M | staff |
-| Docs & knowledge | `/#/docs` | K | staff |
-| Marketing engine | `/#/marketing` | MK | marketing |
-| Dev tools | `/#/dev/tokens` `components` `specs` `tables` `rules` `routes` `actions` | D | super admin |
+| Testing hub | `/#/` (HUB-01), `/#/no-access` (HUB-02) | HUB | everyone |
+| Public website + proposal | `/#/site` (P-01), `/#/site/proposal` (P-02), `/replaces` (P-03), `/roadmap` (P-04) | P | visitors |
+| Client (tenant) app | `/#/app` (C-01), `/app/binder` (C-02), `/app/learn` (C-03), `/app/pay` (C-04); PhoneShell | C | clients |
+| Front desk | `/#/desk` (F-01) | F | front desk |
+| Attorneys | `/#/counsel` (L-01) | L | attorneys |
+| Assistants / paralegals | `/#/assist` (S-01) | S | paralegals |
+| Owner | `/#/owner` (O-01) | O | owner |
+| Admin / settings | `/#/admin` (A-01), `/#/admin/feedback` (A-05 annotations inbox) | A | owner, super admin |
+| Opposing counsel portal | `/#/opposition` (X-01) | X | opposing counsel |
+| Game board | `/#/board` (GB-01), `/#/board/case/:caseId` (GB-02), `/#/board/overlay` (GB-03) | GB | everyone |
+| Project management | `/#/plan` (PM-01), `/plan/list` (PM-02), `/plan/timeline` (PM-03), `/plan/graph` (PM-04), `/plan/passes` + `/plan/task/:id` (PM-05) | PM | staff |
+| Ops manual | `/#/manual` (M-01), `/manual/:lang/:slug` (M-02), `/manual/decisions` (M-03) | M | staff |
+| Docs & knowledge | `/#/docs` (K-01), `/docs/search` (K-02), `/docs/plan-log` (K-03) | K | staff |
+| Legal memory | `/#/legal` (K-10), `/legal/statutes` (K-11), `/legal/changes` (K-12), `/legal/topics/:slug` (K-13) | K | staff |
+| Marketing engine | `/#/marketing` (MK-01, stub) | MK | marketing |
+| Dev tools | `/#/dev/tokens` `components` `specs` `tables` `rules` `routes` `actions` (D-01..D-20), `/#/dev/canvas` (D-21), `/#/dev/simulator` (D-22) | D | super admin |
 
 Stack: Vite 5 + React 18 + TypeScript strict, HashRouter, CSS tokens, Source Serif 4 + Source Sans 3, mock data in localStorage behind a `DataProvider`, actions bus (`window.__ctl.actions`), en / es everywhere. All demo people are fictional.
 
 ## For agents
 
-Read [`CLAUDE.md`](CLAUDE.md) (rulebook and the exact module contract) then [`docs/README.md`](docs/README.md) (the start-here map: principles, brief, decisions, kanban, build plan, prompts, changelog, page docs, data model, surfaces).
+Read [`CLAUDE.md`](CLAUDE.md) (rulebook and the exact module contract) then [`docs/README.md`](docs/README.md) (the start-here map: principles, brief, decisions, kanban, build plan, prompts, changelog, page docs, data model, surfaces). Every route, action, table and script the system exposes is listed in [`docs/reference/surfaces.md`](docs/reference/surfaces.md).

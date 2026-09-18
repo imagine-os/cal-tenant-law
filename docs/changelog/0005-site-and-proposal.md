@@ -1,3 +1,5 @@
+# 0005 - Public site and proposal P-01..P-04 (T-033..T-036)
+
 version: 0.1.0
 date: 2026-09-18
 prompt: 0001
@@ -67,3 +69,8 @@ No new tables, no new rules, no new DataProvider methods, no new npm scripts, no
 - Prices, the video order, the eighth office and the real attorney names stay unverified (D-025, U-2, U-4, U-5); T-112 in Pass 5 clears them from P-02 and P-03.
 - The header CTA and the booking band are Placeholders until F-10 / F-11 land; the stage picker's store link waits on P-10; the play buttons wait on C-40.
 - Spanish covers every heading, every label and every short body string; the longest feature descriptions in `proposalData.ts` fall back to English until the Spanish fill pass.
+
+
+---
+
+Folded from `docs/changelog/_pending/` into this numbered entry at Pass 1 integration (changelog 0010, release 0.1.0). Where the text above says `_pending`, read this file.
