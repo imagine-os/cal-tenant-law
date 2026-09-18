@@ -9,7 +9,7 @@
 .datatable.is-framed .datatable-foot { padding: 0 10px 4px; }
 .datatable-search { flex: 1 1 220px; max-width: 360px; } .datatable-filter { flex: 0 1 180px; } .datatable-toolbar-extra { margin-left: auto; display: flex; gap: var(--sp-2); flex-wrap: wrap; }
 /* Figma table (598:23508..23564): container white with the two-layer shadow, head 49 tall #552583 with white 10 px labels (12 floor), rows 44 tall with a #D4D4D4 rule, cell colours per column role, status badge #E9FBF7 / #25D9AB r4. */
-.datatable-scroll { overflow: auto; border: 0; border-radius: var(--r-card); background: var(--color-surface-raised); box-shadow: var(--shadow-raised); max-height: 70vh; }
+.datatable-scroll { position: relative; overflow: auto; border: 0; border-radius: var(--r-card); background: var(--color-surface-raised); box-shadow: var(--shadow-raised); max-height: 70vh; }
 .datatable table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: var(--fs-sm); }
 .datatable th, .datatable td { padding: 0 var(--sp-4); height: var(--h-row); border-bottom: 1px solid var(--color-border-row); text-align: left; vertical-align: middle; white-space: nowrap; font-size: var(--fs-sm); }
 .datatable.is-dense th, .datatable.is-dense td { height: 36px; font-size: var(--fs-xs); }

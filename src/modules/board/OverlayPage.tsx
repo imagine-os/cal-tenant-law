@@ -14,7 +14,7 @@ import { GameBoard, type BoardCommand } from '../../components/organism/GameBoar
 import { BoardKey } from '../../components/organism/GameBoard/BoardKey';
 import type { BoardNodeKindEntry, BoardOverlay, BoardPathType } from '../../components/organism/GameBoard/types';
 import { useT } from '../../i18n/I18nProvider';
-import { BOARD, EDGES, NODES, PHASES, nodeById, phaseById } from './boardData';
+import { BOARD, EDGES, NODES, PHASES, nodeById, phaseById, useNodesWithMeta } from './boardData';
 import { PhaseChips, useBoardLabels } from './boardChrome';
 import { IfThenPanel } from './IfThenPanel';
 import { NodeDetail } from './NodeDetail';
@@ -40,6 +40,7 @@ export function OverlayPage() {
   const [hiddenPaths, setHiddenPaths] = useState<BoardPathType[]>([]);
 
   const { rows: nodeMeta } = useTable<BoardNodeMetaRow>('board_node_meta');
+  const nodesWithMeta = useNodesWithMeta(nodeMeta);
   const filled = { cost: nodeMeta.filter((r) => !!r.typical_cost_band).length, deadline: nodeMeta.filter((r) => !!r.deadline_rule).length, total: nodeMeta.length || NODES.length };
 
   const selected = nodeById[selectedId];
@@ -103,7 +104,7 @@ export function OverlayPage() {
 
       <div className="board-split">
         <GameBoard
-          nodes={NODES} edges={EDGES} phases={PHASES}
+          nodes={nodesWithMeta} edges={EDGES} phases={PHASES}
           selectedId={selectedId} onSelect={pick}
           overlay={overlay} hiddenPaths={hiddenPaths}
           focusPhase={focusPhase} fitNonce={fitNonce} command={command}
@@ -123,7 +124,7 @@ export function OverlayPage() {
           <p className="small">{t('board.overlay.explain')}</p>
           <p className="xs faint">{t('board.overlay.filled', filled)}</p>
           <div className="row wrap" style={{ gap: 8 }}>
-            <Placeholder what={t('board.overlay.costNotWired')} plannedIn="T-074 cost model (store SKUs)"><Chip icon="dollar">{t('board.overlay.cost')}: {t('board.overlay.costBadge')}</Chip></Placeholder>
+            <Chip icon="dollar">{t('board.overlay.cost')}: {filled.cost}/{filled.total}</Chip>
             <Placeholder what={t('board.overlay.deadlineNotWired')} plannedIn="T-059 deadline engine (docs/legal)"><Chip icon="clock">{t('board.overlay.deadline')}: {t('board.overlay.deadlineBadge')}</Chip></Placeholder>
           </div>
         </div>

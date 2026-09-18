@@ -296,12 +296,23 @@ export function GameBoard({
                 {p.lines.map((line, i) => <tspan key={i} x={p.cx} dy={i === 0 ? 0 : p.lineH}>{line}</tspan>)}
               </text>
               <circle className="gb-node-actor" data-actor={p.node.actor} cx={p.actor.x} cy={p.actor.y} r={8} />
-              {overlay !== 'none' && (
-                <g data-placeholder={overlay === 'cost' ? L.costNotWired : L.deadlineNotWired}>
-                  <rect className="gb-badge-plate" x={p.badge.x} y={p.badge.y} width={p.badge.w} height={p.badge.h} rx={13} />
-                  <text className="gb-badge-text" x={p.cx} y={p.badge.y + p.badge.h * 0.7} fontSize={13} textAnchor="middle">{overlay === 'cost' ? L.costBadge : L.deadlineBadge}</text>
-                </g>
-              )}
+              {overlay !== 'none' && (() => {
+                // The cost band is real once board_node_meta is filled from the store SKUs (T-074 first half,
+                // RULE-CATALOG-05); the deadline rule is still a marked placeholder (T-059).
+                const filled = overlay === 'cost' ? p.node.typical_cost_band : p.node.deadline_rule;
+                const text = filled ?? (overlay === 'cost' ? L.costBadge : L.deadlineBadge);
+                // The plate grows with a real band ("$900-$1,500") instead of shrinking the type: 13 units is the
+                // floor that still reads at 1280 and scales past 16 px on a TV (P-01). There is room: cells are
+                // 240 wide with a 42 gap, and the badge hangs in the gap under the square.
+                const bw = Math.max(p.badge.w, text.length * 7.8 + 18);
+                return (
+                  <g data-placeholder={filled ? undefined : overlay === 'cost' ? L.costNotWired : L.deadlineNotWired}>
+                    <rect className="gb-badge-plate" x={p.cx - bw / 2} y={p.badge.y} width={bw} height={p.badge.h} rx={13} />
+                    <text className="gb-badge-text" data-filled={filled ? 'true' : undefined} x={p.cx} y={p.badge.y + p.badge.h * 0.7}
+                      fontSize={13} textAnchor="middle">{text}</text>
+                  </g>
+                );
+              })()}
               {isCurrent && (
                 <>
                   <rect className="gb-here-plate" x={p.cx - 74} y={p.y - 44} width={148} height={30} rx={15} />

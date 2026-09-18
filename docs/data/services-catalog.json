@@ -1,0 +1,2974 @@
+{
+  "version": 1,
+  "generated_at": "2026-09-18T20:12:34Z",
+  "source_note": "Reconstructed 2026-09-18 by Fable 5.1 from ~200 web-search result sets (titles, URLs, indexed snippets) of caltenantlaw.com store/category/product pages and the /all-services/ catalog. Direct fetches of caltenantlaw.com, caltenantlaw.company.site (Ecwid Instant Site), web.archive.org and other mirrors are blocked by the egress proxy, so NOTHING here was read from a live page; every price is 'as indexed' with unknown crawl date, and every item is verified:false. Ecwid store id was not discoverable. Product URL pattern: /store/<SKU>-<Title>-p<productId>; categories -c<categoryId>; the same product is re-listed under several category paths (default/, game-board/, legal-kits/, judgment/, appeal/, free-resources/...). Prices from earlier crawls that differ are recorded in price_history. Phase labels come from docs/game-board/nodes.json phases[].label; stage_node_ids from nodes[].id.",
+  "currency": "USD",
+  "categories": [
+    {
+      "id": "schedule-a-consultation",
+      "label": "Schedule a Consultation",
+      "order": 1,
+      "phase": null,
+      "description": "Entry point: initial and follow-up attorney consultations (30 min, phone or Microsoft Teams) plus short evaluation products. Reached from the Initial / Follow-up Consultation forms.",
+      "parent_id": "talk-to-an-attorney",
+      "icon": "phone"
+    },
+    {
+      "id": "talk-to-an-attorney",
+      "label": "Talk to an attorney",
+      "order": 1,
+      "phase": null,
+      "icon": null,
+      "description": "Every paid path starts with a licensed California tenant attorney on the phone. Grouped here by CTL OS; the store lists these as separate categories.",
+      "parent_id": null
+    },
+    {
+      "id": "legal-hotline",
+      "label": "Legal Hotline (existing clients)",
+      "order": 2,
+      "phase": null,
+      "description": "Not an Ecwid product: per-minute phone line run on VoiceStamps Technologies; $60 card deposit per 10-minute block, unused minutes refunded.",
+      "parent_id": "talk-to-an-attorney",
+      "icon": "mic"
+    },
+    {
+      "id": "free-and-self-help",
+      "label": "Free and do-it-yourself",
+      "order": 3,
+      "phase": null,
+      "icon": null,
+      "description": "What costs nothing, and what you can do yourself with the forms and the instructions. Grouped here by CTL OS; the store lists these as separate categories.",
+      "parent_id": null
+    },
+    {
+      "id": "legal-kits",
+      "label": "Legal Kits",
+      "order": 3,
+      "phase": null,
+      "description": "Self-help PDF e-books: forms, step-by-step instructions, strategy, what to expect in court. Delivered as an Adobe PDF download page after payment.",
+      "parent_id": "free-and-self-help",
+      "icon": "book"
+    },
+    {
+      "id": "free-resources",
+      "label": "Free Resources",
+      "order": 4,
+      "phase": null,
+      "description": "$0 downloads: Game Board PDF, Habitability Worksheet, Prejudgment Claim form, UD Form Interrogatories forms, small-claims complaint, temporary relocation agreement.",
+      "parent_id": "free-and-self-help",
+      "icon": "download"
+    },
+    {
+      "id": "game-board",
+      "label": "Game Board Services",
+      "order": 5,
+      "phase": null,
+      "description": "The same paid services re-listed by eviction stage ('legal services organized by the Eviction Game Board - find the right service for each step of the California unlawful detainer process'). Ecwid category c34591035 'Unlawful Detainer Game Board'.",
+      "parent_id": "free-and-self-help",
+      "icon": "gamepad"
+    },
+    {
+      "id": "letters",
+      "label": "Letters to the Landlord",
+      "order": 6,
+      "phase": null,
+      "description": "Pre-litigation demand / negotiation letters drafted by the lawyer (SKU 110-111). Store files them under Schedule a Consultation / Changes to Prepared Paperwork paths.",
+      "parent_id": null,
+      "icon": "mail"
+    },
+    {
+      "id": "motion-to-quash",
+      "label": "Motion to Quash",
+      "order": 7,
+      "phase": "Motion To Quash",
+      "description": "'Challenge defective service or a defective summons before filing your Answer.' Ranges from the initial motion to appellate review (writ of mandate) and removal to federal court. Ecwid c29490094.",
+      "parent_id": null,
+      "icon": "shield"
+    },
+    {
+      "id": "default",
+      "label": "Default",
+      "order": 8,
+      "phase": "Default",
+      "description": "'All aspects of a default, where you have officially lost the case and want to un-lose it': ex parte stay to stop the lockout plus motion for relief from default (your fault) or motion to vacate (clerk's fault).",
+      "parent_id": null,
+      "icon": "alert"
+    },
+    {
+      "id": "discovery",
+      "label": "Discovery",
+      "order": 9,
+      "phase": "Discovery",
+      "icon": null,
+      "description": "Both sides can demand documents and answers. In an eviction discovery closes five days before trial. Grouped here by CTL OS; the store lists ours and theirs as separate categories.",
+      "parent_id": null
+    },
+    {
+      "id": "discovery-by-us",
+      "label": "Discovery - by Us",
+      "order": 9,
+      "phase": "Discovery",
+      "description": "'Your attempt to get information from which to prepare your case for trial': requests for admission, form/special interrogatories, requests for production, meet-and-confer, motions to compel. Ecwid c29490097.",
+      "parent_id": "discovery",
+      "icon": "search"
+    },
+    {
+      "id": "discovery-by-them",
+      "label": "Discovery - by Them / Their Discovery to You",
+      "order": 10,
+      "phase": "Discovery",
+      "description": "'The landlord's attempts to get information from you': responses, objections, opposition to their motion to compel, deposition preparation. Ecwid c3290605.",
+      "parent_id": "discovery",
+      "icon": "question"
+    },
+    {
+      "id": "demurrer",
+      "label": "Demurrer",
+      "order": 11,
+      "phase": "Demurrer",
+      "description": "'Challenge a defective unlawful detainer complaint before filing your Answer.' Demurrers and motions to strike the Complaint or Cross-complaint, replies, oppositions, meet-and-confer. Ecwid c29490099.",
+      "parent_id": null,
+      "icon": "scale"
+    },
+    {
+      "id": "answer",
+      "label": "Answer",
+      "order": 12,
+      "phase": "Demurrer",
+      "description": "'Preparing your Answer to the Complaint, and related paperwork.' Ecwid c29490100.",
+      "parent_id": null,
+      "icon": "file-text"
+    },
+    {
+      "id": "trial-preparation",
+      "label": "Trial Preparation / Heading to Trial",
+      "order": 13,
+      "phase": "TRIAL",
+      "description": "'Get ready for trial with jury instructions and other papers you will need to file, help making your presentation effective, and other trial-related services.' Includes Motion for Summary Judgment and Court Appearance. Ecwid c3290609 / c2707015.",
+      "parent_id": null,
+      "icon": "gavel"
+    },
+    {
+      "id": "settling-and-negotiation",
+      "label": "Settling and Negotiation",
+      "order": 14,
+      "phase": "TRIAL",
+      "description": "'Your negotiation for a settlement, settlement terms, the agreement, and enforcement.' Ecwid c29490104.",
+      "parent_id": null,
+      "icon": "users"
+    },
+    {
+      "id": "judgment",
+      "label": "Judgment",
+      "order": 15,
+      "phase": "TRIAL",
+      "description": "'The judgment in a case, including document preparation and advice' - cost memorandum / attorney-fee motion after a win, motion for new trial after a loss.",
+      "parent_id": null,
+      "icon": "check"
+    },
+    {
+      "id": "appeal",
+      "label": "Appeal",
+      "order": 16,
+      "phase": "APPEAL",
+      "description": "'Appeal of the judgment if your default was improperly taken or the judgment was illegal or improper': appeal package, stays, record augmentation, briefs. Ecwid c3290636.",
+      "parent_id": null,
+      "icon": "timeline"
+    },
+    {
+      "id": "suing-the-landlord",
+      "label": "Suing the Landlord",
+      "order": 17,
+      "phase": "Outcomes",
+      "description": "'Sue your California landlord for damages - security deposit, habitability, harassment, wrongful eviction. Tenant side only.' Small claims, cross-complaint in the eviction, or separate Superior Court suit. Ecwid c29490107 / 'Sue Your Landlord' c3692258.",
+      "parent_id": null,
+      "icon": "megaphone"
+    },
+    {
+      "id": "extra-services",
+      "label": "Extra Services",
+      "order": 18,
+      "phase": null,
+      "description": "Clerical / procedural add-ons: fax/e-filing and process-service arranging, Case Management Conference statement, correcting clerk mistakes.",
+      "parent_id": null,
+      "icon": "layers"
+    },
+    {
+      "id": "changes-to-prepared-paperwork",
+      "label": "Changes to Prepared Paperwork",
+      "order": 19,
+      "phase": null,
+      "description": "'Amendments where paperwork has already been properly prepared by the lawyer, but you want some changes made other than corrections of errors.' No SKU-level item indexed; likely billed via Supplemental Payments.",
+      "parent_id": null,
+      "icon": "edit"
+    },
+    {
+      "id": "miscellaneous-supplemental",
+      "label": "Miscellaneous / Supplemental",
+      "order": 20,
+      "phase": null,
+      "description": "'Supplemental payments, advance posting, and overtime payments. PLEASE DO NOT USE THIS OPTION UNLESS EXPRESSLY INSTRUCTED TO DO SO.' Top-ups for minimum-charge items and hourly overage at $330/hr.",
+      "parent_id": null,
+      "icon": "dollar"
+    },
+    {
+      "id": "judges-gone-wild",
+      "label": "Judges Gone Wild",
+      "order": 21,
+      "phase": null,
+      "description": "Category name seen in store nav; contents not indexed (presumably writs / judicial-misconduct remedies).",
+      "parent_id": null,
+      "icon": "flag"
+    },
+    {
+      "id": "legal-ethics",
+      "label": "Legal Ethics",
+      "order": 22,
+      "phase": null,
+      "description": "Category name seen in store nav (URL slug 'legal-ethics-musical'); contents not indexed.",
+      "parent_id": null,
+      "icon": "star"
+    }
+  ],
+  "services": [
+    {
+      "sku": "101",
+      "title": "101 - Initial Consultation with Attorney",
+      "category_id": "schedule-a-consultation",
+      "stage_node_ids": [
+        "start",
+        "evaluate-service"
+      ],
+      "phase": "START",
+      "price_cents": 16500,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "30-minute consultation with Ken Carlson or an associate attorney, by phone or Microsoft Teams; verbal (email on request).",
+      "what_you_get": "Half hour of attorney advice on your situation, goals and questions from the intake form; a recommendation of the next store item(s). Pay by card or PayPal; scheduling via online system or 951-659-1234.",
+      "prerequisites": "Watch free pre-consultation videos, then submit the Initial Consultation Form (new client) or Follow-up Consultation Form (returning client); the form's thank-you page links to the store product.",
+      "turnaround_note": "Scheduled slot; typically within days.",
+      "source_urls": [
+        "https://caltenantlaw.com/store/101-Initial-Consultation-with-Attorney-p11768166",
+        "https://caltenantlaw.com/game-board/101-Initial-Consultation-with-Attorney-p11768166",
+        "https://caltenantlaw.com/store/101-Initial-Consultation-with-Ken-Carlson-p11768166",
+        "https://caltenantlaw.com/attorney-consultation/",
+        "https://caltenantlaw.com/initial-consultation-form/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "aliases": [
+        "101 - Initial Consultation with Ken Carlson (older title)"
+      ],
+      "deliverable_format": "call",
+      "icon": "phone",
+      "time_expectation": "30 minutes on the phone or Microsoft Teams",
+      "client_inputs": [
+        "Watched the free pre-consultation videos",
+        "Completed Initial Consultation Form (new client) or Follow-up Consultation Form (returning client)"
+      ],
+      "stage_scope": "START"
+    },
+    {
+      "sku": "102",
+      "title": "102 - Follow-up Consultation [A]",
+      "category_id": "schedule-a-consultation",
+      "stage_node_ids": [
+        "new-service-new-motion",
+        "compile-information-for-trial-preparation"
+      ],
+      "phase": null,
+      "price_cents": 16500,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "30-minute follow-up consultation 'where you have followed advice and your landlord has responded by taking some course of action'.",
+      "what_you_get": "Half hour of attorney advice on the next step given the landlord's response and any paperwork submitted.",
+      "prerequisites": "Returning client; submit the Follow-up Consultation Form first.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/paid-legal-services-returning-client/102-Follow-up-Consultation-A-p302194125",
+        "https://caltenantlaw.com/default/102-Follow-up-Consultation-p302194125",
+        "https://caltenantlaw.com/follow-up-consultation-form/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "call",
+      "icon": "phone",
+      "time_expectation": "30 minutes on the phone or Microsoft Teams",
+      "client_inputs": [
+        "Completed Follow-up Consultation Form",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "START · Discovery"
+    },
+    {
+      "sku": null,
+      "title": "Quick Question",
+      "category_id": "schedule-a-consultation",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 5000,
+      "price_note": "$50.00 shown in category listing snippet; SKU not indexed",
+      "unit": "flat",
+      "deliverable": "Short attorney answer to one or two questions.",
+      "what_you_get": "Brief answer (format not indexed).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/schedule-a-consultation/110-Simple-Letter-to-Landlord-p648039754"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "call",
+      "icon": "phone",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": null,
+      "title": "I just got this paperwork. Now what?",
+      "category_id": "schedule-a-consultation",
+      "stage_node_ids": [
+        "summons-and-complaint-filed",
+        "evaluate-service"
+      ],
+      "phase": "START",
+      "price_cents": 10000,
+      "price_note": "$100.00 shown in category listing snippet; SKU not indexed",
+      "unit": "flat",
+      "deliverable": "Attorney review of eviction/court paperwork you just received, with next-step advice.",
+      "what_you_get": "Review plus advice (format not indexed).",
+      "prerequisites": "Watch free pre-consultation videos, then submit the Initial Consultation Form (new client) or Follow-up Consultation Form (returning client); the form's thank-you page links to the store product.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/schedule-a-consultation/110-Simple-Letter-to-Landlord-p648039754"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "call",
+      "icon": "phone",
+      "time_expectation": null,
+      "client_inputs": [
+        "Watched the free pre-consultation videos",
+        "Completed Initial Consultation Form (new client) or Follow-up Consultation Form (returning client)"
+      ],
+      "stage_scope": "START"
+    },
+    {
+      "sku": null,
+      "title": "Situation Evaluation",
+      "category_id": "schedule-a-consultation",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 20000,
+      "price_note": "$200.00 shown in category listing snippet; SKU not indexed",
+      "unit": "flat",
+      "deliverable": "Longer attorney evaluation of your tenancy situation (pre-litigation).",
+      "what_you_get": "Evaluation and strategy (format not indexed).",
+      "prerequisites": "Watch free pre-consultation videos, then submit the Initial Consultation Form (new client) or Follow-up Consultation Form (returning client); the form's thank-you page links to the store product.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/schedule-a-consultation/110-Simple-Letter-to-Landlord-p648039754"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "call",
+      "icon": "phone",
+      "time_expectation": null,
+      "client_inputs": [
+        "Watched the free pre-consultation videos",
+        "Completed Initial Consultation Form (new client) or Follow-up Consultation Form (returning client)"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": null,
+      "title": "Case Evaluation",
+      "category_id": "schedule-a-consultation",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 40000,
+      "price_note": "$400.00 shown in category listing snippet; SKU not indexed",
+      "unit": "flat",
+      "deliverable": "In-depth attorney evaluation of a pending case (facts, paperwork, options).",
+      "what_you_get": "Written or verbal case evaluation (format not indexed).",
+      "prerequisites": "Watch free pre-consultation videos, then submit the Initial Consultation Form (new client) or Follow-up Consultation Form (returning client); the form's thank-you page links to the store product.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/schedule-a-consultation/110-Simple-Letter-to-Landlord-p648039754"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "call",
+      "icon": "phone",
+      "time_expectation": null,
+      "client_inputs": [
+        "Watched the free pre-consultation videos",
+        "Completed Initial Consultation Form (new client) or Follow-up Consultation Form (returning client)"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "HOTLINE",
+      "title": "Legal Hotline - For Existing Clients Only",
+      "category_id": "legal-hotline",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 6000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "per_10min",
+      "deliverable": "Reserved phone call with Ken Carlson through VoiceStamps Technologies; 'only where you have an emergency that can't wait for a consultation or if you only have a quick question or two'.",
+      "what_you_get": "$60 card deposit covers up to 10 minutes; another $60 auto-accepted per new 10-minute block without interrupting the call; only minutes used are charged, balance refunded to card 'in a few days'. Deposits in $10 increments ($100 = 20 minutes). Billing 'completely separate from the regular consultation'. Tech support VoiceStamps 469-272-4688.",
+      "prerequisites": "Existing clients only.",
+      "turnaround_note": "Reserve a call time; immediate.",
+      "source_urls": [
+        "https://caltenantlaw.com/hotline",
+        "https://caltenantlaw.com/Hotline.htm"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "call",
+      "icon": "phone",
+      "time_expectation": "10 minutes per block",
+      "client_inputs": [
+        "An open matter with the firm"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "040",
+      "title": "040 - Basic Eviction Defense Kit",
+      "category_id": "legal-kits",
+      "stage_node_ids": [
+        "answer-to-complaint",
+        "evaluate-complaint-for-demurrer"
+      ],
+      "phase": "Demurrer",
+      "price_cents": 2000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "43-page PDF e-book: 'information on almost every defense to eviction' and how to fill out the Answer form step by step.",
+      "what_you_get": "Legal forms, step-by-step instructions, strategy, preparation, what to expect in court. Immediate redirect to a download page; Adobe Acrobat PDF.",
+      "prerequisites": "None.",
+      "turnaround_note": "Instant download.",
+      "source_urls": [
+        "https://caltenantlaw.com/store/040---Basic-Eviction-Defense-Kit-p11768220",
+        "https://caltenantlaw.com/default/040-Basic-Eviction-Defense-Kit-p11768220",
+        "https://caltenantlaw.com/legal-kits/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "kit",
+      "icon": "book",
+      "time_expectation": "Instant download",
+      "client_inputs": [],
+      "stage_scope": "Demurrer"
+    },
+    {
+      "sku": "041",
+      "title": "041 - Eviction Trial Kit",
+      "category_id": "legal-kits",
+      "stage_node_ids": [
+        "prepare-jury-trial-papers",
+        "trial"
+      ],
+      "phase": "TRIAL",
+      "price_cents": 10000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "PDF kit that 'prepares you to represent yourself at a jury trial'; 'hundreds of dollars worth of advice'.",
+      "what_you_get": "Trial strategy, preparation, courtroom expectations. Immediate redirect to a download page; Adobe Acrobat PDF.",
+      "prerequisites": "None.",
+      "turnaround_note": "Instant download.",
+      "source_urls": [
+        "https://caltenantlaw.com/store/041-Eviction-Trial-Kit-p11768327",
+        "https://caltenantlaw.com/legal-kits/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "kit",
+      "icon": "book",
+      "time_expectation": "Instant download",
+      "client_inputs": [],
+      "stage_scope": "TRIAL"
+    },
+    {
+      "sku": "042",
+      "title": "042 - Deluxe Eviction Defense Kit",
+      "category_id": "legal-kits",
+      "stage_node_ids": [
+        "answer-to-complaint",
+        "prepare-jury-trial-papers"
+      ],
+      "phase": "Demurrer",
+      "price_cents": 12000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "74-page PDF e-book combining the Basic Eviction Defense Kit (040) and the Eviction Trial Kit (041); also explains using the Prejudgment Claim (010) to add yourself to the lawsuit.",
+      "what_you_get": "Immediate redirect to a download page; Adobe Acrobat PDF.",
+      "prerequisites": "None.",
+      "turnaround_note": "Instant download.",
+      "source_urls": [
+        "https://caltenantlaw.com/answer/042-Deluxe-Eviction-Defense-Kit-p11768231",
+        "https://caltenantlaw.com/paid-legal-services-returning-client/042-Deluxe-Eviction-Defense-Kit-p11768231"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "kit",
+      "icon": "book",
+      "time_expectation": "Instant download",
+      "client_inputs": [],
+      "stage_scope": "Demurrer · TRIAL"
+    },
+    {
+      "sku": "045",
+      "title": "045 - Security Deposit Recovery Kit",
+      "category_id": "legal-kits",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 5000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "PDF kit: small-claims form, detailed fill-out instructions, explanation of security-deposit law, how to present the case and handle common problems; 'goal is to get 3 times the amount of the deposit'.",
+      "what_you_get": "Immediate redirect to a download page; Adobe Acrobat PDF.",
+      "prerequisites": "None.",
+      "turnaround_note": "Instant download.",
+      "source_urls": [
+        "https://caltenantlaw.com/store/045-Security-Deposit-Recovery-Kit-p11768374",
+        "https://caltenantlaw.com/legal-kits/045-Security-Deposit-Recovery-Kit-p11768374"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "kit",
+      "icon": "book",
+      "time_expectation": "Instant download",
+      "client_inputs": [],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "050",
+      "title": "050 - Break Your Lease Kit",
+      "category_id": "legal-kits",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 10000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "PDF kit on legally terminating a lease (Civil Code 1942 route, 30-day notice when month-to-month), with forms, instructions and strategy.",
+      "what_you_get": "Immediate redirect to a download page; Adobe Acrobat PDF.",
+      "prerequisites": "None.",
+      "turnaround_note": "Instant download.",
+      "source_urls": [
+        "https://caltenantlaw.com/legal-kits/050-Break-Your-Lease-Kit-p46357924",
+        "https://caltenantlaw.com/store/050-Break-Your-Lease-Kit-p46357924",
+        "https://caltenantlaw.com/breaking-your-lease/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "kit",
+      "icon": "book",
+      "time_expectation": "Instant download",
+      "client_inputs": [],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "001",
+      "title": "001 - Habitability Worksheet",
+      "category_id": "free-resources",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 0,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "free",
+      "deliverable": "Worksheet to inventory habitability defects (repairs/health-law issues).",
+      "what_you_get": "Free PDF download.",
+      "prerequisites": "None.",
+      "turnaround_note": "Instant.",
+      "source_urls": [
+        "https://caltenantlaw.com/free-resources/001-Habitability-Worksheet-p11871283",
+        "https://caltenantlaw.com/free-legal-pre-consultation-videos-for-tenants/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "pdf",
+      "icon": "download",
+      "time_expectation": "Instant",
+      "client_inputs": [],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "002",
+      "title": "002 - Eviction \"Game Board\"",
+      "category_id": "free-resources",
+      "stage_node_ids": [
+        "start"
+      ],
+      "phase": "START",
+      "price_cents": 0,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "free",
+      "deliverable": "The Unlawful Detainer Game Board flow chart ('take the awful out of Unlawful Detainer'); PDF free, or buy a poster that is mailed to you.",
+      "what_you_get": "Free PDF download; mailed poster at a price not indexed.",
+      "prerequisites": "None.",
+      "turnaround_note": "PDF instant; poster by mail.",
+      "source_urls": [
+        "https://caltenantlaw.com/store/002-Eviction-Game-Board-p11871312",
+        "https://caltenantlaw.com/unlawful-detainer/game-board",
+        "https://caltenantlaw.com/game-board/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "variants": [
+        {
+          "label": "Printed poster, mailed",
+          "price_cents": null,
+          "price_note": "poster price not indexed"
+        }
+      ],
+      "deliverable_format": "pdf",
+      "icon": "download",
+      "time_expectation": "PDF instant; poster by mail",
+      "client_inputs": [],
+      "stage_scope": "START"
+    },
+    {
+      "sku": "010",
+      "title": "010 - Prejudgment Claim of Right to Possession",
+      "category_id": "free-resources",
+      "stage_node_ids": [
+        "unnamed-tenants-prejudgement-claim"
+      ],
+      "phase": "START",
+      "price_cents": 0,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "free",
+      "deliverable": "'Step one if you're not named in the Complaint but want to avoid being evicted': the PJCRP form used by unnamed occupants to join the case.",
+      "what_you_get": "Free form download (no instructions; the Deluxe kit explains how to use it).",
+      "prerequisites": "None.",
+      "turnaround_note": "Instant.",
+      "source_urls": [
+        "https://caltenantlaw.com/store/010-Prejudgment-Claim-of-Right-to-Possession-p11871323",
+        "https://caltenantlaw.com/answer/010-Prejudgment-Claim-of-Right-to-Possession-p11871323"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "pdf",
+      "icon": "download",
+      "time_expectation": "Instant",
+      "client_inputs": [],
+      "stage_scope": "START"
+    },
+    {
+      "sku": "015",
+      "title": "015 - Unlawful Detainer Form Interrogatories",
+      "category_id": "free-resources",
+      "stage_node_ids": [
+        "discovery-requests"
+      ],
+      "phase": "Discovery",
+      "price_cents": null,
+      "price_note": "price not indexed; 0xx series and 'Free Resources' placement imply $0",
+      "unit": "free",
+      "deliverable": "Judicial Council UD form interrogatories (blank form).",
+      "what_you_get": "Form download; 'publicly available forms provided for convenience for free, without instructions'.",
+      "prerequisites": "None.",
+      "turnaround_note": "Instant.",
+      "source_urls": [
+        "https://caltenantlaw.com/discovery-by-us/015-Unlawful-Detainer-Form-Interrogatories-p576981881",
+        "https://caltenantlaw.com/legal-kits/015-Unlawful-Detainer-Form-Interrogatories-p576981881"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "pdf",
+      "icon": "download",
+      "time_expectation": "Instant",
+      "client_inputs": [],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "021",
+      "title": "021 - UD Form Interrogatories",
+      "category_id": "free-resources",
+      "stage_node_ids": [
+        "discovery-requests"
+      ],
+      "phase": "Discovery",
+      "price_cents": null,
+      "price_note": "price not indexed; 0xx series implies $0",
+      "unit": "free",
+      "deliverable": "UD form interrogatories (blank form; appears to duplicate/precede 015).",
+      "what_you_get": "Form download.",
+      "prerequisites": "None.",
+      "turnaround_note": "Instant.",
+      "source_urls": [
+        "https://caltenantlaw.com/legal-kits/021-UD-Form-Interrogatories-p11871328"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "pdf",
+      "icon": "download",
+      "time_expectation": "Instant",
+      "client_inputs": [],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "065",
+      "title": "065 - Fax filing, E-filing, and Process Service arranging",
+      "category_id": "extra-services",
+      "stage_node_ids": [
+        "summons-and-complaint-filed"
+      ],
+      "phase": null,
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Office arranges court fax/e-filing of prepared paperwork and process service on the landlord's lawyer.",
+      "what_you_get": "Filing and service handled for you; court/vendor fees presumably extra.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/trial-preparation/065-Fax-filing-E-filing-and-Process-Service-arranging-p108871140",
+        "https://caltenantlaw.com/discovery-by-us/065-Fax-filing-E-filing-and-Process-Service-arranging-p108871140"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney"
+      ],
+      "stage_scope": "START"
+    },
+    {
+      "sku": "080",
+      "title": "080 - CMC Statement",
+      "category_id": "extra-services",
+      "stage_node_ids": [
+        "trial-set-by-clerk"
+      ],
+      "phase": "TRIAL",
+      "price_cents": 10000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Case Management Conference statement ('the judge asks how things are going on the case and when it might be ready for trial').",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/schedule-a-consultation/080-CMC-Statement-p238473332",
+        "https://caltenantlaw.com/settling-and-negotiation/80-CMC-Statement-p238473332",
+        "https://caltenantlaw.com/appeal/080-CMC-Statement-p238473332"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "TRIAL"
+    },
+    {
+      "sku": "200",
+      "title": "200 - Trying to correct the Court Clerk's Mistakes",
+      "category_id": "default",
+      "stage_node_ids": [
+        "default-entered-by-clerk",
+        "landlord-misleads-court-clerk"
+      ],
+      "phase": "Default",
+      "price_cents": 20000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Attorney phone call to the clerk supervisor / court manager to undo a clerk error (premature default, refused paperwork, trial set too soon, miscalendared hearing, wrong courtroom).",
+      "what_you_get": "A lawyer's call; 'about half the time' it works. 'If it works, you save $400; if not, you have $100 more cost' vs. the $500 paperwork route (201).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "Same day / next court day.",
+      "source_urls": [
+        "https://caltenantlaw.com/store/200-Trying-to-correct-the-Court-Clerks-Mistakes-p11801488",
+        "https://caltenantlaw.com/default/200-Trying-to-correct-the-Court-Clerks-Mistakes-p11801488"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": "Same day / next court day",
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Default"
+    },
+    {
+      "sku": "110",
+      "title": "110 - Simple Letter to Landlord",
+      "category_id": "letters",
+      "stage_node_ids": [
+        "eviction-notice-or-lease-ends"
+      ],
+      "phase": "START",
+      "price_cents": 30000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Attorney-drafted simple demand/notice letter to the landlord.",
+      "what_you_get": "Letter as PDF for you to send.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/legal-kits/110-Simple-Letter-to-Landlord-p648039754",
+        "https://caltenantlaw.com/changes-to-prepared-paperwork/110-Simple-Letter-to-Landlord-p648039754"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "letter",
+      "icon": "mail",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the notice that was served on you"
+      ],
+      "stage_scope": "START"
+    },
+    {
+      "sku": "111",
+      "title": "111 - Complex Letter to the Landlord",
+      "category_id": "letters",
+      "stage_node_ids": [
+        "eviction-notice-or-lease-ends"
+      ],
+      "phase": "START",
+      "price_cents": 60000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Attorney-drafted complex letter to the landlord (multiple issues / negotiation).",
+      "what_you_get": "Letter as PDF for you to send.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/game-board/111-Complex-Letter-to-the-Landlord-p510313990"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "letter",
+      "icon": "mail",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the notice that was served on you"
+      ],
+      "stage_scope": "START"
+    },
+    {
+      "sku": "150",
+      "title": "150 - Normal Motion to Quash",
+      "category_id": "motion-to-quash",
+      "stage_node_ids": [
+        "service-bad-file-motion-to-quash",
+        "motion-to-quash-hearing"
+      ],
+      "phase": "Motion To Quash",
+      "price_cents": 25000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "'The normal motion to quash, based upon the physical service of the summons and complaint.' Challenges jurisdiction for bad service; you 'submit on the papers' and do not attend.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065). Buys time; if granted the landlord must re-serve.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step. File within ~5-10 days of service.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/paid-legal-services-returning-client/150-Normal-Motion-to-Quash-p11801558",
+        "https://caltenantlaw.com/store/150-Motion-to-Quash-Service-of-Summons-p11801558"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "aliases": [
+        "150 - Motion to Quash Service of Summons (older title)"
+      ],
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Motion To Quash"
+    },
+    {
+      "sku": "151",
+      "title": "151 - Delta Motion to Quash",
+      "category_id": "motion-to-quash",
+      "stage_node_ids": [
+        "service-bad-file-motion-to-quash"
+      ],
+      "phase": "Motion To Quash",
+      "price_cents": 35000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "'Even if properly served' - attacks technical defects in the Complaint so the 5-day UD summons cannot be used; 'requires substantially more review and research than a normal motion'. (Note: Stancil v. Superior Court (2021) limited this tactic.)",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/motion-to-quash/151-Delta-Motion-to-Quash-p510301822",
+        "https://caltenantlaw.com/store/151-Delta-Motion-to-Quash-p510301822"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": "5 days",
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Motion To Quash"
+    },
+    {
+      "sku": "155",
+      "title": "155 - Removal to Federal Court",
+      "category_id": "motion-to-quash",
+      "stage_node_ids": [
+        "foreclosure-tenants-remove-to-federal-court",
+        "fed-ct-considers-removal"
+      ],
+      "phase": "Removal to Federal Court / Petition",
+      "price_cents": 60000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Notice of Removal to the Federal District Court, 'usually done right after the motion to quash phase'; stops the eviction until remand ('at least 45 days, perhaps months').",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065). Requires filing in the federal courthouse plus a copy in the eviction case.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/Removal-to-Federal-Court-p113392427",
+        "https://caltenantlaw.com/motion-to-quash/155-Removal-to-Federal-Court-p113392427"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": "buys about 45 days",
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)",
+        "Copy of the notice that was served on you"
+      ],
+      "stage_scope": "Removal to Federal Court / Petition"
+    },
+    {
+      "sku": "160",
+      "title": "160 - Petition for Writ of Mandate [Quash-Limited]",
+      "category_id": "motion-to-quash",
+      "stage_node_ids": [
+        "motion-to-quash-denied",
+        "petition-for-writ-of-mandate"
+      ],
+      "phase": "Removal to Federal Court / Petition",
+      "price_cents": 60000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "'Mini-appeal' to the Appellate Division after a denied motion to quash in a limited civil case (uses the convenient limited-case writ form); stays the action and extends time to respond.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/motion-to-quash/160-Petition-for-Writ-of-Mandate-Quash-Limited-p369056025"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Motion To Quash · Removal to Federal Court / Petition"
+    },
+    {
+      "sku": "161",
+      "title": "161 - Reply to Opposition to Petition for Writ of Mandate",
+      "category_id": "motion-to-quash",
+      "stage_node_ids": [
+        "petition-for-writ-of-mandate",
+        "writ-of-mandate-decision"
+      ],
+      "phase": "Removal to Federal Court / Petition",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Reply brief to the landlord's opposition to the writ petition.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 160/170.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/free-resources/161-Reply-to-Opposition-to-Petition-for-Writ-of-Mandate-p11801630"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 160 or 170 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Removal to Federal Court / Petition"
+    },
+    {
+      "sku": "170",
+      "title": "170 - Petition for Writ of Mandate [Quash - Unlimited]",
+      "category_id": "motion-to-quash",
+      "stage_node_ids": [
+        "motion-to-quash-denied",
+        "petition-for-writ-of-mandate"
+      ],
+      "phase": "Removal to Federal Court / Petition",
+      "price_cents": 90000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Writ petition to the District Court of Appeal for unlimited cases, 'which cannot use the convenient form designed for limited case writs, and involves substantially more work'.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/170-Petition-for-Writ-of-Mandate-Quash-Unlimited-p11801568",
+        "https://caltenantlaw.com/judgment/170-Petition-for-Writ-of-Mandate-Quash-Unlimited-p11801568"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Motion To Quash · Removal to Federal Court / Petition"
+    },
+    {
+      "sku": "201",
+      "title": "201 - Default Relief motion and Stay",
+      "category_id": "default",
+      "stage_node_ids": [
+        "ex-parte-stay-application",
+        "motion-to-vacate",
+        "motion-for-relief-from-default",
+        "ex-parte-and-motion-hearings"
+      ],
+      "phase": "Default",
+      "price_cents": 50000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Package: ex parte stay (stop the lockout) plus either a motion for relief from default (your fault) or motion to vacate (clerk's fault). For when default/judgment/writ have issued and the Sheriff has posted.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065). 'You can un-lose, stop the lockout, and put the case back on track, but it isn't cheap.'",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "Urgent; days.",
+      "source_urls": [
+        "https://caltenantlaw.com/paid-legal-services-returning-client/201-Default-Relief-Package-p12477142",
+        "https://caltenantlaw.com/legal-kits/201-Default-Relief-motion-and-Stay-p12477142"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "aliases": [
+        "201 - Default Relief Package (older title)"
+      ],
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": "Urgent; days",
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Default"
+    },
+    {
+      "sku": "205",
+      "title": "205 - Ex Parte Application for Stay and Shortening Time",
+      "category_id": "default",
+      "stage_node_ids": [
+        "ex-parte-stay-application",
+        "ex-parte-and-motion-hearings"
+      ],
+      "phase": "Default",
+      "price_cents": 17500,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "minimum",
+      "deliverable": "Stand-alone ex parte 'hold-everything order' staying the Sheriff's lockout and shortening time so the relief/vacate motion is heard quickly.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065). $175 is the minimum charge.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "Urgent; same/next day.",
+      "source_urls": [
+        "https://caltenantlaw.com/store/205-Ex-Parte-Application-for-Stay-and-Shortening-Time-p11801849",
+        "https://caltenantlaw.com/paid-legal-services-returning-client/205-Ex-Parte-Application-for-Stay-and-Shortening-Time-p11801849"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": "Urgent; same/next day",
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Default"
+    },
+    {
+      "sku": "206",
+      "title": "206 - Motion for Relief from Default",
+      "category_id": "default",
+      "stage_node_ids": [
+        "motion-for-relief-from-default"
+      ],
+      "phase": "Default",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "minimum",
+      "deliverable": "'I goofed up, but for a valid reason' - CCP 473(b) surprise/inadvertence/excusable neglect motion; 'usually requires including the papers you would have filed (motion to quash or answer), paid for and provided separately'.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/default/206-Motion-for-Relief-from-Default-p11801837"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Default"
+    },
+    {
+      "sku": "207",
+      "title": "207 - Motion to Vacate - minimum charge",
+      "category_id": "default",
+      "stage_node_ids": [
+        "motion-to-vacate"
+      ],
+      "phase": "Default",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "minimum",
+      "deliverable": "Motion to vacate a default/judgment entered by clerical or judicial error (not your fault).",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/default/207-Motion-to-Vacate-minimum-charge-p11801843"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Default"
+    },
+    {
+      "sku": "250",
+      "title": "250 - Discovery: Trio Package",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "discovery-requests"
+      ],
+      "phase": "Discovery",
+      "price_cents": 60000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Requests for Admission + General Form Interrogatories (incl. 17.1) + Requests for Production, 'the most cost-effective discovery'.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065). Tailored to your situation; you serve them on the landlord's lawyer.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/251-Discovery-Requests-for-Admission-and-Follow-up-General-Form-Interrogatories-p11801739",
+        "https://caltenantlaw.com/legal-kits/The-Basic-Discovery-Package-c3290603"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "251",
+      "title": "251 - Discovery: Requests for Admission and Follow-up General Form Interrogatories",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "discovery-requests"
+      ],
+      "phase": "Discovery",
+      "price_cents": 40000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Tailored requests for admission plus the general form interrogatories whose 17.1 demands facts, witnesses and documents behind each denial.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/251-Discovery-Requests-for-Admission-and-Follow-up-General-Form-Interrogatories-p11801739"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "252",
+      "title": "252 - Discovery: Requests for Production",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "discovery-requests"
+      ],
+      "phase": "Discovery",
+      "price_cents": 20000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Demand for the landlord's ledger, communications, contract papers, repair receipts and evidence supporting denials.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/252-Discovery-Requests-for-Production-p11801686",
+        "https://caltenantlaw.com/discovery-by-us/252-Request-for-Production-p367798275"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "aliases": [
+        "252 - Request for Production"
+      ],
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "253",
+      "title": "253 - Discovery: UD Form Interrogatories",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "discovery-requests"
+      ],
+      "phase": "Discovery",
+      "price_cents": 10000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Prepared Judicial Council UD form interrogatories (reasons for eviction, money paid/credited, repairs, habitability).",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/253-Discovery-UD-Form-Interrogatories-p11801757"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "254",
+      "title": "254 - Discovery: Special Interrogatories",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "discovery-requests"
+      ],
+      "phase": "Discovery",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Custom-written interrogatories for your case.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/254-Discovery-Special-Interrogatories-p11801769"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "270",
+      "title": "270 - Reviewing and Advising on Discovery",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "good-responses",
+        "no-response-or-mostly-objections"
+      ],
+      "phase": "Discovery",
+      "price_cents": 30000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "'2 hours of reviewing the discovery sent, responses received, and what needs to be done as a next step.' Excludes drafting a meet-and-confer letter/call and any motion to compel.",
+      "what_you_get": "Attorney review and advice; 'if less is needed, the balance will be applied to further work on the case, or refunded'.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/discovery-by-us/270-Reviewing-and-Advising-on-Discovery-p11801935",
+        "https://caltenantlaw.com/default/270-Reviewing-and-Advising-on-Discovery-p11801935"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "review",
+      "icon": "eye",
+      "time_expectation": "2 hours",
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "280",
+      "title": "280 - Discovery: Meet and Confer Letter - Evasive Responses",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "meet-and-confer-attempt"
+      ],
+      "phase": "Discovery",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Statutorily required meet-and-confer letter demanding further responses before a motion to compel.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/default/280-Discovery-Meet-and-Confer-Letter-Evasive-Responses-p11801776"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "290",
+      "title": "290 - Discovery: Motion to Compel - No Response Received",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "motion-to-compel-and-postpone-trial",
+        "motion-to-compel-hearing"
+      ],
+      "phase": "Discovery",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Motion to compel when the landlord served no responses at all (simpler than 316).",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/schedule-a-consultation/290-Discovery-Motion-to-Compel-No-Response-Received-p11801798"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "296",
+      "title": "296 - Discovery: Our Reply to their Opposition to our Motion to Compel - minimum charge",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "motion-to-compel-hearing",
+        "opposition-to-motion-to-compel"
+      ],
+      "phase": "Discovery",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "minimum",
+      "deliverable": "Reply brief supporting our motion to compel.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 290/316.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/appeal/296-Discovery-Our-Reply-to-their-Opposition-to-our-Motion-to-Compel-minimum-charge-p11801813"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 290 or 316 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "299",
+      "title": "299 - Discovery: Ex Parte Application to Continue the Trial and advance Motion to Compel",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "motion-to-compel-and-postpone-trial",
+        "granted-trial-postponed-more-responses"
+      ],
+      "phase": "Discovery",
+      "price_cents": 20000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Ex parte application to postpone the trial date so the motion to compel can be heard first.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/legal-kits/299-Discovery-Ex-Parte-Application-to-Continue-the-Trial-and-advance-Motion-to-Compel-p11801814"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "316",
+      "title": "316 - Motion to Compel - Objections and Evasive Responses - minimum charge",
+      "category_id": "discovery-by-us",
+      "stage_node_ids": [
+        "motion-to-compel-and-postpone-trial",
+        "motion-to-compel-hearing"
+      ],
+      "phase": "Discovery",
+      "price_cents": 80000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "minimum",
+      "deliverable": "Motion to compel further responses with the required 'Separate Statement' for every question/response/reason; 'to compel admissions and production both would be $1600'.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step. Meet-and-confer (280) first.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/trial-preparation/316-Motion-to-Compel-Objections-and-Evasive-Responses-minimum-charge-p108788396"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)",
+        "The discovery responses you received"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "300",
+      "title": "300 - Discovery: Responses to their Discovery",
+      "category_id": "discovery-by-them",
+      "stage_node_ids": [
+        "discovery-requests"
+      ],
+      "phase": "Discovery",
+      "price_cents": 40000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Responses to the landlord's discovery 'in proper format, under oath': evaluate each question, formulate objections, gather your information, organize and write the responses.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065). You sign and serve.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "Statutory response deadline (5 days in UD).",
+      "source_urls": [
+        "https://caltenantlaw.com/paid-legal-services-returning-client/300-Discovery-Responses-to-their-Discovery-p11801780"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": "5 days",
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "311",
+      "title": "311 - Discovery: Our Response to their Meet and Confer letter",
+      "category_id": "discovery-by-them",
+      "stage_node_ids": [
+        "meet-and-confer-attempt"
+      ],
+      "phase": "Discovery",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Reply to the landlord's meet-and-confer letter about your responses.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/paid-legal-services-returning-client/311-Discovery-Our-Response-to-their-Meet-and-Confer-letter-p11801786"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "315",
+      "title": "315 - Discovery: Opposition to their Motion to Compel",
+      "category_id": "discovery-by-them",
+      "stage_node_ids": [
+        "opposition-to-motion-to-compel",
+        "motion-to-compel-hearing"
+      ],
+      "phase": "Discovery",
+      "price_cents": 40000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Opposition to the landlord's motion to compel your further responses.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/discovery-by-them/316-Motion-to-Compel-Objections-and-Evasive-Responses-p108788396"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": null,
+      "title": "Deposition Preparation",
+      "category_id": "discovery-by-them",
+      "stage_node_ids": [
+        "discovery-requests"
+      ],
+      "phase": "Discovery",
+      "price_cents": null,
+      "price_note": "listed by name only; SKU and price not indexed",
+      "unit": "flat",
+      "deliverable": "'Special preparation to help you be comfortable with the process and not be intimidated' if the landlord takes your deposition.",
+      "what_you_get": "Coaching session (format not indexed).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/changes-to-prepared-paperwork/Their-Discovery-to-You-c3290605",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Discovery"
+    },
+    {
+      "sku": "370",
+      "title": "370 - Demurrer to the Complaint",
+      "category_id": "demurrer",
+      "stage_node_ids": [
+        "evaluate-complaint-for-demurrer",
+        "demurrer",
+        "demurrer-hearing"
+      ],
+      "phase": "Demurrer",
+      "price_cents": 50000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Demurrer attacking the Complaint as an improper accusation (vs. an Answer denying it). 'For a $500 investment, you can get about 6 weeks more, so most tenants agree to do that.'",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065). If sustained, landlord must amend or case is dismissed.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step. Must be filed within the 5-day response window.",
+      "turnaround_note": "Hearing set 'at least a month away'; buys ~5-6 weeks.",
+      "source_urls": [
+        "https://caltenantlaw.com/default/370-Demurrer-to-the-Complaint-p11801643",
+        "https://caltenantlaw.com/demurrer/370-Demurrer-to-the-Complaint-p11801643",
+        "https://caltenantlaw.com/free-resources/370-Demurrer-to-the-Complaint-p11801643"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": "buys about 5-6 weeks",
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Demurrer"
+    },
+    {
+      "sku": "373",
+      "title": "373 - Reply to Opposition to Demurrer",
+      "category_id": "demurrer",
+      "stage_node_ids": [
+        "our-reply-to-opposition",
+        "demurrer-hearing"
+      ],
+      "phase": "Demurrer",
+      "price_cents": 30000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Reply brief to the landlord's opposition to the demurrer.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 370.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/demurrer",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 370 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Demurrer"
+    },
+    {
+      "sku": "374",
+      "title": "374 - Opposition to Shortening Time for Demurrer",
+      "category_id": "demurrer",
+      "stage_node_ids": [
+        "ex-parte-app-to-shorten-time",
+        "our-opposition-to-ex-parte-app",
+        "ex-parte-hearing"
+      ],
+      "phase": "Demurrer",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Opposition to the landlord's ex parte application to shorten time on the demurrer hearing.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 370.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/legal-kits/374-Opposition-to-Shortening-Time-for-Demurrer-p11801652",
+        "https://caltenantlaw.com/demurrer/374-Opposition-to-Shortening-Time-for-Demurrer-p11801652"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 370 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Demurrer"
+    },
+    {
+      "sku": "376",
+      "title": "376 - Demurrer Meet and Confer",
+      "category_id": "demurrer",
+      "stage_node_ids": [
+        "demurrer"
+      ],
+      "phase": "Demurrer",
+      "price_cents": 30000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "'Comply with the legal requirement to meet and confer by reviewing opposition letters and writing a response' (CCP 430.41).",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "With 370.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/376-Demurrer-Meet-and-Confer-p233571672",
+        "https://caltenantlaw.com/miscellaneous-supplemental/376-Demurrer-Meet-and-Confer-p233571672"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 370 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Demurrer"
+    },
+    {
+      "sku": "377",
+      "title": "377 - Demurrer Opposition - Min. Charge",
+      "category_id": "demurrer",
+      "stage_node_ids": [
+        "opposition-to-demurrer"
+      ],
+      "phase": "Demurrer",
+      "price_cents": 50000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "minimum",
+      "deliverable": "Opposition to a demurrer filed against your complaint/cross-complaint (when you are suing the landlord).",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/paid-legal-services-returning-client/377-Demurrer-Opposition-Min-Charge-p233491893"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Demurrer"
+    },
+    {
+      "sku": null,
+      "title": "Motion to Strike (Complaint / Cross-complaint)",
+      "category_id": "demurrer",
+      "stage_node_ids": [
+        "demurrer"
+      ],
+      "phase": "Demurrer",
+      "price_cents": null,
+      "price_note": "range $100-$500 quoted in a section snippet; individual SKUs not indexed",
+      "unit": "flat",
+      "deliverable": "Motion to strike improper matter from the landlord's Complaint; section description: 'Motion to Strike services, with options ranging from $100 to $500'.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/demurrer/",
+        "https://caltenantlaw.com/store/demurrer"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Demurrer"
+    },
+    {
+      "sku": "385",
+      "title": "385 - Motion to Strike Opposition",
+      "category_id": "demurrer",
+      "stage_node_ids": [
+        "opposition-to-demurrer"
+      ],
+      "phase": "Demurrer",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Opposition when the landlord moves to strike punitive damages / attorney fees or other portions of your Complaint; 'oppose that motion or have your case whittled away'.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/discovery-by-them/385-Motion-to-Strike-Opposition-p518969515"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Demurrer"
+    },
+    {
+      "sku": "400",
+      "title": "400 - Answer to Unlawful Detainer Complaint",
+      "category_id": "answer",
+      "stage_node_ids": [
+        "answer-to-complaint",
+        "jury-trial-requested"
+      ],
+      "phase": "Demurrer",
+      "price_cents": 25000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Attorney-prepared Answer (UD-105 with affirmative defenses), normally with jury demand.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step. Or after 370 is overruled (10 days).",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/legal-kits/400-Answer-to-Unlawful-Detainer-Complaint-p12727823",
+        "https://caltenantlaw.com/answer/Answer-c29490100"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Demurrer · TRIAL"
+    },
+    {
+      "sku": "425",
+      "title": "425 - Motion for Summary Judgment [minimum]",
+      "category_id": "trial-preparation",
+      "stage_node_ids": [
+        "summary-judgment-motion-filed-by-landlord",
+        "prepare-file-serve-sj-opposition",
+        "summary-judgment-hearing"
+      ],
+      "phase": "Summary Judgment",
+      "price_cents": 60000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "minimum",
+      "deliverable": "Motion for (or opposition to) summary judgment in the UD case.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/trial-preparation/425-Motion-for-Summary-Judgment-minimum-p375562958",
+        "https://caltenantlaw.com/discovery-by-us/425-Motion-for-Summary-Judgment-minimum-p375562958"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Summary Judgment"
+    },
+    {
+      "sku": "450",
+      "title": "450 - Court Appearance - minimum",
+      "category_id": "trial-preparation",
+      "stage_node_ids": [
+        "motion-to-quash-hearing",
+        "demurrer-hearing",
+        "ex-parte-and-motion-hearings",
+        "motion-to-compel-hearing",
+        "summary-judgment-hearing",
+        "pretrial-conferences",
+        "trial"
+      ],
+      "phase": null,
+      "price_cents": 33000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "minimum",
+      "deliverable": "Attorney appears for you at a hearing (one hour minimum at the $330/hr rate).",
+      "what_you_get": "Court appearance; overage billed via Supplemental Payments.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/trial-preparation/",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "Motion To Quash · Demurrer · Default · Discovery · Summary Judgment · TRIAL"
+    },
+    {
+      "sku": "460",
+      "title": "460 - Trial: Initial Jury Trial Documents",
+      "category_id": "trial-preparation",
+      "stage_node_ids": [
+        "prepare-jury-trial-papers",
+        "pretrial-conferences"
+      ],
+      "phase": "TRIAL",
+      "price_cents": 66000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "The initial jury-trial paper set: standard CACI jury instructions already drafted for tenant cases, motions in limine, witness/exhibit lists, trial brief.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step. After trial is set.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/trial-preparation/",
+        "https://caltenantlaw.com/legal-kits/Heading-to-Trial-c3290609"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "TRIAL"
+    },
+    {
+      "sku": "461",
+      "title": "461 - Trial: Unique Jury Instructions - Per Instruction",
+      "category_id": "trial-preparation",
+      "stage_node_ids": [
+        "prepare-jury-trial-papers"
+      ],
+      "phase": "TRIAL",
+      "price_cents": 33000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "per_item",
+      "deliverable": "Custom jury instruction where CACI has none (e.g. foreclosure-tenant notice rules), researched and cited; 'if they already exist, this charge does not apply, since they are included in the Jury Trial Docs'.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "With 460.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/461-Trial-Unique-Jury-Instructions-Per-Instruction-p11801832"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 460 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)",
+        "Copy of the notice that was served on you"
+      ],
+      "stage_scope": "TRIAL"
+    },
+    {
+      "sku": "465",
+      "title": "465 - Trial: Formatting Jury Instructions",
+      "category_id": "trial-preparation",
+      "stage_node_ids": [
+        "prepare-jury-trial-papers"
+      ],
+      "phase": "TRIAL",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Formatting the agreed/requested jury instructions into the court's required form.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "With 460.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/default/465-Trial-Formatting-Jury-Instructions-p11801834"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 460 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "TRIAL"
+    },
+    {
+      "sku": "475",
+      "title": "475 - Eviction Trial Preparation",
+      "category_id": "trial-preparation",
+      "stage_node_ids": [
+        "prepare-jury-trial-papers",
+        "trial"
+      ],
+      "phase": "TRIAL",
+      "price_cents": null,
+      "price_note": "price not indexed; one hour at $330/hr implies $330",
+      "unit": "flat",
+      "deliverable": "'One-hour trial preparation consultation: exactly what to do, how to do it, the best ways to present your case, and how to handle particular questions the landlord's lawyer might pose.' Phone coaching during trial also mentioned.",
+      "what_you_get": "One-hour attorney session.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/475-Eviction-Trial-Preparation-p11801516",
+        "https://caltenantlaw.com/game-board/475-Eviction-Trial-Preparation-p11801516"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "TRIAL"
+    },
+    {
+      "sku": "490",
+      "title": "490 - Trial: Opening Statement to the Jury",
+      "category_id": "trial-preparation",
+      "stage_node_ids": [
+        "trial"
+      ],
+      "phase": "TRIAL",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Drafted opening statement for you to deliver.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "With 460.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/trial-preparation/",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 460 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "TRIAL"
+    },
+    {
+      "sku": "500",
+      "title": "500 - Talk to the Other Lawyer",
+      "category_id": "settling-and-negotiation",
+      "stage_node_ids": [
+        "pretrial-conferences",
+        "settlement-you-set-the-terms"
+      ],
+      "phase": "TRIAL",
+      "price_cents": 16500,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Attorney calls the landlord's lawyer to negotiate on your behalf (half hour).",
+      "what_you_get": "Negotiation call and report.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/default/Settling-and-Negotiation-c29490104"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "letter",
+      "icon": "mail",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "TRIAL · Outcomes"
+    },
+    {
+      "sku": "501",
+      "title": "501 - Settlement Agreement Drafting",
+      "category_id": "settling-and-negotiation",
+      "stage_node_ids": [
+        "settlement-you-set-the-terms"
+      ],
+      "phase": "TRIAL",
+      "price_cents": 20000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "'Final drafting and review of the settlement agreement, even if it is not done on the day of trial.'",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/settling-and-negotiation/501-Settlement-Agreement-Drafting-p11801851",
+        "https://caltenantlaw.com/store/501-Settlement-Agreement-Drafting-p11801851"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "letter",
+      "icon": "mail",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney"
+      ],
+      "stage_scope": "Outcomes"
+    },
+    {
+      "sku": "505",
+      "title": "505 - Motion to Seal Case",
+      "category_id": "settling-and-negotiation",
+      "stage_node_ids": [
+        "case-dismissed-by-landlord",
+        "settlement-you-set-the-terms"
+      ],
+      "phase": "Outcomes",
+      "price_cents": 16500,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Motion to seal/mask the UD record so the eviction does not appear on tenant screening.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/default/Settling-and-Negotiation-c29490104"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "letter",
+      "icon": "mail",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney"
+      ],
+      "stage_scope": "Outcomes"
+    },
+    {
+      "sku": "510",
+      "title": "510 - Cost Memorandum / Attorney Fees Motion",
+      "category_id": "judgment",
+      "stage_node_ids": [
+        "you-win"
+      ],
+      "phase": "TRIAL",
+      "price_cents": 16500,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "After winning: memorandum of costs (main document) plus motion for attorney fees (secondary) so the judge awards costs and fees.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step. After judgment in your favor.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/510-Cost-Memorandum-Attorney-Fees-Motion-p11801863"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "TRIAL"
+    },
+    {
+      "sku": "520",
+      "title": "520 - Motion for New Trial",
+      "category_id": "judgment",
+      "stage_node_ids": [
+        "you-lose",
+        "judgment-entered-writ-issued"
+      ],
+      "phase": "TRIAL",
+      "price_cents": 30000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Post-trial motion for new trial after a loss.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step. Strict post-judgment deadline.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/trial-preparation/520-Motion-for-New-Trial-p369056184"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "TRIAL"
+    },
+    {
+      "sku": "600",
+      "title": "600 - Appeal Package",
+      "category_id": "appeal",
+      "stage_node_ids": [
+        "notice-of-appeal"
+      ],
+      "phase": "APPEAL",
+      "price_cents": 50000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Notice of appeal, designation of record and statement on appeal.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/appeal",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney",
+        "Copy of the summons and complaint (PDF or photo)",
+        "Copy of the notice that was served on you"
+      ],
+      "stage_scope": "APPEAL"
+    },
+    {
+      "sku": "605",
+      "title": "605 - Responses to Opposition or Order as to Statement on Appeal",
+      "category_id": "appeal",
+      "stage_node_ids": [
+        "notice-of-appeal"
+      ],
+      "phase": "APPEAL",
+      "price_cents": 16500,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Response to the landlord's objections, or the court's order, regarding the statement on appeal.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 600.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/legal-ethics-musical/605---Responses-to-Opposition-or-Order-as-to-Statement-on-Appeal-p11801916"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 600 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)",
+        "Copy of the notice that was served on you"
+      ],
+      "stage_scope": "APPEAL"
+    },
+    {
+      "sku": "610",
+      "title": "610 - Appeal: Stay Pending Appeal [minimum]",
+      "category_id": "appeal",
+      "stage_node_ids": [
+        "request-stay-pending-appeal-trial-court",
+        "request-stay-pending-appeal-appeals-court"
+      ],
+      "phase": "APPEAL",
+      "price_cents": 60000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "minimum",
+      "deliverable": "'Double drafting': petition for stay to the trial judge (usually denied), then Petition for Writ of Supersedeas to the Appellate Court to stop the lockout pending appeal. Condition: rent paid on time to court or landlord.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 600.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/610-Appeal-Stay-Pending-Appeal-p11801908",
+        "https://caltenantlaw.com/judgment/610-Appeal-Stay-Pending-Appeal-minimum-p11801908"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 600 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "APPEAL"
+    },
+    {
+      "sku": "620",
+      "title": "620 - Appeal: Motion to Augment Record",
+      "category_id": "appeal",
+      "stage_node_ids": [
+        "notice-of-appeal",
+        "your-opening-brief"
+      ],
+      "phase": "APPEAL",
+      "price_cents": 33000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Motion to the appeals court to add documents missing from the transcripts/record.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 600.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/default/620-Appeal-Motion-to-Augment-Record-p11801913"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 600 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)",
+        "Copy of the notice that was served on you"
+      ],
+      "stage_scope": "APPEAL"
+    },
+    {
+      "sku": "630",
+      "title": "630 - Opening Brief - Request for Extension of Time",
+      "category_id": "appeal",
+      "stage_node_ids": [
+        "your-opening-brief"
+      ],
+      "phase": "APPEAL",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "flat",
+      "deliverable": "Application to extend the opening-brief deadline.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 600.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/appeal",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 600 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "APPEAL"
+    },
+    {
+      "sku": "650",
+      "title": "650 - Opening Brief on Appeal - Minimum Charge",
+      "category_id": "appeal",
+      "stage_node_ids": [
+        "your-opening-brief"
+      ],
+      "phase": "APPEAL",
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "minimum",
+      "deliverable": "Appellant's opening brief.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 600; record complete.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/free-resources/650-Opening-Brief-on-Appeal-Minimum-Charge-p14094013"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 600 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "APPEAL"
+    },
+    {
+      "sku": null,
+      "title": "Review and Evaluate Responsive Brief",
+      "category_id": "appeal",
+      "stage_node_ids": [
+        "landlords-responsive-brief-filed"
+      ],
+      "phase": "APPEAL",
+      "price_cents": null,
+      "price_note": "listed by name only; SKU (likely 65x) and price not indexed",
+      "unit": "flat",
+      "deliverable": "Attorney review of the landlord's responsive brief and advice on reply.",
+      "what_you_get": "Review and advice.",
+      "prerequisites": "Follows 650.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/appeal",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "review",
+      "icon": "eye",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 650 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "APPEAL"
+    },
+    {
+      "sku": null,
+      "title": "Reply Brief on Appeal - Minimum Charge",
+      "category_id": "appeal",
+      "stage_node_ids": [
+        "your-reply-brief",
+        "appeal-hearing"
+      ],
+      "phase": "APPEAL",
+      "price_cents": null,
+      "price_note": "listed by name only; SKU (likely 66x) and price not indexed",
+      "unit": "minimum",
+      "deliverable": "Appellant's reply brief.",
+      "what_you_get": "Court-ready paperwork drafted by the attorney, delivered as PDF by email/fax for you to sign, file and serve ('all documents are faxed or scanned to PDF format'). Filing/service arranging is a separate item (065).",
+      "prerequisites": "Follows 650.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/store/appeal",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "SKU 650 already ordered with us",
+        "Copy of the summons and complaint (PDF or photo)"
+      ],
+      "stage_scope": "APPEAL"
+    },
+    {
+      "sku": "705",
+      "title": "705 - Drafting Complaint [simple]",
+      "category_id": "suing-the-landlord",
+      "stage_node_ids": [
+        "you-stay-and-sue"
+      ],
+      "phase": "Outcomes",
+      "price_cents": 90000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Formal Superior Court Complaint or Cross-complaint (up to 3 causes of action) built from Judicial Council forms; for cases over $10,000, complex issues, or counter-suing after moving out. 'Assumes that you provide all of the information that the lawyer needs.'",
+      "what_you_get": "Basic information gathering, consultation, Summons, Civil Case Cover Sheet and Complaint drafting; after payment you are directed to a download page with an intake form to complete.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/trial-preparation/705-Drafting-Complaint-simple-p15689262",
+        "https://caltenantlaw.com/suing-the-landlord/705-Drafting-Complaint-Cross-complaint-p15689262"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "aliases": [
+        "705 - Drafting Complaint / Cross-complaint"
+      ],
+      "price_history": [
+        {
+          "price_cents": 60000,
+          "note": "$600.00 seen in one older-looking snippet (paid-legal-services-returning-client path); date unknown"
+        }
+      ],
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney"
+      ],
+      "stage_scope": "Outcomes"
+    },
+    {
+      "sku": "706",
+      "title": "706 - Drafting Complaint [complex]",
+      "category_id": "suing-the-landlord",
+      "stage_node_ids": [
+        "you-stay-and-sue"
+      ],
+      "phase": "Outcomes",
+      "price_cents": 150000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "flat",
+      "deliverable": "Complex Complaint / Cross-complaint (more than 3 causes of action).",
+      "what_you_get": "As 705.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/suing-the-landlord/706-Drafting-Complaint-complex-p653744570"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": "filing",
+      "icon": "file-text",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney"
+      ],
+      "stage_scope": "Outcomes"
+    },
+    {
+      "sku": null,
+      "title": "Changes to Prepared Paperwork",
+      "category_id": "changes-to-prepared-paperwork",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": null,
+      "price_note": "category description only; no SKU indexed",
+      "unit": "per_hour",
+      "deliverable": "'Amendments where paperwork has already been properly prepared by the lawyer, but you want some changes made other than corrections of errors.' (Corrections of the firm's own errors are implicitly free.)",
+      "what_you_get": "Revised PDF; charged at $330/hr, paid through Supplemental Payments.",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/changes-to-prepared-paperwork/Suing-the-Landlord-c29490107",
+        "https://caltenantlaw.com/store"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "edit",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "800",
+      "title": "800 - Supplemental Payment - $50",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 5000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "801",
+      "title": "801 - Supplemental Payment - $100",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 10000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "802",
+      "title": "802 - Supplemental Payment - $200",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 20000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "803",
+      "title": "803 - Supplemental Payment - $300",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 30000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "804",
+      "title": "804 - Supplemental Payment - $400",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 40000,
+      "price_note": "amount implied by the 800-820 series listing",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "805",
+      "title": "805 - Supplemental Payment - $500",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 50000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "806",
+      "title": "806 - Supplemental Payment - $600",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 60000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "807",
+      "title": "807 - Supplemental Payment - $700",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 70000,
+      "price_note": "amount implied by the 800-820 series listing",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "808",
+      "title": "808 - Supplemental Payment - $800",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 80000,
+      "price_note": "amount implied by the 800-820 series listing",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "809",
+      "title": "809 - Supplemental Payment - $900",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 90000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "810",
+      "title": "810 - Supplemental Payment - $1,000",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 100000,
+      "price_note": "amount implied by the 800-820 series listing",
+      "unit": "deposit",
+      "deliverable": "Top-up payment 'as required and instructed for matters where the minimum initial deposit was estimated and additional attention is required'; also advance posting and overtime at $330/hr.",
+      "what_you_get": "Credit to your account/matter; no separate deliverable.",
+      "prerequisites": "Only when expressly instructed by the office.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/miscellaneous-supplemental/805-Supplemental-Payment-$500-p11827593",
+        "https://caltenantlaw.com/store/806-Supplemental-Payment-$600-p110312311",
+        "https://caltenantlaw.com/default/803-Supplemental-Payment-$300-p11827591",
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "820",
+      "title": "820 - Supplemental Payment - $2,000",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 200000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "deposit",
+      "deliverable": "Largest supplemental payment tier.",
+      "what_you_get": "Credit to your matter.",
+      "prerequisites": "Only when expressly instructed.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "811-819",
+      "title": "811-819 - Supplemental Payment tiers (amounts not indexed)",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": null,
+      "price_note": "price not present in any indexed snippet",
+      "unit": "deposit",
+      "deliverable": "Intermediate tiers between $1,000 (810) and $2,000 (820); series described as '$50 to $2,000, SKU codes 800 through 820'.",
+      "what_you_get": "Credit to your matter.",
+      "prerequisites": "Only when expressly instructed.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/all-services/"
+      ],
+      "evidence": "inferred",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "An instruction from the office to order this"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    },
+    {
+      "sku": "HOURLY",
+      "title": "Ongoing legal work - hourly rate",
+      "category_id": "miscellaneous-supplemental",
+      "stage_node_ids": [],
+      "phase": null,
+      "price_cents": 33000,
+      "price_note": "as indexed by web search; index date unknown (2024-2026 crawl)",
+      "unit": "per_hour",
+      "deliverable": "Any work beyond a flat/minimum item, billed at $330/hour ('the best deal around' for 45 years of expertise).",
+      "what_you_get": "Collected via Supplemental Payments (800-820).",
+      "prerequisites": "Existing client; normally follows a 101/102 consultation in which the attorney recommends this step.",
+      "turnaround_note": "",
+      "source_urls": [
+        "https://caltenantlaw.com/about",
+        "https://caltenantlaw.com/attorney-consultation/"
+      ],
+      "evidence": "verified-snippet",
+      "verified": false,
+      "deliverable_format": null,
+      "icon": "dollar",
+      "time_expectation": null,
+      "client_inputs": [
+        "A completed 101 or 102 consultation with the attorney"
+      ],
+      "stage_scope": "Any stage, or a matter of its own (not a square on the eviction board)"
+    }
+  ],
+  "enrichment_note": "Fields added by CTL OS on 2026-09-18 on top of the research pass's output, all optional and additive: categories gain parent_id (three grouping parents introduced by CTL OS - talk-to-an-attorney, free-and-self-help, discovery - because the store lists sub-items flat) and icon; services gain icon, deliverable_format, time_expectation, client_inputs and stage_scope. deliverable_format and icon are presentation classifications. time_expectation is quoted from turnaround_note or from a duration stated in the item's own description; null where the site states none. client_inputs is a structured restatement of prerequisites, plus the case papers a filing on a board square necessarily needs - it is CTL OS's reading, not the firm's words, and A-10 / the live-scrape pass confirms it. stage_scope restates stage_node_ids as board phase labels. Nothing here invents a price, a SKU or a promise; unknown stays null and the UI renders 'to be confirmed'."
+}
