@@ -1,10 +1,12 @@
-/* Figma Navbar 1824:40233: 390x71 #552583, padding 15/27, 4 white glyphs, no labels, #BF0000 dot on the paw. */
-.bottomnav { display: flex; align-items: center; justify-content: space-between; height: calc(var(--h-bottomnav) + env(safe-area-inset-bottom)); padding: 0 var(--sp-6) env(safe-area-inset-bottom); background: var(--color-primary); color: var(--color-text-on-primary); }
-.bottomnav-item { display: inline-flex; align-items: center; justify-content: center; flex: 1 1 0; min-width: 0; height: 100%; color: inherit; opacity: .86; text-decoration: none; transition: opacity var(--dur-fast); }
-.bottomnav-item:hover, .bottomnav-item.is-active { opacity: 1; text-decoration: none; }
-.bottomnav-item:focus-visible { outline-color: var(--color-text-on-primary); outline-offset: -4px; border-radius: var(--r-md); }
-.bottomnav-icon { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; }
-.bottomnav-badge { position: absolute; top: 5px; right: 3px; width: 8px; height: 7px; border-radius: 50%; background: var(--color-badge); }
-:root[data-theme="dark"] .bottomnav { background: var(--primary-700); }
-.bottomnav.has-labels .bottomnav-item { flex-direction: column; gap: 2px; }
-.bottomnav-label { font-size: var(--fs-2xs); line-height: 1.1; font-weight: var(--fw-semibold); letter-spacing: var(--ls-body); }
+/* Client app tab bar: paper surface, top hairline, safe-area padding; active tab = filled pill behind a heavier glyph plus label. */
+.bottomnav { display: flex; align-items: stretch; justify-content: space-between; height: calc(var(--h-bottomnav) + env(safe-area-inset-bottom)); padding: 6px var(--sp-2) env(safe-area-inset-bottom); background: color-mix(in srgb, var(--color-surface) 92%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); color: var(--color-text-muted); box-shadow: 0 -1px 0 var(--color-hairline-strong), 0 -12px 32px -20px rgba(var(--shadow-color),.25); }
+.bottomnav-item { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; flex: 1 1 0; min-width: 0; min-height: 44px; color: inherit; text-decoration: none; border-radius: var(--r-md); transition: color var(--dur-fast) var(--ease-out); }
+.bottomnav-item:hover { color: var(--color-heading); text-decoration: none; }
+.bottomnav-item.is-active { color: var(--color-primary-text); }
+.bottomnav-item:focus-visible { outline-offset: -3px; }
+.bottomnav-icon { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 32px; border-radius: var(--r-pill); transition: background var(--dur-fast) var(--ease-out); }
+.bottomnav-item.is-active .bottomnav-icon { background: var(--color-primary-soft); }
+.bottomnav-item.is-active .icon { stroke-width: 2.4; }
+.bottomnav-badge { position: absolute; top: 4px; right: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-badge); box-shadow: 0 0 0 2px var(--color-surface); }
+.bottomnav-label { font-size: var(--fs-2xs); line-height: 1.1; font-weight: var(--fw-semibold); letter-spacing: .01em; }
+.bottomnav.has-labels .bottomnav-item { gap: 3px; }

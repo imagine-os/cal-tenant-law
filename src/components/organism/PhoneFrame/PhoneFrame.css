@@ -1,5 +1,5 @@
 .phoneframe-wrap { position: relative; margin: 0 auto; max-width: 100%; }
-.phoneframe { position: absolute; top: 0; left: 0; transform-origin: top left; padding: 12px; border-radius: 44px; background: #1C1C24; box-shadow: var(--shadow-xl), inset 0 0 0 2px #3a3946; }
-.phoneframe-notch { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 110px; height: 28px; border-radius: 16px; background: #0E0C11; z-index: 2; }
-.phoneframe-screen { border-radius: 34px; overflow: hidden; background: var(--color-bg-phone); position: relative; }
+.phoneframe { position: absolute; top: 0; left: 0; transform-origin: top left; padding: 12px; border-radius: 48px; background: linear-gradient(160deg, #1F2230, #0F111A); box-shadow: var(--shadow-xl), inset 0 0 0 2px #3A3D4D, inset 0 0 0 4px #0A0B10; }
+.phoneframe-notch { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); width: 104px; height: 28px; border-radius: 16px; background: #05060A; z-index: 2; }
+.phoneframe-screen { border-radius: 38px; overflow: hidden; background: var(--color-bg-phone); position: relative; }
 .phoneframe-iframe { width: 100%; height: 100%; border: 0; display: block; background: var(--color-bg-phone); }

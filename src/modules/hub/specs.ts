@@ -9,7 +9,7 @@ export const hubSpec = defineSpec({
   layout: ['HubHeader (brand, LangToggle, theme, dev mode)', 'Hero (title, RoleSwitcher)', 'SurfaceGrid (one card per family: P, C, F, L, S, O, A, X, GB, PM, M, K, MK, D)', 'Footer (version, counts: routes, tables, rules, components, actions)'],
   data: ['users', 'tenants'], roles: EVERYONE,
   logic: ['Entering a surface calls switchUser(role) then navigates to ROLE_HOME[role] or the family home path.', 'Dev toggle renders only for super_admin; theme and language persist in localStorage (ctl.theme, ctl.lang).', 'Counts come from getRoutes(), tables, rules, componentLibrary and listActions().'],
-  integrations: [], components: ['Card', 'Button', 'Toggle', 'RoleSwitcher', 'LangToggle', 'Badge', 'Icon', 'IconButton', 'Kbd', 'Tooltip'],
+  integrations: [], components: ['Card', 'Button', 'Toggle', 'RoleSwitcher', 'LangToggle', 'Badge', 'Icon', 'IconButton', 'Kbd', 'Tooltip', 'BrandMark', 'BrandArt'],
   actions: [
     { id: 'hub.enterAs', label: 'Enter as', intent: 'open a surface as its demo role', params: { surface: 'enum:site,app,desk,counsel,assist,owner,admin,opposition,board,plan,manual,docs,marketing,dev' } },
     { id: 'hub.toggleDevMode', label: 'Builder tool', intent: 'turn the builder tool (dev mode) on or off', permission: 'dev.tools' },

@@ -8,6 +8,7 @@ import { Button } from '../../atom/Button/Button';
 import { IconButton } from '../../atom/IconButton/IconButton';
 import { Icon } from '../../atom/Icon/Icon';
 import { LangToggle } from '../../molecule/LangToggle/LangToggle';
+import { BrandMark } from '../../atom/BrandMark/BrandMark';
 import './SiteLayout.css';
 
 export interface SiteNavItem { to: string; label: string; end?: boolean }
@@ -34,7 +35,7 @@ export function SiteLayout({ children, nav = SITE_NAV, ctaTo = '/site/consultati
       <a className="sr-only site2-skip" href="#site-main">{t('shell.skip')}</a>
       <header className="site2-head">
         <div className="container site2-head-inner">
-          <Link to="/site" className="site2-brand"><img src="./brand/ctl-mark.svg" alt="" width={34} height={34} /><span>{t('site.brand')}<small>{t('site.tagline')}</small></span></Link>
+          <Link to="/site" className="site2-brand" aria-label={t('site.brand')}><BrandMark variant="lockup" size={40} name={t('site.brand')} sub={t('site.tagline')} /></Link>
           <nav className={`site2-nav ${open ? 'is-open' : ''}`} aria-label={t('site.navLabel')}>
             {nav.map((n) => <NavLink key={n.to} to={n.to} end={n.end} className={({ isActive }) => `site2-link ${isActive ? 'is-active' : ''}`}>{label(n.label)}</NavLink>)}
             <div className="site2-nav-cta"><Link to={ctaTo}><Button block className="btn-cta">{cta}</Button></Link></div>
@@ -42,7 +43,7 @@ export function SiteLayout({ children, nav = SITE_NAV, ctaTo = '/site/consultati
           <div className="site2-tools">
             <LangToggle size="sm" />
             <IconButton icon={theme === 'dark' ? 'sun' : 'moon'} label={theme === 'dark' ? t('theme.light') : t('theme.dark')} onClick={toggleTheme} />
-            <Link to={ctaTo} className="site2-cta"><Button size="sm" className="btn-cta">{cta}</Button></Link>
+            <Link to={ctaTo} className="site2-cta" tabIndex={-1}><Button className="btn-cta">{cta}</Button></Link>
             <IconButton icon={open ? 'close' : 'menu'} label={open ? t('shell.closeMenu') : t('shell.openMenu')} className="site2-burger" onClick={() => setOpen((o) => !o)} aria-expanded={open} />
           </div>
         </div>
@@ -51,7 +52,7 @@ export function SiteLayout({ children, nav = SITE_NAV, ctaTo = '/site/consultati
       <main id="site-main" className="site2-main">{children}</main>
       <footer className="site2-foot">
         <div className="container site2-foot-grid">
-          <div className="site2-foot-brand"><img src="./brand/ctl-mark.svg" alt="" width={28} height={28} /><strong>{t('site.brand')}</strong><p className="small muted">{t('site.footerLead')}</p><p className="xs faint">{t('site.footerDisclaimer')}</p></div>
+          <div className="site2-foot-brand"><BrandMark variant="lockup" tone="paper" size={36} name={t('site.brand')} /><p className="site2-foot-line">{t('site.footerLine')}</p><p className="small muted">{t('site.footerLead')}</p><p className="xs faint">{t('site.footerDisclaimer')}</p></div>
           <div className="site2-foot-col"><div className="eyebrow">{t('site.offices')}</div>{offices.map((o) => <span key={o.id} className="small">{o.short_name}{o.city ? ` · ${o.city}` : ''}</span>)}</div>
           <div className="site2-foot-col"><div className="eyebrow">{t('site.more')}</div><Link to="/board">{t('site.nav.board')}</Link><Link to="/app">{t('site.clientApp')}</Link><Link to="/"><Icon name="key" size={12} /> {t('shell.hub')}</Link></div>
         </div>

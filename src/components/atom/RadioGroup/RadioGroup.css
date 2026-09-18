@@ -1,20 +1,21 @@
 .radiogroup { border: 0; padding: 0; margin: 0; min-width: 0; }
-.radiogroup legend { margin-bottom: 6px; padding: 0; }
-.radiogroup-options { display: flex; flex-direction: column; gap: 8px; }
+.radiogroup legend { margin-bottom: 8px; padding: 0; }
+.radiogroup-options { display: flex; flex-direction: column; gap: 10px; }
 .radiogroup.is-inline .radiogroup-options { flex-direction: row; flex-wrap: wrap; gap: var(--sp-4); }
 .radio { display: inline-flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: var(--fs-sm); }
-.radio.is-disabled { opacity: .55; cursor: not-allowed; }
+.radio.is-disabled { opacity: .5; cursor: not-allowed; }
 .radio-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
-.radio-dot { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--color-border-strong); background: var(--color-surface); position: relative; margin-top: 1px; transition: border-color var(--dur-fast); }
-.radio.is-checked .radio-dot { border-color: var(--color-primary); border-width: 6px; }
-.radio-input:focus-visible + .radio-dot { box-shadow: var(--shadow-focus); }
+.radio-dot { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; border: 1.5px solid var(--color-border-strong); background: var(--color-surface); position: relative; margin-top: 1px; transition: border-color var(--dur-fast) var(--ease-out), border-width var(--dur-fast) var(--ease-out); }
+.radio:hover .radio-dot { border-color: var(--color-primary); }
+.radio.is-checked .radio-dot { border-color: var(--color-primary); border-width: 7px; }
+.radio-input:focus-visible + .radio-dot { box-shadow: 0 0 0 2px var(--color-focus-halo), 0 0 0 5px var(--color-focus); }
 .radio-text { display: flex; flex-direction: column; gap: 2px; } .radio-desc { color: var(--color-text-muted); font-size: var(--fs-xs); }
-/* Figma option rows (Payment.png 1807:27202): white r8 56 tall, label 600 14 navy, purple radio at the right; checked = primary ring + dot. */
-.radiogroup.is-cards .radiogroup-options { gap: var(--sp-4); }
-.radiogroup.is-cards .radio { flex-direction: row-reverse; justify-content: space-between; align-items: center; min-height: 56px; padding: var(--sp-2) var(--sp-4); border: 1px solid var(--color-border-card-skin, var(--color-border-card)); border-radius: var(--r-md); background: var(--color-surface); box-shadow: var(--shadow-card, none); }
+/* option cards: raised rows with the radio at the right; checked = primary hairline + tint */
+.radiogroup.is-cards .radiogroup-options { gap: var(--sp-3); }
+.radiogroup.is-cards .radio { flex-direction: row-reverse; justify-content: space-between; align-items: center; min-height: 56px; padding: var(--sp-3) var(--sp-4); border: 0; border-radius: var(--r-md); background: var(--color-surface); box-shadow: var(--shadow-raised); transition: box-shadow var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out); }
 .radiogroup.is-cards .radio-text { flex: 1 1 auto; }
 .radiogroup.is-cards .radio-label { font-weight: var(--fw-semibold); color: var(--color-heading); }
-.radiogroup.is-cards .radio-dot { margin-top: 0; border-color: var(--color-primary); }
-.radiogroup.is-cards .radio.is-checked { border-color: var(--color-border-card-skin, var(--color-border-card)); }
-.radiogroup.is-cards .radio.is-checked .radio-dot { border-width: 2px; background: var(--color-primary-soft); }
-.radiogroup.is-cards .radio.is-checked .radio-dot::after { content: ''; position: absolute; inset: 3px; border-radius: 50%; background: var(--color-primary); }
+.radiogroup.is-cards .radio-dot { margin-top: 0; border-color: var(--color-border-strong); }
+.radiogroup.is-cards .radio.is-checked { background: var(--color-surface-tint); box-shadow: inset 0 0 0 1.5px var(--color-border-primary), 0 10px 28px -14px rgba(var(--shadow-color),.2); }
+.radiogroup.is-cards .radio.is-checked .radio-dot { border-width: 1.5px; border-color: var(--color-primary); background: var(--color-surface); }
+.radiogroup.is-cards .radio.is-checked .radio-dot::after { content: ''; position: absolute; inset: 4px; border-radius: 50%; background: var(--color-primary); }

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import type { RouteDef, Surface } from '../specs/types';
 import { PhoneShell } from '../components/template/PhoneShell/PhoneShell';
 import { DesktopShell } from '../components/template/DesktopShell/DesktopShell';
+import { SiteLayout } from '../components/template/SiteLayout/SiteLayout';
 import { getRoutes, isStubElement } from './registry';
 
 /** Every staff-side surface shares one DesktopShell; its menu is filtered per role, so an attorney sees the counsel pages and the docs they may open. */
@@ -16,8 +17,8 @@ export function withShell(route: RouteDef, children: ReactNode): ReactNode {
     case 'opposition': return <DesktopShell surfaces={['opposition']} routes={allRoutes} title={TITLE.opposition!} titleByRole={false}>{children}</DesktopShell>;
     case 'dev': return <DesktopShell surfaces={['dev', 'docs', 'admin']} routes={allRoutes} title={TITLE.dev!}>{children}</DesktopShell>;
     case 'docs': return <DesktopShell surfaces={['docs', 'dev']} routes={allRoutes} title={TITLE.docs!} feedback={false}>{children}</DesktopShell>;
-    // a public stub has no SiteLayout yet: give it the main landmark so QA and screen readers find the content
-    case 'public': return isStubElement(route.element) ? <main id="main">{children}</main> : children;
+    // a public stub renders inside the editorial site frame (header, footer); built public pages bring their own SiteLayout
+    case 'public': return isStubElement(route.element) ? <SiteLayout>{children}</SiteLayout> : children;
     default:
       return <DesktopShell surfaces={[...STAFF, 'docs']} routes={allRoutes} title={TITLE[route.surface] ?? 'Staff'} titleByRole>{children}</DesktopShell>;
   }
