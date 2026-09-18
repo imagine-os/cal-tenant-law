@@ -15,6 +15,8 @@
     "screenshots": "node scripts/screenshots.mjs",
     "qa:responsive": "node scripts/qa-responsive.mjs",
     "qa:bundle": "node scripts/qa-bundle.mjs",
+    "plan:check": "node scripts/plan-check.mjs",
+    "plan:sync": "node scripts/plan-sync.mjs",
     "qa": "npm run qa:bundle && npm run qa:responsive"
   },
   "dependencies": {
