@@ -97,3 +97,41 @@
 .hub-links a { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; border-radius: var(--r-md); background: var(--color-surface-2); color: var(--color-text); font-size: var(--fs-sm); box-shadow: var(--hairline); }
 .hub-links a:hover { background: var(--color-surface-tint); color: var(--color-primary-text); text-decoration: none; }
 .hub-locs { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+
+/* ---- live previews (showcase pass, T-024): the real home page of each surface as its demo role, loaded in view, capped ---- */
+.hub-preview-desktop { display: flex; justify-content: center; align-items: flex-start; padding: var(--sp-2); background: var(--color-surface-2); border-radius: var(--r-md); box-shadow: var(--hairline); overflow: hidden; min-height: 132px; }
+.hub-preview-desktop > * { width: 100%; }
+.hub-preview .dvf-cap { display: none; }
+.hub-preview .phoneframe-wrap { width: auto; }
+.hub-preview-idle { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 116px; color: hsl(var(--hue) 40% 60%); }
+/* the feature card previews the phone live in place of the drawn phone */
+.hub-preview-phone { flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: center; margin: calc(-1 * var(--sp-6)) calc(-1 * var(--sp-2)) calc(-1 * var(--sp-6)) 0; padding-top: var(--sp-4); }
+.hub-preview-phone .hub-card-art { margin: 0; width: clamp(150px, 22vw, 230px); }
+.hub-preview-phone .phoneframe-wrap { transform: translateY(14%); filter: drop-shadow(0 20px 30px rgba(var(--shadow-color),.25)); }
+.hub-card-meta { display: inline-flex; flex-wrap: wrap; gap: 4px; align-items: center; min-width: 0; }
+.hub-card-meta code { font-family: var(--font-mono); }
+@media (max-width: 600px) { .hub-preview-phone { display: none; } }
+@media (min-width: 2560px) { .hub-preview-desktop { min-height: 200px; } }
+
+/* ---- testing hub row ---- */
+.hub-group-tools { padding-top: 0; }
+.hub-tools-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); }
+.hub-tool { --hue: 214; display: flex; align-items: center; gap: var(--sp-4); min-height: var(--target-min); }
+.hub-tool.is-interactive:hover { box-shadow: var(--shadow-raised-hover); }
+.hub-medallion-sm { width: 44px; height: 44px; border-radius: 12px; flex: 0 0 auto; }
+.hub-tool-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }
+.hub-tool-text strong { color: var(--color-heading); font-size: var(--fs-md); letter-spacing: var(--ls-title); }
+.hub-tool-body { color: var(--color-text-secondary); font-size: var(--fs-sm); line-height: var(--lh-md); }
+.hub-tool-arrow { color: var(--color-text-faint); flex: 0 0 auto; }
+.hub-tool:hover .hub-tool-arrow { color: var(--color-primary-text); }
+.hub-tools-grid .ph, .hub-tools-grid .ph-wrap { display: block; width: 100%; }
+.hub-hue-canvas { --hue: 280; } .hub-hue-simulator { --hue: 200; } .hub-hue-proposal { --hue: 32; } .hub-hue-legal { --hue: 350; }
+@media (max-width: 1100px) { .hub-tools-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 700px) { .hub-tools-grid { grid-template-columns: 1fr; } }
+
+/* stat strip gains the plan-tasks column */
+.hub-stats { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+.hub-stat-tasks .eyebrow a { color: inherit; text-decoration: underline; text-decoration-color: var(--color-hairline-strong); text-underline-offset: 3px; }
+.hub-stat-tasks .eyebrow a:hover { color: var(--color-primary-text); }
+@media (max-width: 900px) { .hub-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .hub-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
