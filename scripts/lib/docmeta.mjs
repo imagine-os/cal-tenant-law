@@ -27,8 +27,8 @@ function titleOf(path, body, meta) {
 }
 
 /**
- * Everything an index needs from one markdown file: title and header meta for every doc; headings,
- * word count, figures, pending decisions and capture placeholders for the manual chapters.
+ * Everything an index needs from one markdown file: title, header meta, word count, figures, `##` headings,
+ * pending decisions (`> DECISION NEEDED:` / `> DECISIÓN PENDIENTE:`) and `[screenshot: ...]` capture placeholders.
  * `headings` are the raw `##` texts (the viewer slugs them), skipping fenced code.
  */
 export function docMeta(path, source) {
@@ -37,8 +37,10 @@ export function docMeta(path, source) {
   const body = fm ? source.slice(fm[0].length).replace(/^\n/, '') : source;
   const headings = [], decisions = [], placeholders = [];
   let section = '', fenced = false;
-  // Only the manual reads headings, decisions and placeholders; other docs keep the index small.
-  for (const line of /docs\/ops-manual\/(es|en)\//.test(path) ? body.split('\n') : []) {
+  // Every doc reads headings, decisions and placeholders: the docs viewer (K-01) draws the outline before the body
+  // arrives, knowledge search (K-02) matches headings without fetching bodies and the "decisions needed" chip counts
+  // `> DECISION NEEDED:` callouts across the whole tree. Only the `##` texts travel, never the body.
+  for (const line of body.split('\n')) {
     if (/^```/.test(line)) { fenced = !fenced; continue; }
     if (fenced) continue;
     const h = line.match(/^##\s+(.+)$/); if (h) { section = h[1].trim(); headings.push(section); continue; }

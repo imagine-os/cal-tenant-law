@@ -1,0 +1,63 @@
+/* M-01..M-03 ops manual. Tokens only; readable from a phone to a 4K TV. */
+.manual-toolbar { display: flex; flex-wrap: wrap; gap: var(--sp-4); align-items: flex-end; }
+.manual-progress { flex: 1 1 260px; max-width: 420px; }
+.manual-part { margin-top: var(--sp-5); }
+.manual-part-head { margin-bottom: var(--sp-3); }
+.manual-part-title { margin: 0; font-size: var(--fs-lg); }
+.manual-grid { display: grid; grid-template-columns: 1fr; gap: var(--sp-3); }
+@media (min-width: 700px) { .manual-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1600px) { .manual-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 2400px) { .manual-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.manual-card { display: flex; flex-direction: column; gap: 6px; }
+.manual-card-title { margin: 0; font-size: var(--fs-md); }
+.manual-card-meta { gap: 6px; }
+.manual-card-open { margin: auto 0 0; }
+
+/* Chapter */
+.manual-chapter { max-width: none; }
+.manual-chapter-head { display: flex; flex-wrap: wrap; gap: var(--sp-4); align-items: flex-start; margin: var(--sp-3) 0; }
+.manual-chapter-title { margin: 6px 0 4px; }
+.manual-chapter-tools { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.manual-steps { display: flex; flex-wrap: wrap; gap: var(--sp-4); padding: var(--sp-3) 0; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+.manual-fallback { display: flex; gap: var(--sp-2); align-items: flex-start; margin: var(--sp-3) 0; padding: var(--sp-3) var(--sp-4); border-left: 4px solid var(--color-warn); border-radius: var(--r-sm); background: var(--color-warn-bg); }
+.manual-fallback p { margin: 0; }
+
+.manual-chapter-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-5); align-items: start; margin-top: var(--sp-4); }
+.manual-outline { display: none; }
+.manual-outline-phone { display: block; margin-top: var(--sp-3); max-width: 420px; }
+@media (min-width: 1280px) {
+  .manual-chapter-layout { grid-template-columns: minmax(0, 1fr) minmax(200px, 260px); }
+  .manual-outline { display: block; position: sticky; top: var(--sp-3); max-height: calc(100vh - 140px); overflow: auto; }
+  .manual-outline-phone { display: none; }
+}
+.manual-body { min-width: 0; }
+.manual-body .prose { max-width: 80ch; }
+.manual-outline-list { list-style: none; margin: var(--sp-2) 0 var(--sp-3); padding: 0; }
+.manual-outline-link { display: block; width: 100%; min-height: 32px; padding: 4px 6px; border: 0; border-left: 2px solid var(--color-border); background: none; color: var(--color-text-muted); font-size: var(--fs-xs); text-align: left; cursor: pointer; }
+.manual-outline-link:hover { color: var(--color-text); border-left-color: var(--color-primary); }
+
+.manual-callout { margin: var(--sp-4) 0; padding: var(--sp-3) var(--sp-4); border-left: 4px solid var(--color-border-strong); border-radius: var(--r-sm); background: var(--color-surface-2); }
+.manual-callout p { margin: 2px 0 0; }
+.manual-callout.is-decision { border-left-color: var(--color-warn); background: var(--color-warn-bg); }
+.manual-callout.is-warning { border-left-color: var(--color-danger); background: var(--color-danger-bg); }
+.manual-callout.is-note, .manual-callout.is-tip { border-left-color: var(--color-info); background: var(--color-info-bg); }
+.manual-callout.is-inPerson { border-left-color: var(--color-primary); background: var(--color-primary-soft); }
+.manual-callout.is-inCtlOs { border-left-color: var(--color-success); background: var(--color-success-bg); }
+
+.manual-shot { margin: var(--sp-4) 0; }
+.manual-shot img { width: 100%; height: auto; border: 1px solid var(--color-border); border-radius: var(--r-card); box-shadow: var(--shadow-md); }
+.manual-shot figcaption { margin-top: 6px; gap: var(--sp-2); }
+.manual-shot-missing { display: flex; flex-direction: column; gap: 6px; margin: var(--sp-4) 0; padding: var(--sp-4); border: 2px dashed var(--color-placeholder-outline, var(--color-border-strong)); border-radius: var(--r-card); background: var(--color-surface-2); }
+
+.manual-prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin-top: var(--sp-6); padding-top: var(--sp-4); border-top: 1px solid var(--color-border); }
+.manual-prevnext-link { display: flex; flex-direction: column; gap: 2px; min-height: 44px; padding: var(--sp-3); border: 1px solid var(--color-border); border-radius: var(--r-card); background: var(--color-surface); text-decoration: none; }
+.manual-prevnext-link.is-next { text-align: right; }
+.manual-prevnext-link:hover { border-color: var(--color-primary); }
+.manual-source { margin-top: var(--sp-4); }
+
+.manual-gaps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.manual-gaps li { gap: var(--sp-2); padding: var(--sp-2) var(--sp-3); border: 1px dashed var(--color-border-strong); border-radius: var(--r-sm); }
+/* Dense inline links still need a 24 px target (WCAG 2.5.8): the row keeps its density, the hit area does not. */
+.manual-gaps a, .manual-card a, .manual-outline a { display: inline-flex; align-items: center; min-height: 24px; }
+
+@media (max-width: 520px) { .manual-prevnext { grid-template-columns: 1fr; } }

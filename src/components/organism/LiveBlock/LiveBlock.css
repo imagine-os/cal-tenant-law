@@ -1,0 +1,38 @@
+/* LiveBlock: a framed block of live system data inside a manual chapter. Tokens only. */
+.live {
+  border: 1px solid var(--color-border-primary, var(--color-border-strong));
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--r-card);
+  background: var(--color-surface-tint);
+  margin: var(--sp-4) 0;
+  overflow: hidden;
+}
+.live-head { display: flex; align-items: flex-start; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--color-border); background: var(--color-surface); }
+.live-title { margin: 0; font-size: var(--fs-md); color: var(--color-heading); }
+.live-body { padding: var(--sp-3) var(--sp-4); overflow-x: auto; }
+.live-foot { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); justify-content: space-between; padding: var(--sp-2) var(--sp-4); border-top: 1px solid var(--color-border); font-size: var(--fs-xs); color: var(--color-text-muted); background: var(--color-surface); }
+.live-source a { font-family: var(--font-mono); }
+
+/* On a phone the block scrolls its own table sideways (`.live-body` is overflow-x: auto) instead of squeezing
+   "Super admin" into one letter per line; the page itself never gains a horizontal scrollbar. */
+.live-table { width: 100%; min-width: 440px; border-collapse: collapse; font-size: var(--fs-sm); }
+.live-table th, .live-table td { text-align: left; padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--color-border); vertical-align: top; }
+.live-table th { background: var(--color-table-head); color: var(--color-table-head-text); font-weight: var(--fw-semibold); white-space: nowrap; }
+.live-table tbody tr:last-child td { border-bottom: 0; }
+.live-num { text-align: right; font-variant-numeric: tabular-nums; }
+.live-group { margin-bottom: var(--sp-3); }
+.live-group-head { display: flex; align-items: baseline; gap: var(--sp-2); margin-bottom: 6px; }
+.live-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.live-cols { margin-left: 6px; color: var(--color-text-faint); font-variant-numeric: tabular-nums; }
+.live-rls { margin-top: var(--sp-3); font-size: var(--fs-xs); color: var(--color-text-muted); }
+.live-rls ul { margin: 4px 0 0; padding-left: 1.2em; }
+.live-verify { margin-left: 6px; vertical-align: middle; }
+
+/* Unknown or not-yet-wired directive: dashed block that names itself (P-09). */
+.live-stub {
+  display: flex; flex-direction: column; gap: 4px; align-items: flex-start; width: 100%;
+  min-height: 44px; padding: var(--sp-3) var(--sp-4); text-align: left;
+  border: 2px dashed var(--color-placeholder-outline, var(--color-border-strong));
+  border-left-width: 2px; background: var(--color-surface-2); color: var(--color-text); cursor: pointer;
+}
+.live-stub-label { font-size: var(--fs-sm); color: var(--color-heading); }

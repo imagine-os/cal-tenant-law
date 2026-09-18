@@ -1,0 +1,99 @@
+/* K-01..K-03 docs viewer, knowledge search and plan log. Tokens only; every width from 360 to 3840. */
+.docs-page { max-width: none; }
+.docs-layout { display: grid; grid-template-columns: 1fr; gap: var(--sp-5); align-items: start; }
+.docs-tree-phone, .docs-outline-phone { display: block; }
+.docs-tree-list, .docs-outline { display: none; }
+
+@media (min-width: 900px) {
+  .docs-layout { grid-template-columns: minmax(200px, 250px) minmax(0, 1fr); }
+  .docs-tree-phone { display: none; }
+  .docs-tree-list { display: block; }
+  .docs-outline-phone { display: none; }
+}
+@media (min-width: 1280px) {
+  .docs-layout { grid-template-columns: minmax(220px, 280px) minmax(0, 1fr) minmax(180px, 240px); }
+  .docs-outline { display: block; }
+}
+
+.docs-tree { position: sticky; top: var(--sp-3); }
+.docs-tree-list { max-height: calc(100vh - 160px); overflow: auto; padding-right: 4px; }
+.docs-group { margin-bottom: var(--sp-2); }
+.docs-group-head {
+  display: flex; align-items: center; gap: 6px; width: 100%; min-height: 36px; padding: 6px 8px;
+  border: 0; background: none; color: var(--color-text-faint); font-size: var(--fs-2xs);
+  text-transform: uppercase; letter-spacing: var(--ls-eyebrow); font-weight: var(--fw-semibold); cursor: pointer; text-align: left;
+}
+.docs-group-head:hover { color: var(--color-text); }
+.docs-group-count { font-variant-numeric: tabular-nums; }
+.docs-group-items { list-style: none; margin: 0 0 var(--sp-2); padding: 0; }
+.docs-link {
+  display: flex; align-items: center; gap: 6px; min-height: 36px; padding: 6px 8px 6px 20px;
+  font-size: var(--fs-sm); color: var(--color-text); border-radius: var(--r-sm); text-decoration: none;
+}
+.docs-link:hover { background: var(--color-surface-2); }
+.docs-link.is-active { background: var(--color-primary-soft); color: var(--color-primary-text); font-weight: var(--fw-semibold); }
+
+.docs-body { min-width: 0; }
+.docs-body .prose { max-width: 84ch; }
+.docs-meta { gap: var(--sp-3); margin-bottom: var(--sp-3); padding-bottom: var(--sp-2); border-bottom: 1px solid var(--color-border); }
+.doc-directive code { font-size: var(--fs-xs); }
+
+.doc-shot { margin: var(--sp-4) 0; }
+.doc-shot img { width: 100%; height: auto; border: 1px solid var(--color-border); border-radius: var(--r-card); box-shadow: var(--shadow-md); }
+.doc-shot figcaption { margin-top: 6px; gap: var(--sp-2); }
+.doc-shot-missing {
+  display: flex; flex-direction: column; gap: 6px; margin: var(--sp-4) 0; padding: var(--sp-4);
+  border: 2px dashed var(--color-placeholder-outline, var(--color-border-strong)); border-radius: var(--r-card); background: var(--color-surface-2);
+}
+
+.docs-prevnext { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-3); margin-top: var(--sp-6); padding-top: var(--sp-4); border-top: 1px solid var(--color-border); }
+.docs-prevnext-link { display: flex; flex-direction: column; gap: 2px; min-height: 44px; padding: var(--sp-3); border: 1px solid var(--color-border); border-radius: var(--r-card); text-decoration: none; background: var(--color-surface); }
+.docs-prevnext-link.is-next { text-align: right; }
+.docs-prevnext-link:hover { border-color: var(--color-border-primary, var(--color-primary)); }
+
+.docs-outline { position: sticky; top: var(--sp-3); max-height: calc(100vh - 140px); overflow: auto; }
+.docs-outline-list { list-style: none; margin: var(--sp-2) 0 0; padding: 0; }
+.docs-outline-link { display: block; width: 100%; min-height: 32px; padding: 4px 6px; border: 0; border-left: 2px solid var(--color-border); background: none; color: var(--color-text-muted); font-size: var(--fs-xs); text-align: left; cursor: pointer; }
+.docs-outline-link:hover { color: var(--color-text); border-left-color: var(--color-primary); }
+
+/* K-02 search */
+.docs-searchbar { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: flex-end; }
+.docs-searchbar > .grow { flex: 1 1 260px; }
+.docs-progress { max-width: 480px; }
+.docs-results { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.docs-result { display: flex; flex-direction: column; gap: 4px; min-height: 44px; padding: var(--sp-3); border: 1px solid var(--color-border); border-radius: var(--r-card); background: var(--color-surface); text-decoration: none; color: var(--color-text); }
+.docs-results li.is-selected .docs-result { border-color: var(--color-primary); box-shadow: 0 0 0 2px var(--color-primary-soft); }
+.docs-result-head { gap: var(--sp-2); }
+.docs-result-snippet { color: var(--color-text-muted); }
+.docs-result mark { background: var(--color-warn-bg); color: var(--color-text); padding: 0 2px; border-radius: 2px; }
+
+/* K-03 plan log */
+.docs-log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+.docs-log-item { display: flex; gap: var(--sp-3); }
+.docs-log-rail { position: relative; width: 12px; flex: 0 0 12px; }
+.docs-log-rail::before { content: ''; position: absolute; left: 5px; top: 18px; bottom: -18px; width: 2px; background: var(--color-border); }
+.docs-log-item:last-child .docs-log-rail::before { display: none; }
+.docs-log-dot { position: absolute; left: 0; top: 10px; width: 12px; height: 12px; border-radius: 50%; background: var(--color-neutral); }
+.docs-log-dot.is-prompt { background: var(--color-primary); }
+.docs-log-dot.is-changelog { background: var(--color-success); }
+.docs-log-dot.is-decision { background: var(--color-accent, var(--color-neutral)); }
+.docs-log-title { margin: 0 0 var(--sp-2); font-size: var(--fs-md); }
+.docs-log-facts { display: grid; gap: 4px var(--sp-3); margin: 0 0 var(--sp-2); }
+.docs-log-fact { display: grid; grid-template-columns: 90px minmax(0, 1fr); gap: var(--sp-2); align-items: baseline; }
+.docs-log-fact dd { margin: 0; }
+.docs-log-codes { gap: 6px; }
+/* Dense inline links still need a 24 px target (WCAG 2.5.8): the row keeps its density, the hit area does not. */
+.docs-log-codes a, .docs-log-item a { display: inline-flex; align-items: center; min-height: 24px; }
+@media (max-width: 520px) {
+  .docs-log-fact { grid-template-columns: 1fr; }
+  .docs-prevnext { grid-template-columns: 1fr; }
+}
+
+/* `> DECISION NEEDED:` and friends, styled so a question in a doc is visible instead of a grey quote. */
+.doc-callout { margin: var(--sp-3) 0; padding: var(--sp-3) var(--sp-4); border-left: 4px solid var(--color-border-strong); border-radius: var(--r-sm); background: var(--color-surface-2); }
+.doc-callout p { margin: 2px 0 0; }
+.doc-callout.is-decision { border-left-color: var(--color-warn); background: var(--color-warn-bg); }
+.doc-callout.is-warning { border-left-color: var(--color-danger); background: var(--color-danger-bg); }
+.doc-callout.is-note, .doc-callout.is-tip { border-left-color: var(--color-info); background: var(--color-info-bg); }
+.doc-callout.is-inPerson { border-left-color: var(--color-primary); background: var(--color-primary-soft); }
+.doc-callout.is-inCtlOs { border-left-color: var(--color-success); background: var(--color-success-bg); }
