@@ -1,0 +1,14 @@
+/* Visual-direction switch: the menu variant is one 44 px palette button with a small radio menu (narrow bars, phone). */
+.brandswitch { position: relative; display: inline-flex; }
+.brandswitch-pop { position: absolute; right: 0; top: calc(100% + 8px); min-width: 200px; padding: var(--sp-2); background: var(--color-surface-overlay); color: var(--color-text); border-radius: var(--r-card); box-shadow: var(--shadow-overlay); display: flex; flex-direction: column; gap: 2px; z-index: 70; animation: brandswitch-pop var(--dur-base) var(--ease-out); }
+@keyframes brandswitch-pop { from { opacity: 0; transform: translateY(-4px); } }
+.brandswitch-eyebrow { padding: 6px 10px 4px; }
+.brandswitch-item { display: flex; align-items: center; gap: 10px; min-height: var(--target-min); padding: 0 10px; border: 0; border-radius: var(--r-md); background: transparent; color: var(--color-text); font-size: var(--fs-sm); font-weight: var(--fw-medium); text-align: left; transition: background var(--dur-fast) var(--ease-out); }
+.brandswitch-item:hover { background: var(--color-surface-tint); color: var(--color-heading); }
+.brandswitch-item.is-active { background: var(--color-primary-soft); color: var(--color-primary-text); font-weight: var(--fw-semibold); }
+.brandswitch-dot { width: 14px; height: 14px; border-radius: 4px; flex: 0 0 auto; box-shadow: inset 0 0 0 1px rgba(0,0,0,.18); }
+.brandswitch-dot-clearsky { background: linear-gradient(135deg, #0B1730 55%, #3E9BE0); }
+.brandswitch-dot-boardgame { background: linear-gradient(135deg, #0F4033 55%, #F2A21B); }
+.brandswitch-dot-courthouse { background: linear-gradient(135deg, #0E0E0F 55%, #C8321A); }
+/* on ink bars (hub hero) the button follows the other ink controls */
+.surface-ink .brandswitch-btn, .on-ink .brandswitch-btn { color: var(--color-hero-text); }

@@ -5,21 +5,22 @@
  * its own ("the attorney home as the attorney") without dragging the parent window's session with it, and without
  * anyone editing `SessionProvider`, `App.tsx` or the shells (module contract).
  *
- * How: the frame URL carries `#/<route>?as=<role>&dev=0|1&lang=en|es&theme=light|dark`. On load, inside the iframe
+ * How: the frame URL carries `#/<route>?as=<role>&dev=0|1&lang=en|es&theme=light|dark&brand=clearsky|boardgame|courthouse`. On load, inside the iframe
  * only, `installFrameSession()` shadows the three localStorage keys the providers read (`ctl.session`, `ctl.lang`,
  * `ctl.theme`) with the values from the hash and swallows writes to them. Everything else (the mock database
  * `ctl.db.v1`, shell preferences) passes through, so the frame shares the data and never writes a session back.
  * localStorage is shared across same-origin frames, so shadowing - not writing - is the only safe way to do this.
  *
  * The patch lives in the iframe's own realm (each window has its own `Storage.prototype`), so the parent window is
- * untouched, and it is a no-op in a top-level window or when the hash carries none of the four params.
+ * untouched, and it is a no-op in a top-level window or when the hash carries none of the five params.
  * It runs at module-evaluation time (imported by this module's `index.ts`, which the registry globs eagerly), i.e.
  * before React renders and before `ThemeProvider` / `I18nProvider` / `SessionProvider` read storage.
  */
 import { ROLES, type Role } from '../../auth/roles';
 import { demoUserByRole } from '../../auth/demoUsers';
 import { SESSION_KEY } from '../../auth/SessionProvider';
-import { THEME_KEY } from '../../design/ThemeProvider';
+import { THEME_KEY, parseBrand } from '../../design/ThemeProvider';
+import { DEFAULT_BRAND, type BrandName } from '../../design/tokens';
 import { LANG_KEY } from '../../i18n/I18nProvider';
 import type { Lang } from '../../i18n/types';
 
@@ -30,6 +31,8 @@ export interface FrameOpts {
   dev?: boolean;
   lang?: Lang;
   theme?: 'light' | 'dark';
+  /** Visual direction (docs/design/directions.md); omitted = whatever the parent window stored. */
+  brand?: BrandName;
 }
 
 const isRole = (s: string): s is Role => (ROLES as readonly string[]).includes(s);
@@ -40,18 +43,19 @@ export function isFramed(): boolean {
   try { return window.self !== window.top; } catch { return true; }
 }
 
-/** Parses `as` / `dev` / `lang` / `theme` out of a hash route (`#/app?as=client&dev=1`). Returns null when none are present. */
+/** Parses `as` / `dev` / `lang` / `theme` / `brand` out of a hash route (`#/app?as=client&dev=1`). Returns null when none are present. */
 export function readFrameOpts(hash: string): FrameOpts | null {
   const i = hash.indexOf('?');
   if (i < 0) return null;
   const sp = new URLSearchParams(hash.slice(i + 1));
-  const as = sp.get('as'), dev = sp.get('dev'), lang = sp.get('lang'), theme = sp.get('theme');
-  if (!as && dev == null && !lang && !theme) return null;
+  const as = sp.get('as'), dev = sp.get('dev'), lang = sp.get('lang'), theme = sp.get('theme'), brand = parseBrand(sp.get('brand'));
+  if (!as && dev == null && !lang && !theme && !brand) return null;
   return {
     as: as && isRole(as) ? as : null,
     dev: dev == null ? undefined : dev === '1' || dev === 'true',
     lang: lang === 'es' ? 'es' : lang === 'en' ? 'en' : undefined,
     theme: theme === 'dark' ? 'dark' : theme === 'light' ? 'light' : undefined,
+    brand: brand ?? undefined,
   };
 }
 
@@ -62,6 +66,7 @@ export function frameRoute(path: string, o: FrameOpts): string {
   if (o.dev != null) sp.set('dev', o.dev ? '1' : '0');
   if (o.lang) sp.set('lang', o.lang);
   if (o.theme) sp.set('theme', o.theme);
+  if (o.brand) sp.set('brand', o.brand);
   const q = sp.toString();
   return q ? `${path}${path.includes('?') ? '&' : '?'}${q}` : path;
 }
@@ -87,9 +92,9 @@ export function installFrameSession(): void {
   const userId = o.as ? demoUserByRole(o.as).id : (typeof prevSession?.userId === 'string' ? prevSession.userId : 'usr_super');
   over[SESSION_KEY] = JSON.stringify({ userId, devMode: o.dev ?? false, viewAs: null });
   if (o.lang) over[LANG_KEY] = o.lang;
-  if (o.theme) {
-    const prevTheme = (read(THEME_KEY) ?? {}) as { brand?: string; skin?: string };
-    over[THEME_KEY] = JSON.stringify({ theme: o.theme, brand: prevTheme.brand ?? 'ctl', skin: prevTheme.skin ?? 'styled' });
+  if (o.theme || o.brand) {
+    const prevTheme = (read(THEME_KEY) ?? {}) as { theme?: string; brand?: string; skin?: string };
+    over[THEME_KEY] = JSON.stringify({ theme: o.theme ?? (prevTheme.theme === 'dark' ? 'dark' : 'light'), brand: o.brand ?? parseBrand(prevTheme.brand) ?? DEFAULT_BRAND, skin: prevTheme.skin ?? 'styled' });
   }
 
   const proto = Storage.prototype;

@@ -12,6 +12,8 @@
 .site2-link.is-active { background: var(--color-primary-soft); color: var(--color-primary-text); font-weight: var(--fw-semibold); }
 .site2-nav-cta { display: none; }
 .site2-tools { display: flex; align-items: center; gap: 8px; }
+.site2-brand-seg { display: inline-flex; } .site2-brand-menu { display: none; }
+@media (max-width: 1599px) { .site2-brand-seg { display: none; } .site2-brand-menu { display: inline-flex; } }
 .site2-burger { display: none !important; }
 .site2-scrim { display: none; }
 .site2-main { flex: 1 1 auto; }

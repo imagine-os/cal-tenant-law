@@ -21,6 +21,9 @@
 .topbar-pop-section { display: flex; flex-direction: column; gap: 6px; padding-top: var(--sp-3); border-top: 1px solid var(--color-hairline); }
 .topbar-pop-links { display: flex; gap: var(--sp-3); flex-wrap: wrap; padding-top: var(--sp-3); border-top: 1px solid var(--color-hairline); font-size: var(--fs-sm); }
 .topbar-signout { border: 0; background: none; color: var(--color-danger); padding: 0; font-weight: var(--fw-medium); margin-left: auto; min-height: 32px; }
+/* visual-direction switch: three labels on wide bars, one palette button below 1280 */
+.topbar-brand-seg { display: inline-flex; } .topbar-brand-menu { display: none; }
+@media (max-width: 1279px) { .topbar-brand-seg { display: none; } .topbar-brand-menu { display: inline-flex; } }
 @media (max-width: 1180px) { .topbar-search { flex-basis: 220px; } .topbar-new { min-width: 0; padding: 0 var(--sp-3); } }
 @media (max-width: 1024px) { .topbar-new .btn-label { display: none; } .topbar-new::before { content: "+"; font-size: 20px; line-height: 1; } }
 @media (max-width: 900px) { .topbar { padding: 0 var(--sp-3); } .topbar-menu { display: inline-flex; } .topbar-title { display: block; font-size: var(--fs-sm); } .topbar-search { display: none; } .topbar-right { gap: 4px; } }

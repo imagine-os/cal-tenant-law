@@ -1,7 +1,7 @@
 // Captures routes as the surface's demo user (dev mode on) at 390 and 1280 px, light (+ dark for key pages); add --widths=3840 for TV checks.
 // Output: docs/screenshots/<CODE>/<width>[-dark][-<label>].jpg and docs/screenshots/routes.json (the route manifest).
 // Usage: npm run screenshots [-- --smoke] [-- --only=/dev,/docs] [-- --codes=HUB-01,D-02] [-- --label=before] [-- --quality=72] [-- --dark]
-//        [-- --widths=390,1280] [-- --port=4173]
+//        [-- --widths=390,1280] [-- --brand=boardgame] [-- --port=4173]
 //   --smoke      1280 only, no files, just console errors (exit 1 when anything throws)
 //   --only=a,b   routes whose path starts with a prefix (trailing $ = exact)
 //   --codes=A,B  routes whose spec code is listed
@@ -11,7 +11,7 @@
 // fills every known route param (scripts/qa-lib.mjs PARAMS), never captures the same code twice, and prints a summary.
 // Chromium is preinstalled at /opt/pw-browsers; PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1; never run `playwright install`.
 import { mkdirSync, writeFileSync } from 'node:fs';
-import { arg, list, startPreview, launch, fetchManifest, fillParams, routeFilter, NOISE, initScript } from './qa-lib.mjs';
+import { arg, list, startPreview, launch, fetchManifest, fillParams, routeFilter, NOISE, initScript, brandArg } from './qa-lib.mjs';
 
 const args = process.argv.slice(2);
 const SMOKE = args.includes('--smoke');
@@ -22,6 +22,7 @@ const LABEL = arg(args, 'label');
 const QUALITY = Number(arg(args, 'quality', '72'));
 const WIDTHS = SMOKE ? [1280] : list(arg(args, 'widths', '390,1280')).map(Number);
 const PORT = Number(arg(args, 'port', process.env.QA_PORT ?? '4173'));
+const BRAND = brandArg(args);
 const BASE = `http://localhost:${PORT}/#`;
 const KEY_PAGES = new Set(['HUB-01', 'D-01', 'D-02', 'D-04', 'D-05', 'D-20', 'P-01', 'C-01', 'F-01', 'L-01', 'GB-01']);
 const fileName = (width, theme, label = '') => `${width}${theme === 'dark' ? '-dark' : ''}${label ? `-${label}` : ''}.jpg`;
@@ -48,7 +49,7 @@ async function main() {
       const themes = !SMOKE && (ALL_DARK || KEY_PAGES.has(code)) ? ['light', 'dark'] : ['light'];
       for (const theme of themes) {
         const ctx = await browser.newContext({ viewport: { width, height: width < 600 ? 844 : 800 }, deviceScaleFactor: 1 });
-        await ctx.addInitScript(...initScript(theme, path, { devMode: true }));
+        await ctx.addInitScript(...initScript(theme, path, { devMode: true, brand: BRAND }));
         const page = await ctx.newPage();
         await page.route(/^https?:\/\/(?!localhost)/, (r) => r.abort());
         const errors = [];

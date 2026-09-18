@@ -1,8 +1,8 @@
 import './BrandArt.css';
 
-export type BrandArtVariant = 'sky' | 'phone';
+export type BrandArtVariant = 'sky' | 'phone' | 'board' | 'ledger';
 export interface BrandArtProps {
-  /** sky = the clearing sky (hero art, fills its box); phone = a compact client-app phone with a board-position card. */
+  /** sky = the clearing sky (hero art, fills its box); board = the game-board path (hero art for the Board game direction); ledger = ruled paper with a section mark (Courthouse); phone = a compact client-app phone with a board-position card. */
   variant?: BrandArtVariant;
   className?: string;
   /** Accessible name; omit for decorative use (aria-hidden). */
@@ -11,8 +11,9 @@ export interface BrandArtProps {
 
 /**
  * Brand illustration, inline SVG only (no images): the firm's line "Your cloudy day is about to clear up" drawn as a
- * sky where clouds part around an amber sun, and a compact phone for the client-app card. Colours come from tokens, so
- * both read in light and dark and on ink surfaces.
+ * sky where clouds part around an amber sun (Clear sky), the eviction board as a winding path of squares in the
+ * poster's KEY colours with a token on "you are here" (Board game), ruled paper with a section mark (Courthouse), and a
+ * compact phone for the client-app card. Colours come from tokens, so every variant reads in light and dark and on ink.
  */
 export function BrandArt({ variant = 'sky', className = '', title }: BrandArtProps) {
   const a11y = title ? { role: 'img' as const, 'aria-label': title } : { 'aria-hidden': true as const };
@@ -43,6 +44,61 @@ export function BrandArt({ variant = 'sky', className = '', title }: BrandArtPro
         <rect x="26" y="252" width="168" height="32" className="ba-phone-nav" />
         <rect x="26" y="252" width="168" height="32" rx="24" className="ba-phone-nav" />
         {[0, 1, 2, 3].map((i) => <rect key={i} x={54 + i * 34} y={262} width="16" height="12" rx="4" className={i === 0 ? 'ba-nav-active' : 'ba-nav'} />)}
+      </svg>
+    );
+  }
+  if (variant === 'board') {
+    const squares: { x: number; y: number; tone: string; icon?: 'doc' | 'gavel' | 'check' | 'x' }[] = [
+      { x: 60, y: 340, tone: 'start' }, { x: 190, y: 300, tone: 'document', icon: 'doc' }, { x: 320, y: 250, tone: 'neutral' }, { x: 450, y: 200, tone: 'positive', icon: 'check' },
+      { x: 580, y: 240, tone: 'hearing', icon: 'gavel' }, { x: 660, y: 110, tone: 'negative', icon: 'x' }, { x: 530, y: 60, tone: 'jump' },
+    ];
+    const S = 92;
+    return (
+      <svg className={`brandart brandart-board ${className}`} viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" {...a11y}>
+        {title && <title>{title}</title>}
+        <defs><pattern id="ba-felt" width="28" height="28" patternUnits="userSpaceOnUse"><circle cx="14" cy="14" r="1.6" className="ba-felt-dot" /></pattern></defs>
+        <rect width="800" height="520" fill="url(#ba-felt)" />
+        {/* the normal path, then the jump (dashed violet) */}
+        <path d="M106 386 C 170 386, 160 346, 236 346 S 300 296, 366 296 S 430 246, 496 246 S 570 286, 626 286" className="ba-path ba-path-halo" />
+        <path d="M106 386 C 170 386, 160 346, 236 346 S 300 296, 366 296 S 430 246, 496 246 S 570 286, 626 286" className="ba-path ba-path-normal" />
+        <path d="M626 286 C 690 286, 706 240, 706 156" className="ba-path ba-path-negative" />
+        <path d="M496 246 C 530 190, 540 150, 576 106" className="ba-path ba-path-jump" />
+        <polygon points="706,140 696,160 716,160" className="ba-arrow ba-arrow-negative" />
+        <polygon points="582,98 562,108 580,120" className="ba-arrow ba-arrow-jump" />
+        {squares.map((q) => (
+          <g key={`${q.x}-${q.y}`} className={`ba-square ba-square-${q.tone}`} transform={`translate(${q.x} ${q.y})`}>
+            <rect width={S} height={S} rx="18" className="ba-square-shape ba-square-shadow" transform="translate(6 6)" />
+            <rect width={S} height={S} rx="18" className="ba-square-shape" />
+            {q.tone === 'start' && <text x={S / 2} y={S / 2 + 7} textAnchor="middle" className="ba-square-text">START</text>}
+            {q.icon === 'doc' && <path d={`M${S / 2 - 14} ${S / 2 - 18} h18 l10 10 v26 h-28 z M${S / 2 - 8} ${S / 2 - 2} h16 M${S / 2 - 8} ${S / 2 + 8} h16`} className="ba-square-icon" />}
+            {q.icon === 'check' && <path d={`M${S / 2 - 18} ${S / 2} l12 12 l24 -26`} className="ba-square-icon" />}
+            {q.icon === 'x' && <path d={`M${S / 2 - 14} ${S / 2 - 14} l28 28 M${S / 2 + 14} ${S / 2 - 14} l-28 28`} className="ba-square-icon" />}
+            {q.icon === 'gavel' && <path d={`M${S / 2 - 20} ${S / 2 + 18} h40 M${S / 2 - 6} ${S / 2 - 18} l14 14 l-16 16 l-14 -14 z M${S / 2 + 4} ${S / 2 - 4} l16 16`} className="ba-square-icon" />}
+          </g>
+        ))}
+        {/* the tenant's token on the positive square */}
+        <g className="ba-token" transform="translate(496 176)">
+          <ellipse cx="0" cy="30" rx="26" ry="8" className="ba-token-shadow" />
+          <circle cx="0" cy="0" r="26" className="ba-token-body" />
+          <circle cx="-8" cy="-9" r="7" className="ba-token-shine" />
+        </g>
+        {/* the sun still shows through: the firm's line */}
+        <circle cx="96" cy="96" r="40" className="ba-sun" />
+        <circle cx="96" cy="96" r="56" className="ba-sun-halo" />
+      </svg>
+    );
+  }
+  if (variant === 'ledger') {
+    return (
+      <svg className={`brandart brandart-ledger ${className}`} viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" {...a11y}>
+        {title && <title>{title}</title>}
+        {Array.from({ length: 12 }, (_, i) => <line key={i} x1="0" x2="800" y1={60 + i * 40} y2={60 + i * 40} className="ba-rule" />)}
+        <line x1="560" x2="560" y1="0" y2="520" className="ba-rule ba-rule-margin" />
+        <text x="600" y="150" className="ba-section">§</text>
+        <text x="600" y="196" className="ba-cite">C.C.P. 1161</text>
+        <text x="600" y="236" className="ba-cite">C.C.P. 1167</text>
+        <text x="600" y="276" className="ba-cite">C.C.P. 1170.5</text>
+        <rect x="600" y="316" width="22" height="22" className="ba-mark" />
       </svg>
     );
   }

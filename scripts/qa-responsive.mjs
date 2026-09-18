@@ -2,10 +2,10 @@
 // A cell fails on horizontal scroll, a console error, visible text under 12 px (under 16 px at >= 1920: body text must be
 // legible from 10 feet), a fixed element covering a sticky one, or a blank page. Also records redirects and the a11y checks
 // from src/dev/a11yScan.ts (compiled on the fly with esbuild) into docs/qa/responsive-report.{md,json}.
-// Usage: npm run build && npm run qa:responsive [-- --only=/dev,/desk] [-- --codes=D-08,D-09] [-- --widths=360,1280] [-- --themes=light] [-- --port=4174]
+// Usage: npm run build && npm run qa:responsive [-- --only=/dev,/desk] [-- --codes=D-08,D-09] [-- --widths=360,1280] [-- --themes=light] [-- --brand=boardgame] [-- --port=4174]
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { transformSync } from 'esbuild';
-import { arg, list, startPreview, launch, fetchManifest, fillParams, routeFilter, NOISE, initScript } from './qa-lib.mjs';
+import { arg, list, startPreview, launch, fetchManifest, fillParams, routeFilter, NOISE, initScript, brandArg } from './qa-lib.mjs';
 
 const args = process.argv.slice(2);
 const PORT = Number(arg(args, 'port', process.env.QA_PORT ?? '4174'));
@@ -13,6 +13,7 @@ const WIDTHS = list(arg(args, 'widths', '360,390,768,1280,1920,2560,3840')).map(
 const MIN_FONT = (w) => (w >= 1920 ? 16 : 12);
 const THEMES = list(arg(args, 'themes', 'light,dark'));
 const ONLY = list(arg(args, 'only')); const CODES = list(arg(args, 'codes'));
+const BRAND = brandArg(args);
 const BASE = `http://localhost:${PORT}/#`;
 const OUT = new URL('../docs/qa/', import.meta.url);
 
@@ -24,14 +25,14 @@ async function main() {
   let manifest;
   try { manifest = await fetchManifest(browser, BASE); } catch (e) { console.error(e.message); await browser.close(); server.kill(); process.exit(1); }
   const routes = manifest.filter(routeFilter(ONLY, CODES)).filter((r) => !r.path.includes('*'));
-  console.log(`${routes.length} routes x ${WIDTHS.join('/')} x ${THEMES.join('+')}`);
+  console.log(`${routes.length} routes x ${WIDTHS.join('/')} x ${THEMES.join('+')} · brand ${BRAND}`);
   const report = { generatedAt: new Date().toISOString(), widths: WIDTHS, themes: THEMES, routes: [] };
   for (const r of routes) {
     const entry = { code: r.code, path: r.path, name: r.spec?.name ?? r.code, surface: r.surface, status: r.status, cells: {} };
     const url = fillParams(r.path);
     for (const width of WIDTHS) for (const theme of THEMES) {
       const ctx = await browser.newContext({ viewport: { width, height: width < 600 ? 844 : width >= 2560 ? Math.round(width * 9 / 16) : 900 }, deviceScaleFactor: 1 });
-      await ctx.addInitScript(...initScript(theme, r.path));
+      await ctx.addInitScript(...initScript(theme, r.path, { brand: BRAND }));
       const page = await ctx.newPage();
       await page.route(/^https?:\/\/(?!localhost)/, (x) => x.abort());
       const errors = [];

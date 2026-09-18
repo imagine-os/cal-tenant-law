@@ -8,6 +8,7 @@ import { Button } from '../../atom/Button/Button';
 import { IconButton } from '../../atom/IconButton/IconButton';
 import { Icon } from '../../atom/Icon/Icon';
 import { LangToggle } from '../../molecule/LangToggle/LangToggle';
+import { BrandSwitch } from '../../molecule/BrandSwitch/BrandSwitch';
 import { BrandMark } from '../../atom/BrandMark/BrandMark';
 import './SiteLayout.css';
 
@@ -20,7 +21,7 @@ export const SITE_NAV: SiteNavItem[] = [
   { to: '/site/videos', label: 'site.nav.videos' }, { to: '/site/offices', label: 'site.nav.offices' }, { to: '/board', label: 'site.nav.board' },
 ];
 
-/** Public website frame: skip link, sticky header with brand, nav (drawer on phones), language, theme and the consultation CTA; footer with regional offices from the tenants table, links and the staff entry. Pages render bare inside. */
+/** Public website frame: skip link, sticky header with brand, nav (drawer on phones), language, visual direction, theme and the consultation CTA; footer with regional offices from the tenants table, links and the staff entry. Pages render bare inside. */
 export function SiteLayout({ children, nav = SITE_NAV, ctaTo = '/site/consultation', ctaLabel, footerNote }: SiteLayoutProps) {
   const { theme, toggleTheme } = useTheme();
   const { t } = useI18n();
@@ -42,6 +43,8 @@ export function SiteLayout({ children, nav = SITE_NAV, ctaTo = '/site/consultati
           </nav>
           <div className="site2-tools">
             <LangToggle size="sm" />
+            <span className="site2-brand-seg"><BrandSwitch variant="segmented" size="sm" /></span>
+            <span className="site2-brand-menu"><BrandSwitch variant="menu" size="md" /></span>
             <IconButton icon={theme === 'dark' ? 'sun' : 'moon'} label={theme === 'dark' ? t('theme.light') : t('theme.dark')} onClick={toggleTheme} />
             <Link to={ctaTo} className="site2-cta" tabIndex={-1}><Button className="btn-cta">{cta}</Button></Link>
             <IconButton icon={open ? 'close' : 'menu'} label={open ? t('shell.closeMenu') : t('shell.openMenu')} className="site2-burger" onClick={() => setOpen((o) => !o)} aria-expanded={open} />

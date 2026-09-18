@@ -12,6 +12,7 @@ import { Toggle } from '../../atom/Toggle/Toggle';
 import { Badge } from '../../atom/Badge/Badge';
 import { SegmentedControl } from '../../molecule/SegmentedControl/SegmentedControl';
 import { LangToggle } from '../../molecule/LangToggle/LangToggle';
+import { BrandSwitch } from '../../molecule/BrandSwitch/BrandSwitch';
 import { RoleSwitcher } from '../../molecule/RoleSwitcher/RoleSwitcher';
 import { Placeholder } from '../../atom/Placeholder/Placeholder';
 import './TopBar.css';
@@ -29,7 +30,7 @@ export interface TopBarProps {
 }
 
 /**
- * Staff top bar: menu (narrow), title, global search, then language, theme, notifications and the user menu
+ * Staff top bar: menu (narrow), title, global search, then language, visual direction (segmented; a menu button below 1280), theme, notifications and the user menu
  * (demo role switcher, appearance, builder-tool toggle, hub link, sign out). Every unwired control is a Placeholder.
  */
 export function TopBar({ title, onMenu, children, searchTo, helpTo, notificationsTo }: TopBarProps) {
@@ -60,6 +61,8 @@ export function TopBar({ title, onMenu, children, searchTo, helpTo, notification
       <div className="topbar-mid">{children}</div>
       <div className="topbar-right">
         <LangToggle size="sm" />
+        <span className="topbar-brand-seg"><BrandSwitch variant="segmented" size="sm" /></span>
+        <span className="topbar-brand-menu"><BrandSwitch variant="menu" size="md" /></span>
         <IconButton icon={theme === 'dark' ? 'sun' : 'moon'} label={theme === 'dark' ? t('theme.light') : t('theme.dark')} onClick={toggleTheme} />
         {helpTo && <Link to={helpTo} className="topbar-help topbar-hide-sm"><Icon name="question" size={22} />{t('shell.help')}</Link>}
         {notificationsTo
@@ -75,7 +78,7 @@ export function TopBar({ title, onMenu, children, searchTo, helpTo, notification
             <div className="topbar-pop" role="menu">
               <div className="topbar-pop-head"><Avatar name={user.name} size={40} /><div><strong>{user.name}</strong><div className="xs muted">{user.email || t('session.noEmail')}</div><Badge size="sm" tone="primary">{roleLabel(user.role, lang)}</Badge></div></div>
               <div className="topbar-pop-section"><div className="eyebrow">{t('session.demo')}</div><RoleSwitcher /></div>
-              <div className="topbar-pop-section"><div className="eyebrow">{t('theme.appearance')}</div><div className="row wrap"><SegmentedControl size="sm" ariaLabel={t('theme.theme')} value={theme} onChange={() => toggleTheme()} options={[{ value: 'light', label: t('theme.light'), icon: 'sun' }, { value: 'dark', label: t('theme.dark'), icon: 'moon' }]} /><Button variant="ghost" size="sm" icon="palette" onClick={cycleBrand}>{t('theme.brand')}: {brand}</Button></div></div>
+              <div className="topbar-pop-section"><div className="eyebrow">{t('theme.appearance')}</div><div className="row wrap"><SegmentedControl size="sm" ariaLabel={t('theme.theme')} value={theme} onChange={() => toggleTheme()} options={[{ value: 'light', label: t('theme.light'), icon: 'sun' }, { value: 'dark', label: t('theme.dark'), icon: 'moon' }]} /><Button variant="ghost" size="sm" icon="palette" onClick={cycleBrand}>{t('theme.brand')}: {t(`brand.${brand}`)}</Button></div></div>
               {isSuperAdmin && <div className="topbar-pop-section"><Toggle size="sm" checked={devMode} onChange={setDevMode} label={t('hub.devMode')} description={t('hub.devModeHint')} /></div>}
               <div className="topbar-pop-links"><Link to="/" onClick={() => setOpen(false)}>{t('shell.hub')}</Link><button type="button" className="topbar-signout" onClick={() => { signOut(); setOpen(false); nav('/'); }}>{t('session.signOut')}</button></div>
             </div>

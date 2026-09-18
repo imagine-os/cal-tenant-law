@@ -23,6 +23,8 @@ import { BrandMark } from '../../components/atom/BrandMark/BrandMark';
 import { BrandArt } from '../../components/atom/BrandArt/BrandArt';
 import { RoleSwitcher } from '../../components/molecule/RoleSwitcher/RoleSwitcher';
 import { LangToggle } from '../../components/molecule/LangToggle/LangToggle';
+import { SegmentedControl } from '../../components/molecule/SegmentedControl/SegmentedControl';
+import type { BrandName } from '../../design/tokens';
 import { PhoneFrame } from '../../components/organism/PhoneFrame/PhoneFrame';
 import { DeviceFrame } from '../../components/organism/DeviceFrame/DeviceFrame';
 import { frameRoute, frameSrc, isFramed } from '../showcase/frameSession';
@@ -117,13 +119,13 @@ function useLivePreviews(cap = PREVIEW_CAP) {
 function HubHeader() {
   const { t } = useI18n();
   const { isSuperAdmin, devMode, setDevMode } = useSession();
-  const { theme, toggleTheme, brand, cycleBrand } = useTheme();
+  const { theme, toggleTheme, brand, setBrand, brands } = useTheme();
   return (
     <header className="container container-wide hub-head">
       <div className="hub-brand"><BrandMark variant="lockup" tone="paper" size={40} sub={`v${__APP_VERSION__}`} /></div>
       <div className="hub-controls">
         <LangToggle size="sm" />
-        <IconButton icon="palette" label={`${t('theme.brand')}: ${brand}`} variant="outline" onClick={cycleBrand} />
+        <SegmentedControl size="sm" ariaLabel={t('theme.direction')} value={brand} onChange={setBrand} options={brands.map((b) => ({ value: b, label: t(`brand.${b}`) }))} />
         <IconButton icon={theme === 'dark' ? 'sun' : 'moon'} label={theme === 'dark' ? t('theme.light') : t('theme.dark')} variant="outline" onClick={toggleTheme} />
         {isSuperAdmin && <Toggle size="sm" checked={devMode} onChange={setDevMode} label={t('hub.devMode')} />}
       </div>
@@ -131,9 +133,13 @@ function HubHeader() {
   );
 }
 
+/** Hero illustration per direction: the clearing sky, the board path, the ruled ledger. */
+const HERO_ART: Record<BrandName, 'sky' | 'board' | 'ledger'> = { clearsky: 'sky', boardgame: 'board', courthouse: 'ledger' };
+
 function Hero() {
   const { t } = useI18n();
   const { devMode } = useSession();
+  const { brand } = useTheme();
   return (
     <section className="container container-wide hub-hero">
       <div className="hub-hero-copy">
@@ -142,7 +148,7 @@ function Hero() {
         <p className="lead">{t('hub.promise')}</p>
         <p className="hub-hero-line">{t('hub.tagline')}</p>
       </div>
-      <div className="hub-hero-art" aria-hidden><BrandArt variant="sky" /></div>
+      <div className="hub-hero-art" aria-hidden><BrandArt variant={HERO_ART[brand]} /></div>
       <div className="hub-session">
         <span className="hub-session-label"><Icon name="user" size={18} /> {t('hub.session')}</span>
         <RoleSwitcher />
@@ -157,9 +163,9 @@ interface PreviewProps { card: SurfaceCard; path: string; live: boolean; registe
 /** Small live preview of a surface, as its own demo role (frame params), loaded only once it is in view. The client app previews in a phone; the rest in a desktop frame. */
 function SurfacePreview({ card, path, live, register }: PreviewProps) {
   const { t, lang } = useI18n();
-  const { theme } = useTheme();
+  const { theme, brand } = useTheme();
   const framed = isFramed();
-  const opts = { as: card.role, dev: false, lang, theme } as const;
+  const opts = { as: card.role, dev: false, lang, theme, brand } as const;
   const label = `${t(`hub.surface.${card.key}`)} · ${roleLabel(card.role, lang)}`;
   const phone = card.preview === 'phone';
   return (
@@ -294,7 +300,7 @@ export function HubPage() {
   const nav = useNavigate();
   const { setLang } = useI18n();
   const { isSuperAdmin, devMode, setDevMode, switchUser } = useSession();
-  const { toggleTheme, cycleBrand } = useTheme();
+  const { toggleTheme, cycleBrand, setBrand, brands } = useTheme();
   const enter = useCallback((s: SurfaceCard) => { switchUser(s.role); nav(s.to ?? ROLE_HOME[s.role]); }, [switchUser, nav]);
   const openTool = useCallback((tool: ToolCard) => {
     if (!getRoutes().some((r) => r.path === tool.to)) return false;
@@ -318,6 +324,7 @@ export function HubPage() {
     'hub.toggleDevMode': () => { if (!isSuperAdmin) return { ok: false, message: 'dev mode is super_admin only' }; setDevMode(!devMode); return { ok: true, message: `dev mode ${devMode ? 'off' : 'on'}` }; },
     'hub.setLang': ({ lang }) => { if (lang !== 'en' && lang !== 'es') return { ok: false, message: 'lang must be en or es' }; setLang(lang); return { ok: true, message: `language ${lang}` }; },
     'hub.toggleTheme': () => { toggleTheme(); return { ok: true, message: 'theme toggled' }; },
+    'hub.setBrand': ({ brand }) => { if (!brands.includes(brand as BrandName)) return { ok: false, message: `brand must be one of ${brands.join(', ')}` }; setBrand(brand as BrandName); return { ok: true, message: `direction ${String(brand)}` }; },
     'hub.cycleBrand': () => { cycleBrand(); return { ok: true, message: 'brand cycled' }; },
   });
   return (

@@ -69,7 +69,8 @@ Anything a person, an agent, a test or the voice controller can address by URL a
 
 | Pattern | Does | Owner |
 | --- | --- | --- |
-| `#/<route>?as=<role>&dev=0\|1&lang=en\|es&theme=light\|dark` | Renders any page as any demo role **inside an iframe** (the hub previews, D-21 frames, D-22). `src/modules/showcase/frameSession.ts` shadows `ctl.session` / `ctl.lang` / `ctl.theme` inside that frame's realm only and swallows writes, so a frame never changes the parent's session. | showcase |
+| `#/<route>?as=<role>&dev=0\|1&lang=en\|es&theme=light\|dark&brand=clearsky\|boardgame\|courthouse` | Renders any page as any demo role **inside an iframe** (the hub previews, D-21 frames, D-22). `src/modules/showcase/frameSession.ts` shadows `ctl.session` / `ctl.lang` / `ctl.theme` inside that frame's realm only and swallows writes, so a frame never changes the parent's session. | showcase |
+| `#/<route>?brand=clearsky\|boardgame\|courthouse` | In a top-level window, sets and persists the visual direction on load (`ThemeProvider`; `docs/design/directions.md`). The hub header's Clear sky / Board game / Courthouse switch does the same (`hub.setBrand`). | design (HUB-01, D-01) |
 | `#/dev/simulator?device=&route=&role=&lang=&theme=&dev=&rot=&present=&step=` | Addresses a whole demo: device preset (360, 390, 768, 1280, 1920, 2560, 3840), page, role, language, theme, builder tool, orientation, present mode, tour step. | showcase (D-22) |
 | `#/dev/canvas` + `ctl.canvas` (localStorage) | Zoom, pan, filters, live-frame cap persist per viewer; Focus opens a frame at working size. | showcase (D-21) |
 | `#/plan?...`, `#/plan/list`, `#/plan/timeline`, `#/plan/graph?layout=`, `#/plan/passes?pass=`, `#/plan/task/:id` | Every PM view's filters, grouping, layout and selected task live in the query string. | plan |
@@ -113,8 +114,8 @@ Groups: core (`tenants, users, feedback, page_layouts, presence, actions_log`), 
 | `npm run tokens` | `src/design/tokens.ts` -> `src/styles/tokens.css` | |
 | `npm run sql` | schema -> `supabase/schema.sql` (RLS) + `docs/data-model.md` | |
 | `npm run specs` | `docs/screenshots/routes.json` -> `docs/specs.md` | |
-| `npm run screenshots` | Playwright captures -> `docs/screenshots/<CODE>/` (pages with live iframes - HUB-01, D-21, D-22 - wait 3 s for the frames) | `--smoke`, `--only=`, `--codes=`, `--label=`, `--quality=`, `--dark`, `--widths=`, `--port=` |
-| `npm run qa:responsive` | 7 widths x 2 themes matrix -> `docs/qa/responsive-report.{md,json}` | `--only=`, `--codes=`, `--widths=`, `--themes=`, `--port=` |
+| `npm run screenshots` | Playwright captures -> `docs/screenshots/<CODE>/` (pages with live iframes - HUB-01, D-21, D-22 - wait 3 s for the frames) | `--smoke`, `--only=`, `--codes=`, `--label=`, `--quality=`, `--dark`, `--widths=`, `--brand=clearsky\|boardgame\|courthouse` (or `QA_BRAND`), `--port=` |
+| `npm run qa:responsive` | 7 widths x 2 themes matrix -> `docs/qa/responsive-report.{md,json}` | `--only=`, `--codes=`, `--widths=`, `--themes=`, `--brand=clearsky\|boardgame\|courthouse` (or `QA_BRAND`), `--port=` |
 | `npm run qa:bundle` | bundle sizes -> `docs/qa/bundle-report.{md,json}` | |
 | `npm run qa` | bundle + responsive | |
 | `npm run plan:check` | validates `docs/plan/tasks.json` (id shape, duplicates, dependencies exist, no cycles, known lanes / passes / models / statuses / sizes) and that `docs/kanban.md` mirrors every status; prints the span in ticks | `--quiet` |
@@ -314,7 +315,13 @@ Every `PageSpec.actions` entry: `{ id, label, intent, permission?, params?, page
 | `dev.runAction` | run an action by id with no parameters | actions.run | `id: string` | D-20 |
 | `dev.copyActions` | copy the actions manifest to the clipboard | — | — | D-20 |
 
-**`hub.*`** (9)
+**`shell.*`** (1, registered by `ThemeProvider` for every surface, page code `SHELL`)
+
+| Id | Intent | Permission | Params | Page |
+| --- | --- | --- | --- | --- |
+| `shell.setBrand` | switch the visual direction (clear sky, board game or courthouse) from any page | — | `brand: enum:clearsky,boardgame,courthouse` | every shell (`BrandSwitch` in TopBar, SiteLayout, PhoneShell) |
+
+**`hub.*`** (10)
 
 | Id | Intent | Permission | Params | Pages |
 | --- | --- | --- | --- | --- |
@@ -325,6 +332,7 @@ Every `PageSpec.actions` entry: `{ id, label, intent, permission?, params?, page
 | `hub.toggleDevMode` | turn the builder tool (dev mode) on or off | dev.tools | — | HUB-01 |
 | `hub.setLang` | switch the interface language | — | `lang: enum:en,es` | HUB-01 |
 | `hub.toggleTheme` | switch between light and dark | — | — | HUB-01 |
+| `hub.setBrand` | switch the visual direction (clear sky, board game or courthouse) | — | `brand: enum:clearsky,boardgame,courthouse` | HUB-01 |
 | `hub.cycleBrand` | cycle the brand palette | — | — | HUB-01 |
 | `hub.goHome` | go to the home page of my current role | — | — | HUB-02 |
 

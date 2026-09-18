@@ -19,10 +19,11 @@ export function TokensPage() {
   useActions(tokensSpec, { 'dev.setTheme': ({ theme: th }) => { setTheme(th === 'dark' ? 'dark' : 'light'); return { ok: true, message: `theme ${String(th)}` }; }, 'dev.setBrand': ({ brand: br }) => { if (brandNames.includes(br as typeof brand)) { setBrand(br as typeof brand); return { ok: true, message: `brand ${String(br)}` }; } return { ok: false, message: `unknown brand ${String(br)}` }; } });
   return (
     <div className="page stack">
-      <PageHeader code="D-01" title="Design tokens" subtitle="src/design/tokens.ts is the single source; npm run tokens writes src/styles/tokens.css. Two axes: data-theme (light | dark) and data-brand (ctl | clearsky); --scale bands lift type and spacing at 1920 / 2560 / 3840."
+      <PageHeader code="D-01" title="Design tokens" subtitle="src/design/tokens.ts is the single source; npm run tokens writes src/styles/tokens.css. Two axes: data-theme (light | dark) and data-brand (clearsky | boardgame | courthouse, the three directions in docs/design/directions.md); --scale bands lift type and spacing at 1920 / 2560 / 3840."
         actions={<><SegmentedControl size="sm" value={theme} onChange={(v) => setTheme(v as 'light' | 'dark')} options={[{ value: 'light', label: 'Light', icon: 'sun' }, { value: 'dark', label: 'Dark', icon: 'moon' }]} /><SegmentedControl size="sm" value={brand} onChange={(v) => setBrand(v as typeof brand)} options={brandNames.map((n) => ({ value: n, label: brands[n].label }))} /></>} />
-      <Section title="Brand palette" description={`${b.label}: primary ramp + accent. Every semantic role resolves from these.`}>
-        <div className="swatches">{Object.entries(b).filter(([k]) => k !== 'label').map(([k, v]) => <Swatch key={k} name={k} value={v} />)}</div>
+      <Section title="Brand palette" description={`${b.label} (${b.displayFont}): ${b.description} Primary ramp + accent + CTA; every semantic role resolves from these, then the direction's own overrides (docs/design/directions.md).`}>
+        <div className="swatches">{Object.entries(b).filter(([k, v]) => typeof v === 'string' && !['label', 'description', 'displayFont'].includes(k)).map(([k, v]) => <Swatch key={k} name={k} value={v as string} />)}</div>
+        {b.extra && <div className="swatches">{Object.entries(b.extra).map(([k, v]) => <Swatch key={k} name={k} value={v} />)}</div>}
       </Section>
       <Section title="Neutrals" description="Cool slate greys shared by every brand, from paper white to ink.">
         <div className="swatches">{Object.entries(neutrals).map(([k, v]) => <Swatch key={k} name={k} value={v} />)}</div>
