@@ -1,0 +1,11 @@
+/* Figma mdi_check_box / mdi_check_box_outline_blank (I443:17967;121:2955): 24 px Material square, r3, primary fill when checked. */
+.checkbox { display: inline-flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: var(--fs-sm); }
+.checkbox.is-disabled { opacity: .55; cursor: not-allowed; }
+.checkbox-input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.checkbox-box { flex: 0 0 auto; width: 22px; height: 22px; border-radius: var(--r-cb); border: 2px solid var(--color-label); background: var(--color-surface); display: inline-flex; align-items: center; justify-content: center; color: transparent; transition: background var(--dur-fast), border-color var(--dur-fast); }
+.checkbox-lg .checkbox-box { width: 24px; height: 24px; }
+.checkbox-input:checked + .checkbox-box, .checkbox-input:indeterminate + .checkbox-box { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-text-on-primary); }
+.checkbox-input:focus-visible + .checkbox-box { box-shadow: var(--shadow-focus); }
+.checkbox-text { display: flex; flex-direction: column; gap: 2px; }
+.checkbox-label { color: var(--color-text); } .checkbox-desc { color: var(--color-text-muted); font-size: var(--fs-xs); }
+.checkbox-lg { font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-body); } .checkbox-lg .checkbox-label { color: var(--color-text-option); }

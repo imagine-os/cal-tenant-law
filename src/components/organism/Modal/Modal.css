@@ -1,0 +1,20 @@
+.modal-scrim { position: fixed; inset: 0; z-index: 1000; background: var(--color-scrim); display: flex; align-items: center; justify-content: center; padding: var(--sp-4); animation: modal-fade var(--dur-base) var(--ease-out); }
+@keyframes modal-fade { from { opacity: 0; } }
+.modal { background: var(--color-surface); border-radius: var(--r-lg); box-shadow: var(--shadow-xl); width: 100%; max-height: calc(100vh - 32px); display: flex; flex-direction: column; outline: none; animation: modal-up var(--dur-base) var(--ease-out); }
+@keyframes modal-up { from { transform: translateY(12px); opacity: 0; } }
+.modal-sm { max-width: 400px; } .modal-md { max-width: 560px; } .modal-lg { max-width: 820px; }
+.modal-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding: var(--sp-4) var(--sp-5) 0; }
+.modal-title { font-size: var(--fs-lg); color: var(--color-title); }
+.modal-body { padding: var(--sp-4) var(--sp-5); overflow: auto; }
+.modal-foot { display: flex; justify-content: flex-end; gap: var(--sp-2); padding: 0 var(--sp-5) var(--sp-5); flex-wrap: wrap; }
+/* Figma alert (Home Page-5 "Hey!"): 270 wide, r10, centred copy, split footer */
+.modal-scrim.is-alert { background: var(--color-scrim-soft); }
+.modal-alert .modal-foot .btn-ghost { color: var(--color-primary-text); }
+.modal-alert { max-width: 270px; border-radius: var(--r-card); box-shadow: none; text-align: center; }
+.modal-alert .modal-head { justify-content: center; padding: var(--sp-5) var(--sp-4) 0; }
+.modal-alert .modal-body { padding: var(--sp-2) var(--sp-4) var(--sp-4); font-size: var(--fs-sm); color: var(--color-text); }
+.modal-alert .modal-foot { padding: 0; gap: 0; border-top: 1px solid var(--color-border); flex-wrap: nowrap; }
+.modal-alert .modal-foot > * { flex: 1 1 0; height: 48px; border-radius: 0; border: 0; }
+.modal-alert .modal-foot > * + * { border-left: 1px solid var(--color-border); }
+.modal-alert .modal-foot > :first-child { border-bottom-left-radius: var(--r-card); } .modal-alert .modal-foot > :last-child { border-bottom-right-radius: var(--r-card); }
+@media (max-width: 600px) { .modal-scrim { align-items: flex-end; padding: 0; } .modal:not(.modal-alert) { max-width: none; border-radius: var(--r-lg) var(--r-lg) 0 0; max-height: 92vh; padding-bottom: env(safe-area-inset-bottom); } .modal:not(.modal-alert) .modal-foot > * { flex: 1 1 auto; } .modal-scrim:has(.modal-alert) { align-items: center; padding: var(--sp-4); } }

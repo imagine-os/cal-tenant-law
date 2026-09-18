@@ -1,0 +1,18 @@
+/* Figma: desk table badge 26 tall r4 #E9FBF7 / #25D9AB (598:23563); mobile status pill white r50 with a 10 px dot (I1807:27155;120:1717); home cards use plain coloured text. */
+.badge { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 26px; min-width: 73px; padding: 0 12px; border-radius: var(--r-sm); font-size: var(--fs-xs); font-weight: var(--fw-regular); line-height: 1; white-space: nowrap; background: var(--color-surface-3); color: var(--color-text-muted); }
+.badge-sm { height: 20px; min-width: 0; padding: 0 8px; }
+.badge-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+.badge-primary { background: var(--color-primary-soft); color: var(--color-primary-text); }
+.badge-success { background: var(--color-success-bg); color: var(--color-success); }
+.badge-warn { background: var(--color-warn-bg); color: var(--color-warn); }
+.badge-danger { background: var(--color-danger-bg); color: var(--color-danger); }
+.badge-info { background: var(--color-info-bg); color: var(--color-info); }
+.badge-accent { background: var(--color-accent-soft); color: var(--color-heading); }
+.badge-completed { background: var(--color-completed-bg); color: var(--color-completed); }
+/* mobile white pill: dot + bold text in the status colour, no fill */
+.badge-pill { background: var(--color-surface); border-radius: var(--r-pill); font-weight: var(--fw-bold); height: 22px; padding: 0 8px; }
+.badge-pill.badge-status[data-status] { background: var(--color-surface); }
+/* plain text status (home upcoming cards, pet card warning line) */
+.badge-text, .badge-text.badge-status[data-status] { background: none; padding: 0; height: auto; border-radius: 0; font-weight: var(--fw-regular); font-size: var(--fs-xs); line-height: var(--lh-xs); white-space: normal; text-align: center; }
+:root[data-theme="dark"] .badge-status { filter: saturate(.9) brightness(1.15); }
+:root[data-theme="dark"] .badge-pill, :root[data-theme="dark"] .badge-pill.badge-status[data-status] { background: var(--color-surface-2); }

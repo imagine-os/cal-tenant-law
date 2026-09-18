@@ -1,0 +1,7 @@
+.ph { display: inline-flex; } .ph.is-block, .ph.is-block > .ph-wrap { display: flex; width: 100%; }
+.ph-wrap { position: relative; display: inline-flex; border-radius: var(--r-md); }
+.ph.is-dev > .ph-wrap { outline: 2px dashed var(--color-placeholder-outline); outline-offset: 3px; }
+.ph-badge { position: absolute; top: -10px; right: -6px; z-index: 2; padding: 1px 6px; border-radius: var(--r-pill); background: var(--color-cta); color: var(--color-cta-text); font-size: var(--fs-2xs); font-weight: var(--fw-bold); letter-spacing: .02em; line-height: 1.4; pointer-events: none; }
+.ph-planned { color: var(--color-cta); font-weight: var(--fw-semibold); }
+.ph-text { display: inline-flex; align-items: center; min-height: 24px; padding: 0 var(--sp-2); border-radius: var(--r-sm); color: var(--color-text-faint); border: 1px dashed transparent; }
+.ph-text.is-dev { border-color: var(--color-placeholder-outline); }

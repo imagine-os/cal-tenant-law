@@ -1,0 +1,4 @@
+.empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--sp-2); padding: var(--sp-10) var(--sp-4); border: 1px dashed var(--color-border-strong); border-radius: var(--r-card); color: var(--color-text-muted); }
+.empty.is-compact { padding: var(--sp-5) var(--sp-4); }
+.empty-icon { display: inline-flex; padding: 12px; border-radius: 50%; background: var(--color-primary-soft); color: var(--color-primary-text); }
+.empty-title { font-size: var(--fs-md); } .empty-body { max-width: 40ch; font-size: var(--fs-sm); } .empty-action { margin-top: var(--sp-2); }

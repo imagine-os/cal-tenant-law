@@ -1,0 +1,6 @@
+.crumbs-list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px var(--sp-1); font-size: var(--fs-sm); }
+.crumbs-item { display: inline-flex; align-items: center; gap: var(--sp-1); min-height: 32px; }
+.crumbs-link { display: inline-flex; align-items: center; min-height: 32px; padding: 0 var(--sp-1); border-radius: var(--r-sm); color: var(--color-text-muted); }
+.crumbs-link:hover { color: var(--color-primary-text); text-decoration: none; background: var(--color-surface-tint); }
+.crumbs-current { color: var(--color-text); font-weight: var(--fw-semibold); padding: 0 var(--sp-1); }
+.crumbs-sep { color: var(--color-icon-muted); }

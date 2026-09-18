@@ -1,0 +1,8 @@
+.tip { position: relative; display: inline-flex; max-width: 100%; }
+.tip-bubble { display: none; position: absolute; left: 50%; transform: translateX(-50%); z-index: 60; padding: var(--sp-2) var(--sp-3); border-radius: var(--r-md); background: var(--color-title); color: var(--color-bg); font-size: var(--fs-xs); line-height: var(--lh-sm); width: max-content; max-width: min(320px, calc(100vw - 32px)); box-shadow: var(--shadow-lg); pointer-events: none; white-space: normal; text-align: left; }
+.tip-top { bottom: calc(100% + 8px); } .tip-bottom { top: calc(100% + 8px); }
+.tip-bubble.is-open { display: block; animation: tip-in var(--dur-fast) var(--ease-out); }
+@keyframes tip-in { from { opacity: 0; } to { opacity: 1; } }
+/* keep the bubble inside the viewport near the edges (the trigger's own box decides; edge cases clamp) */
+.tip:first-child .tip-bubble { left: 0; transform: none; } .tip:last-child:not(:first-child) .tip-bubble { left: auto; right: 0; transform: none; }
+:root[data-theme="dark"] .tip-bubble { background: var(--n-100); color: var(--n-950); }

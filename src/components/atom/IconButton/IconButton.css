@@ -1,0 +1,9 @@
+.iconbtn { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: var(--r-md); border: 1px solid transparent; background: transparent; color: var(--color-icon-header); transition: background var(--dur-fast), color var(--dur-fast); }
+.iconbtn-sm { width: 32px; height: 32px; }
+.iconbtn:hover { background: var(--color-surface-tint); color: var(--color-primary-text); }
+.iconbtn.is-active { background: var(--color-primary-soft); color: var(--color-primary-text); }
+.iconbtn-outline { border-color: var(--color-border); background: var(--color-surface); }
+.iconbtn-primary { background: var(--color-primary); color: var(--color-text-on-primary); }
+.iconbtn-primary:hover { background: var(--color-primary-hover); color: var(--color-text-on-primary); }
+.iconbtn:disabled { opacity: .5; cursor: not-allowed; }
+.iconbtn-badge { position: absolute; top: 4px; right: 4px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: var(--r-full); background: var(--color-danger); color: #fff; font-size: var(--fs-xs); font-weight: var(--fw-bold); line-height: 18px; text-align: center; }

@@ -1,0 +1,4 @@
+.searchinput { position: relative; display: flex; align-items: center; min-width: 0; }
+.searchinput > .field { flex: 1 1 auto; min-width: 0; }
+.searchinput-clear { position: absolute; right: 4px; top: 50%; transform: translateY(-50%); }
+.searchinput input[type="search"]::-webkit-search-cancel-button { display: none; }

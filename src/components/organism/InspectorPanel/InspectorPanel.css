@@ -1,0 +1,11 @@
+.insp { display: flex; flex-direction: column; gap: var(--sp-4); }
+.insp-code { font-size: var(--fs-xs); background: var(--color-primary-soft); color: var(--color-primary-text); padding: 2px 6px; border-radius: var(--r-sm); }
+.insp-title { font-size: var(--fs-md); }
+.insp-section { display: flex; flex-direction: column; gap: 6px; }
+.insp-h { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--color-text-faint); }
+.insp-list, .insp-layout { margin: 0; padding-left: 1.2em; font-size: var(--fs-sm); display: flex; flex-direction: column; gap: 4px; }
+.insp-table { display: inline-flex; padding: 3px 8px; border-radius: var(--r-sm); background: var(--color-surface-3); color: var(--color-text-muted); font-size: var(--fs-xs); }
+.insp-table.is-known { background: var(--color-primary-soft); color: var(--color-primary-text); }
+.insp-rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.insp-rules li { display: grid; grid-template-columns: auto 1fr auto; gap: 8px; align-items: center; font-size: var(--fs-sm); padding: 6px 0; border-bottom: 1px solid var(--color-border); }
+.insp-rule-title { min-width: 0; }

@@ -1,0 +1,37 @@
+{
+  "name": "ctl-os",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "CTL OS - operations system for California Tenant Law (caltenantlaw.com): public site, tenant app, staff dashboards, game board, docs and dev tools",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run tokens && tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "tokens": "node --experimental-strip-types scripts/gen-tokens.mjs",
+    "sql": "node --experimental-strip-types scripts/gen-sql.mjs",
+    "specs": "node scripts/gen-specs.mjs",
+    "screenshots": "node scripts/screenshots.mjs",
+    "qa:responsive": "node scripts/qa-responsive.mjs",
+    "qa:bundle": "node scripts/qa-bundle.mjs",
+    "qa": "npm run qa:bundle && npm run qa:responsive"
+  },
+  "dependencies": {
+    "@fontsource/source-sans-3": "^5.2.5",
+    "@fontsource/source-serif-4": "^5.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "react-router-dom": "^6.26.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^4.3.1",
+    "esbuild": "^0.21.5",
+    "playwright": "^1.47.0",
+    "typescript": "^5.5.4",
+    "vite": "^5.4.8"
+  }
+}

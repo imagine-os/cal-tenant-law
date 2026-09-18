@@ -1,0 +1,4 @@
+.dvf { margin: 0; min-width: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.dvf-cap { display: flex; align-items: center; gap: var(--sp-2); font-size: var(--fs-xs); color: var(--color-text-muted); font-family: var(--font-mono); }
+.dvf-stage { position: relative; overflow: hidden; border: 1px solid var(--color-border-strong); border-radius: var(--r-md); background: var(--color-bg); }
+.dvf-stage iframe { position: absolute; top: 0; left: 0; border: 0; transform-origin: top left; background: var(--color-bg); }

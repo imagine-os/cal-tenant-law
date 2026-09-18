@@ -1,0 +1,16 @@
+/* Tabs: desk underline (front desk reservation tabs), pills, and the Figma mobile split tabs (notification 550:7896/8402). */
+.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+.tabs::-webkit-scrollbar { display: none; }
+.tabs-underline { border-bottom: 1px solid var(--color-border); }
+.tab { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border: 0; background: none; color: var(--color-label); font-weight: var(--fw-semibold); font-size: var(--fs-sm); white-space: nowrap; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color var(--dur-fast), border-color var(--dur-fast); }
+.tabs-sm .tab { padding: 8px 10px; font-size: var(--fs-xs); }
+.tab:hover:not(:disabled) { color: var(--color-primary-text); }
+.tab:disabled { opacity: .5; cursor: not-allowed; }
+.tabs-underline .tab.is-active { color: var(--color-primary-text); border-bottom-color: var(--color-primary); }
+.tabs-pills { padding: 4px; background: var(--color-surface-2); border-radius: var(--r-md); width: fit-content; max-width: 100%; }
+.tabs-pills .tab { border-radius: var(--r-md); margin-bottom: 0; border-bottom: 0; height: 32px; padding: 0 12px; }
+.tabs-pills .tab.is-active { background: var(--color-surface); color: var(--color-primary-text); box-shadow: var(--shadow-sm); }
+.tabs-split { gap: 0; }
+.tabs-split .tab { flex: 1 1 0; justify-content: center; padding: 10px 8px; margin: 0; font-size: var(--fs-xs); font-weight: var(--fw-regular); color: var(--color-title); border-bottom: 1px solid var(--color-border); }
+.tabs-split .tab.is-active { font-weight: var(--fw-semibold); border-bottom-color: var(--color-title); color: var(--color-title); }
+.tab-count { color: var(--color-text-muted); }

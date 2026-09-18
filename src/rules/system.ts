@@ -1,0 +1,8 @@
+/** Platform rules the foundation enforces (P-01..P-15 digest). Ids append-only. */
+import { defineRules } from './types';
+
+export const rules = defineRules([
+  { id: 'RULE-SYS-01', title: 'Every page is specified, checked and documented', description: 'No route without a PageSpec (with actions); build green, responsive at 360-3840, spec.checkedAt recorded, page doc and changelog in the same turn; every visible string through useT(); unwired controls use Placeholder.', category: 'system', status: 'implemented', pages: ['HUB-01', 'HUB-02', 'D-01', 'D-02', 'D-03', 'D-05', 'D-19', 'D-20'], source: 'docs/platform-principles.md P-01, P-02, P-05, P-09, P-13', implementedIn: 'src/specs (specCompleteness), scripts/qa-responsive.mjs, Placeholder atom' },
+  { id: 'RULE-SYS-02', title: 'Data goes through the provider with tenant, id, updated_at and version', description: 'Every table carries id, tenant_id, created_at, updated_at, version; pages read and write only through useData / useTable by id; lists re-render from subscribe; writes and action runs are logged.', category: 'system', status: 'implemented', pages: ['D-04', 'O-01', 'A-01'], source: 'docs/platform-principles.md P-14; hoy CLAUDE.md data rule', implementedIn: 'src/data/schema/types.ts BASE_COLUMNS, MockProvider, actions_log' },
+  { id: 'RULE-SYS-03', title: 'Annotations are triaged before anything changes', description: 'A feedback row (comment, request, bug) gets triage + triage_note + decision_ref recorded before the fix; owner requests are binding, staff requests are triaged, client comments are signals.', category: 'system', status: 'in_dev', pages: ['O-01', 'A-01'], source: 'docs/reference/annotations-triage.md; P-08', implementedIn: 'feedback table columns; FeedbackButton picker' },
+]);

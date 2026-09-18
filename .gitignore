@@ -1,0 +1,11 @@
+node_modules
+dist
+.DS_Store
+*.log
+.vite
+
+# QA pass raw evidence (24 MB of matrix screenshots and the pass-local report); the reports and docs/qa/fix-status.md carry the conclusions
+docs/qa/shots/
+docs/qa/responsive-report.qa.json
+scripts/__pycache__/
+docs/design/fidelity/_shots/

@@ -1,0 +1,12 @@
+.phoneshell { min-height: 100vh; background: var(--color-bg); display: flex; justify-content: center;
+  /* mobile field skin (Figma Text Input 443:17975): 4 px radius, #F1F1F1 border, 16/600 value; desktop shell overrides these */
+  --r-field: var(--r-input); --color-border-field: var(--color-border-input); --fs-field: var(--fs-md); --fw-field: var(--fw-semibold);
+  --section-title-color: var(--color-label); --section-title-weight: var(--fw-regular); --shadow-card: none; --color-border-card-skin: var(--color-border-card); }
+.phoneshell-col { width: 100%; max-width: var(--w-phone-max); min-height: 100vh; background: var(--color-bg-phone); display: flex; flex-direction: column; position: relative; }
+.phoneshell[data-tone="list"] .phoneshell-col { background: var(--color-bg-phone-list); --color-bg-phone: var(--color-bg-phone-list); }
+.phoneshell[data-tone="form"] .phoneshell-col { background: var(--color-bg-phone-form); --color-bg-phone: var(--color-bg-phone-form); }
+@media (min-width: 600px) { .phoneshell:not(.in-frame) .phoneshell-col { border-left: 1px solid var(--color-border); border-right: 1px solid var(--color-border); } }
+.phoneshell-content { flex: 1; padding-bottom: calc(var(--h-bottomnav) + env(safe-area-inset-bottom) + 8px); }
+.phoneshell-nav { position: sticky; bottom: 0; z-index: 40; }
+.phoneshell-hub { position: fixed; top: 12px; left: 12px; z-index: 30; display: inline-flex; align-items: center; gap: 4px; font-size: var(--fs-xs); color: var(--color-text-muted); background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--r-pill); padding: 4px 10px; }
+@media (max-width: 600px) { .phoneshell-hub { display: none; } }

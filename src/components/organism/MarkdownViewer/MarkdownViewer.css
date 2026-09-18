@@ -1,0 +1,4 @@
+.markdown-table { overflow-x: auto; margin: 0 0 1em; }
+.markdown-table table { display: table; margin: 0; min-width: 100%; }
+.markdown blockquote p { margin: 0; }
+.markdown input[type="checkbox"] { margin-right: 6px; }

@@ -1,0 +1,25 @@
+/* Figma top bar 593:16049: 80 tall white, 1 px #EDEDED, search 320x48 r8 left, right cluster gap 15. */
+.topbar { display: flex; align-items: center; gap: var(--sp-4); height: var(--h-topbar); padding: 0 var(--sp-5); background: var(--color-surface); border-bottom: 1px solid var(--color-border-bar); position: sticky; top: 0; z-index: 50; }
+.topbar-left { display: flex; align-items: center; gap: var(--sp-4); min-width: 0; flex: 1 1 auto; }
+.topbar-search { width: min(320px, 100%); flex: 0 1 320px; } .topbar-search .field { min-width: 0; }
+.topbar-title { font-weight: var(--fw-semibold); color: var(--color-heading); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.topbar-mid { display: flex; align-items: center; gap: var(--sp-2); }
+.topbar-right { display: flex; align-items: center; gap: 15px; margin-left: auto; }
+.topbar-new { min-width: 172px; height: 47px; padding: 0 var(--sp-4); }
+.topbar-menu { display: none; }
+.topbar-help { display: inline-flex; align-items: center; gap: 6px; color: var(--color-text); font-size: var(--fs-sm); text-decoration: none; }
+.topbar-help:hover { color: var(--color-primary-text); text-decoration: none; }
+.topbar-user { position: relative; }
+.topbar-userbtn { display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 4px 6px 4px 4px; border-radius: var(--r-md); color: inherit; text-align: left; }
+.topbar-userbtn:hover { background: var(--color-surface-tint); }
+.topbar-username { display: flex; flex-direction: column; line-height: 1.15; font-size: var(--fs-sm); }
+.topbar-caret { color: var(--color-text-muted); }
+.topbar-pop { position: absolute; right: 0; top: calc(100% + 8px); width: min(340px, calc(100vw - 32px)); background: var(--color-surface); border: 1px solid var(--color-border-subtle); border-radius: var(--r-lg); box-shadow: var(--shadow-xl); padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-3); z-index: 60; }
+.topbar-pop-head { display: flex; gap: 12px; align-items: center; } .topbar-pop-head > div { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
+.topbar-pop-section { display: flex; flex-direction: column; gap: 6px; padding-top: var(--sp-3); border-top: 1px solid var(--color-border); }
+.topbar-pop-links { display: flex; gap: var(--sp-3); flex-wrap: wrap; padding-top: var(--sp-3); border-top: 1px solid var(--color-border); font-size: var(--fs-sm); }
+.topbar-signout { border: 0; background: none; color: var(--color-danger); padding: 0; font-weight: var(--fw-medium); margin-left: auto; }
+@media (max-width: 1180px) { .topbar-search { flex-basis: 220px; } .topbar-new { min-width: 0; padding: 0 var(--sp-3); } }
+@media (max-width: 1024px) { .topbar-new .btn-label { display: none; } .topbar-new::before { content: "+"; font-size: 20px; line-height: 1; } }
+@media (max-width: 900px) { .topbar-menu { display: inline-flex; } .topbar-title { display: none; } .topbar-search { display: none; } .topbar-right { gap: 6px; } }
+@media (max-width: 600px) { .topbar { padding: 0 var(--sp-2); gap: var(--sp-2); } .topbar-username, .topbar-hide-sm, .topbar-mid, .topbar-new, .topbar-caret { display: none; } .topbar-loc .field { min-width: 100px; } }

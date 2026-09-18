@@ -1,0 +1,4 @@
+.stub { gap: var(--sp-3); max-width: 720px; margin: var(--sp-6) auto; }
+.stub-code { font-size: var(--fs-sm); background: var(--color-primary-soft); color: var(--color-primary-text); padding: 2px 8px; border-radius: var(--r-sm); }
+.stub-title { font-size: var(--fs-xl); }
+.stub-layout ol { margin: 6px 0 0; padding-left: 1.2em; font-size: var(--fs-sm); display: flex; flex-direction: column; gap: 2px; }

@@ -1,0 +1,12 @@
+/* Figma KPI card (front desk-4.jpg): white, two-layer desk shadow, 40 px #552583 r8 icon square + label 16 #181818, value Open Sans 700 28, "Update: date" 12 muted under a #F1F1F1 rule. */
+.stat { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-4) var(--sp-4) var(--sp-3); background: var(--color-surface); border: 1px solid var(--color-border-subtle); border-radius: var(--r-md); box-shadow: var(--shadow-desk); text-align: left; min-width: 0; color: inherit; }
+button.stat { cursor: pointer; } button.stat:hover { border-color: var(--color-border-primary); }
+.stat-primary { background: var(--color-primary); border-color: var(--color-primary); color: var(--color-text-on-primary); }
+.stat-top { display: flex; align-items: center; gap: var(--sp-3); min-height: 40px; }
+.stat-label { font-size: var(--fs-md); font-weight: var(--fw-regular); color: var(--color-text); line-height: var(--lh-md); } .stat-primary .stat-label { color: rgba(255,255,255,.9); }
+.stat-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: 0 0 auto; border-radius: var(--r-md); background: var(--color-primary); color: var(--color-text-on-primary); } .stat-primary .stat-icon { background: rgba(255,255,255,.18); color: #fff; }
+.stat-value { font-size: var(--fs-2xl); font-weight: var(--fw-bold); color: var(--color-text); line-height: 1.15; letter-spacing: -0.01em; } .stat-primary .stat-value { color: #fff; }
+.stat-foot { display: flex; gap: 8px; align-items: baseline; font-size: var(--fs-xs); padding-top: var(--sp-2); border-top: 1px solid var(--color-border-input); color: var(--color-text-muted); }
+.stat-primary .stat-foot { border-top-color: rgba(255,255,255,.25); color: rgba(255,255,255,.8); }
+.stat-delta.is-pos { color: var(--color-success-strong); } .stat-delta.is-neg { color: var(--color-danger); } .stat-hint { color: var(--color-text-muted); } .stat-primary .stat-hint { color: inherit; }
+@media (max-width: 600px) { .stat-value { font-size: var(--fs-xl); } .stat-label { font-size: var(--fs-sm); } }
