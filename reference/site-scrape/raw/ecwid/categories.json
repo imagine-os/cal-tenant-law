@@ -1,0 +1,1290 @@
+{
+ "34591035": {
+  "id": 34591035,
+  "name": "Unlawful Detainer Game Board",
+  "slugs": {
+   "forRouteWithId": "Unlawful-Detainer-Game-Board",
+   "forRouteWithoutId": "unlawful-detainer-game-board"
+  },
+  "order": 1,
+  "parent": 0,
+  "path": [
+   "Unlawful Detainer Game Board"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": false,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff6a"
+    },
+    "homogeneity": false
+   },
+   "height": 523,
+   "image1500pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/1908102419.jpg",
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/1908027838.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/1908102418.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/1908027837.jpg",
+   "width": 523,
+   "alt": "Unlawful Detainer Game Board",
+   "altType": "Fallback"
+  },
+  "description": "<p>For the judges and plaintiff's lawyers who want to talk about your \"playing games,\" this Game Board poster shown in a smaller version on the website is their focus. What they're missing is that law is a game, with rules of evidence, special procedures, powers that some have, rolling the dice, and lots of surprises. If they can't see it as a game, they've been watching too much TV. Law is not about common sense, fairness, human decency, or justice. It is about power, rights, and technical rules. What you learn to do through this website is play the game better than the landlord's lawyer. That's why they are whining to the judge. Representing yourself, you are a better \"lawyer\" than they are, and that makes them look bad to their client who keeps forking out money to see results.</p>\n<p>In reality, the eviction game is more complicated than even this. The primary purpose of this Game Board is to give you an idea of where we are, and how long things take. I don't want to put everything on here because it would make the process too confusing, and would take away some of the surprises that the landlord's lawyer has to face.</p>",
+  "productCount": 3,
+  "product_ids": [
+   11871312,
+   135891747,
+   135891748
+  ],
+  "subcategories": []
+ },
+ "2707002": {
+  "id": 2707002,
+  "name": "Legal Kits",
+  "slugs": {
+   "forRouteWithId": "Legal-Kits",
+   "forRouteWithoutId": "legal-kits"
+  },
+  "order": 2,
+  "parent": 0,
+  "path": [
+   "Legal Kits"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/854931973.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/854931974.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/854931972.jpg",
+   "width": 174,
+   "alt": "Legal Kits",
+   "altType": "Fallback"
+  },
+  "description": "<p><strong>Doing the Best you Can with What you've Got</strong></p>\n<p>Low on funds? No problem. These inexpensive, easy-to-use legal kits give you hundreds of dollars <em>worth</em> of legal advice for a fraction of the normal cost. You also get the legal forms to use, step-by-step instructions on what to do, strategy, preparation, what to expect in court, and more.</p>\n<p>Granted these are not as good as having full legal advice, but for the price they are an extremely good bargain. Many tenants use them as an introduction to get a good understanding of the process and their rights, and then get more specific legal advice with a consultation, attorney-drafted legal papers, and even help in negotiating.</p>",
+  "productCount": 5,
+  "product_ids": [
+   11768220,
+   11768327,
+   11768231,
+   11768374,
+   46357924
+  ],
+  "subcategories": []
+ },
+ "29823027": {
+  "id": 29823027,
+  "name": "Extra Services",
+  "slugs": {
+   "forRouteWithId": "Extra-Services",
+   "forRouteWithoutId": "extra-services"
+  },
+  "order": 3,
+  "parent": 0,
+  "path": [
+   "Extra Services"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": true,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#000000",
+     "rgbaHexValue": "#00000000"
+    },
+    "homogeneity": true
+   },
+   "height": 175,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/855454133.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/855454139.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/855454132.jpg",
+   "width": 175,
+   "alt": "Extra Services",
+   "altType": "Fallback"
+  },
+  "description": "",
+  "productCount": 3,
+  "product_ids": [
+   108871140,
+   238475174,
+   238473332
+  ],
+  "subcategories": []
+ },
+ "29490089": {
+  "id": 29490089,
+  "name": "Scheduled Consultation",
+  "slugs": {
+   "forRouteWithId": "Scheduled-Consultation",
+   "forRouteWithoutId": "scheduled-consultation-1"
+  },
+  "order": 4,
+  "parent": 0,
+  "path": [
+   "Scheduled Consultation"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998190.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998191.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998189.jpg",
+   "width": 174,
+   "alt": "Scheduled Consultation",
+   "altType": "Fallback"
+  },
+  "description": "<p>All consultations with the attorney other than Hotline calls,</p>",
+  "productCount": 8,
+  "product_ids": [
+   11768166,
+   302194125,
+   11801479,
+   518613644,
+   518608397,
+   632962193,
+   648039754,
+   510313990
+  ],
+  "subcategories": []
+ },
+ "29490093": {
+  "id": 29490093,
+  "name": "Changes to Prepared Paperwork",
+  "slugs": {
+   "forRouteWithId": "Changes-to-Prepared-Paperwork",
+   "forRouteWithoutId": "changes-to-prepared-paperwork"
+  },
+  "order": 5,
+  "parent": 0,
+  "path": [
+   "Changes to Prepared Paperwork"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998209.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998210.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998208.jpg",
+   "width": 174,
+   "alt": "Changes to Prepared Paperwork",
+   "altType": "Fallback"
+  },
+  "description": "<p>Where paperwork has already been properly prepared by the lawyer, but you want some changes made other than corrections of errors, this section covers those amendments.</p>",
+  "productCount": 1,
+  "product_ids": [
+   15544859
+  ],
+  "subcategories": []
+ },
+ "29490094": {
+  "id": 29490094,
+  "name": "Motion to Quash",
+  "slugs": {
+   "forRouteWithId": "Motion-to-Quash",
+   "forRouteWithoutId": "motion-to-quash"
+  },
+  "order": 6,
+  "parent": 0,
+  "path": [
+   "Motion to Quash"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998218.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998219.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998217.jpg",
+   "width": 174,
+   "alt": "Motion to Quash",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section deal with the Motion to Quash service of Summons, ranging from the initial motion filed to the appellate court review of the decisions made by the judges.</p>",
+  "productCount": 6,
+  "product_ids": [
+   11801558,
+   510301822,
+   113392427,
+   369056025,
+   11801630,
+   11801568
+  ],
+  "subcategories": []
+ },
+ "29490095": {
+  "id": 29490095,
+  "name": "Default",
+  "slugs": {
+   "forRouteWithId": "Default",
+   "forRouteWithoutId": "default"
+  },
+  "order": 7,
+  "parent": 0,
+  "path": [
+   "Default"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998222.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998228.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998221.jpg",
+   "width": 174,
+   "alt": "Default",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns all of the different aspects of a \"default\", where you have officially \"lost\" the case and want to \"un-lose\" ;the case to get back on track and have your day in court.</p>",
+  "productCount": 5,
+  "product_ids": [
+   11801488,
+   12477142,
+   11801849,
+   11801837,
+   11801843
+  ],
+  "subcategories": []
+ },
+ "29490097": {
+  "id": 29490097,
+  "name": "Discovery - by Us",
+  "slugs": {
+   "forRouteWithId": "Discovery-by-Us",
+   "forRouteWithoutId": "discovery-by-us"
+  },
+  "order": 8,
+  "parent": 0,
+  "path": [
+   "Discovery - by Us"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998235.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998236.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998234.jpg",
+   "width": 175,
+   "alt": "Discovery - by Us",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns your attempt to get information from which to prepare your case for trial.</p>",
+  "productCount": 10,
+  "product_ids": [
+   11801686,
+   11801739,
+   367798275,
+   11801757,
+   11801769,
+   11801935,
+   11801776,
+   11801798,
+   11801813,
+   11801814
+  ],
+  "subcategories": []
+ },
+ "29490098": {
+  "id": 29490098,
+  "name": "Discovery - by Them",
+  "slugs": {
+   "forRouteWithId": "Discovery-by-Them",
+   "forRouteWithoutId": "discovery-by-them-1"
+  },
+  "order": 9,
+  "parent": 0,
+  "path": [
+   "Discovery - by Them"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998239.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998240.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998238.jpg",
+   "width": 174,
+   "alt": "Discovery - by Them",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns the landlord's attempts to get information from you.\n <br></p>",
+  "productCount": 5,
+  "product_ids": [
+   11801780,
+   11801786,
+   11801807,
+   11801498,
+   110312566
+  ],
+  "subcategories": []
+ },
+ "29490099": {
+  "id": 29490099,
+  "name": "Demurrer",
+  "slugs": {
+   "forRouteWithId": "Demurrer",
+   "forRouteWithoutId": "demurrer"
+  },
+  "order": 10,
+  "parent": 0,
+  "path": [
+   "Demurrer"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998248.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998249.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998247.jpg",
+   "width": 174,
+   "alt": "Demurrer",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns a Demurrer to the Complaint or Cross-complaint, and a Motion to Strike the Complaint, or Cross-complaint.</p>",
+  "productCount": 8,
+  "product_ids": [
+   11801643,
+   12727865,
+   11801652,
+   233571672,
+   233491893,
+   11801665,
+   518969515,
+   518588427
+  ],
+  "subcategories": []
+ },
+ "29490100": {
+  "id": 29490100,
+  "name": "Answer",
+  "slugs": {
+   "forRouteWithId": "Answer",
+   "forRouteWithoutId": "answer"
+  },
+  "order": 11,
+  "parent": 0,
+  "path": [
+   "Answer"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998252.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998253.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998251.jpg",
+   "width": 174,
+   "alt": "Answer",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns preparing your Answer to the Complaint, and related paperwork.</p>",
+  "productCount": 1,
+  "product_ids": [
+   12727823
+  ],
+  "subcategories": []
+ },
+ "29490103": {
+  "id": 29490103,
+  "name": "Trial Preparation",
+  "slugs": {
+   "forRouteWithId": "Trial-Preparation",
+   "forRouteWithoutId": "trial-preparation"
+  },
+  "order": 12,
+  "parent": 0,
+  "path": [
+   "Trial Preparation"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998270.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998271.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998269.jpg",
+   "width": 174,
+   "alt": "Trial Preparation",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns helping you get ready for trial with jury instructions and other papers you will need to file, help making your presentation effective, and other trial-related services.\n <br></p>",
+  "productCount": 8,
+  "product_ids": [
+   375562958,
+   352434846,
+   11801825,
+   11801832,
+   11801834,
+   11801516,
+   11801835,
+   369056184
+  ],
+  "subcategories": []
+ },
+ "29490104": {
+  "id": 29490104,
+  "name": "Settling and Negotiation",
+  "slugs": {
+   "forRouteWithId": "Settling-and-Negotiation",
+   "forRouteWithoutId": "settling-and-negotiation"
+  },
+  "order": 13,
+  "parent": 0,
+  "path": [
+   "Settling and Negotiation"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998274.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998275.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998273.jpg",
+   "width": 174,
+   "alt": "Settling and Negotiation",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns your negotiation for a settlement, settlement terms, the agreement, and enforcement.</p>",
+  "productCount": 3,
+  "product_ids": [
+   11801492,
+   11801851,
+   11801852
+  ],
+  "subcategories": []
+ },
+ "29490105": {
+  "id": 29490105,
+  "name": "Judgment",
+  "slugs": {
+   "forRouteWithId": "Judgment",
+   "forRouteWithoutId": "judgment"
+  },
+  "order": 14,
+  "parent": 0,
+  "path": [
+   "Judgment"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998278.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998279.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998277.jpg",
+   "width": 174,
+   "alt": "Judgment",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns the judgment in a case, including document preparation and advice.</p>",
+  "productCount": 1,
+  "product_ids": [
+   11801863
+  ],
+  "subcategories": []
+ },
+ "32551404": {
+  "id": 32551404,
+  "name": "Judges Gone Wild",
+  "slugs": {
+   "forRouteWithId": "Judges-Gone-Wild",
+   "forRouteWithoutId": "judges-gone-wild"
+  },
+  "order": 15,
+  "parent": 0,
+  "path": [
+   "Judges Gone Wild"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": true,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#000000",
+     "rgbaHexValue": "#00000000"
+    },
+    "homogeneity": true
+   },
+   "height": 164,
+   "image1500pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/959873223.jpg",
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/959873216.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/959873222.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/959873215.jpg",
+   "width": 164,
+   "alt": "Judges Gone Wild",
+   "altType": "Fallback"
+  },
+  "description": "<p>Sadly, so many judges and commissioners in California courts have prostituted themselves to the landlords, abandoning their oath of office, to become the point man for the landlords. They even order the clerks to take illegal actions, and hold secret meetings to help the landlords win. Judges have absolute immunity, which they gave to themselves, so that even if they intentionally violate the law and the Constitution, they cannot be personally sued. Absolute immunity gives them absolute power, which in turn corrupts absolutely. The machine to fix all of the other machines in Society is itself the most broken. There are a few things that you can do to TRY to get fair hearings and a fair trial.\n <br></p>",
+  "productCount": 1,
+  "product_ids": [
+   126268608
+  ],
+  "subcategories": []
+ },
+ "29490106": {
+  "id": 29490106,
+  "name": "Appeal",
+  "slugs": {
+   "forRouteWithId": "Appeal",
+   "forRouteWithoutId": "appeal-1"
+  },
+  "order": 16,
+  "parent": 0,
+  "path": [
+   "Appeal"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998282.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998283.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998281.jpg",
+   "width": 174,
+   "alt": "Appeal",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns your appeal of the judgment if your default was improperly taken or the judgment was illegal or improper.</p>",
+  "productCount": 8,
+  "product_ids": [
+   11801903,
+   11801916,
+   11801908,
+   11801913,
+   113392422,
+   14094013,
+   14094038,
+   14094039
+  ],
+  "subcategories": []
+ },
+ "29490107": {
+  "id": 29490107,
+  "name": "Suing the Landlord",
+  "slugs": {
+   "forRouteWithId": "Suing-the-Landlord",
+   "forRouteWithoutId": "suing-the-landlord"
+  },
+  "order": 17,
+  "parent": 0,
+  "path": [
+   "Suing the Landlord"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998286.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998287.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/853998285.jpg",
+   "width": 174,
+   "alt": "Suing the Landlord",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section concerns all aspects of suing the landlord, whether in small claims court, a counter-suit in an eviction case, or your separate lawsuit as the Plaintiff.</p>",
+  "productCount": 2,
+  "product_ids": [
+   15689262,
+   653744570
+  ],
+  "subcategories": []
+ },
+ "2720426": {
+  "id": 2720426,
+  "name": "Miscellaneous / Supplemental",
+  "slugs": {
+   "forRouteWithId": "Miscellaneous-Supplemental",
+   "forRouteWithoutId": "miscellaneous-supplemental"
+  },
+  "order": 18,
+  "parent": 0,
+  "path": [
+   "Miscellaneous / Supplemental"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": true,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#000000",
+     "rgbaHexValue": "#00000000"
+    },
+    "homogeneity": true
+   },
+   "height": 175,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/719438420.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/719438429.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/719438419.jpg",
+   "width": 175,
+   "alt": "Miscellaneous / Supplemental",
+   "altType": "Fallback"
+  },
+  "description": "<p>This section provides for supplemental payments, advance posting, and overtime payments.\n <br></p>\n<p><strong>PLEASE DO NOT USE THIS OPTION UNLESS EXPRESSLY INSTRUCTED TO DO SO.</strong></p>",
+  "productCount": 12,
+  "product_ids": [
+   437211349,
+   11827589,
+   11827590,
+   11827591,
+   11827592,
+   11827593,
+   110312311,
+   110312312,
+   110312313,
+   110312314,
+   11827594,
+   110312315
+  ],
+  "subcategories": []
+ },
+ "2720444": {
+  "id": 2720444,
+  "name": "Free Resources",
+  "slugs": {
+   "forRouteWithId": "Free-Resources",
+   "forRouteWithoutId": "free-resources"
+  },
+  "order": 19,
+  "parent": 0,
+  "path": [
+   "Free Resources"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/854931969.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/854931970.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/854931968.jpg",
+   "width": 174,
+   "alt": "Free Resources",
+   "altType": "Fallback"
+  },
+  "description": "<p><span style=\"color: rgb(255, 255, 255);\">These are publicly available forms that you could eventually find, but which are provided here for your convenience, for free.</span></p>\n<p><span style=\"color: rgb(255, 255, 255);\">These forms DO NOT include instructions on how to fill them out, what to do with them, when they apply, or any other information that you really need an attorney's advice to so. If you know what to do, then this just saves you the time looking for them. If you don't know what to do, at least you see first hand that law is not just about checking the box, filing in the blank, and handing the form in.</span></p>\n<p><strong><span style=\"color: rgb(255, 255, 255);\">IF YOU ARE <em>ONLY</em> GETTING FREE LEGAL FORMS, THE SYSTEM WILL NOT ALLOW THAT FROM HERE. USE THE \"JUST THE FORMS\" LINK ON THE MAIN PAGE OF CALTENANTLAW.COM</span> </strong></p>",
+  "productCount": 4,
+  "product_ids": [
+   11871283,
+   11871323,
+   576981881,
+   11871326
+  ],
+  "subcategories": []
+ },
+ "16373011": {
+  "id": 16373011,
+  "name": "Legal Ethics",
+  "slugs": {
+   "forRouteWithId": "Legal-Ethics",
+   "forRouteWithoutId": "legal-ethics"
+  },
+  "order": 20,
+  "parent": 0,
+  "path": [
+   "Legal Ethics"
+  ],
+  "mediaItem": {
+   "borderInfo": {
+    "dominatingColor": {
+     "isDark": false,
+     "isFullyTransparent": true,
+     "rgbHexValue": "#ffffff",
+     "rgbaHexValue": "#ffffff00"
+    },
+    "homogeneity": true
+   },
+   "height": 174,
+   "image1500pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/855407751.jpg",
+   "image400pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/855407749.jpg",
+   "image800pxUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/855407750.jpg",
+   "imageOriginalUrl": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/855407748.jpg",
+   "width": 175,
+   "alt": "Legal Ethics",
+   "altType": "Fallback"
+  },
+  "description": "<p>The new musical comedy audioplay by Ken Carlson, the attorney who hosts this California Tenant Law website. This 95 minute production lampoons the legal system through the eyes of an idealistic new lawyer wanting to do good as a lawyer. The MP3 download is 230 Megs, so be patient!</p>",
+  "productCount": 1,
+  "product_ids": [
+   62232512
+  ],
+  "subcategories": []
+ },
+ "2835908": {
+  "id": 2835908,
+  "name": "",
+  "hidden": true,
+  "description": "",
+  "subcategories": [
+   34591035,
+   2707002,
+   29823027,
+   29490089,
+   29490093,
+   29490094,
+   29490095,
+   29490097,
+   29490098,
+   29490099,
+   29490100,
+   29490103,
+   29490104,
+   29490105,
+   32551404,
+   29490106,
+   29490107,
+   2720426,
+   2720444,
+   16373011
+  ],
+  "product_ids": []
+ },
+ "3290592": {
+  "id": 3290592,
+  "name": "I'm Being Evicted...",
+  "hidden": true,
+  "description": "<p><u><strong>Oh, No!</strong></u></p>\n<p><span style=\"font-family: times new roman,times;\">The wolf is at your door, but has he got a surprise coming! The landlord wants you to run away scared, but once you realize what you can do to turn the tables on him, this can actually be a fun experience. How can you have fun being evicted? Watch me. I've been doing this very thing for over 30 years.\n  <br></span></p>\n<p><span style=\"font-family: times new roman,times;\">This is definitely a \"get out of victim mode\" experience. You will be paying as legal fees only a small fraction of the rent you would normally be paying if your landlord would just work with you. But no, he wants to fight. Let's give him one. He's not expecting what's about to happen. He's arrogant and belligerent, and so is his lawyer. Perfect. \n  <br></span></p>\n<p><span style=\"font-family: times new roman,times;\">First you find out what's going on, how this works, and how you are going to achieve your goal, in our Initial Consultation. From there, what we do will depend on your individual case and how things unfold, playing it by ear. Let's get started. The clock is ticking, and this is a very time-sensitive procedure.\n  <br></span></p>",
+  "subcategories": [
+   3290593,
+   3290594,
+   3290595,
+   3290596,
+   3290601,
+   3290602,
+   3290609,
+   3290636
+  ],
+  "product_ids": []
+ },
+ "3290593": {
+  "id": 3290593,
+  "name": "Start Here",
+  "hidden": true,
+  "description": "<p>You don't walk or drive with your eyes closed. You don't take any legal steps, either, without knowing what you are, where you are going, what you want to avoid, what you need to do, and what your choices are. You make a plan, which not only gives you a lot more security and calmness than you have right now, but it provides a schedule to follow.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11871312,
+   11871323,
+   11768220,
+   11768166
+  ]
+ },
+ "3290609": {
+  "id": 3290609,
+  "name": "Heading to Trial",
+  "hidden": true,
+  "description": "<p>At long last, the trial in your case approaches. Your landlord has been worn down and frustrated by all that you have done to this point, and he thinks it will all be over soon. Maybe not.</p>\n<p>You will being filing your Answer, and probably requesting a jury trial, raising defenses that the landlord may not be prepared for. You will gather your witnesses and evidence, prepare the papers for trial and head in. Up to now, you have been technically on your own, but you can hire a lawyer to do the trial for you, and really spring a surprise on your landlord.&nbsp;</p>\n<p>Chances are, for all the bluster and sabre-rattling of your landlord up to this point, when he sees what it will cost for him to do trial [$5,000-$15,000], and his poor chances of winning, he will buckle at the last minute. 90% do.&nbsp; You've called his bluff, he grudgingly admits defeat, and settles the case with you. Otherwise, you have a very interesting experience, since in practical terms, you've already won.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11871283,
+   11871312,
+   11871326,
+   11768327,
+   11768231,
+   302194125,
+   11801479,
+   12727823,
+   11801825,
+   11801832,
+   11801834,
+   11801516,
+   11801835,
+   11801851,
+   11801852,
+   11801863
+  ]
+ },
+ "3290594": {
+  "id": 3290594,
+  "name": "Emergency! Emergency!",
+  "hidden": true,
+  "description": "<p>Just in case you are in an emergency situation, there is a special process.</p>\n<p>There is a Hotline you can call to talk to the lawyer at $5/minute, paid in advance by credit or debit card. If you need the information right away, and only need to talk for a few minutes, this may be your best choice to avoid a panic situation from getting worse. This can be where your landlord is giving you immediate deadlines, or your landlord is trying to physically force you out, one way or the other, or sending in people to your place without your permission. The Hotline number is: <strong><span style=\"color: #0000ff; font-size: large;\" color=\"#0000FF\" size=\"5\">(888)693-8437 - 1 - 0472 5588</span></strong></p>\n<p>If you've just gotten the Sheriff's Notice to Vacate, you need to jump on this right away. The landlord has taken your default [i.e., you already lost the case], and is taking the final steps. It's not over. You need to un-lose. There is a process to stop the lockout, undo the judgment, and put you back on track.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11768166,
+   11801479,
+   11801558,
+   12477142
+  ]
+ },
+ "3290595": {
+  "id": 3290595,
+  "name": "Your First Papers to File",
+  "hidden": true,
+  "description": "<p>The Summons says that you have 5 calendar days from the date of service of it within which to file your \"response.\" You may not have been served, but that doesn't mean the landlord's lawyer won't lie and say he did, in order to take your default. When you know that there is an eviction case pending against you, you need to take action right away, not to sit naively by, waiting for the landlord to do the right thing.</p>\n<p>You may not have been named as a Defendant in the case, but they plan to evict you anyway. You need to file the Prejudgment Claim to make yourself a Defendant, and take action from there.</p>\n<p><strong>You are NOT expected to know which of these to file. </strong>That is what you will decide during your Initial Consultation. The choices are provided here to make them easy to find.</p>\n<p>Depending on what has happened, your first papers to file will be a Motion to Quash, Demurrer, Answer, or Prejudgment Claim. If you're facing the Sheriff's Notice to Vacate, you need to file the papers in the Emergency! section first.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11871323,
+   11871326,
+   302194125,
+   11801479,
+   11801558,
+   11801643,
+   12727823
+  ]
+ },
+ "3290596": {
+  "id": 3290596,
+  "name": "The Empire Strikes Back",
+  "hidden": true,
+  "description": "<p><span style=\"color: #0000ff; font-size: large;\"><strong>How dare you!</strong></span></p>\n<p><span style=\"color: #0000ff; font-size: large;\"><span style=\"color: #000000; font-size: medium;\">I couldn't resist the Star Wars analogy, because that's how it feels: you dare challenge the power, money and majesty of your landLORD and all the corrupt powers of the Court behind him? Yep. You mean their scare tactics and sneaky tricks aren't going to bully you out, without a fight? Sorry, no. Are you really going to take this all the way, running up the stakes, just to be <u>difficult</u>? No, actually to <u>win</u>. In <u>real</u> terms.</span></span></p>\n<p><span style=\"color: #0000ff; font-size: large;\"><span style=\"color: #000000; font-size: medium;\">The landlord's lawyer has promised to make quick work of you, and now you're about to make him look bad. The landlord whose arrogance has blinded him to his own wrongfulness is aghast at your audacity to defy him, and indignant to your \"dilatory tactics\" postponing the \"inevitable.\" Think I'm kidding? They really think like that. Actually, popping those inflated egos and brutalizing those bullies with your legal tactics is what makes this experience fun. </span></span></p>\n<p><span style=\"color: #0000ff; font-size: large;\"><span style=\"color: #000000; font-size: medium;\">Depending on what papers you have filed, the landlord will probably file a response to it, so that these subcategories are arranged accordingly. You may back to this section again and again as the case progresses.\n   <br></span></span></p>\n<p><span style=\"color: #0000ff; font-size: large;\"><span style=\"color: #000000; font-size: medium;\">\n   <br>\n  </span></span></p>",
+  "subcategories": [
+   3290597,
+   3290598
+  ],
+  "product_ids": []
+ },
+ "3290601": {
+  "id": 3290601,
+  "name": "Undoing the Court's Mistakes",
+  "hidden": true,
+  "description": "<p>While we could like to believe that the Court is infallible, it is not. The machine entrusted with solving the problems of the rest of society is itself one of the most broken. For over 30 years I have watched this steady decline, and I literally spend about 1/3 of my practice getting the court to follow the law. It's a lot hard than you'd think.</p>\n<p>Under-trained, under-supervised, and overburdened court clerks are often unfamiliar with the \"fancy footwork\" I generate for you, and they do the standard things they are most familiar with, oblivious to the law. If you quote them the law, they stare blankly at you. Even the supervisors and Court Managers are unfamiliar with some of the papers you may file in your case. Add to that the often biased and corrupt commissioners and judges to whom the case is referred, and you see why being a tenant fighting for your rights under the law is so hard. The opposing lawyers are nothing compared to the court staff who have the power and too often the inclination to throw your rights out the window. Eviction cases are generally assigned to the bottom of the judicial totem pole, along with traffic tickets and small claims court.</p>\n<p>In an effort to address this, we have a few options. One is where I contact the court to see if this can be corrected in a simple fashion, particularly where it is the clerk's mistake. That works about half the time. Otherwise, there are various motions and appeals which need to be taken, at additional expense but usually with good results.</p>",
+  "subcategories": [],
+  "product_ids": [
+   302194125,
+   11801479,
+   11801488,
+   12477142,
+   11801849,
+   11801837,
+   11801843,
+   11801665,
+   11801903,
+   11801908
+  ]
+ },
+ "3290602": {
+  "id": 3290602,
+  "name": "The Discovery Phase",
+  "hidden": true,
+  "description": "<p>Discovery is the part of a lawsuit where you get information together to be able to prove your case at trial. The landlord and his staff will lie, almost without exception, because they want to win. How will disprove what they say? How will you show the judge that your case is solid? Where is the real battle going to be, in the facts or law? You want to know before you go to trial what the landlord is going to claim, and how you are going to answer it.</p>\n<p>You are probably aware of depositions, but they are rare in eviction cases because of the time and expense involved. Usually, there are Form Interrogatories and Special Interrogatories [questions],Requests for Admission, and Requests for Production of Documents. There is a 5-day deadline for responding to these, and a Motion to Compel the answers if they fail to respond, incompletely respond, or respond evasively. It is unusual for the landlord to send any discovery to you, but it happens. From your side, it is beneficial to send discovery to the landlord because (1) you generally have the harder and omre complex case to prove where the landlord has a lot of the related information, and (2) it can greatly increase the cost to the landlord of evicting you, planting the seed that this eviction case may cost him far more than it's worth to just work it out with you in a settlement.</p>",
+  "subcategories": [
+   3290605,
+   3290604,
+   3290603
+  ],
+  "product_ids": []
+ },
+ "3290636": {
+  "id": 3290636,
+  "name": "Appeal",
+  "hidden": true,
+  "description": "<p>It may happen that, for whatever reasons, you lose the case and the judge will not help. It could happen because you responded too late, by landlord dirty tricks, by court clerk errors, judge bias, or many other things that are not your fault.It happens.</p>\n<p>In that event, you may want to appeal the case. The appeal does NOT automatically stop the eviction; you have to specially ask for the trial judge to stop it, and if that doesn't work, ask the appellate court.</p>\n<p>There are also things that you need to do in the process, like file the notice of appeal within 30 days of the notice of entry of judgment, file the request for clerk's transcript and Statement of Appeal, your Opening Brief, and perhaps a Reply Brief, in addition to a few other matters that may arise. These papers have to be done correctly and on time. The actual costs are difficult to assess on some items, like the statement on appeal and Opening Brief, so the charges shown for those are the MINIMUM. You will be advised as to the actual cost once the paperwork is evaluated.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11801903,
+   11801916,
+   11801908,
+   11801913,
+   14094013,
+   14094038,
+   14094039
+  ]
+ },
+ "3290597": {
+  "id": 3290597,
+  "name": "If you filed a Motion to Quash...",
+  "hidden": true,
+  "description": "<p>If you filed a motion to quash, or a Prejudgment Claim followed by a Motion to Quash, the landlord MIGHT file an opposition to it. Usually, they don't. The Motion to Quash is essentially to challenge whether the Court has \"jurisdiction\" over you, so that they can proceed at all with this case. It is a highly technical area, not one of common sense, but it is an important part of the legal game.</p>\n<p><span style=\"color: #0000ff; font-size: large;\"><strong>Removal to Federal Court</strong></span></p>\n<p>If you are the tenant of a foreclosed landlord, and are now being evicted by the foreclosing bank or someone who bought the property at the foreclosure auction, you have special rights created by Congress, called the Protecting Tenants at Foreclosure Act of 2009 [\"PTFA\"]. Since this is a federal law, and the landlord can only evict you under the PTFA, it should be decided in Federal Court as a \"Federal Question.\" We therefore \"remove\" your eviction case to the federal district court, literally making a federal case out of it. The federal court judges have so far found any means to misconstrue the situation to justify \"remanding\" the case back to State Court. We are awaiting a decision by the Ninth Circuit on this issue, so it's worth trying each time, so that if the law changes, you're right there to take advantage of it. Depending on how the given federal judge handles these cases, you may need to file a response after removing the case.</p>\n<p><span style=\"color: #0000ff; font-size: large;\"><strong>Writ of Mandate on the Motion to Quash</strong></span></p>\n<p>As simple as the motion to quash hearing is, the judges make a surprising number of mistakes in ruling upon it. The judge may deny it because you weren't there, or deny it because the landlord doesn't claim to have served you, or deny it despite the landlord's admission that you weren't properly served. The case might have been heard by a commissioner or judge that you legally excluded, in defiance of the law. Sometimes the judge illegally orders you to \"answer only,\" or improperly sets the case for trial prematurely, in order to help the landlord evict you and criple your case. [Yes, it's that bad!] Where the judge has made a mistake in ruling on the motion to quash, you have the right to a mini-appeal on that narrow issue, called a Petition for Writ of Mandate.</p>\n<p>This can be filed within the time to respond. If your case was first removed and remanded, then it would be after the trial court decided the motion to quash after that remand. If you win on this Petition, the case goes back to Square One.</p>",
+  "subcategories": [],
+  "product_ids": [
+   302194125,
+   11801479,
+   11801630,
+   11801568
+  ]
+ },
+ "3290598": {
+  "id": 3290598,
+  "name": "If you filed a Demurrer...",
+  "hidden": true,
+  "description": "<p>If you filed a Demurrer to the Complaint, there are two kinds of responses you would get. If the main one is their Opposition to the Demurrer, to which you would file a Reply. The second is the landlord's attempt to speed things along by asking the judge to shorten the time for hearing on the demurrer from a month away to either immediately or within a week or so.&nbsp;</p>",
+  "subcategories": [],
+  "product_ids": [
+   12727865,
+   11801652
+  ]
+ },
+ "3290605": {
+  "id": 3290605,
+  "name": "Their Discovery to You",
+  "hidden": true,
+  "description": "<p>Usually, the landlord will not submit discovery to you unless you first send it to him. The reason is that discovery is an additional expense, and can result in a dely of the trial, which the landlord does not want. However, if you submit discovery to him, and his lawyer tells him that this will cost at last another $1,000 or so to answer, the landlord wants to get even, and make you go through that expense, too.</p>\n<p>Typically, the discovery submitted by the landlord's lawyer is lame. They don't know what to ask, or how to ask for it, and it's loaded with mistakes. Still, you have to respond in some way, and how you do in a given case requires some attorney evaluation of the given question and range of responses, to be discussed with you.</p>\n<p>If the landlord takes your deposition, you should have some special preparation for that, so that you're comfortable with the process, aware of how to answer, and not at all intimidated by what they hope would be a terrifying experience. You'll have fun, instead, and maybe drive them crazy.</p>",
+  "subcategories": [],
+  "product_ids": [
+   302194125,
+   11801479,
+   11801935,
+   11801780,
+   11801786,
+   11801807,
+   11801498,
+   11801492
+  ]
+ },
+ "3290604": {
+  "id": 3290604,
+  "name": "Making Them Answer",
+  "hidden": true,
+  "description": "<p>In most instances, the landlord either fails to respond to your discovery at all or poses multiple objections with evasive responses, solely to frustrate your efforts to get the information to which you are entitled. We expect this.</p>\n<p>You start with a \"meet and confer\" letter, asking for the information. This is a legal requirement if they have given any response at all.</p>\n<p>Then you have a motion to compel their response, and in the case of a request for admissions, a motion to \"deem admitted\" those requests which they failed to answer.</p>\n<p>They will file some Opposition to your motion and you will then file a Reply to their Opposition.</p>",
+  "subcategories": [],
+  "product_ids": [
+   302194125,
+   11801479,
+   11801849,
+   367798275,
+   11801935,
+   11801776,
+   11801798,
+   11801813,
+   11801492
+  ]
+ },
+ "3290603": {
+  "id": 3290603,
+  "name": "The Basic Discovery Package",
+  "hidden": true,
+  "description": "<p>These are the basic documents you would probably use to get the information from the landlord.</p>\n<p>The UD form interrogatories are the easiest to fill out, but you still need to know which ones apply to your case. Checking all of them is not a good idea for several reasons.</p>\n<p>The requests for admission ask the landlord to admit that certain specific things are true, so that you have already proven them for trial if he does. For anything he denies, we use the General form interrogatories to get the facts, witnesses and documents that support his denial.</p>\n<p>The requests for production require the landlord to give you the papers that relate to the case, like the lease with modifications, payment records, letters and emails, repair records, photographs, corporation organization documents, fictitious business name statements, management contracts, and so forth. He didn't want to give them to you before, but now he has to, since he's filed this case.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11801686,
+   11801739,
+   11801757,
+   11801769
+  ]
+ },
+ "2913404": {
+  "id": 2913404,
+  "name": "Our discovery sent to them",
+  "hidden": true,
+  "description": "<p>Here is the basic set of our discovery sent to them.&nbsp; The basic kinds of discovery are form interrogatories and special interrogatories [questions you ask them to answer], requests for production [to make the give you specified paperwork], requests foradmission [to admit that specified facts are true], depositions [using a court reporter], and subpoenas duces tecum [orders for third parties to produce records].</p>",
+  "subcategories": [],
+  "product_ids": [
+   11801686,
+   11801739,
+   11801757,
+   11801769,
+   108788396
+  ]
+ },
+ "2902880": {
+  "id": 2902880,
+  "name": "Emergency Information Needed",
+  "hidden": true,
+  "description": "",
+  "subcategories": [],
+  "product_ids": [
+   11801488,
+   11801492
+  ]
+ },
+ "2902882": {
+  "id": 2902882,
+  "name": "Eviction - Basic Papers",
+  "hidden": true,
+  "description": "",
+  "subcategories": [],
+  "product_ids": [
+   11871323,
+   15544859,
+   11801558,
+   11801643,
+   12727865,
+   11801652,
+   11801665,
+   12727823
+  ]
+ },
+ "3692258": {
+  "id": 3692258,
+  "name": "Sue Your Landlord",
+  "hidden": true,
+  "description": "<p>You tried to be nice, fair, and reasonable, but noooo, the landlord was not on that page. He sees himself as the landLORD, and you'd just better do what he says. Oh, well, you tried. Plan B is you sue him. That's right, you sue your landlord.</p>\n<p>If you have not had an initial consultation yet, you really should do that first, so you understand what you can do and how best to accomplish it. The timing is often the most important part, as you'll learn in the initial consultation. Waiting too long, starting too soon, or not having enough to start can be fatal flaws to an otherwise successful lawsuit.</p>\n<p>It certainly gets their attention. They never thought you'd put them on defense, but here you are, and they have to seriously face their own liability. Maybe they'll even finally try to settle this with you.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11871283,
+   11768374,
+   11768166,
+   302194125,
+   11801479,
+   15544859,
+   11801488,
+   11801492,
+   11801851,
+   15689262
+  ]
+ },
+ "2902878": {
+  "id": 2902878,
+  "name": "Scheduled Consultation",
+  "hidden": true,
+  "description": "<p>When in doubt, start here. If this is your first time, you MUST selection this option and choose the Initial Consultation.</p>\n<p>Most of these consultations involve forms for you to download, fill out, and send back. You also may be asked to Fax or scan paperwork so that I have that to review before we talk. If you do this, it may take a few minutes of your time, but it makes our consultation time more cost-effective for you, and helps me better focus the information you need to your particular situation.</p>\n<p><span style=\"color: #0000ff;\"><strong>After you have paid, you will be directed immediately to the download page, so you can get the forms right then. Please take the time right away to fill those out and send them in, so I can help you as soon as possible. </strong></span></p>",
+  "subcategories": [],
+  "product_ids": [
+   11768166,
+   302194125,
+   11801479,
+   11801935,
+   11801498,
+   11801516
+  ]
+ },
+ "2913365": {
+  "id": 2913365,
+  "name": "Eviction - Discovery Phase",
+  "hidden": true,
+  "description": "<p>By the time you get to trial, your landlord will be so frustrated with how long this has taken and how expensive it has been, that he will be inclined to lie on the witness stand to say whatever it takes to get a judgment against you. With the way he's treated you so far, what's one more lie? Don't think that he'd be afraid of perjury charges.</p>\n<p>Before it gets to trial, you want to know what the landlord is going to claim, and particularly what he has to say about your defenses. If you know in advance that he is going to claim X and you can disprove that, you'll be ready for him, and expose him as a liar on the witness stand. You may be able to nail him down to the facts so tightly that you can win as a matter a matter of law.&nbsp; That is what discovery is all about.</p>\n<p>There are different types of discovery, and if the landlord fails to answer, or is evasive in his responses, then you can get a court order for him to respond, and pay you money for the effort, in addition to postponeing the trial until he does.&nbsp; The types of discovery you choose should be based upon advice you receive in a prior discovery consultation, not on your own guess.</p>",
+  "subcategories": [
+   2913449,
+   2913447,
+   2913404
+  ],
+  "product_ids": []
+ },
+ "2913364": {
+  "id": 2913364,
+  "name": "Eviction - Special Procedures",
+  "hidden": true,
+  "description": "<p>There are special procedures which may be available in your case, depending on the circumstances.&nbsp; Included in this categor are the Petition for Writ of Mandate and Removal to the Federal Court.&nbsp; You will be advised during your earlier consultation whether you should use either or both of these.</p>",
+  "subcategories": [],
+  "product_ids": [
+   15544859,
+   11801630,
+   11801568
+  ]
+ },
+ "2913358": {
+  "id": 2913358,
+  "name": "Eviction Defense",
+  "hidden": true,
+  "description": "<p>Most caltenantlaw.com clients need help with an eviction. Through this system, you can get professionally prepared, legally correct paperwork at a fraction of the normal cost. The papers come to you as a PDF email attachment, with instructions on copies to make, filing, and other important information.&nbsp; In most cases, you don't even have to set foot inside a courtroom until trial, and then you can substitute a lawyer to officially represent you at trial [I am not available to do that, sorry.]</p>",
+  "subcategories": [
+   2902882,
+   2913364,
+   2913477,
+   2913365,
+   2707015
+  ],
+  "product_ids": [
+   367798275
+  ]
+ },
+ "2707015": {
+  "id": 2707015,
+  "name": "Eviction Trial Preparation",
+  "hidden": true,
+  "description": "<p>You've never done this before, and it all looks a bit scary. Relax. You just need to know what happens, and what to do. Your landlord is expecting you to be intimidated by this whole process and buckle under rather than face the terror of trial. Imagine his suprise when you're better prepared than his lawyer is, and you're ready to win!</p>\n<p>You can get help in a special one-hour trial preparation consultation with attorney Ken Carlson, or buy an eviction trial kit. You can get help organizing your exhibits and witnesses, have the initial trial papers drafted for you, get jury instructions, motions in limine, and even coaching over the phone when you're in trial. Seeing that you're so ready, watch your landlord back down suddenly, and be ready to give you almost whatever you want in a settlement.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11768327,
+   11801825,
+   11801832,
+   11801834,
+   11801516,
+   11801835,
+   11801851,
+   11801863
+  ]
+ },
+ "2913477": {
+  "id": 2913477,
+  "name": "Emergency Procedures",
+  "hidden": true,
+  "description": "<p>Much as we'd like the judges and clerks to follow the law they are supposed to enforce, and much as we'd like the landlord's lawyers to act ethically and not attempt dirty tricks, alas! tenants spend more energy trying to get the judge and clerks to follow the law and undoing the landlord's lawyer's dirty tricks than is spent in the real litigation.</p>\n<p>Most common is the default and lockout notice from the Sheriff, as the first thing you know about the case. Second most common is the clerks prematurely entering your default and judgment just because the landlord's lawyer asks them to. Third is the mistaken or deliberate violation of the law by the judge or commissioner, being the landlord's puppet, rather than a bench officer with integrity and respect for the law.</p>\n<p>In these cases, YOU have to correct their mistakes and tactics, using the special procedures and papers provided in this section. You will be guided as to which of these to use in your prior consultation with the attorney.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11801488,
+   12477142,
+   11801849,
+   11801837,
+   11801843,
+   11801492
+  ]
+ },
+ "2707005": {
+  "id": 2707005,
+  "name": "Legal Papers",
+  "hidden": true,
+  "description": "<p>Save thousands in attorney fees while getting the best in professional legal help. This is no sloppy paralegal document service. These are attorney-drafted legal papers with all of the proper format, legal citations, arguments, authority, and procedure. You can actually represent yourself, often without having to step foot in the courtroom, but have all of your paperwork in order.</p>\n<p>All papers come to you as a PDF attachment to an email that gives you full instructions and explanations. You will know what you are filing, and why, what the other side might do, and how to handle things, as well as when you will need to contact us for more help.</p>",
+  "subcategories": [
+   2913358
+  ],
+  "product_ids": [
+   11801558,
+   11801630,
+   11801568,
+   11801849,
+   11801837,
+   11801843,
+   11801686,
+   11801739,
+   11801757,
+   11801769,
+   11801776,
+   11801798,
+   11801813,
+   11801814,
+   11801780,
+   11801786,
+   11801807,
+   11801643,
+   11801652,
+   11801665,
+   12727823,
+   11801825,
+   11801832,
+   11801834,
+   11801835,
+   11801851,
+   11801852,
+   11801863,
+   11801903,
+   11801916,
+   11801908,
+   11801913
+  ]
+ },
+ "2707004": {
+  "id": 2707004,
+  "name": "Consultation",
+  "hidden": true,
+  "description": "<p>Consult Ken Carlson directly either by phone or video SKype. No need to travel through traffic to a high-rise office, pay for parking and wait in the lobby. Distance is dead. Do the consultation from your home, office or cell phone at flexible times.</p>\n<p><strong><span style=\"color: #0000ff;\">If this is your first time, you <u>must</u> go to the Scheduled Consultations and get the Initial Consultation. Even if it doesn't go any further, I still need the information you provide there to create your file. </span></strong></p>",
+  "subcategories": [
+   2902878,
+   2902880
+  ],
+  "product_ids": []
+ },
+ "2913449": {
+  "id": 2913449,
+  "name": "Discovery by them",
+  "hidden": true,
+  "description": "<p>Since the landlord wants to speed the case along to trial, and minimize his expenses in doing so, it is unusual that the landlord conducts discovery, which can postpone the trial and does cost more money than without it.</p>\n<p>If you get discovery from your landlord, you should have a consultation to go over what is needed and how to respond, and then select from this list. In very rare instances, the landlord will even schedule a deposition, for which you need a special consultation to handle.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11801780,
+   11801786,
+   11801807
+  ]
+ },
+ "2913447": {
+  "id": 2913447,
+  "name": "Forcing them to Respond",
+  "hidden": true,
+  "description": "<p>Usually, the landlord does not just answer as they should, but makes multiple, repeated objections to each and every question and request that you make, just to frustrate your efforts. This is a gamble by the landlord that you will not take the next step, but here you do, and the landlord and his lawyer face the possibility of money sanctions paid to you, as well as producing the information they tried hide, having the issued \"deemed admitted\" and otherwise suffering even greater expense and losses than they had ever dreamed would happen.</p>\n<p>There is a two step process in most case, the first of which is to make a \"meet and confer\" effort to informally resolve the issues. This is legally required where they responded in some way, but not if they didn't respond at all.&nbsp; The next part is to file the actual motion to compel or motion to deem admissions, as the case might be.</p>",
+  "subcategories": [],
+  "product_ids": [
+   11801776,
+   11801798,
+   11801813,
+   11801814
+  ]
+ }
+}

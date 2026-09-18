@@ -1,116 +1,81 @@
 # California Tenant Law (caltenantlaw.com): site digest
 
-Prepared 2026-09-18 (Fable 5.1) from ~60 web-search result sets: titles, URLs and indexed snippets of the site's own pages and third-party profiles. **The site itself was unreachable from the build environment** (the egress proxy blocks caltenantlaw.com, its `cms.` subdomain and every mirror / reader route tried), so nothing visual was observed and every fact is "as indexed" with an unknown crawl date. Flags: **[v]** verbatim in indexed text; **[u]** inferred from URL patterns, titles or partial snippets. Decision D-025 governs how these facts appear in the product (never as unflagged facts). Follow-up for whoever has browser access: 20 minutes on `/site-index`, the videos page, `/store`, `/offices` and the YouTube channel `@caltenantlaw` closes most [u] items; a view-source of the home page settles the CMS / forms / scheduler questions.
+**Method**: scraped live on 2026-09-18 (Fable 5.1, prompt 0004) from the build environment once the domain was allowed: 98 HTML pages (every URL in `/site-index` and `/sitemap.xml`, plus every internal link), the Ecwid storefront API for store 1197002 (96 products, 49 categories incl. hidden ones), the videos page's JavaScript chunk (33 video ids), YouTube metadata for 36 videos, the compiled stylesheet and Typekit kit. Raw HTML: `reference/site-scrape/raw/`; inventory: `docs/reference/site-scrape/pages.md`; data: `docs/data/{services-catalog,videos,articles,offices,faq}.json`; catalog prose: `docs/reference/services-catalog.md`; brand: `docs/reference/brand-observed.md`. This replaces the 2026-09-18 search-index reconstruction (its [u] items are resolved below; where a fact is still not on the site it is marked **[not on site]**). Prices and legal statements remain **unverified by the firm** (`verified: false`, D-038) until an attorney confirms them.
 
 ## 1. Identity
 
-- **California Tenant Law** ("CalTenantLaw", older copy "Cal Tenant Law"). Home title "California Tenant Law — Renters' Rights Lawyers Since 1980"; about title "Empowering Tenants Since 1980"; older brand line "The Renters' Rights Online Legal Help Clinic". [v]
-- Practice since **1980**; website since **1999**; "tens of thousands of clients"; "45 years"; "serving all 58 counties by phone and video"; "eight offices statewide". [v]
-- HQ / mailing: PO Box 2417, Idyllwild, CA 92549; phone 951-659-1234. [v]
-- Legacy `.htm` pages describe the site as "Non-profit legal advice for California renters' rights" (currency unknown). [v]
-- **Founder**: Kenneth H. Carlson, J.D. ("Ken Carlson"), CA Bar #93602 (admitted 1980), Founder & Principal Attorney; UC Berkeley, Loyola Law School; admitted to all California courts and federal courts "up through the United States Supreme Court"; Idyllwild resident 20+ years; practice areas landlord-tenant and mobile home law. Avvo 4.4; Yelp 26 reviews; Martindale notes a 2003 State Bar discipline ("Discipline and Probation with no Actual Suspension"). [v] Flag for the client on how bios address it.
-- **Visual style**: **not observed**. No palette, typography or imagery can be assumed. Only cues: WordPress attachment titles for logo / OG images, a `toebner_law_image` attachment, the illustrated Game Board poster (cartoon judge, landlord, tenants, sheriff truck, "OUT OF ORDER" scales). [u]
+- **California Tenant Law** ("CalTenantLaw" in body copy; "Carlson Law Office, PO Box 2417, Idyllwild, CA 92549" on the copyright page). Title: "California Tenant Law — Renters' Rights Lawyers Since 1980"; header strapline **"The Renters' Rights Online Legal Help Clinic"**; about title "Empowering Tenants Since 1980"; logo tagline **"Your cloudy day is about to clear up"**; hero "Get out of victim mode. Learn what to do. Knowledge is power."
+- Practice since **1980**; website since **1999** (Ken "created the caltenantlaw.com website in 1999"); "tens of thousands of clients"; "45 years"; "serving all 58 California counties through phone and video consultations"; "eight offices statewide"; "We have no physical office"; "All of our attorneys and staff work from home."
+- Phone 951-659-1234; hotline 213 340 1090 (existing clients); fax for paperwork 888 764 1919; mailing PO Box 2417, Idyllwild, CA 92549.
+- **Founder**: Kenneth H. Carlson, J.D., CA State Bar #93602 (1980), Founder & Principal Attorney; UC Berkeley and Loyola Law; admitted to all California courts and the federal system "up through the United States Supreme Court"; taught the Department of Real Estate landlord-tenant course; 20+ years in Idyllwild (runs MyIdy.net); wrote the musical comedy *Legal Ethics*; invented the Facsuit. Bio at `/offices/riverside` (the old `/ken` is gone). The State Bar discipline note from third-party profiles is **[not on site]** (still flag for the client).
+- **Visual style (observed)**: storm-cloud navy (`#0b152a`, `#172b58`) with orange (`#e86935`, `#ff6601`) and a yellow highlight (`#f9dc00`); Barlow headings (Typekit) + Source Sans 3 body; clouds hero video; flat cartoon icons; the illustrated Game Board. Details and copied assets: `brand-observed.md`, `public/brand/observed/`.
+- **Stack (observed)**: Next.js (Vercel deployment id in asset URLs), Tailwind, Typekit, reCAPTCHA forms that email a copy, Ecwid store (card + PayPal), VoiceStamps hotline, Microsoft Teams or phone, YouTube. The blog page says "Blog posts will be fetched from WordPress. Currently one post exists for future use by associates." No legacy `.htm` pages remain (`/LegalServices.htm` 404); no `cms.` subdomain in use; no client login (Ecwid "My Account / Track Orders" only).
 
-## 2. The network of offices (seven found; the site says eight) [v unless noted]
+## 2. The network of offices (eight, all found)
 
-| Office page | Attorney (as indexed) | Address (as indexed) | Coverage copy |
-| --- | --- | --- | --- |
-| /offices/riverside | Kenneth H. Carlson (Bar 93602) | PO Box 2417, Idyllwild 92549 | Inland Empire: Riverside, Idyllwild, Palm Springs, Palm Desert, Hemet, Temecula, Murrieta, Corona, Moreno Valley |
-| /offices/downtown-los-angeles | Jeremy A. Cook (Bar 283576, 2012) | 312 W. Fifth St. #512, Los Angeles 90013 | DTLA, Koreatown, Echo Park, Silver Lake, Hollywood |
-| /offices/san-fernando | Perrin F. Disner (Law Offices of Perrin F. Disner) | 4630 Sepulveda Blvd, Suite 105, Sherman Oaks 91403 | Sherman Oaks to Pasadena, Burbank, Glendale, SFV, western LA County |
-| /offices/long-beach-orange-county | Brian Barajas (CA + DC) | PO Box 32303, Long Beach 90802 | Long Beach, Torrance, Compton; North / Central OC |
-| /offices/san-diego | "Chelsea Cooper" [u] | n/a | Downtown SD, La Jolla, Pacific Beach, Chula Vista, Oceanside, Escondido, Carlsbad, El Cajon |
-| /offices/sacramento | Brittany Renee Torbert (Bar 314905, 2017) | 2999 Douglas Blvd #180, Roseville 95661 | Sacramento, Roseville, Folsom, Elk Grove |
-| /offices/bay-area | Kavin Williams (KAW LAW, est. 2022) | 582 Market St, 17th Floor, San Francisco 94104 | SF, Oakland, Berkeley, San Jose, nine Bay Area counties |
-| (8th) | [u] | | |
+| Office | Attorney (as published) | Bar # (year) | Address | Coverage (short) |
+| --- | --- | --- | --- | --- |
+| Riverside (Main Office) `/offices/riverside` | Kenneth H. Carlson, Founder & Principal Attorney | 93602 (1980) | PO Box 2417, Idyllwild 92549 | Inland Empire |
+| Downtown Los Angeles | Jeremy Cook | 283576 (2012) | 312 W. Fifth St. #512, LA 90013 | DTLA, Koreatown, Echo Park, Hollywood, central LA |
+| San Diego | Chelsea Cooper | 275383 (2010) | 10089 Willow Creek Rd #200, San Diego 92131 | all San Diego County |
+| Bay Area | Kavin Williams (KAW LAW, 2022) | 320233 (2018) | 582 Market St, 17th Floor, SF 94104 | nine Bay Area counties |
+| Sacramento | Brittany Torbert | 314905 (2017) | 2999 Douglas Blvd #180, Roseville 95661 | Sacramento region |
+| San Luis Obispo County (the eighth) | Samara Weiner | 225318 (2003) | 791 Price Street, Pismo Beach 93449 | SLO County, Santa Barbara, southern Monterey |
+| San Fernando Valley | Perrin F. Disner | 257586 (2008) | 4630 Sepulveda Blvd, Suite 105, Sherman Oaks 91403 | Valley, Burbank, Glendale, Pasadena |
+| Long Beach / South Bay / Orange County | Brian Barajas (CA + DC) | 333192 (2021) | PO Box 32303, Long Beach 90802 | South Bay, Gateway Cities, north/central OC |
 
-Model: independent practitioners under the CalTenantLaw banner ("network of tenant lawyers throughout California"); consultations "with Ken Carlson or one of his associate attorneys". Also indexed: many **city landing pages** (/inglewood/, /big-bear/, /albany/, /redondo-beach/, /sanbernardinocounty/) repeating the nav; a referral directory /lawyers ("Other Tenant Lawyers in California") and /free-clinics/. **Seed data must not use these names (D-023).**
+Every office page shares one phone (951) and the same page template ("How We Help <area> Tenants" list, "Areas Served", contact). Consultations are "with Ken Carlson or one of his associate attorneys"; paperwork is emailed to "your assigned associate attorney". Full bios: `docs/data/offices.json`. Also on the site: `/lawyers` = `/free-clinics` (referral directory of other tenant lawyers by city, Beverly Hills to San Diego); `/related-services` (one therapist). City landing pages from the old site (/inglewood/ etc.) **[not on site]** any more. **Seed data still must not use these names (D-023).**
 
-## 3. Positioning and voice [v]
+## 3. Positioning and voice (verbatim)
 
-Tenant-side only. Unbundled: "All services are piecemeal, like a legal vending machine, so you control the costs." "We do everything but go to court, though we can arrange a lawyer for court appearances." "You speak only with a licensed attorney who specializes in landlord-tenant law." "Transparent pricing with no hidden fees." Remote-first: "Consultations are entirely by phone or Microsoft Teams." "All payments are online by card or PayPal." Educate-first: "Rather than pay to have a lawyer tell you the same information, you can watch the videos, rewind and save them for free." Voice: direct, wry, combative for the tenant ("The most common theft by landlords is the 'Late Fee.'", "If you don't answer the door, they will probably just stick it on the door and walk away. That's their first mistake."). Humor section: the "Res-Law" audioplay (a lampoon of the legal system: eviction mill, corporate powerhouse, DA's office, anything-for-a-buck firm). "Understanding Landlords" decodes "bad landlord quirks".
+Tenant-side only; educate first, then sell unbundled work. "All services are piecemeal, like a legal vending machine, so you control the costs." "Like a vending machine, you pay for X and you get X, so that the total cost is entirely up to you." "We do everything but go to court, and for that we can arrange a lawyer for you if you wish." "No paralegals. You speak only with a licensed attorney who specializes in landlord-tenant law." "You officially represent yourself, even though the judge and lawyers will know that we are behind you, writing all of your paperwork and advising you." "Transparent pricing with no hidden fees." "Consultations are entirely by phone or Microsoft Teams." "Rather than pay to have a lawyer tell you the same information, you can watch the videos, rewind and save them for free." Voice: direct, wry, combative for the tenant ("The most common theft by landlords is the 'Late Fee.'"; "If you don't answer the door, they will probably just stick it on the door and walk away. Perfect! That's their first mistake."; "Unleash the Kraken"; "When it comes to you, the landlord is not stepping on a cockroach; he is stepping on a landmine."). Humor: *Understanding Landlords* (reptilian thinking, arrogance, little people with power, "in my country", my temple) and the *Legal Ethics* musical (double CD $15, free MP3, Audible). Civic: *Get Political* ("Tenants are a 66% majority. Yet only about 5% of tenants vote.").
 
-## 4. How clients buy today [v unless noted]
+## 4. How clients buy today (verbatim where quoted)
 
-1. Watch the free pre-consultation videos.
-2. **Initial Consultation Form** (/initial-consultation-form/): detailed intake; on submit "you will be given a link to the services page, and a copy of your answers will be emailed to you."
-3. Buy **101 Initial Consultation with Attorney** ($165) by card or PayPal; some pages mention an "online scheduling system" (vendor [u]).
-4. 30-minute consultation by phone or Microsoft Teams ("normally verbal over the phone, but can be by email upon request").
-5. Returning clients: **Follow-up Consultation Form** -> **102 Follow-up Consultation [A]** ($165).
-6. Existing clients: **Legal Hotline** (/hotline): $60 card deposit covers 10 minutes, further $60 blocks auto-accepted, unused minutes refunded; runs on **VoiceStamps Technologies**; billing separate from consultations.
+1. Watch the free **Legal Videos** (`/pre-consultation-videos`; 33 videos in three groups; downloads of the forms they mention).
+2. **Attention** gate (`/consultation`): "$165 for 30 minutes with an experienced tenant rights attorney ... By Continuing, You Acknowledge the Above".
+3. **Initial Consultation Form** (`/consultation/form`, 3,100 words of intake). "After filling out the Initial Consultation Form, you will be redirected to the service page where you may submit your payment." A PDF of the answers is emailed.
+4. Buy **101 Initial Consultation with Attorney ($165)** in the Ecwid store (order fields: contact name, best phone, best email, best time/date, comments); pay by card or PayPal. "On your first consultation, you become a client." Download links in the confirmation stay open 72 hours. No third-party scheduler is visible: scheduling is the "Best Time/Date" field plus a call back **[resolves the [u] scheduler question]**.
+5. 30 minutes by phone or Teams; "you can record the session if you want".
+6. Returning clients: **Follow-Up Consultation Form** (`/consultation/follow-up`) -> **102 Follow-up Consultation ($165)**, or **103 "I just got this paperwork. Now what?" ($100)**, **106 Quick Question ($50, 5 minutes)**, **104 Situation Evaluation ($200)**, **105 Case Evaluation ($400)**.
+7. Existing clients: **Legal Hotline** (`/hotline`): $60 card deposit per 10 minutes, auto-renewed, unused minutes refunded, VoiceStamps Technologies, "reserve a time for your call"; **75 Email Communications ($240 deposit for 4 paired emails at $60)**; emails otherwise billed "as consultation time with a minimum of $75 payment required".
+8. Paperwork is bought per SKU (below), delivered as PDF by email/download for the tenant to file ("Getting the papers to the courthouse for filing is preferably done by you"), or the firm arranges filing (65, $125 min.). Court appearance by an associate (450, $330/h min. one hour) only "IF one of our staff attorneys is available"; remote via Zoom / CourtCall.
 
-Rates: consultation $165 / 30 min; ongoing work **$330 / hour**; hotline **$60 per 10 min**. **Unverified for 2026.**
+Rates (as posted 2026-09-18, unverified): consultation **$165 / 30 min**; ongoing work **$330 / hour**; hotline **$60 per 10 min**; billed email minimum **$75**.
 
-### Store catalog (Ecwid; SKU-numbered; prices as indexed) [v]
+### Store catalog (Ecwid store 1197002; 20 visible categories, 96 products)
 
-Categories: Schedule a Consultation · Legal Kits · Game Board (services by eviction stage) · Motion to Quash · Default · Discovery by Us · Their Discovery to You · Demurrer · Answer · Trial Preparation · Settling and Negotiation · Judgment · Appeal · Suing the Landlord · Changes to Prepared Paperwork · Supplemental.
+Full table with prices, units, deliverables, prerequisites and board nodes: `docs/reference/services-catalog.md`; data: `docs/data/services-catalog.json`. Categories in `/store` menu order: Request a Consultation (101-111) · Changes to Prepared Paperwork (140) · Motion to Quash (150-170) · Default (200-207) · Discovery – by Us (250-299, 316 hidden) · Discovery – by Them (300-340) · Demurrer (370-390) · Answer (400) · Trial Preparation (425-520) · Settling and Negotiation (500-505) · Judgment (510) · Appeal (600-670) · Suing the Landlord (705, 706) · Miscellaneous / Supplemental (800-820) · Game Board (002, 21, 22) · Legal Kits (040-050) · Judges Gone Wild (901) · Extra Services (65, 75, 80) · Free (001, 010, 015, 020) · Legal Ethics (CD, MP3). Price range $10 to $2,000; 12 items are posted as minimums; motions to compel, discovery responses and jury instructions are per item. Products also carry the firm's older hidden stage hierarchy ("I'm Being Evicted... > Start Here / Emergency! Emergency! / Your First Papers to File / The Empire Strikes Back / Undoing the Court's Mistakes / The Discovery Phase / Heading to Trial / Appeal"), kept in the JSON.
 
-| SKU | Item | Price | Board node(s) |
-| --- | --- | --- | --- |
-| 002 | Eviction "Game Board" poster (PDF free; poster mailed) | n/a | all |
-| 040 | Basic Eviction Defense Kit | ~$20 [u] | answer-to-complaint |
-| 041 | Eviction Trial Kit | $100 | prepare-jury-trial-papers |
-| 042 | Deluxe Eviction Defense Kit | $120 | answer-to-complaint, discovery |
-| 045 | Security Deposit Recovery Kit | n/a | (deposit path) |
-| 050 | Break Your Lease Kit | $100 | (lease path) |
-| 101 | Initial Consultation with Attorney | $165 | start |
-| 102 | Follow-up Consultation [A] | $165 | any |
-| 110 | Simple Letter to Landlord | n/a | pre-filing |
-| 150 | Normal Motion to Quash | $250 | service-bad-file-motion-to-quash |
-| 151 | Delta Motion to Quash | $350 | service-bad-file-motion-to-quash |
-| 160 | Petition for Writ of Mandate [Quash, Limited] | $600 | petition-for-writ-of-mandate |
-| 170 | Petition for Writ of Mandate [Quash, Unlimited] | $900 | petition-for-writ-of-mandate |
-| 200 | Trying to correct the Court Clerk's Mistakes | $200 | default-entered-by-clerk |
-| 201 | Default Relief motion and Stay | $500 | motion-for-relief-from-default, ex-parte-stay-application |
-| 205 | Ex Parte Application for Stay and Shortening Time | $175 | ex-parte-stay-application |
-| 206 | Motion for Relief from Default (minimum) | n/a | motion-for-relief-from-default |
-| 252 | Discovery: Requests for Production | n/a | discovery-requests |
-| 270 | Reviewing and Advising on Discovery | n/a | good-responses / no-response |
-| 299 | Discovery: Ex Parte to Continue Trial and advance Motion to Compel | n/a | motion-to-compel-and-postpone-trial |
-| 300 | Discovery: Responses to their Discovery | n/a | (their discovery) |
-| 370 | Demurrer to the Complaint ("about 6 weeks more time") | $500 | demurrer |
-| 400 | Answer to Unlawful Detainer Complaint | $250 | answer-to-complaint |
-| 425 | Motion for Summary Judgment [minimum] | $600 | summary-judgment |
-| 450 | Court Appearance (minimum) | $330 | hearings |
-| 460 | Trial: Initial Jury Trial Documents | $660 | jury-trial-requested |
-| 461 | Trial: Unique Jury Instructions (per instruction) | $330 | pretrial-conferences |
-| 501 | Settlement Agreement Drafting | n/a | settlement-you-set-the-terms |
-| 510 | Cost Memorandum / Attorney Fees Motion | $165 | you-win |
-| 520 | Motion for New Trial | n/a | you-lose |
-| 610 | Appeal: Stay Pending Appeal [minimum] | n/a | request-stay-pending-appeal-trial-court |
-| 705 | Drafting Complaint / Cross-complaint [simple] (> 3 causes $1,500) | $900 | you-stay-and-sue |
-| 800-806+ | Supplemental payments $50-$500 (hourly top-ups) | as named | any |
+## 5. Content inventory (LMS curriculum seed)
 
-URL patterns `/store/<SKU>-<Name>-p<EcwidProductId>`, categories `-c<id>`; the same product under several category paths; legacy entry `/LegalServices.htm` ("Caltenantlaw Ecwid shopping cart"). Free: articles, videos, Game Board PDF, "limited free e-mail Q&A" (older copy), self-help research links (statutes, forms, "Check Out the Judge").
+**Legal Videos** (`docs/data/videos.json`, order as on the page, YouTube titles in parentheses where they differ):
+- *Legal Videos* (17): Rent Eviction · Repairs (Making Repairs, 27:48) · Sue Your Landlord (50:22) · Don't Panic! (Evictions (2026), 5:37) · Landlord Intrusion (2025, 15:58) · Moving Out (with Minimal Stress) · Foreclosure Eviction (Foreclosure Help (2025)) · House for Sale · AI / Robot Layoffs & Eviction · Owner Foreclosure (2025) · Temporary Relocation · How We Do This · Breaking Your Lease · Security Deposit (2025) · Finding Your Landlord · Roommate Law · Landlord Mentality.
+- *Winning Your Eviction Series* (6, 2023): Take Control (Part 1) · Nonpayment of Rent (Part 2) · Perform Covenant (Part 3) · Three-Day Notice to Quit (Part 4: Notice To Quit) · Foreclosure Eviction (Part 5) · No Fault Eviction (Part 6). The old "Part 7 The Game Board" is now the 2026 Game Board video.
+- *The Game Board Series* (10, "Evictions (2026)" / "(2025)", Nov-Dec 2025): The Game Board · Motion to Quash (42:58) · Demurrer · Default · Trial (39:23) · Appeal · Summary Judgement Motion · Discovery · Evictions Answer (Bare Bones) · Answer.
+- Embedded on articles only: General Renters' Rights (2023), Rent Control (2024), Facsuit promo. Presenter line: "Kenneth H. Carlson, a California tenant rights attorney (State Bar #93602) with 45 years of experience". The COVID-19 video is **[not on site]**.
+**Articles** (`docs/data/articles.json`, 33 pages): 14 Free Advice Articles (Breaking Your Lease · Cockroaches · Commercial Tenancies · General Tenant Rights · Landlord Intrusions · Late Fees · Mobilehome Disputes (26k words) · Property for Sale · Rent Control · Repairs Needed · Security Deposits · Temporary Leave · Toxic Mold · Unlawful Detainer), 10 Eviction Process pages (Winning · The Eviction Process · Taking Control · Nonpayment of Rent · Perform Covenant · Three-Day Notice · Foreclosure Eviction · No Fault Eviction · The Game Board · Motion to Quash), 5 Self-Help Research tools (Check Out the Judge · Find the Statutes · Just the Forms · Get Useful Forms · Find Your Landlord), Understanding Landlords, Get Political (3). "LA Rent Control Made Simple" and the COVID eviction page are **[not on site]** (the LA RSO text is a PDF in the document library).
+**Downloads** (PDF, not fetched): habitability worksheet, UD answer, ledger, small claims complaint, temporary relocation agreement, FW-001 fee waiver, Game Board (2021), repair-and-deduct grid, 1942 lease termination letter, 30-day notice, no-trespassing notice, new roommate agreement, property-left-behind notice, small claims guide (2026), UD answer guide (2024), LA RSO, San Diego right-to-know, "Top 3" laws, credit dispute form, call-a-meeting flyer, CTL flier.
+**Other**: `/testimonials` (6 quotes + Avvo links), `/contact` (4-question FAQ, `docs/data/faq.json`), policies (privacy, terms, cookies, copyright), `/blog` placeholder, `/income-opportunity` (Facsuit).
 
-## 5. Content inventory (LMS curriculum seed) [v titles; order and URLs partly u]
+## 6. Tech signals and pain points
 
-**Series A: "Winning Your Eviction" (2023)**: Part 1 Taking Control (youtube.com/watch?v=pHqA6RcIn1M) · Part 2 Nonpayment of Rent (IUfWKdAgCz8) · Part 3 Perform Covenant or Quit · Part 4 Notice to Quit (8zI-YvX9pbc) · Part 5 Foreclosure Eviction (d2hO1r43z_8) · Part 6 No Fault Eviction (1CnX_WNm0ng) · Part 7 The Game Board (w8maOjM0qxY).
-**Series B: "Eviction Series" (procedural)**: Motion to Quash · Demurrer · Default · Answer (Bare Bones) · Answer · Discovery · Summary Judgment Motion · Trial · Appeal (URLs [u]).
-**Series C: "Evictions (2025)" refresh**: The Game Board (RkyQOn9Lh40, 2025-11-15) · Motion to Quash (upqDnCI63eo) · others [u].
-**Topic videos**: General Renters' Rights (IOHAuOF5pv4) · Sue Your Landlord (Izimz3RUDGo) · How We Do This (gpuW9PTt40U) · COVID-19 advice (9GPJjIkqLlQ, archival) · Shorts. Site says videos also cover breaking your lease, repairs, security deposits, landlord intrusion [u titles].
-**Articles (14 categories)**: Breaking Your Lease · Cockroaches · Commercial Tenancies · General Tenant Rights · Landlord Intrusions · Late Fees · Mobilehome Disputes · Property for Sale · Rent Control (+ LA Rent Control Made Simple, LA Rent Help Information) · Repairs Needed · Security Deposits · Temporary Leave · Toxic Mold · Unlawful Detainer (Overview, Winning, The Eviction Process, Taking Control, Nonpayment, Perform Covenant, Three-Day Notice, Foreclosure Eviction, No Fault Eviction, The Game Board, Motion to Quash) · Foreclosure · COVID Eviction (archival).
-**Legal Information hub**: Legal Videos · Self-Help Research (Find the Statutes, Just the Forms, Get Useful Forms, Check Out the Judge) · Understanding Landlords · Humor (Res-Law) · Get Political · Register to Vote · Take Action · Income Opportunity · Related Services.
-**Other**: /testimonials/, /offices, /lawyers, /free-clinics/, /contact/, /ken/, city pages, a West Hollywood renter-resources PDF.
+Next.js + Tailwind + Typekit (2023+ rebuild; the search index still described WordPress) · Ecwid store embedded client-side with a server-rendered `/all-services` text mirror · card + PayPal · VoiceStamps hotline · Teams or phone · reCAPTCHA intake forms that email the answers · YouTube · no client portal, no login, no scheduler · WordPerfect pleadings (per Justin; **[not on site]**).
 
-## 6. Tech signals and pain points [v unless noted]
+Pain points (confirmed): buying = video -> gate -> long form (emailed PDF) -> Ecwid item with free-text "best time" -> call back -> Teams -> VoiceStamps -> PDF by email, with no single client record; the 96 SKUs encode time (minimums, per-item, 12 supplemental amounts) instead of tracking it; the store's stage navigation was abandoned (hidden categories) so the menu is now by document type, not by where the tenant is on the board; three descriptions of the same rule drift (Answer "within 5 days" vs Game Board "10 days"); one attorney photo 404s; the blog is empty; `/free-clinics` duplicates `/lawyers`; a dead "tenant unions" link.
 
-WordPress (+ `cms.` subdomain; theme / plugins [u]; title separator changed from "|" to "—", suggesting a migration in progress) · legacy static `.htm` site still live (duplicate content, split SEO) · Ecwid store (products duplicated across categories) · card + PayPal · VoiceStamps hotline · Microsoft Teams or phone · "online scheduling system" [u vendor] · intake forms that email a copy [u vendor] · YouTube embeds · no chat, no client portal, no login [u negative] · **WordPerfect** pleadings (per Justin).
+## 7. Legal topics and statutes named
 
-Pain points: three URL schemes; buying = form -> email -> Ecwid -> scheduler -> Teams -> VoiceStamps with no single client record; videos are the curriculum but untracked; ~40 SKUs with minimums and 800-series top-ups instead of time tracking; pleadings hand-drafted in WordPerfect with no template system tied to SKUs or board stage.
+Every statute the site cites is now merged into `docs/legal/statute-index.md` (section "Cited on the live site") with `verified_on: null`, and the 2026 currency candidates (Answer deadline wording, deposit penalty "3 times", repair-and-deduct "two months", CARES/CDC text, 2017 masking law, small claims limits) are logged in `docs/legal/law-change-log.md` as "needs attorney check". Articles' citations are listed per page in `docs/data/articles.json`.
 
-## 7. Legal topics and statutes named (moved to `docs/legal/`)
+## 8. Courts and opposing parties
 
-The full topic and statute list with 2026 currency flags lives in `docs/legal/statute-index.md` and `docs/legal/topics/`. Flags to clear first: AB 2347 (10 court days), AB 12 (deposit cap), repair-and-deduct wording, deposit penalty multiple, AB 1482 sunset / SB 567, local relocation figures, COVID content archival.
-
-## 8. Courts and opposing parties [v unless noted]
-
-All 58 counties by phone / video; seven office regions; Superior Courts (limited-civil UD departments) by implication, no courthouses named [u]; heavy LA exposure implied by RSO pages; writs of mandate imply appellate practice. Opposing parties: landlords, property managers, "eviction mill" attorneys, court clerks (SKU 200), banks / new owners after foreclosure. The firm does not appear in court by default but sells Court Appearance (450) and can "arrange a lawyer".
+All 58 counties by phone / video; eight office regions; Superior Court limited-civil UD departments and their Appellate Departments (writs of mandate, SKUs 160/170/901), the District Courts of Appeal (170, 650-670), federal district court (155 removal). Opposing parties named on the site: landlords and their "eviction mill" lawyers, property managers ("little people with power"), court clerks (200, 207), commissioners and judges pro tem (901), banks / flippers after foreclosure. The firm appears in court only by arrangement (450).
 
 ## 9. Quick facts
 
-Brand California Tenant Law · caltenantlaw.com · since 1980 · site since 1999 · founder Kenneth H. Carlson, J.D., SBN 93602, Idyllwild · 951-659-1234 · PO Box 2417, Idyllwild CA 92549 · taglines "Renters' Rights Lawyers Since 1980", "Empowering Tenants Since 1980", "The Renters' Rights Online Legal Help Clinic", "like a legal vending machine" · core offer $165 / 30-min consult -> SKU-priced paperwork ($165-$1,500) -> $330 / h overflow · $60 per 10-min hotline · signature asset the Unlawful Detainer Game Board · network of 7 (claimed 8) regional attorneys · stack today WordPress, legacy .htm, Ecwid, PayPal / card, YouTube, Teams, VoiceStamps, unknown scheduler / forms, WordPerfect.
+California Tenant Law · caltenantlaw.com (Next.js) · since 1980 · site since 1999 · Kenneth H. Carlson, J.D., SBN 93602, Idyllwild · 951-659-1234 · hotline 213 340 1090 · PO Box 2417, Idyllwild CA 92549 · taglines "Renters' Rights Lawyers Since 1980", "The Renters' Rights Online Legal Help Clinic", "Your cloudy day is about to clear up", "Get out of victim mode", "like a legal vending machine" · $165 / 30-min consult -> 96 SKUs ($10-$2,000) -> $330 / h overflow via supplemental payments · $60 per 10-min hotline · signature asset the Unlawful Detainer Game Board (free PDF, $20 poster, $10 print) · 8 regional attorneys · 33 videos · 33 article pages · stack Next.js, Ecwid, PayPal / card, YouTube, Teams, VoiceStamps, reCAPTCHA forms.
 
 ## Resumen en español
 
-Resumen del bufete según el índice web (el sitio no fue accesible desde el entorno de construcción; todo dato es "según indexado" y está marcado [v] verificado en fragmento o [u] inferido): California Tenant Law, solo inquilinos, desde 1980, fundador Kenneth H. Carlson, red de siete u ocho oficinas regionales, servicios por piezas con precios por SKU organizados por etapa del tablero de desalojo, consultas por teléfono o Teams a $165, línea telefónica de $60 por 10 minutos, videos gratuitos como currículo, tienda Ecwid, WordPress y páginas antiguas .htm, alegatos en WordPerfect. Los temas legales y las banderas de actualidad 2026 viven en `docs/legal/`.
+Resumen del bufete tomado en vivo del sitio el 2026-09-18 (antes era una reconstrucción del índice de búsqueda): California Tenant Law, solo inquilinos, desde 1980, fundador Kenneth H. Carlson, ocho oficinas regionales (la octava es San Luis Obispo County), servicios por piezas con 96 SKU en la tienda Ecwid (de $10 a $2,000, muchos como mínimo más pagos suplementarios), consultas por teléfono o Teams a $165, línea directa de $60 por 10 minutos, 33 videos gratuitos como currículo, 33 artículos, sitio en Next.js con Tailwind y Typekit. Los precios y las reglas legales siguen sin verificar por un abogado.
