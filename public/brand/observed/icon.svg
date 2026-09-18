@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="California Tenant Law">
+  <title>California Tenant Law</title>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#20386e"/>
+      <stop offset="1" stop-color="#0b152a"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#ffa43a" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#ff6601" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffb02a"/>
+      <stop offset="1" stop-color="#ff6601"/>
+    </linearGradient>
+    <clipPath id="tile"><rect width="32" height="32" rx="7"/></clipPath>
+  </defs>
+
+  <rect width="32" height="32" rx="7" fill="url(#sky)"/>
+
+  <g clip-path="url(#tile)">
+    <!-- Sun in the clearing -->
+    <circle cx="16" cy="8.4" r="9" fill="url(#glow)"/>
+    <circle cx="16" cy="8.4" r="3.5" fill="url(#sun)"/>
+
+    <!-- Clouds drawn back to either side, leaving a wide clearing -->
+    <g fill="#ffffff">
+      <circle cx="4.6" cy="11" r="4"/>
+      <circle cx="9.2" cy="10.1" r="3.3"/>
+      <rect x="0.6" y="11.4" width="11" height="3.6" rx="1.8"/>
+
+      <circle cx="27.4" cy="11" r="4"/>
+      <circle cx="22.8" cy="10.1" r="3.3"/>
+      <rect x="20.4" y="11.4" width="11" height="3.6" rx="1.8"/>
+    </g>
+  </g>
+
+  <text x="16" y="26.2" text-anchor="middle" fill="#ffffff"
+        font-family="'Helvetica Neue', Helvetica, Arial, sans-serif"
+        font-size="11.5" font-weight="800" letter-spacing="-0.3">CTL</text>
+</svg>

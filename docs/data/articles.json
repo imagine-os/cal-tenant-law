@@ -1,0 +1,1035 @@
+{
+ "version": "0.1.1",
+ "generated_at": "2026-09-18T20:45:00Z",
+ "source_note": "Every article / topic page reachable from https://caltenantlaw.com/site-index (Free Advice Articles, Eviction Process pages, Self-Help Research, Understanding Landlords, Get Political). Summaries are ours; sections, statutes (regex over the page text, normalised), embedded videos and linked PDFs are extracted. Statute strings are as the site cites them, not verified.",
+ "count": 33,
+ "articles": [
+  {
+   "id": "free-advice-articles--breaking-your-lease",
+   "title": "Breaking Your Lease — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/breaking-your-lease",
+   "category": "Free Advice Articles",
+   "word_count": 2934,
+   "summary": "How to end a lease early and legally: month-to-month vs fixed term, using habitability defects (CC 1942) as the legal reason, fraud, illegal units, destruction, the back-up plan and suing the landlord; landlord's duty to mitigate (CC 1951.2).",
+   "sections": [
+    "Breaking Your Lease",
+    "Types of Rental Agreements",
+    "Purpose versus Legal Reason",
+    "Habitability Defects",
+    "How to Do It",
+    "Fraud and Deceit",
+    "Illegal Unit",
+    "Destruction",
+    "Back-Up Plan",
+    "Suing the Landlord"
+   ],
+   "statutes_cited": [
+    "CC §1942",
+    "CC §1950.5(f), 2 weeks or so b",
+    "CC §1951.2"
+   ],
+   "videos_embedded": [
+    "6h1_wsfVLyA"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/breaking-your-lease.html"
+  },
+  {
+   "id": "free-advice-articles--cockroaches",
+   "title": "Cockroaches — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/cockroaches",
+   "category": "Free Advice Articles",
+   "word_count": 620,
+   "summary": "Infestations are a habitability problem the landlord must cure; how to tell whose fault it is, how to get rid of them, what kind they are.",
+   "sections": [
+    "Landlords, Cockroaches, and You",
+    "Are They Your Fault?",
+    "How Do You Get Rid of Them?",
+    "What Kind Are They?"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/cockroaches.html"
+  },
+  {
+   "id": "free-advice-articles--commercial-tenancies",
+   "title": "Commercial Tenancies — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/commercial-tenancies",
+   "category": "Free Advice Articles",
+   "word_count": 7078,
+   "summary": "Long guide for business tenants: finding space, using your own agent for free, understanding and negotiating the lease, the differences from residential law (H&S 26141/26148 mold disclosure, CC 1950.8, CCP 1161.1).",
+   "sections": [
+    "Commercial Landlord-Tenant Law",
+    "Introduction",
+    "Finding a Space to Rent",
+    "Signing the Lease",
+    "Tenant Improvement Problems",
+    "Defects and Repairs",
+    "Gouging Rent Increases",
+    "Time to Move",
+    "Trade Fixtures and Improvements",
+    "Eviction"
+   ],
+   "statutes_cited": [
+    "Health",
+    "H&S §26148",
+    "CC §1950.8",
+    "CCP §1161.1"
+   ],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/commercial-tenancies.html"
+  },
+  {
+   "id": "free-advice-articles--general-tenant-rights",
+   "title": "General Tenant Rights — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/general-tenant-rights",
+   "category": "Free Advice Articles",
+   "word_count": 5532,
+   "summary": "Overview of California tenant rights: the rental agreement, terms supplied by law, discrimination, landlord authority, privacy (CC 1954), late fees (CC 1671, 3302), breaking the lease, special laws, the hide-and-seek landlord (CC 1962), liability for crimes, shared utilities (CC 1940.9).",
+   "sections": [
+    "General Tenant Rights",
+    "The Rental Agreement",
+    "Privacy",
+    "Late Fees and Grace Periods",
+    "Breaking the Lease",
+    "Miscellaneous Special Laws"
+   ],
+   "statutes_cited": [
+    "Health",
+    "CC §1954",
+    "CC §1945",
+    "Business",
+    "§10131",
+    "CC §1941.4",
+    "CC §1671",
+    "CC §3302",
+    "CC §1946.1",
+    "CC §1942",
+    "CC §1962",
+    "CC §1962 also",
+    "CC §1940.9",
+    "CC §1940.9(b)(2",
+    "CC §1940.8"
+   ],
+   "videos_embedded": [
+    "IOHAuOF5pv4"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/general-tenant-rights.html"
+  },
+  {
+   "id": "free-advice-articles--landlord-intrusions",
+   "title": "Landlord Intrusions — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/landlord-intrusions",
+   "category": "Free Advice Articles",
+   "word_count": 2515,
+   "summary": "The tenant owns exclusive possession; when the landlord may enter under CC 1954 (24-hour written notice, business hours, listed purposes), realtor exceptions, abuse of entry, trespass and enforcement, full text of CC 1954.",
+   "sections": [
+    "Landlord Intrusions",
+    "Your Right of Possession",
+    "Trespass and Enforcement",
+    "The Exception: Civil Code 1954",
+    "Realtor Exceptions",
+    "Permitted Entry Types",
+    "Abuse of the Right of Entry",
+    "Working It Out",
+    "Taking Control",
+    "California Civil Code Section 1954"
+   ],
+   "statutes_cited": [
+    "CC §1954",
+    "§1954",
+    "Penal §834-849.5, especially 837",
+    "CC §1953",
+    "§1950.5",
+    "§1954.201",
+    "§17973"
+   ],
+   "videos_embedded": [
+    "KKuNOnvxLuY"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/landlord-intrusions.html"
+  },
+  {
+   "id": "free-advice-articles--late-fees",
+   "title": "Late Fees — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/late-fees",
+   "category": "Free Advice Articles",
+   "word_count": 2624,
+   "summary": "\"The most common theft by landlords is the Late Fee\": why late fees are void liquidated damages under CC 1671(d) / 3302, how prior late-fee payments invalidate a 3-day notice, what to do.",
+   "sections": [
+    "Late Fees",
+    "Late Fees Are Illegal",
+    "But It's in the Lease...",
+    "So Where Does That Put Me?"
+   ],
+   "statutes_cited": [
+    "§3302",
+    "CC §1671",
+    "§1671",
+    "§1671(b",
+    "CC §3302"
+   ],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/late-fees.html"
+  },
+  {
+   "id": "free-advice-articles--mobilehome-disputes",
+   "title": "Mobilehome Disputes — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/mobilehome-disputes",
+   "category": "Free Advice Articles",
+   "word_count": 26299,
+   "summary": "26,000-word treatment of the Mobilehome Residency Law (CC 798 et seq.), the RV Park Occupancy Law (CC 799 et seq.), trailers and trailer parks, evictions (CCP 1159-1162), key points and resources.",
+   "sections": [
+    "Mobilehome Disputes",
+    "Overview and Your Rights",
+    "Mobilehome Residency Law",
+    "Recreational Vehicle Park Occupancy Law",
+    "Trailers and Trailer Parks",
+    "Key Points and Resources"
+   ],
+   "statutes_cited": [
+    "§798.56",
+    "§798.55",
+    "§1162",
+    "§18010",
+    "§798.17",
+    "§798.74",
+    "§1159",
+    "§798.50",
+    "§798.84",
+    "§798",
+    "§799.29",
+    "§798.73",
+    "§798.6",
+    "§10130",
+    "§798.76",
+    "§798.39",
+    "§798.25",
+    "§22658",
+    "§798.43",
+    "§799.22",
+    "§799.10",
+    "§798.3",
+    "§18007",
+    "§18008",
+    "§799.20",
+    "§799.45",
+    "§798.5",
+    "§798.7",
+    "§798.8",
+    "§798.18",
+    "§18002.6",
+    "§798.23",
+    "§798.28",
+    "§798.29",
+    "§798.31",
+    "§798.37",
+    "§18200",
+    "§798.41",
+    "§798.42",
+    "§18215"
+   ],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/mobilehome-disputes.html"
+  },
+  {
+   "id": "free-advice-articles--property-for-sale",
+   "title": "Property for Sale — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/property-for-sale",
+   "category": "Free Advice Articles",
+   "word_count": 1481,
+   "summary": "Showings and strangers when the landlord sells: your control under CC 1954, how the sale goes, taking control.",
+   "sections": [
+    "Property for Sale",
+    "How It Goes",
+    "Taking Control"
+   ],
+   "statutes_cited": [
+    "CC §1954",
+    "§1954"
+   ],
+   "videos_embedded": [
+    "5f6cWAPE5ao"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/property-for-sale.html"
+  },
+  {
+   "id": "free-advice-articles--rent-control",
+   "title": "Rent Control — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/rent-control",
+   "category": "Free Advice Articles",
+   "word_count": 3353,
+   "summary": "History and politics of rent control in California, how it works, AB 1482, why affordable housing is not built, what tenants can do.",
+   "sections": [
+    "Rent Control",
+    "The Rent Crisis",
+    "How Did We Get Here?",
+    "The Birth of Rent Control",
+    "Fast Forward to Today",
+    "Why Have Affordable Apartments Not Been Built?",
+    "The Rental Market Is Ratcheted Up",
+    "What Can Be Done?",
+    "Political Stranglehold",
+    "Rent Control",
+    "How Are the Landlord's Profits Affected by Rent Control?",
+    "It's Just Not Enough Only to Hope"
+   ],
+   "statutes_cited": [
+    "AB 1482"
+   ],
+   "videos_embedded": [
+    "3tDqYV8jcLs"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/rent-control.html"
+  },
+  {
+   "id": "free-advice-articles--repairs-needed",
+   "title": "Repairs Needed — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/repairs-needed",
+   "category": "Free Advice Articles",
+   "word_count": 2576,
+   "summary": "Implied warranty of habitability, deceit, making a list, contacting the landlord and inspectors, repair and deduct under CC 1942 (up to one month's rent, twice a year), suing, major construction.",
+   "sections": [
+    "Uninhabitable Conditions",
+    "Repairs",
+    "Deceit",
+    "Making a List",
+    "Contacting the Landlord",
+    "Contacting Government Inspectors",
+    "Taking Action",
+    "Suing the Landlord"
+   ],
+   "statutes_cited": [
+    "CC §1942",
+    "CC §1942.4"
+   ],
+   "videos_embedded": [
+    "d_0khUe5QZc"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/repairs-needed.html"
+  },
+  {
+   "id": "free-advice-articles--security-deposits",
+   "title": "Security Deposits — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/security-deposits",
+   "category": "Free Advice Articles",
+   "word_count": 4591,
+   "summary": "Deposit basics (one month cap since 2024-07-01), preliminary inspection, deductions, cleaning, repairs, replacement, rent defaults, 21-day refund, small claims, bad-faith penalty up to twice the deposit, full text of CC 1950.5.",
+   "sections": [
+    "Security Deposits",
+    "The Basics",
+    "Preliminary Inspection",
+    "Deduction Documentation",
+    "Cleaning",
+    "Repairs",
+    "Replacement Costs",
+    "Rent Defaults",
+    "Getting Your Money Back",
+    "Going to Court",
+    "California Civil Code Section 1950.5"
+   ],
+   "statutes_cited": [
+    "CC §1950.5",
+    "§1161",
+    "§1946",
+    "CC §1942",
+    "§1950.5",
+    "§1950.6",
+    "§116.220",
+    "§780"
+   ],
+   "videos_embedded": [
+    "X4jNxmSgIE4"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/security-deposits.html"
+  },
+  {
+   "id": "free-advice-articles--temporary-leave",
+   "title": "Temporary Leave — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/temporary-leave",
+   "category": "Free Advice Articles",
+   "word_count": 3226,
+   "summary": "When major construction or fumigation forces you out temporarily: your leverage, the relocation agreement, putting on pressure, handling the event (CC 1954, 1953).",
+   "sections": [
+    "Temporary Leave",
+    "The Big Problem",
+    "You Have Control",
+    "Making the Agreement",
+    "Putting the Pressure On",
+    "Handling the Event"
+   ],
+   "statutes_cited": [
+    "§1954",
+    "CC §1954",
+    "CC §1953"
+   ],
+   "videos_embedded": [
+    "oym9RubwVKg"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/temporary-leave.html"
+  },
+  {
+   "id": "free-advice-articles--toxic-mold",
+   "title": "Toxic Mold — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/toxic-mold",
+   "category": "Free Advice Articles",
+   "word_count": 6445,
+   "summary": "Mold health risks, what to do, the cost, legal rights, testing, and the full text of the Toxic Mold Protection Act (H&S 26100-26157).",
+   "sections": [
+    "Toxic Mold",
+    "The Danger",
+    "What to Do",
+    "The Cost",
+    "Your Legal Rights",
+    "Get Checked",
+    "California Health and Safety Code: Chapter 18 — Toxic Mold"
+   ],
+   "statutes_cited": [
+    "§26103",
+    "§26130",
+    "§26105",
+    "§26101.7",
+    "§26147",
+    "§26154",
+    "CC §1954",
+    "§26100",
+    "§26101",
+    "§20700",
+    "§10100",
+    "§10127",
+    "§26101.5",
+    "§26102",
+    "§26104",
+    "§26106",
+    "§26107",
+    "§26120",
+    "§26121",
+    "§26122",
+    "§26123",
+    "§26124",
+    "§26125",
+    "§26131",
+    "§26132",
+    "§26133",
+    "§26134",
+    "§26140",
+    "§26141",
+    "§26142",
+    "§26143",
+    "§26144",
+    "§26145",
+    "§26146",
+    "§26148",
+    "§26149",
+    "§26150",
+    "§1102.6",
+    "§2079",
+    "§26151"
+   ],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/toxic-mold.html"
+  },
+  {
+   "id": "free-advice-articles--unlawful-detainer",
+   "title": "Unlawful Detainer — Free Advice Articles",
+   "url": "https://caltenantlaw.com/free-advice-articles/unlawful-detainer",
+   "category": "Free Advice Articles",
+   "word_count": 631,
+   "summary": "Hub for the eviction guide: what an unlawful detainer is, links to the ten eviction-process pages and the Winning Your Eviction video series.",
+   "sections": [
+    "The Unlawful Detainer Eviction Guide",
+    "Get Out of Victim Mode",
+    "Winning Your Eviction"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [
+    "1CnX_WNm0ng",
+    "8zI-YvX9pbc",
+    "IUfWKdAgCz8",
+    "RkyQOn9Lh40",
+    "d2hO1r43z_8",
+    "lIHRO_uAUBo",
+    "pHqA6RcIn1M",
+    "upqDnCI63eo"
+   ],
+   "pdfs_linked": [],
+   "author_line": null,
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/free-advice-articles/unlawful-detainer.html"
+  },
+  {
+   "id": "get-political",
+   "title": "Get Political",
+   "url": "https://caltenantlaw.com/get-political",
+   "category": "Get Political",
+   "word_count": 194,
+   "summary": "Tenants are 66 % of Californians but 5 % vote; register and take action.",
+   "sections": [
+    "Register to Vote",
+    "Take Action"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": null,
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/get-political.html"
+  },
+  {
+   "id": "get-political--register-to-vote",
+   "title": "Register to Vote",
+   "url": "https://caltenantlaw.com/get-political/register-to-vote",
+   "category": "Get Political",
+   "word_count": 240,
+   "summary": "Register-to-vote pitch with the statewide rent control petition \"40 % of the vote\" line and the registertovote.ca.gov link.",
+   "sections": [],
+   "statutes_cited": [],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": null,
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/get-political/register-to-vote.html"
+  },
+  {
+   "id": "get-political--take-action",
+   "title": "Take Action",
+   "url": "https://caltenantlaw.com/get-political/take-action",
+   "category": "Get Political",
+   "word_count": 307,
+   "summary": "Call a tenant meeting (PDF), spread the word (CTL flier PDF), contact your politicians, find or form a tenant union (dead link), help CTL grow.",
+   "sections": [
+    "Here are some things you can do to be part of the solution, and not part of the problem:",
+    "Register to Vote",
+    "Call a Tenant Meeting in Your Building",
+    "Spread the Word about California Tenant Law",
+    "Contact Your Politicians",
+    "Mad as Hell? Find or Form a Tenant Union",
+    "Help California Tenant Law Grow"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [],
+   "pdfs_linked": [
+    "/pdfs/CTLflier.pdf",
+    "/pdfs/CallMtg.pdf",
+    "/pdfs/Orgn.htm"
+   ],
+   "author_line": null,
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/get-political/take-action.html"
+  },
+  {
+   "id": "self-help-research--check-out-the-judge",
+   "title": "Check Out the Judge — Self-Help Research",
+   "url": "https://caltenantlaw.com/self-help-research/check-out-the-judge",
+   "category": "Self-Help Research",
+   "word_count": 290,
+   "summary": "Research the assigned judge on The Robing Room before the hearing.",
+   "sections": [
+    "Check Out the Judge",
+    "Why It Matters",
+    "The Robing Room",
+    "Tips for Using This Tool"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": null,
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/self-help-research/check-out-the-judge.html"
+  },
+  {
+   "id": "self-help-research--find-the-statutes",
+   "title": "Find the Statutes — Self-Help Research",
+   "url": "https://caltenantlaw.com/self-help-research/find-the-statutes",
+   "category": "Self-Help Research",
+   "word_count": 321,
+   "summary": "Where the law lives (leginfo) and the key codes: CC 1940-1954.06, CC 798-799.79, CCP 1159-1179a, H&S 17920.3, CC 1946.2 / 1947.12 (AB 1482).",
+   "sections": [
+    "Find the Statutes",
+    "California Legislative Information",
+    "Key Codes for Tenants",
+    "How to Search"
+   ],
+   "statutes_cited": [
+    "CC §1940",
+    "§1950.5",
+    "§1941",
+    "§1954",
+    "§1942.5",
+    "CC §798",
+    "CCP §1159",
+    "H&S §17920.3",
+    "CC §1946.2",
+    "§1947.12",
+    "AB 1482"
+   ],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": null,
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/self-help-research/find-the-statutes.html"
+  },
+  {
+   "id": "self-help-research--find-your-landlord",
+   "title": "Find Your Landlord — Self-Help Research",
+   "url": "https://caltenantlaw.com/self-help-research/find-your-landlord",
+   "category": "Self-Help Research",
+   "word_count": 933,
+   "summary": "Why and how to find the real owner: county tax assessor, county recorder, other resources, what to do with the information.",
+   "sections": [
+    "Find Your Landlord",
+    "Why Find the Owner?",
+    "Who Owns the Property?",
+    "Using the County Tax Assessor",
+    "Using the County Recorder",
+    "Other Resources",
+    "What to Do with the Information"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/self-help-research/find-your-landlord.html"
+  },
+  {
+   "id": "self-help-research--get-useful-forms",
+   "title": "Get Useful Forms — Self-Help Research",
+   "url": "https://caltenantlaw.com/self-help-research/get-useful-forms",
+   "category": "Self-Help Research",
+   "word_count": 1217,
+   "summary": "The firm's own PDF forms with instructions: habitability checklist, repair-and-deduct grid, 1942 lease termination letter, 30-day notice, no-trespassing notice, new roommate agreement, property-left-behind notice, plus a document library (ledger, small claims guide, UD answer guide, temporary relocation, LA RSO, San Diego right-to-know, top 3 laws, credit dispute form).",
+   "sections": [
+    "Get Useful Forms",
+    "Tenant Forms & Templates",
+    "Document Library"
+   ],
+   "statutes_cited": [
+    "CC §1942",
+    "CC §1954"
+   ],
+   "videos_embedded": [],
+   "pdfs_linked": [
+    "/pdfs/1942LeaseTermination.pdf",
+    "/pdfs/30NT.pdf",
+    "/pdfs/Complaint2026.pdf",
+    "/pdfs/HabitabilityWorksheet.pdf",
+    "/pdfs/Ledger.pdf",
+    "/pdfs/NewRoommate.pdf",
+    "/pdfs/NoTrespass.pdf",
+    "/pdfs/PropertyLeft.pdf",
+    "/pdfs/RepairGrid.pdf",
+    "/pdfs/SanDiegoJCE.pdf",
+    "/pdfs/TempRelocK.pdf",
+    "/pdfs/Top3.pdf",
+    "/pdfs/UDRdispute.pdf",
+    "/pdfs/UDans-2024.pdf",
+    "/pdfs/larso.pdf"
+   ],
+   "author_line": null,
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/self-help-research/get-useful-forms.html"
+  },
+  {
+   "id": "self-help-research--just-the-forms",
+   "title": "Just the Forms — Self-Help Research",
+   "url": "https://caltenantlaw.com/self-help-research/just-the-forms",
+   "category": "Self-Help Research",
+   "word_count": 305,
+   "summary": "Official Judicial Council forms for tenants (UD-105 Answer, SC-100, UD-150, MC-030) via selfhelp.courts.ca.gov; still says \"You generally have 5 days to file\" the Answer.",
+   "sections": [
+    "Just the Forms",
+    "California Courts — Self-Help Forms",
+    "Key Forms for Tenants",
+    "Tips"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": null,
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/self-help-research/just-the-forms.html"
+  },
+  {
+   "id": "understanding-landlords",
+   "title": "Understanding Landlords",
+   "url": "https://caltenantlaw.com/understanding-landlords",
+   "category": "Free Information",
+   "word_count": 651,
+   "summary": "Humor with a point: five landlord mentalities (reptilian thinking, arrogance, little people with power, \"in my country\", my temple) and how to handle each.",
+   "sections": [
+    "Reptilian Thinking",
+    "Arrogance",
+    "Little People with Power",
+    "In My Country...",
+    "My Temple"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": null,
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/understanding-landlords.html"
+  },
+  {
+   "id": "unlawful-detainer--eviction-process",
+   "title": "The Eviction Process — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/eviction-process",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 1184,
+   "summary": "When and how an eviction must proceed (3/30/60/90-day notices, no self-help, exempt occupancies) and \"Unleash the Kraken\": the counter-pressure a tenant can apply once the notice is served.",
+   "sections": [
+    "Confrontation: The Eviction Process",
+    "When and How",
+    "Unleash the Kraken"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/eviction-process.html"
+  },
+  {
+   "id": "unlawful-detainer--foreclosure-eviction",
+   "title": "Foreclosure Eviction — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/foreclosure-eviction",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 2705,
+   "summary": "Foreclosure process, strategies for the former owner and for the tenant (PTFA 90-day notice, CCP 1161b, CC 2924.8), and the buyer's dirty tricks (disinformation, cash for keys, \"what tenant?\", report or move, malicious prosecution, settlement scams).",
+   "sections": [
+    "Foreclosure Eviction",
+    "Foreclosure Process",
+    "Strategies for the Former Owner",
+    "Strategies for the Tenant",
+    "Dirty Tricks Department: How the Buyer Tries to Cheat Tenants"
+   ],
+   "statutes_cited": [
+    "CC §1927",
+    "CC §2924",
+    "CC §2924.8",
+    "CCP §1161b"
+   ],
+   "videos_embedded": [
+    "FmGSZ8KSRJM"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/foreclosure-eviction.html"
+  },
+  {
+   "id": "unlawful-detainer--game-board",
+   "title": "The Game Board — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/game-board",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 5274,
+   "summary": "Section-by-section walk through the Unlawful Detainer Game Board: service and PJCRP, motion to quash, removal to federal court, changing the judge, writ of mandate, discovery, demurrer, answer and affirmative defenses, jury trial request, summary judgment, trial and settlement, winning and losing, Arrieta claim, default and recovery.",
+   "sections": [
+    "The Unlawful Detainer Game Board",
+    "Let the Games Begin",
+    "START: Service and Initial Response",
+    "Motion to Quash: Taking Control",
+    "Removal to Federal Court",
+    "Changing the Judge",
+    "The Motion to Quash Hearing",
+    "The Petition for Writ of Mandate",
+    "Discovery",
+    "The Demurrer",
+    "The Answer and Affirmative Defenses",
+    "Requesting a Jury Trial",
+    "Summary Judgment",
+    "Trial",
+    "Winning and Losing",
+    "Arrieta Claim: Last Chance Preservation of Rights",
+    "Default and Recovery"
+   ],
+   "statutes_cited": [
+    "CC §1942"
+   ],
+   "videos_embedded": [
+    "RkyQOn9Lh40"
+   ],
+   "pdfs_linked": [
+    "/pdfs/Game-Board-2021.pdf"
+   ],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/game-board.html"
+  },
+  {
+   "id": "unlawful-detainer--motion-to-quash",
+   "title": "Motion to Quash — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/motion-to-quash",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 1484,
+   "summary": "What a motion to quash is, service requirements, common defects (papers on the door, no mailing, fictitious recipient, no diligence, defective mailing, wrong address), filing, the declaration, what the judge considers, if you win.",
+   "sections": [
+    "Motion to Quash",
+    "What Is a Motion to Quash?",
+    "Service Requirements",
+    "Common Service Defects",
+    "Filing Your Motion to Quash",
+    "Your Declaration Is Critical",
+    "What the Judge Considers",
+    "If You Win the Motion",
+    "If You Lose the Motion",
+    "Strategic Advantages",
+    "Successive Motions to Quash",
+    "What Comes After Motion to Quash"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [
+    "upqDnCI63eo"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/motion-to-quash.html"
+  },
+  {
+   "id": "unlawful-detainer--no-fault-eviction",
+   "title": "No Fault Eviction — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/no-fault-eviction",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 1388,
+   "summary": "No-fault evictions: just-cause laws, 30/60-day notices, owner move-in abuse, relocation assistance, AB 1482, local ordinances, defending in court, your leverage.",
+   "sections": [
+    "No Fault Eviction",
+    "What Is a No-Fault Eviction?",
+    "Just Cause Eviction Laws",
+    "Notice Requirements",
+    "Owner Move-In: The Biggest Abuse",
+    "Relocation Assistance Requirements",
+    "AB 1482 Protections",
+    "Rent Control Ordinances",
+    "How to Defend Against No-Fault Evictions",
+    "Fighting in Court",
+    "Your Leverage"
+   ],
+   "statutes_cited": [
+    "AB 1482"
+   ],
+   "videos_embedded": [
+    "1CnX_WNm0ng"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/no-fault-eviction.html"
+  },
+  {
+   "id": "unlawful-detainer--nonpayment-of-rent",
+   "title": "Nonpayment of Rent — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/nonpayment-of-rent",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 1397,
+   "summary": "Why nonpayment cases are the easiest to win: fatal notice defects, illegal charges, repair credits, habitability defense, COVID protections, payment proof, settlement leverage, time on your side.",
+   "sections": [
+    "Nonpayment of Rent",
+    "Why Nonpayment Cases Are the Easiest to Win",
+    "Notice Defects Are Fatal",
+    "Fighting Illegal Charges",
+    "Repair and Maintenance Credits",
+    "The Habitability Defense",
+    "COVID Protections and Beyond",
+    "Payment and Proof",
+    "Your Settlement Leverage",
+    "Time on Your Side"
+   ],
+   "statutes_cited": [
+    "CC §1511"
+   ],
+   "videos_embedded": [
+    "IUfWKdAgCz8"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/nonpayment-of-rent.html"
+  },
+  {
+   "id": "unlawful-detainer--perform-covenant",
+   "title": "Perform Covenant — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/perform-covenant",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 1377,
+   "summary": "Lease-violation evictions: what a covenant is, the triviality rule, materiality, right to cure, incurable breaches, illegal demands, retaliation, notice defects, defense strategy.",
+   "sections": [
+    "Perform Covenant or Quit",
+    "What Is a \"Covenant\" Anyway?",
+    "The Triviality Rule",
+    "Materiality Requires Financial Harm",
+    "The Right to Cure",
+    "What Can't Be Cured",
+    "Landlords Can't Demand Illegal Things",
+    "Retaliation Protections",
+    "The Notice Has to Be Proper",
+    "Your Defense Strategy"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [
+    "lIHRO_uAUBo"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/perform-covenant.html"
+  },
+  {
+   "id": "unlawful-detainer--taking-control",
+   "title": "Taking Control — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/taking-control",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 998,
+   "summary": "Mindset piece: shift perspective, you have more rights than you know, timing, know your enemy, keep it secret, what comes next.",
+   "sections": [
+    "Taking Control",
+    "Shift Your Perspective",
+    "You Have More Rights Than You Know",
+    "Timing Is Everything",
+    "Know Your Enemy",
+    "Keep It Secret",
+    "What Comes Next"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [
+    "pHqA6RcIn1M"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/taking-control.html"
+  },
+  {
+   "id": "unlawful-detainer--three-day-notice",
+   "title": "Three-Day Notice to Quit — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/three-day-notice",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 1239,
+   "summary": "Three-day notice to quit: common defects (wrong amount, improper service, unclear description, illegal charges, formatting), timing rules, responding, don't panic and move, responding in court.",
+   "sections": [
+    "Three-Day Notice to Quit",
+    "What Is a Three-Day Notice to Quit?",
+    "Common Defects in Three-Day Notices",
+    "Timing Rules You Need to Know",
+    "What Happens If You Respond?",
+    "Don't Panic and Move",
+    "Responding in Court",
+    "Your Strategic Advantage"
+   ],
+   "statutes_cited": [],
+   "videos_embedded": [
+    "8zI-YvX9pbc"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/three-day-notice.html"
+  },
+  {
+   "id": "unlawful-detainer--winning",
+   "title": "Winning — Easier than You Thought — Eviction Process",
+   "url": "https://caltenantlaw.com/unlawful-detainer/winning",
+   "category": "Eviction Process (Unlawful Detainer)",
+   "word_count": 1056,
+   "summary": "Weak points of the four common evictions (nonpayment, breach, no cause, foreclosure), the winning strategy, how long it takes (\"my record is 4½ years\"), the video series.",
+   "sections": [
+    "Winning Unlawful Detainer Cases",
+    "1. Nonpayment of Rent",
+    "2. Breach of the Lease",
+    "3. No Cause Termination",
+    "4. Foreclosure Evictions",
+    "Winning Strategy",
+    "How Long Does It All Take?",
+    "Watch Our Video Series"
+   ],
+   "statutes_cited": [
+    "CC §1511"
+   ],
+   "videos_embedded": [
+    "1CnX_WNm0ng",
+    "8zI-YvX9pbc",
+    "IUfWKdAgCz8",
+    "d2hO1r43z_8",
+    "lIHRO_uAUBo",
+    "pHqA6RcIn1M"
+   ],
+   "pdfs_linked": [],
+   "author_line": "Written and presented by Ken Carlson, J.D. (CA State Bar #93602)",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-18T20:45:00Z",
+   "raw_html": "reference/site-scrape/raw/unlawful-detainer/winning.html"
+  }
+ ]
+}

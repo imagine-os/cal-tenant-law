@@ -1,0 +1,49 @@
+{
+ "version": "0.1.1",
+ "generated_at": "2026-09-18T20:45:00Z",
+ "source_note": "The only FAQ on the site is the \"Frequently Asked Questions\" block on https://caltenantlaw.com/contact (4 questions). The \"What to Expect\" cards on /consultation and \"How It Works\" on /paid-legal-services-new-returning are included as FAQ-like copy.",
+ "items": [
+  {
+   "id": "request-consultation",
+   "question": "How do I request a consultation?",
+   "answer": "Use our online consultation request system. Call 951-659-1234 to learn more. Initial consultations are $165 for 30 minutes.",
+   "source_url": "https://caltenantlaw.com/contact"
+  },
+  {
+   "id": "my-county",
+   "question": "Do you handle cases in my county?",
+   "answer": "Yes. We serve all 58 California counties through phone and video consultations.",
+   "source_url": "https://caltenantlaw.com/contact"
+  },
+  {
+   "id": "rates",
+   "question": "What are your rates?",
+   "answer": "$165 for an initial 30-minute consultation, $330/hour for ongoing legal work. We believe in transparent pricing with no hidden fees.",
+   "source_url": "https://caltenantlaw.com/contact"
+  },
+  {
+   "id": "have-ready",
+   "question": "What should I have ready for my consultation?",
+   "answer": "We guide you through the process. Begin by watching the legal videos and filling out the Initial Consultation form.",
+   "source_url": "https://caltenantlaw.com/contact"
+  },
+  {
+   "id": "hours",
+   "question": "Hours & response time",
+   "answer": "Phone Consultations: By appointment, Monday–Friday. Response Time: We typically respond to inquiries within one business day. Urgent Eviction Matters: If you've received an eviction notice (Unlawful Detainer), please call us directly at 951-659-1234.",
+   "source_url": "https://caltenantlaw.com/contact"
+  },
+  {
+   "id": "what-to-expect",
+   "question": "What to expect (consultation page)",
+   "answer": "Phone or Teams: Consultations are entirely by phone or Microsoft Teams — no need to leave your home. Experienced Attorney: No paralegals. You speak only with a licensed attorney who specializes in landlord-tenant law. You Control the Costs: All services are piecemeal, like a legal vending machine. Pay by card or PayPal. Watch Videos First: Review the legal videos before your call to get the most from your time.",
+   "source_url": "https://caltenantlaw.com/consultation"
+  },
+  {
+   "id": "how-it-works",
+   "question": "How it works (paid legal services page)",
+   "answer": "1. You may need a consultation with a lawyer. There are no paralegals giving information as many other low-cost services offer. These consultations are ONLY with an experienced lawyer who specializes in landlord-tenant law representing tenants. 2. Unlike most legal consultations, these are entirely by phone or Microsoft Teams. All payments are online by card or PayPal. All services are piecemeal, like a legal vending machine, so you control the costs. Accounting is electronic through the shopping cart's optional registration and sign-in feature. All documents are faxed or scanned to PDF format. 3. Consultations are normally verbal over the phone, but can be by email upon request. Emailed communications except to correct mistakes in paperwork, arrange a consultation time, or request accounting information, are all billed as consultation time with a minimum of $75 payment required.",
+   "source_url": "https://caltenantlaw.com/paid-legal-services-new-returning"
+  }
+ ]
+}

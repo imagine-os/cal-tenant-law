@@ -70,8 +70,8 @@ Mirrors `docs/plan/tasks.json` (statuses `done | doing | todo | blocked`); one l
 
 ### Awaiting Justin
 - Pages: confirm Settings > Pages > Source = GitHub Actions is enabled on imagine-os/cal-tenant-law (the workflow token cannot create the site; D-024)
-- Real site access: caltenantlaw.com is blocked from the build environment; allow the domain or share a view-source / screenshots of the home page, /site-index, /store, /offices and the videos page so brand visuals, video order and the 8th office can be confirmed (D-025)
-- Pricing confirmation: store prices and hourly / hotline rates are as last indexed ($165 consult, $330/h, $60 per 10 min hotline, SKU table in docs/reference/firm-site-digest.md); confirm before they appear on P-10 / C-30 as facts
+- Real site access: resolved 2026-09-18 (prompt 0004): the site was scraped live (98 pages, 96 store products, 33 videos, 8 offices; `docs/reference/site-scrape/pages.md`). Still for Justin: confirm the firm is happy with `public/brand/observed/` being used in the proposal (their copyrighted assets)
+- Pricing confirmation: store prices and rates are now as posted on 2026-09-18 ($165 consult, $330/h, $60 per 10 min hotline, 96 SKUs in `docs/data/services-catalog.json`, `verified: false`); an attorney or Justin confirms before P-10 / C-30 show them as facts (D-038). Six copy inconsistencies for the firm are in `docs/legal/law-change-log.md` LC-008..LC-013
 - Attorney names: seed data uses fictional demo users (D-023); confirm whether the network attorneys' real names may appear in the proposal (P-02) and the offices page
 - Company-OS timing: stays a seam (D-016) until Justin says otherwise; say when to open it and whether Supabase is the interim or the long-term backend
 - Pleading-paper editor approach (D-018, proposed): browser rich-text with a pleading-line ruler, PDF / DOCX export, realtime provider in Pass 3; confirm or redirect
