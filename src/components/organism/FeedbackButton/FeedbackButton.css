@@ -1,9 +1,10 @@
 /* Stacked above the SpecChip on the right edge so it never covers the sticky sidebar (left) or sticky table/timeline headers. */
-.feedbackbtn { position: fixed; right: var(--sp-4); bottom: calc(var(--sp-4) + 48px + env(safe-area-inset-bottom)); z-index: 890; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: var(--r-full); border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text-muted); font-size: var(--fs-xs); font-weight: var(--fw-semibold); box-shadow: var(--shadow-lg); }
-.feedbackbtn:hover { color: var(--color-primary-text); border-color: var(--color-primary); }
-@media (max-width: 900px) { .feedbackbtn { bottom: calc(var(--sp-4) + 52px + env(safe-area-inset-bottom)); width: 40px; padding: 0; justify-content: center; } .feedbackbtn-label { display: none; } }
-@media (max-width: 600px) { .feedbackbtn { bottom: calc(var(--h-bottomnav) + var(--sp-3) + 48px + env(safe-area-inset-bottom)); right: var(--sp-3); } }
+.feedbackbtn { position: fixed; right: var(--sp-4); bottom: calc(var(--sp-4) + 52px + env(safe-area-inset-bottom)); z-index: 890; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border-radius: var(--r-full); border: 0; background: var(--color-surface-overlay); color: var(--color-text-secondary); font-size: var(--fs-xs); font-weight: var(--fw-semibold); box-shadow: var(--shadow-overlay); transition: color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out); }
+.feedbackbtn:hover { color: var(--color-primary-text); box-shadow: var(--shadow-overlay), inset 0 0 0 1px var(--color-border-primary); }
+@media (hover: hover) and (pointer: fine) { .feedbackbtn:hover { transform: translateY(-1px); } }
+@media (max-width: 900px) { .feedbackbtn { bottom: calc(var(--sp-4) + 56px + env(safe-area-inset-bottom)); width: 44px; padding: 0; justify-content: center; } .feedbackbtn-label { display: none; } }
+@media (max-width: 600px) { .feedbackbtn { bottom: calc(var(--h-bottomnav) + var(--sp-3) + 52px + env(safe-area-inset-bottom)); right: var(--sp-3); } }
 body.is-picking, body.is-picking * { cursor: crosshair !important; }
 body.is-picking *:hover { outline: 2px dashed var(--color-cta); outline-offset: 1px; }
-.feedback-pick-hint { position: fixed; left: 50%; bottom: calc(var(--sp-6) + 56px); transform: translateX(-50%); z-index: 90; padding: var(--sp-2) var(--sp-4); border-radius: var(--r-pill); background: var(--color-title); color: var(--color-bg); font-size: var(--fs-sm); box-shadow: var(--shadow-lg); max-width: 90vw; text-align: center; }
+.feedback-pick-hint { position: fixed; left: 50%; bottom: calc(var(--sp-6) + 56px); transform: translateX(-50%); z-index: 90; padding: var(--sp-2) var(--sp-4); border-radius: var(--r-pill); background: var(--color-surface-ink); color: var(--paper-50); font-size: var(--fs-sm); box-shadow: var(--shadow-lg); max-width: 90vw; text-align: center; }
 .feedback-unpin { border: 0; background: none; color: var(--color-primary-text); padding: 0 4px; min-height: 28px; text-decoration: underline; }

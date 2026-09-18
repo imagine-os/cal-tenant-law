@@ -33,4 +33,14 @@ export const strings: StringTable = {
   'noaccess.body': { en: 'You are {role}; {path} needs a different role. Switch the demo user in the hub.', es: 'Eres {role}; {path} necesita otro rol. Cambia el usuario demo en el centro.' },
   'noaccess.hub': { en: 'Back to the hub', es: 'Volver al centro' },
   'noaccess.home': { en: 'Go to my home', es: 'Ir a mi inicio' },
+  // design pass (mod/design): hero, audience groups, card chips and the stat strip
+  'hub.promise': { en: 'One system for every seat at the firm: tenants, front desk, attorneys, the owner and the people who build it.', es: 'Un sistema para cada puesto del despacho: inquilinos, recepción, abogados, el titular y quienes lo construyen.' },
+  'hub.tagline': { en: 'Your cloudy day is about to clear up.', es: 'Tu día nublado está por despejarse.' },
+  'hub.group.clients': { en: 'Outside the firm', es: 'Fuera del despacho' }, 'hub.group.clients.title': { en: 'What a tenant sees', es: 'Lo que ve el inquilino' }, 'hub.group.clients.body': { en: 'The website that educates first, the client app that follows a case, the eviction game board that explains every move, and the portal the other side uses.', es: 'El sitio que educa primero, la app que acompaña el caso, el tablero del desalojo que explica cada movimiento y el portal que usa la otra parte.' },
+  'hub.group.staff': { en: 'Firm staff', es: 'Equipo del despacho' }, 'hub.group.staff.title': { en: 'Every seat at the firm', es: 'Cada puesto del despacho' }, 'hub.group.staff.body': { en: 'Front desk to owner: one staff shell whose menu is filtered per role, so every seat sees its own work.', es: 'De recepción al titular: un mismo marco cuyo menú se filtra por rol, para que cada puesto vea su trabajo.' },
+  'hub.group.build': { en: 'Build & test', es: 'Construcción y pruebas' }, 'hub.group.build.title': { en: 'How CTL OS is built', es: 'Cómo se construye CTL OS' }, 'hub.group.build.body': { en: 'The plan, the ops manual, every document and the developer tools that keep the system honest.', es: 'El plan, el manual de operaciones, toda la documentación y las herramientas que mantienen honesto el sistema.' },
+  'hub.enter': { en: 'Enter', es: 'Entrar' },
+  'hub.inProgress': { en: 'In progress', es: 'En construcción' },
+  'hub.you': { en: 'You are here', es: 'Estás aquí' },
+  'hub.stat.routes': { en: 'routes', es: 'rutas' }, 'hub.stat.built': { en: 'built', es: 'construidas' }, 'hub.stat.tables': { en: 'tables', es: 'tablas' }, 'hub.stat.rules': { en: 'rules', es: 'reglas' }, 'hub.stat.components': { en: 'components', es: 'componentes' }, 'hub.stat.actions': { en: 'actions', es: 'acciones' },
 };

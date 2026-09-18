@@ -1,6 +1,6 @@
 .progress { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; }
-.progress-track { flex: 1 1 auto; height: 8px; border-radius: var(--r-pill); background: var(--color-surface-3); overflow: hidden; }
+.progress-track { flex: 1 1 auto; height: 8px; border-radius: var(--r-pill); background: var(--color-surface-3); overflow: hidden; box-shadow: inset 0 1px 1px rgba(var(--shadow-color),.06); }
 .progress-sm .progress-track { height: 5px; }
-.progress-fill { height: 100%; border-radius: inherit; background: var(--color-primary); transition: width var(--dur-slow) var(--ease-out); }
+.progress-fill { height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); transition: width var(--dur-slow) var(--ease-out); }
 .progress-success .progress-fill { background: var(--color-success); } .progress-warn .progress-fill { background: var(--color-warn); } .progress-danger .progress-fill { background: var(--color-danger); } .progress-cta .progress-fill { background: var(--color-cta); }
 .progress-value { font-size: var(--fs-xs); color: var(--color-text-muted); font-variant-numeric: tabular-nums; min-width: 3.2em; text-align: right; }

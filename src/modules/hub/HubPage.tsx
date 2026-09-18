@@ -13,9 +13,12 @@ import { useActions } from '../../actions/useActions';
 import { Card } from '../../components/molecule/Card/Card';
 import { Toggle } from '../../components/atom/Toggle/Toggle';
 import { Badge } from '../../components/atom/Badge/Badge';
+import { Button } from '../../components/atom/Button/Button';
 import { Icon, type IconName } from '../../components/atom/Icon/Icon';
 import { IconButton } from '../../components/atom/IconButton/IconButton';
 import { Kbd } from '../../components/atom/Kbd/Kbd';
+import { BrandMark } from '../../components/atom/BrandMark/BrandMark';
+import { BrandArt } from '../../components/atom/BrandArt/BrandArt';
 import { RoleSwitcher } from '../../components/molecule/RoleSwitcher/RoleSwitcher';
 import { LangToggle } from '../../components/molecule/LangToggle/LangToggle';
 import { hubSpec } from './specs';
@@ -40,6 +43,14 @@ export const SURFACES: SurfaceCard[] = [
   { key: 'dev', codes: 'D-xx', role: 'super_admin', icon: 'code', to: '/dev/tokens' },
 ];
 
+/** Audience groups for the hub (design pass): who the surface serves decides where its card sits and which hue its medallion takes. */
+export type HubGroupKey = 'clients' | 'staff' | 'build';
+export const HUB_GROUPS: { key: HubGroupKey; surfaces: string[] }[] = [
+  { key: 'clients', surfaces: ['app', 'site', 'board', 'opposition'] },
+  { key: 'staff', surfaces: ['desk', 'counsel', 'assist', 'owner', 'admin', 'marketing'] },
+  { key: 'build', surfaces: ['plan', 'manual', 'docs', 'dev'] },
+];
+
 /* ---------- sections (another pass adds the canvas and simulator between SurfaceGrid and Footer) ---------- */
 
 function HubHeader() {
@@ -47,8 +58,8 @@ function HubHeader() {
   const { isSuperAdmin, devMode, setDevMode } = useSession();
   const { theme, toggleTheme } = useTheme();
   return (
-    <header className="container hub-head">
-      <div className="hub-brand"><img src="./brand/ctl-mark.svg" alt="" width={32} height={32} />CTL OS <Badge tone="primary" size="sm">v{__APP_VERSION__}</Badge></div>
+    <header className="container container-wide hub-head">
+      <div className="hub-brand"><BrandMark variant="lockup" tone="paper" size={40} sub={`v${__APP_VERSION__}`} /></div>
       <div className="hub-controls">
         <LangToggle size="sm" />
         <IconButton icon={theme === 'dark' ? 'sun' : 'moon'} label={theme === 'dark' ? t('theme.light') : t('theme.dark')} variant="outline" onClick={toggleTheme} />
@@ -62,37 +73,73 @@ function Hero() {
   const { t } = useI18n();
   const { devMode } = useSession();
   return (
-    <section className="hub-hero">
-      <p className="eyebrow">{t('hub.eyebrow')}</p>
-      <h1>{t('hub.title')}</h1>
-      <p className="muted">{t('hub.subtitle')}</p>
-      <div className="hub-session"><span className="small muted">{t('hub.session')}</span><RoleSwitcher /></div>
-      {devMode && <p className="small tone-info"><Icon name="spec" size={14} /> {t('hub.devModeOn')} <Kbd>Ctrl</Kbd> + <Kbd>.</Kbd></p>}
+    <section className="container container-wide hub-hero">
+      <div className="hub-hero-copy">
+        <p className="eyebrow">{t('hub.eyebrow')}</p>
+        <h1 className="display">{t('hub.title')}</h1>
+        <p className="lead">{t('hub.promise')}</p>
+        <p className="hub-hero-line">{t('hub.tagline')}</p>
+      </div>
+      <div className="hub-hero-art" aria-hidden><BrandArt variant="sky" /></div>
+      <div className="hub-session">
+        <span className="hub-session-label"><Icon name="user" size={18} /> {t('hub.session')}</span>
+        <RoleSwitcher />
+        {devMode && <p className="hub-session-dev xs"><Icon name="spec" size={14} /> {t('hub.devModeOn')} <Kbd>Ctrl</Kbd> + <Kbd>.</Kbd></p>}
+      </div>
     </section>
+  );
+}
+
+function SurfaceCardView({ s, enter, stub, feature }: { s: SurfaceCard; enter: (s: SurfaceCard) => void; stub: boolean; feature: boolean }) {
+  const { t } = useI18n();
+  const { user, devMode } = useSession();
+  const demo = demoUserByRole(s.role);
+  const here = user.role === s.role && s.role !== 'public';
+  return (
+    <Card className={`hub-card hub-hue-${s.key} ${feature ? 'hub-card-feature' : ''}`} padding="lg">
+      <div className="hub-card-body">
+        <div className="hub-card-top">
+          <span className="hub-medallion"><Icon name={s.icon} size={26} strokeWidth={1.75} /></span>
+          <span className="hub-card-chips">
+            {stub && <Badge tone="neutral" size="sm" dot>{t('hub.inProgress')}</Badge>}
+            {here && <Badge tone="success" size="sm" dot>{t('hub.you')}</Badge>}
+          </span>
+        </div>
+        <h3 className="hub-card-title">{t(`hub.surface.${s.key}`)}</h3>
+        <p className="hub-card-text">{t(`hub.surface.${s.key}.body`)}</p>
+        <div className="hub-card-foot">
+          <Button variant={feature ? 'primary' : 'outline'} iconRight="arrow-right" onClick={() => enter(s)}>{s.role === 'public' ? t('hub.open') : t('hub.enterAs', { name: demo.name })}</Button>
+          {devMode && <code className="hub-card-codes xs faint">{s.codes}</code>}
+        </div>
+      </div>
+      {feature && <div className="hub-card-art" aria-hidden><BrandArt variant="phone" /></div>}
+    </Card>
   );
 }
 
 function SurfaceGrid({ enter }: { enter: (s: SurfaceCard) => void }) {
   const { t } = useI18n();
-  const { user } = useSession();
+  const routes = getRoutes();
+  const isStub = (s: SurfaceCard) => { const path = s.to ?? ROLE_HOME[s.role]; const r = routes.find((x) => x.path === path); return !!r && isStubElement(r.element); };
   return (
-    <section className="hub-grid" aria-label={t('hub.surfaces')}>
-      {SURFACES.map((s) => {
-        const demo = demoUserByRole(s.role);
-        return (
-          <Card key={s.key} className={`hub-card hub-span-${s.span ?? 4}`} padding="lg" interactive onClick={() => enter(s)}>
-            <span className="hub-card-icon"><Icon name={s.icon} /></span>
-            <h2 className="hub-card-title">{t(`hub.surface.${s.key}`)}</h2>
-            <p className="muted small">{t(`hub.surface.${s.key}.body`)}</p>
-            <div className="row-between wrap">
-              <span className="hub-card-cta">{s.role === 'public' ? t('hub.open') : t('hub.enterAs', { name: demo.name })} →</span>
-              <code className="xs faint">{t('hub.codes')} {s.codes}</code>
+    <div className="hub-groups" aria-label={t('hub.surfaces')}>
+      {HUB_GROUPS.map((g) => (
+        <section key={g.key} className={`hub-group hub-group-${g.key}`} aria-labelledby={`hub-group-${g.key}`}>
+          <div className="container container-wide hub-group-inner">
+            <header className="hub-group-head">
+              <p className="eyebrow eyebrow-rule">{t(`hub.group.${g.key}`)}</p>
+              <h2 className="hub-group-title">{t(`hub.group.${g.key}.title`)}</h2>
+              <p className="hub-group-body" id={`hub-group-${g.key}`}>{t(`hub.group.${g.key}.body`)}</p>
+            </header>
+            <div className="hub-grid">
+              {g.surfaces.map((key) => SURFACES.find((s) => s.key === key)).filter((s): s is SurfaceCard => !!s).map((s) => (
+                <SurfaceCardView key={s.key} s={s} enter={enter} stub={isStub(s)} feature={s.key === 'app'} />
+              ))}
             </div>
-            {user.role === s.role && s.role !== 'public' && <Badge size="sm" tone="success" className="hub-card-you">●</Badge>}
-          </Card>
-        );
-      })}
-    </section>
+          </div>
+        </section>
+      ))}
+    </div>
   );
 }
 
@@ -100,14 +147,11 @@ function Footer() {
   const { t } = useI18n();
   const routes = getRoutes();
   const built = routes.filter((r) => !isStubElement(r.element)).length;
+  const stats: [number, string][] = [[routes.length, t('hub.stat.routes')], [built, t('hub.stat.built')], [tables.length, t('hub.stat.tables')], [rules.length, t('hub.stat.rules')], [componentLibrary.length, t('hub.stat.components')], [listActions().length, t('hub.stat.actions')]];
   return (
-    <footer className="hub-foot xs muted">
-      <span>{t('hub.footer.routes', { n: routes.length, built, stubs: routes.length - built })}</span>
-      <span>{t('hub.footer.tables', { n: tables.length })}</span>
-      <span>{t('hub.footer.rules', { n: rules.length })}</span>
-      <span>{t('hub.footer.components', { n: componentLibrary.length })}</span>
-      <span>{t('hub.footer.actions', { n: listActions().length })}</span>
-      <span>{t('hub.footer.mock')}</span>
+    <footer className="container container-wide hub-foot">
+      <dl className="hub-stats">{stats.map(([n, label]) => <div key={label} className="hub-stat"><dt className="eyebrow">{label}</dt><dd className="hub-stat-value">{n}</dd></div>)}</dl>
+      <p className="hub-foot-note xs muted">{t('hub.footer.mock')}</p>
     </footer>
   );
 }
@@ -127,9 +171,11 @@ export function HubPage() {
   });
   return (
     <div className="hub">
-      <HubHeader />
-      <main className="container" id="main">
+      <div className="hub-top grain">
+        <HubHeader />
         <Hero />
+      </div>
+      <main className="hub-main" id="main">
         <SurfaceGrid enter={enter} />
         <Footer />
       </main>

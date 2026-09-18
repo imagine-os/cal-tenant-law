@@ -13,6 +13,7 @@ import { Button } from '../../atom/Button/Button';
 import { Avatar } from '../../atom/Avatar/Avatar';
 import { Placeholder } from '../../atom/Placeholder/Placeholder';
 import type { IconName } from '../../atom/Icon/Icon';
+import { BrandMark } from '../../atom/BrandMark/BrandMark';
 import './DesktopShell.css';
 
 export interface DesktopShellProps { surfaces: Surface[]; routes: RouteDef[]; title: string; children: ReactNode; feedback?: boolean; /** Staff shell: title follows the effective role instead of the current route's surface. */ titleByRole?: boolean }
@@ -56,12 +57,11 @@ export function DesktopShell({ surfaces, routes, title: titleProp, children, fee
   const current = routes.find((r) => matchPath({ path: r.path, end: true }, pathname));
   const firstWith = (prefix: string) => routes.find((r) => r.path.startsWith(prefix) && hasRole(r.roles))?.path;
   const header = (
-    <Link to="/" className="shell-brand" title={`CTL OS · ${title} · ${t('shell.hub')}`}>
-      <img src="./brand/ctl-mark.svg" alt="CTL OS" width={32} height={32} />
-      {!(rail && !narrow) && <span className="shell-brand-text"><strong>CTL OS</strong><small>{title}</small></span>}
+    <Link to="/" className="shell-brand" title={`CTL OS · ${title} · ${t('shell.hub')}`} aria-label={`CTL OS · ${title} · ${t('shell.hub')}`}>
+      <BrandMark variant={rail && !narrow ? 'mark' : 'lockup'} tone="paper" size={36} sub={title} />
     </Link>
   );
-  const footer = <Button variant="outline" block icon="logout" onClick={() => { signOut(); }} className="shell-logout" title={t('shell.signOutDemo')}>{rail && !narrow ? '' : t('session.signOut')}</Button>;
+  const footer = <Button variant="ghost" block icon="logout" onClick={() => { signOut(); }} className="shell-logout" title={t('shell.signOutDemo')}>{rail && !narrow ? '' : t('session.signOut')}</Button>;
   const sidebar = <Sidebar groups={groups} rail={rail && !narrow} onToggleRail={narrow ? undefined : () => setRail((r) => !r)} storageKey={`ctl.sidebar.${role}`} header={header} footer={footer} showCodes={devMode} onNavigate={() => setDrawer(false)} />;
 
   return (

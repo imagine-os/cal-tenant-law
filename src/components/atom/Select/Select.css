@@ -1,4 +1,4 @@
 .select-wrap { position: relative; display: flex; align-items: center; }
-.select { appearance: none; padding-right: 36px; cursor: pointer; }
+.select { appearance: none; padding-right: 40px; cursor: pointer; }
 .select-xs .select { padding-right: 28px; }
-.select-chevron { position: absolute; right: 10px; color: var(--color-text); pointer-events: none; }
+.select-chevron { position: absolute; right: 12px; color: var(--color-text-muted); pointer-events: none; }

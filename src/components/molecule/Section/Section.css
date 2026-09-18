@@ -1,12 +1,12 @@
-/* Section label: Figma home "Services" / "Pets" Open Sans 400 16 grey at x=14 (PhoneShell sets --section-title-*); desk keeps 600 navy. */
-.section { display: flex; flex-direction: column; gap: var(--sp-3); }
-.section-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap; }
+.section { display: flex; flex-direction: column; gap: var(--sp-4); }
+.section-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap; }
 .section-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.section-title { font-size: var(--fs-md); font-weight: var(--section-title-weight, var(--fw-semibold)); color: var(--section-title-color, var(--color-heading)); line-height: var(--lh-md); } .section-desc { font-size: var(--fs-xs); }
-.section-toggle { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 0; color: inherit; text-align: left; }
+.section-title { font-family: var(--font-display); font-size: var(--fs-lg); font-weight: var(--section-title-weight, var(--fw-semibold)); color: var(--section-title-color, var(--color-heading)); line-height: var(--lh-title); letter-spacing: var(--ls-title); } .section-desc { font-size: var(--fs-xs); color: var(--color-text-muted); }
+.section-toggle { display: inline-flex; align-items: center; gap: 6px; border: 0; background: none; padding: 0; color: inherit; text-align: left; min-height: 32px; }
 .section-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
 .section-body { display: flex; flex-direction: column; gap: var(--sp-3); min-width: 0; }
-/* Home band variant: 28 px label row on the screen tone, body on the grey band bleeding to the screen edges (gutter = --sp-4). */
+/* band variant: label row on the screen tone, body on the band bleeding to the screen edges (gutter = --sp-4) */
 .section.is-band { gap: 0; }
-.section.is-band .section-head { min-height: 28px; align-items: center; padding: 6px 0 4px; }
-.section.is-band .section-body { background: var(--color-band); margin: 0 calc(-1 * var(--sp-4)); padding: var(--sp-2) var(--sp-4) var(--sp-2); }
+.section.is-band .section-head { min-height: 32px; align-items: center; padding: 8px 0 6px; }
+.section.is-band .section-title { font-family: var(--font-sans); font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-text-muted); }
+.section.is-band .section-body { background: var(--color-band); margin: 0 calc(-1 * var(--sp-4)); padding: var(--sp-3) var(--sp-4); }

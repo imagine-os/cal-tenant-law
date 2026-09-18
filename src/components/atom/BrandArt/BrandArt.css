@@ -1,0 +1,26 @@
+.brandart { display: block; width: 100%; height: auto; }
+.brandart-sky { height: 100%; }
+/* sky: transparent over the hero gradient; sun amber, clouds paper with a soft gradient, rays and glow from the sky accent */
+.ba-glow-a { stop-color: var(--color-cta); stop-opacity: .55; } .ba-glow-b { stop-color: var(--color-accent); stop-opacity: .22; } .ba-glow-c { stop-color: var(--color-accent); stop-opacity: 0; }
+.ba-ray-a { stop-color: #fff; stop-opacity: 0; } .ba-ray-b { stop-color: #FFF3DC; stop-opacity: .16; }
+.ba-sun { fill: var(--color-cta); } .ba-sun-halo { fill: var(--color-cta); opacity: .22; }
+.ba-cloud-a { stop-color: #FFFFFF; } .ba-cloud-b { stop-color: var(--paper-200); }
+.ba-cloud { fill: url(#ba-cloud); }
+.ba-cloud-far { opacity: .28; } .ba-cloud-mid { opacity: .5; } .ba-cloud-near { opacity: .96; }
+.ba-ground { fill: var(--paper-200); opacity: .96; }
+:root[data-theme="dark"] .ba-cloud-far { opacity: .16; } :root[data-theme="dark"] .ba-cloud-mid { opacity: .3; } :root[data-theme="dark"] .ba-cloud-near { opacity: .8; } :root[data-theme="dark"] .ba-ground { opacity: .8; }
+@media (prefers-reduced-motion: no-preference) {
+  .ba-cloud-far { animation: ba-drift 18s ease-in-out infinite alternate; } .ba-cloud-mid { animation: ba-drift 24s ease-in-out infinite alternate-reverse; }
+  @keyframes ba-drift { from { transform: translateX(0); } to { transform: translateX(14px); } }
+}
+/* phone */
+.brandart-phone { max-width: 220px; }
+.ba-phone-body { fill: #14161F; } .ba-phone-screen { fill: var(--color-bg-phone); }
+.ba-phone-bar { fill: var(--color-primary); } .ba-phone-nav { fill: var(--color-surface-2); }
+.ba-line-paper { fill: rgba(255,255,255,.8); } .ba-line { fill: var(--color-heading); opacity: .8; } .ba-line-soft { fill: var(--color-border); }
+.ba-card { fill: var(--color-surface); stroke: var(--color-hairline-strong); }
+.ba-progress { fill: var(--color-success); }
+.ba-dot-accent { fill: var(--color-accent-soft); stroke: var(--color-accent); } .ba-dot-cta { fill: var(--color-cta-soft); stroke: var(--color-cta); }
+.ba-square-0, .ba-square-1 { fill: var(--board-positive-bg); stroke: var(--board-positive-fg); } .ba-square-2 { fill: var(--board-document-bg); stroke: var(--board-document-fg); } .ba-square-3 { fill: var(--board-hearing-bg); } .ba-square-4 { fill: var(--board-neutral-bg); stroke: var(--board-neutral-fg); } .ba-square-5 { fill: var(--board-jump-bg); stroke: var(--board-jump-fg); }
+.ba-nav { fill: var(--color-border); } .ba-nav-active { fill: var(--color-primary); }
+:root[data-theme="dark"] .ba-phone-body { fill: #2A2E3D; }

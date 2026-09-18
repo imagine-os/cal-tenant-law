@@ -1,11 +1,11 @@
-/* Figma desk page title (employees.jpg "Manage Employees"): Open Sans 700 24 #181818, primary button 52 tall on the right, 26 px below the top bar. */
-.pagehead { display: flex; flex-direction: column; gap: var(--sp-4); margin-bottom: var(--sp-5); }
-.pagehead-row { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap; }
-.pagehead-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.pagehead-back { display: inline-flex; align-items: center; gap: 4px; min-height: 32px; width: fit-content; font-size: var(--fs-xs); color: var(--color-text-muted); margin-bottom: 4px; }
-.pagehead-title { font-size: var(--fs-xl); font-weight: var(--fw-bold); color: var(--color-text); } .pagehead-sub { font-size: var(--fs-sm); max-width: 70ch; }
-.pagehead-code { font-size: var(--fs-xs); background: var(--color-primary-soft); color: var(--color-primary-text); padding: 2px 6px; border-radius: var(--r-sm); text-transform: none; letter-spacing: 0; }
+/* Page header: serif title with tight tracking, one-line subtitle, actions on the right; code pill in dev mode only. */
+.pagehead { display: flex; flex-direction: column; gap: var(--sp-4); margin-bottom: var(--sp-6); }
+.pagehead-row { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap; }
+.pagehead-text { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.pagehead-back { display: inline-flex; align-items: center; gap: 4px; min-height: 32px; width: fit-content; font-size: var(--fs-xs); color: var(--color-text-muted); margin-bottom: 2px; }
+.pagehead-title { font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: var(--fw-bold); letter-spacing: var(--ls-display); line-height: 1.1; color: var(--color-heading); } .pagehead-sub { font-size: var(--fs-md); color: var(--color-text-secondary); max-width: 66ch; line-height: var(--lh-md); }
+.pagehead-code { font-size: var(--fs-2xs); font-family: var(--font-mono); background: var(--color-primary-soft); color: var(--color-primary-text); padding: 3px 7px; border-radius: var(--r-xs); text-transform: none; letter-spacing: 0; vertical-align: middle; }
 .pagehead-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
 .pagehead-bar { display: flex; gap: var(--sp-3); align-items: center; flex-wrap: wrap; min-width: 0; max-width: 100%; }
 .pagehead-bar > * { min-width: 0; max-width: 100%; }
-@media (max-width: 600px) { .pagehead-title { font-size: var(--fs-lg); } .pagehead-actions { width: 100%; } .pagehead-actions > * { flex: 1 1 auto; } }
+@media (max-width: 600px) { .pagehead-title { font-size: var(--fs-xl); } .pagehead-sub { font-size: var(--fs-sm); } .pagehead-actions { width: 100%; } .pagehead-actions > * { flex: 1 1 auto; } }
