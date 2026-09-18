@@ -55,14 +55,15 @@ export const clientLearnSpec = defineSpec({
 
 export const clientPaySpec = defineSpec({
   code: 'C-04', name: 'Client payments', purpose: 'What the tenant owes and what they have paid, piece by piece: the firm sells unbundled work, so every line is one SKU at the price listed on the site - never a quote.',
-  layout: ['PageHeader', 'TotalDue', 'DueList', 'HistoryList', 'AsListedNote'],
-  data: ['cases', 'invoices'], roles: ROLES,
-  logic: ['Invoices of my case split by status: due first, then paid and refunded newest first.', 'Total due = sum of amount_cents where status = due.', 'Amounts render "as listed" (docs/reference/firm-site-digest.md §4); payment itself is a seam.'],
+  layout: ['PageHeader', 'TotalDue', 'DueList', 'WhatComesNext (services for my board square)', 'HistoryList', 'AsListedNote'],
+  data: ['cases', 'invoices', 'board_positions', 'services'], roles: ROLES,
+  logic: ['Invoices of my case split by status: due first, then paid and refunded newest first.', 'Total due = sum of amount_cents where status = due.', 'Amounts render "as listed" (docs/reference/firm-site-digest.md §4); payment itself is a seam.', '"What usually comes next" reads the catalog for the square this case stands on (board_positions.node_id), then the squares the board can move to; prices carry the same "as listed, unverified" treatment as P-10 (RULE-CATALOG-01).'],
   integrations: ['Stripe / PayPal (seam, not wired)'], components: ['PageHeader', 'Card', 'Section', 'Badge', 'StatusBadge', 'Button', 'EmptyState', 'Placeholder'],
   actions: [
     { id: 'client.payInvoice', label: 'Pay', intent: 'pay one item on my account', permission: 'store.buy', params: { id: 'id' } },
     { id: 'client.openReceipt', label: 'Receipt', intent: 'open the receipt for something I paid', permission: 'payments.read', params: { id: 'id' } },
+    { id: 'client.openServices', label: 'See the whole menu', intent: 'open the services menu', permission: 'store.read' },
   ],
-  rules: ['RULE-INTAKE-01'], states: ['nothing due', 'items due', 'refund present', 'Spanish'], checkedAt: CHECKED, tone: 'list',
+  rules: ['RULE-INTAKE-01', 'RULE-CATALOG-01'], states: ['nothing due', 'items due', 'refund present', 'Spanish'], checkedAt: CHECKED, tone: 'list',
   notes: [...NOTES, 'Paying and receipts are Placeholders while payments are a seam (no card data in this demo).'],
 });

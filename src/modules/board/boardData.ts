@@ -3,6 +3,7 @@
  * truth: nobody copies the board into src/), typed through the organism's prop types, and indexed once for the three
  * board pages. 10 phases, 88 squares, 114 paths.
  */
+import { useMemo } from 'react';
 import raw from '../../../docs/game-board/nodes.json';
 import type { BoardData, BoardEdge, BoardNode, BoardPathType, BoardPhase } from '../../components/organism/GameBoard/types';
 
@@ -42,3 +43,20 @@ export function searchNodes(q: string, limit = 8): BoardNode[] {
 export const PATH_ORDER: BoardPathType[] = ['normal', 'positive', 'negative', 'neutral', 'jump'];
 /** The i18n key suffix for a path type, so pages never hard-code the poster's wording twice. */
 export const pathKey = (p: BoardPathType): string => `board.path.${p}`;
+
+/**
+ * The board's squares with their per-square metadata merged in (`board_node_meta`): the cost band the services
+ * catalog fills from the store SKUs (T-074 first half, RULE-CATALOG-05) and the deadline rule the deadline engine
+ * will fill (T-059, still null). Memoised so the SVG layout is not recomputed on every render.
+ */
+export function useNodesWithMeta(meta: { node_id: string; typical_cost_band: string | null; deadline_rule: string | null }[]): BoardNode[] {
+  return useMemo(() => {
+    if (meta.length === 0) return NODES;
+    const byId = new Map(meta.map((m) => [m.node_id, m]));
+    return NODES.map((n) => {
+      const m = byId.get(n.id);
+      if (!m || (m.typical_cost_band == null && m.deadline_rule == null)) return n;
+      return { ...n, typical_cost_band: m.typical_cost_band, deadline_rule: m.deadline_rule };
+    });
+  }, [meta]);
+}

@@ -9,6 +9,8 @@ import './site.css';
  */
 export const SITE_NAV: SiteNavItem[] = [
   { to: '/site', label: 'site.nav.home', end: true },
+  { to: '/site/services', label: 'catalog.nav.services' },
+  { to: '/site/how-it-works', label: 'catalog.nav.how' },
   { to: '/board', label: 'site.nav.board' },
   { to: '/site/proposal', label: 'site.nav.proposal', end: true },
   { to: '/site/proposal/replaces', label: 'site.nav.replaces' },

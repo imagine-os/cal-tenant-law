@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useActions } from '../../actions/useActions';
 import { useTable } from '../../data/DataContext';
 import type { BoardNodeMetaRow } from '../../data/schema/board';
@@ -13,7 +14,7 @@ import { GameBoard, type BoardCommand } from '../../components/organism/GameBoar
 import { BoardKey } from '../../components/organism/GameBoard/BoardKey';
 import type { BoardNodeKindEntry, BoardOverlay, BoardPathType } from '../../components/organism/GameBoard/types';
 import { useT } from '../../i18n/I18nProvider';
-import { BOARD, EDGES, NODES, PHASES, RECONSTRUCTED_EDGES, nodeById, searchNodes } from './boardData';
+import { BOARD, EDGES, NODES, PHASES, RECONSTRUCTED_EDGES, nodeById, searchNodes, useNodesWithMeta } from './boardData';
 import { PhaseChips, useBoardLabels } from './boardChrome';
 import { NodeDetail } from './NodeDetail';
 import { boardSpec } from './specs';
@@ -35,11 +36,26 @@ export function BoardPage() {
   const [overlay, setOverlay] = useState<BoardOverlay>('none');
 
   const { rows: nodeMeta } = useTable<BoardNodeMetaRow>('board_node_meta');
+  const nodesWithMeta = useNodesWithMeta(nodeMeta);
   const filled = useMemo(() => ({
     cost: nodeMeta.filter((r) => !!r.typical_cost_band).length,
     deadline: nodeMeta.filter((r) => !!r.deadline_rule).length,
     total: nodeMeta.length || NODES.length,
   }), [nodeMeta]);
+
+  // ?node=<id> opens a square directly (P-06: the current square is addressable). The services menu links here.
+  const [params] = useSearchParams();
+  const wanted = params.get('node');
+  const applied = useRef<string | null>(null);
+  useEffect(() => {
+    if (!wanted || applied.current === wanted) return;
+    const n = nodeById[wanted];
+    if (!n) return;
+    applied.current = wanted;
+    setSelectedId(n.id);
+    setFocusPhase(n.phase);
+    setFitNonce((k) => k + 1);
+  }, [wanted]);
 
   const results = useMemo(() => searchNodes(q), [q]);
   const selected = selectedId ? nodeById[selectedId] : null;
@@ -124,7 +140,7 @@ export function BoardPage() {
       <PhaseChips value={focusPhase} onChange={goPhase} label={t('board.phases')} />
 
       <GameBoard
-        nodes={NODES} edges={EDGES} phases={PHASES}
+        nodes={nodesWithMeta} edges={EDGES} phases={PHASES}
         selectedId={selectedId} onSelect={open}
         overlay={overlay} hiddenPaths={hiddenPaths}
         focusPhase={focusPhase} fitNonce={fitNonce} command={command}

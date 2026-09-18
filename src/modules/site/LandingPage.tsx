@@ -16,8 +16,11 @@ import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 import { SiteFrame } from './chrome';
 import { landingSpec } from './specs';
 import { HOW_STEPS, LESSONS, STAGES, type StageId } from './siteData';
+import { SITE_STAGE_PHASE } from '../catalog/catalogData';
 
-const PLANNED_STORE = 'store P-10, pass 2';
+/** P-01's renter-facing stage -> the services menu filtered to that board phase (P-10). */
+const servicesHref = (stage: StageId): string => `/site/services?stage=${SITE_STAGE_PHASE[stage] ?? ''}`;
+
 const PLANNED_INTAKE = 'intake F-10 and scheduling F-11, pass 2';
 const PLANNED_LMS = 'learning C-40, pass 2';
 
@@ -36,7 +39,12 @@ export function LandingPage() {
       setStage(hit.id);
       return { ok: true, message: `Showing ${bi(hit.label, 'en')}` };
     },
-    'site.openStore': ({ stage: s }) => ({ ok: false, message: `The store opens in pass 2 (P-10); stage ${String(s)} is ready for it.` }),
+    'site.openStore': ({ stage: s }) => {
+      const hit = STAGES.find((x) => x.id === s) ?? current;
+      if (!hit) return { ok: false, message: `No such stage: ${String(s)}` };
+      navigate(servicesHref(hit.id));
+      return { ok: true, message: `Opened the services for ${hit.label.en}` };
+    },
     'site.startIntake': () => ({ ok: false, message: 'The intake form ships in pass 2 (F-10).' }),
     'site.bookConsult': () => ({ ok: false, message: 'Booking ships in pass 2 (F-11).' }),
     'site.watchVideo': ({ lessonId }) => ({ ok: false, message: `The player ships in pass 2 (C-40); lesson ${String(lessonId)} is in the curriculum.` }),
@@ -155,9 +163,9 @@ export function LandingPage() {
                   </ul>
                   <p className="xs muted">{t('site.asListed')}</p>
                   <div>
-                    <Placeholder what={t('p1.stages.open')} plannedIn={PLANNED_STORE}>
+                    <Link to={servicesHref(current.id)}>
                       <Button variant="secondary" iconRight="arrow-right">{t('p1.stages.open')}</Button>
-                    </Placeholder>
+                    </Link>
                   </div>
                 </div>
               </div>
