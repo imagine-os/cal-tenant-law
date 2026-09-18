@@ -14,8 +14,17 @@ const board = boardJson as unknown as BoardData;
 
 interface DemoCase { id: string; label: string; ref: string; tenant: string; note: string; walk: string[] }
 
-/** The three demo cases the GB-02 case selector offers. `walk` is visited-in-order; the last square is the position. */
+/**
+ * The demo cases the GB-02 case selector offers. `walk` is visited-in-order; the last square is the position.
+ * `case_01` is the ops seed's case for the demo client Dana Morales (src/data/seed/ops.ts), so the client app's
+ * "my case" link (C-01 -> /board/case/case_01) lands on a real position; T-054 unifies the two seeds on `cases.id`.
+ */
 export const DEMO_CASES: DemoCase[] = [
+  {
+    id: 'case_01', label: 'Morales v. Crestline Residential LLC', ref: 'UD-2026-004182 · Riverside', tenant: 'ten_inland',
+    note: 'Service was good, the complaint survived our demurrer review, and the answer is filed. Discovery goes out next; the trial-setting window is the deadline to watch.',
+    walk: ['start', 'eviction-notice-or-lease-ends', 'summons-and-complaint-filed', 'clerks-notice-of-filing-mailed', 'process-server-tries-to-serve-you', 'evaluate-service', 'evaluate-complaint-for-demurrer', 'answer-to-complaint'],
+  },
   {
     id: 'case_1', label: 'Ramirez v. Delmar Holdings', ref: 'UD-2026-01148 · Riverside', tenant: 'ten_inland',
     note: 'Served last Tuesday by a server who left the papers with a neighbour. We are deciding whether service was good or bad, which decides whether the next move is a motion to quash or a demurrer.',

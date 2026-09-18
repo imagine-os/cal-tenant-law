@@ -47,8 +47,13 @@ export async function fetchManifest(browser, base, attempts = 3) {
   throw new Error(`could not read the route manifest after ${attempts} attempts: ${last?.message}`);
 }
 
-export const PARAMS = { ':table': 'feedback', ':code': 'D-03', ':id': 'fbk_seed_01', ':caseId': 'case_1', ':slug': 'eviction', '*': '' };
-export const fillParams = (path) => path.replace(/:\w+|\*/g, (p) => PARAMS[p] ?? 'x').replace(/\/$/, '') || '/';
+export const PARAMS = { ':table': 'feedback', ':code': 'D-03', ':id': 'fbk_seed_01', ':caseId': 'case_01', ':lang': 'en', ':slug': '01-front-desk-day', '*': '' };
+/** Per-route overrides where the same param name means something else (a legal topic is not a manual chapter). */
+export const PARAMS_BY_PATH = [[/^\/legal\/topics/, { ':slug': 'unlawful-detainer-procedure' }], [/^\/plan\/task/, { ':id': 'T-050' }]];
+export const fillParams = (path) => {
+  const extra = Object.assign({}, ...PARAMS_BY_PATH.filter(([re]) => re.test(path)).map(([, o]) => o));
+  return path.replace(/:\w+|\*/g, (p) => extra[p] ?? PARAMS[p] ?? 'x').replace(/\/$/, '') || '/';
+};
 export const routeFilter = (only, codes) => (r) => (!only.length || only.some((p) => (p.endsWith('$') ? r.path === p.slice(0, -1) : r.path === p || r.path.startsWith(p.endsWith('/') ? p : `${p}/`)))) && (!codes.length || codes.includes(r.code));
 export const NOISE = /Failed to load resource|ERR_CERT|fonts\.g(oogleapis|static)|net::|favicon/;
 

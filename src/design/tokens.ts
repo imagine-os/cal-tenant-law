@@ -78,11 +78,11 @@ export const status = {
  */
 export const boardHues = {
   light: {
-    positive: { fg: '#1E8E4E', bg: '#E3F5EA' }, negative: { fg: '#C93B3B', bg: '#FBE7E7' }, neutral: { fg: '#4B586E', bg: '#EAEEF3' },
+    normal: { fg: '#C9771A', bg: '#FBEEDC' }, positive: { fg: '#1E8E4E', bg: '#E3F5EA' }, negative: { fg: '#C93B3B', bg: '#FBE7E7' }, neutral: { fg: '#4B586E', bg: '#EAEEF3' },
     jump: { fg: '#6B4FBB', bg: '#EEE8FB' }, document: { fg: '#1C74B8', bg: '#E3F1FC' }, hearing: { fg: '#F6F8FA', bg: '#172E57' },
   },
   dark: {
-    positive: { fg: '#5CCB86', bg: '#153A24' }, negative: { fg: '#F08383', bg: '#4A1F1F' }, neutral: { fg: '#C3CCD8', bg: '#2B3444' },
+    normal: { fg: '#F0A94A', bg: '#4A3210' }, positive: { fg: '#5CCB86', bg: '#153A24' }, negative: { fg: '#F08383', bg: '#4A1F1F' }, neutral: { fg: '#C3CCD8', bg: '#2B3444' },
     jump: { fg: '#B39DF0', bg: '#2C2250' }, document: { fg: '#7FBDF0', bg: '#16324B' }, hearing: { fg: '#0B172E', bg: '#B9CDE8' },
   },
 } as const;

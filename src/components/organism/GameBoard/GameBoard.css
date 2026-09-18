@@ -1,6 +1,6 @@
-/* GameBoard organism (GB-01..GB-04). Colours come from the board tokens (--board-*); the "normal path" uses the amber
-   --color-warn token because boardHues has no `normal` tone yet (a board-normal token is proposed for the Pass 1
-   integration). Nothing here is hard-coded hex. */
+/* GameBoard organism (GB-01..GB-04). Colours come from the board tokens (--board-*): the "normal path" is the amber
+   `normal` tone added to boardHues at Pass 1 integration (--board-normal-fg), so it no longer borrows --color-warn.
+   Nothing here is hard-coded hex. */
 
 .gb {
   position: relative;
@@ -75,7 +75,7 @@
 .gb-edge { fill: none; stroke-linecap: round; }
 .gb-edge-halo { stroke-width: 15; opacity: .16; }
 .gb-edge-line { stroke-width: 4.5; }
-.gb-edge-normal { stroke: var(--color-warn); }
+.gb-edge-normal { stroke: var(--board-normal-fg); }
 .gb-edge-positive { stroke: var(--board-positive-fg); }
 .gb-edge-negative { stroke: var(--board-negative-fg); }
 .gb-edge-neutral { stroke: var(--board-neutral-fg); }
@@ -88,7 +88,7 @@
 .gb-edge-g.is-visited .gb-edge-line { stroke-width: 7.5; }
 .gb-edge-g.is-visited .gb-edge-halo { opacity: .3; }
 .gb-edge-g.is-next .gb-edge-line { stroke-width: 6.5; stroke-dasharray: 14 9; }
-.gb-arrow-normal { fill: var(--color-warn); }
+.gb-arrow-normal { fill: var(--board-normal-fg); }
 .gb-arrow-positive { fill: var(--board-positive-fg); }
 .gb-arrow-negative { fill: var(--board-negative-fg); }
 .gb-arrow-neutral { fill: var(--board-neutral-fg); }
@@ -181,7 +181,7 @@
 .boardkey-item:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
 .boardkey-item[aria-pressed='false'] { opacity: .5; text-decoration: line-through; }
 .boardkey-swatch { width: 34px; height: 8px; border-radius: 4px; flex: none; }
-.boardkey-swatch[data-path='normal'] { background: var(--color-warn); }
+.boardkey-swatch[data-path='normal'] { background: var(--board-normal-fg); }
 .boardkey-swatch[data-path='positive'] { background: var(--board-positive-fg); }
 .boardkey-swatch[data-path='negative'] { background: var(--board-negative-fg); }
 .boardkey-swatch[data-path='neutral'] { background: var(--board-neutral-fg); }

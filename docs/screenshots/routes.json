@@ -1,0 +1,5509 @@
+[
+ {
+  "path": "/site",
+  "code": "P-01",
+  "surface": "public",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "P-01",
+   "name": "Public home",
+   "purpose": "Concept for the redesigned caltenantlaw.com: an educate-first funnel that takes a frightened renter from \"there is a notice on my door\" to a paid 30-minute attorney consultation, through the free videos, the game board and a stage picker that reaches the store.",
+   "layout": [
+    "SiteLayout",
+    "Hero (brand line, promise, CTAs, language, trust strip)",
+    "HowItWorks (watch, intake, consult)",
+    "GameBoardTeaser",
+    "StagePicker (ten board stages, services per stage)",
+    "VideoCurriculum",
+    "Offices (tenants table)",
+    "BookBand (consultation)",
+    "Footer"
+   ],
+   "data": [
+    "tenants"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "Stage picker is a single-select chip group; the selected stage renders its \"where you are\", \"what we do\" and the services indexed under it. The selection is page state today and becomes a URL parameter when the store lands (P-10).",
+    "Services list SKU numbers and prices exactly as last indexed from the current site, behind an \"unverified\" badge and a note; nothing is presented as a confirmed 2026 price (D-025).",
+    "Offices come from the tenants table (kind = office, ordered by sort_order); names are fictional demo offices until the firm confirms the real network (D-023).",
+    "Video cards come from the curriculum preview in siteData.ts; play opens the tracked lesson in the client app once the learning module ships (C-40, Pass 2)."
+   ],
+   "integrations": [
+    "Store / Ecwid replacement (P-10, Pass 2)",
+    "Intake forms (F-10, Pass 2)",
+    "Scheduling (F-11, Pass 2)",
+    "Learning player (C-40, Pass 2)"
+   ],
+   "components": [
+    "SiteLayout",
+    "Section",
+    "Card",
+    "Button",
+    "Chip",
+    "Badge",
+    "Icon",
+    "SegmentedControl",
+    "Placeholder",
+    "Tooltip",
+    "Stepper"
+   ],
+   "actions": [
+    {
+     "id": "site.pickStage",
+     "label": "Pick my stage",
+     "intent": "show what happens at a stage of the eviction",
+     "params": {
+      "stage": "enum:notice,served,quash,demurrer,answer,default,discovery,msj,trial,appeal"
+     }
+    },
+    {
+     "id": "site.openStore",
+     "label": "Open this stage in the store",
+     "intent": "see the documents and services for this stage",
+     "permission": "store.read",
+     "params": {
+      "stage": "enum:notice,served,quash,demurrer,answer,default,discovery,msj,trial,appeal"
+     }
+    },
+    {
+     "id": "site.startIntake",
+     "label": "Start the intake",
+     "intent": "fill in the consultation intake form"
+    },
+    {
+     "id": "site.bookConsult",
+     "label": "Book a consultation",
+     "intent": "book a 30-minute attorney consultation"
+    },
+    {
+     "id": "site.watchVideo",
+     "label": "Play a lesson",
+     "intent": "watch one of the free videos",
+     "params": {
+      "lessonId": "string"
+     }
+    },
+    {
+     "id": "site.openBoard",
+     "label": "Open the game board",
+     "intent": "open the eviction game board"
+    },
+    {
+     "id": "site.setLang",
+     "label": "Language",
+     "intent": "read the site in English or Spanish",
+     "params": {
+      "lang": "enum:en,es"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-INTAKE-01",
+    "RULE-NOTICE-01",
+    "RULE-UD-01"
+   ],
+   "states": [
+    "stage selected (defaults to \"I was served papers\")",
+    "no stage selected",
+    "Spanish",
+    "dark",
+    "10-foot (>= 2560)"
+   ],
+   "notes": [
+    "site module (P-01..P-04). Firm facts are as indexed (D-025): prices and services are labelled \"as listed on the current site\" and never presented as confirmed.",
+    "The header CTA points back to this page until the booking flow ships (F-11, Pass 2); the booking band is the anchor."
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ]
+  }
+ },
+ {
+  "path": "/app",
+  "code": "C-01",
+  "surface": "customer",
+  "status": "built",
+  "roles": [
+   "client",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "C-01",
+   "name": "Client home",
+   "purpose": "The tenant opens one screen and knows where they stand: which square of the eviction game board their case is on, what just happened and what happens next in plain English and Spanish, what is due, what to watch next and what to pay next.",
+   "layout": [
+    "Greeting",
+    "CasePosition (board square, link to GB-02)",
+    "WhatHappenedWhatNext (en + es)",
+    "MyDeadlines",
+    "WatchNext (lesson progress)",
+    "PayNext (invoices due, as listed)",
+    "MyBinder (recent documents, upload)",
+    "Messages"
+   ],
+   "data": [
+    "cases",
+    "deadlines",
+    "documents",
+    "invoices",
+    "lessons",
+    "lesson_progress"
+   ],
+   "roles": [
+    "client",
+    "super_admin"
+   ],
+   "logic": [
+    "My case = cases where client_user_id is me (a super admin previewing the app sees the demo client’s case).",
+    "Plain-language \"what happened / what next\" comes from the board square (src/data/schema/boardStages.ts) in both languages.",
+    "Deadlines show pending rows soonest first; a past due date renders danger, within three days warn (RULE-UD-01).",
+    "Watch next = the lowest-order lesson that is not finished, preferring lessons mapped to my current square.",
+    "Pay next = invoices with status due, prices \"as listed\" and never presented as a quote."
+   ],
+   "integrations": [
+    "Stripe / PayPal (seam, not wired)",
+    "YouTube (the video player is Pass 2)"
+   ],
+   "components": [
+    "Card",
+    "Section",
+    "Badge",
+    "StatusBadge",
+    "ProgressBar",
+    "Button",
+    "Chip",
+    "EmptyState",
+    "Placeholder",
+    "Icon",
+    "BottomNav"
+   ],
+   "actions": [
+    {
+     "id": "client.openCase",
+     "label": "My square on the board",
+     "intent": "show me where my case is on the game board",
+     "permission": "cases.read_own"
+    },
+    {
+     "id": "client.openBinder",
+     "label": "My binder",
+     "intent": "open my binder of documents",
+     "permission": "documents.read_own"
+    },
+    {
+     "id": "client.openLearn",
+     "label": "Learn",
+     "intent": "open the videos I should watch next"
+    },
+    {
+     "id": "client.openPay",
+     "label": "Pay",
+     "intent": "open what I owe"
+    },
+    {
+     "id": "client.uploadDocument",
+     "label": "Add a document",
+     "intent": "add a document or photo to my binder"
+    },
+    {
+     "id": "client.openMessages",
+     "label": "Messages",
+     "intent": "open my messages with the legal team",
+     "permission": "messages.read"
+    },
+    {
+     "id": "client.callHotline",
+     "label": "Call the hotline",
+     "intent": "start a paid hotline call with an attorney",
+     "permission": "consultations.book"
+    }
+   ],
+   "rules": [
+    "RULE-UD-01",
+    "RULE-UD-04",
+    "RULE-INTAKE-01"
+   ],
+   "states": [
+    "active case",
+    "no case yet",
+    "nothing due",
+    "Spanish",
+    "dark"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "tone": "home",
+   "notes": [
+    "client module (T-040). Reads the provisional ops tables (src/data/schema/ops.ts); T-054 / T-058 supersede the shapes.",
+    "Upload and messages are Placeholders (Pass 2 discovery gathering / comms); paying is a Placeholder while payments are a seam."
+   ]
+  }
+ },
+ {
+  "path": "/desk",
+  "code": "F-01",
+  "surface": "frontdesk",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "F-01",
+   "name": "Front desk today",
+   "purpose": "One screen to run the day at an office (and on the wall screen for the whole network): the consultations booked today and this week, the intake queue with what to review and schedule, the calls to return, and what is waiting to be paid.",
+   "layout": [
+    "PageHeader",
+    "StatTiles (today, new intakes, unpaid, calls)",
+    "ConsultationsToday (timeline)",
+    "ConsultationsThisWeek",
+    "IntakeQueue (review / schedule)",
+    "CallsToReturn",
+    "PaymentsPending",
+    "QuickActions"
+   ],
+   "data": [
+    "consultations",
+    "intakes",
+    "invoices",
+    "users",
+    "tenants",
+    "cases"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Rows are scoped to the signed-in office; owner and super admin see every office (P-02).",
+    "Today = the consultation’s scheduled_at falls on today; \"this week\" = the next seven days.",
+    "Reviewing an intake writes status = reviewed through the provider; scheduling waits for the scheduling pass.",
+    "Marking a consultation held writes status = held.",
+    "Consultations are prepaid, time-boxed 30-minute blocks (RULE-INTAKE-01); hotline blocks are $60 per 10 minutes as listed."
+   ],
+   "integrations": [
+    "Microsoft Teams / phone (consultation channel)",
+    "VoiceStamps hotline (later)",
+    "Scheduler (later)",
+    "Stripe / PayPal (seam)"
+   ],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "Section",
+    "Card",
+    "DataTable",
+    "StatusBadge",
+    "Badge",
+    "Chip",
+    "Button",
+    "EmptyState",
+    "Placeholder",
+    "Tooltip",
+    "Avatar"
+   ],
+   "actions": [
+    {
+     "id": "desk.reviewIntake",
+     "label": "Review",
+     "intent": "mark an intake as reviewed",
+     "permission": "intake.write",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "desk.scheduleIntake",
+     "label": "Schedule",
+     "intent": "book a consultation for someone in the intake queue",
+     "permission": "consultations.book",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "desk.markConsultationHeld",
+     "label": "Mark as held",
+     "intent": "mark a consultation as held",
+     "permission": "consultations.write",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "desk.newIntake",
+     "label": "New intake",
+     "intent": "start a new intake for a caller",
+     "permission": "intake.write"
+    },
+    {
+     "id": "desk.bookConsultation",
+     "label": "Book a consultation",
+     "intent": "book a consultation slot for a client",
+     "permission": "consultations.book",
+     "params": {
+      "clientId": "id",
+      "date": "date"
+     }
+    },
+    {
+     "id": "desk.openCallLog",
+     "label": "Open the call log",
+     "intent": "open the call log with hotline minutes",
+     "permission": "messages.read"
+    },
+    {
+     "id": "desk.recordPayment",
+     "label": "Record payment",
+     "intent": "record a payment against an item on a case",
+     "permission": "payments.write",
+     "params": {
+      "id": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-INTAKE-01",
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "busy day",
+    "empty day",
+    "one office",
+    "whole network",
+    "Spanish",
+    "dark"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "front-desk module (T-041). Reads the provisional ops tables; T-063 / T-064 / T-065 replace intake, scheduling and the call log.",
+    "Scheduling, new intake, booking, the call log and recording a payment are Placeholders with plannedIn."
+   ]
+  }
+ },
+ {
+  "path": "/counsel",
+  "code": "L-01",
+  "surface": "counsel",
+  "status": "built",
+  "roles": [
+   "attorney",
+   "owner",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "L-01",
+   "name": "Attorney home",
+   "purpose": "The regional attorney opens the day here: what is running late first, then the deadlines of the next seven days, the discovery that is coming due, the documents waiting for a signature-level review, the next hearings, and every case with the board square it sits on.",
+   "layout": [
+    "PageHeader",
+    "StatTiles (my cases, late, due this week, to review)",
+    "RunningLate",
+    "DeadlinesThisWeek",
+    "DiscoveryDue",
+    "DocumentsToReview",
+    "NextHearings",
+    "MyCases (table with board square)"
+   ],
+   "data": [
+    "cases",
+    "deadlines",
+    "documents",
+    "users",
+    "tenants"
+   ],
+   "roles": [
+    "attorney",
+    "owner",
+    "super_admin"
+   ],
+   "logic": [
+    "My cases = cases where attorney_user_id is me; an owner or super admin sees every case in scope (P-02).",
+    "Late = a case flagged late, a deadline with status missed, or a pending deadline whose due_at has passed. It renders first (annotation fbk_homes_01).",
+    "This week = pending deadlines due in the next seven days, soonest first.",
+    "Discovery due = pending deadlines carrying RULE-UD-03 or naming discovery (the real cut-off engine is T-059).",
+    "Next hearings = pending deadlines that name a hearing, trial or conference.",
+    "Completing a deadline and approving a document are writes by id through the provider (version bumped)."
+   ],
+   "integrations": [
+    "Court e-filing (later)"
+   ],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "Section",
+    "Card",
+    "DataTable",
+    "StatusBadge",
+    "Badge",
+    "Chip",
+    "Button",
+    "EmptyState",
+    "Placeholder",
+    "Tooltip"
+   ],
+   "actions": [
+    {
+     "id": "counsel.openCase",
+     "label": "Open case",
+     "intent": "open a case on the game board",
+     "permission": "cases.read",
+     "params": {
+      "caseId": "id"
+     }
+    },
+    {
+     "id": "counsel.completeDeadline",
+     "label": "Done",
+     "intent": "mark a deadline as done",
+     "permission": "deadlines.write",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "counsel.approveDocument",
+     "label": "Approve for filing",
+     "intent": "approve a document for filing",
+     "permission": "documents.sign",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "counsel.assignToParalegal",
+     "label": "Assign",
+     "intent": "assign work on a case to a paralegal",
+     "permission": "cases.assign",
+     "params": {
+      "caseId": "id"
+     }
+    },
+    {
+     "id": "counsel.openDiscovery",
+     "label": "Discovery tracker",
+     "intent": "open the discovery tracker for a case",
+     "permission": "cases.read",
+     "params": {
+      "caseId": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-UD-01",
+    "RULE-UD-02",
+    "RULE-UD-03",
+    "RULE-UD-05"
+   ],
+   "states": [
+    "busy caseload",
+    "nothing late",
+    "network view",
+    "Spanish",
+    "dark"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "attorneys module (T-042), folder src/modules/counsel to match the `counsel` surface and /counsel route. Reads the provisional ops tables; T-054 / T-055 supersede.",
+    "Assigning and the discovery tracker are Placeholders (T-062 / T-073)."
+   ]
+  }
+ },
+ {
+  "path": "/assist",
+  "code": "S-01",
+  "surface": "assist",
+  "status": "built",
+  "roles": [
+   "paralegal",
+   "attorney",
+   "owner",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "S-01",
+   "name": "Assistant queue",
+   "purpose": "The paralegal’s working screen: what is late, every assignment by status, the documents to prepare grouped by the board square they belong to, the filings that are due, and the client uploads waiting to be filed into the binder.",
+   "layout": [
+    "PageHeader",
+    "StatTiles (open, late, filings due, uploads)",
+    "LateItems",
+    "MyAssignments (tabs by status)",
+    "DocumentsToPrepare (grouped by board square)",
+    "FilingsDue",
+    "ClientUploadsToFile"
+   ],
+   "data": [
+    "assignments",
+    "documents",
+    "deadlines",
+    "cases",
+    "users"
+   ],
+   "roles": [
+    "paralegal",
+    "attorney",
+    "owner",
+    "super_admin"
+   ],
+   "logic": [
+    "My assignments = assignments where user_id is me; an attorney, owner or super admin sees the office queue (P-02).",
+    "Late = the assignment’s late flag or a past due_at while it is not done.",
+    "Documents to prepare = documents of my cases in draft or review, grouped by stage_node_id and ordered by the board phase.",
+    "Filings due = pending deadlines that name a filing, service or response on my cases.",
+    "Client uploads to file = documents of kind upload that are not filed yet.",
+    "Start, complete and \"file it\" are writes by id through the provider; document assembly itself is Pass 2."
+   ],
+   "integrations": [
+    "Document assembly / template catalog (T-066)",
+    "File storage (later)"
+   ],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "Section",
+    "Card",
+    "Tabs",
+    "DataTable",
+    "StatusBadge",
+    "Badge",
+    "Chip",
+    "Button",
+    "EmptyState",
+    "Placeholder",
+    "Stepper"
+   ],
+   "actions": [
+    {
+     "id": "assist.startAssignment",
+     "label": "Start",
+     "intent": "start working on an assignment",
+     "permission": "cases.write",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "assist.completeAssignment",
+     "label": "Complete",
+     "intent": "mark an assignment as done",
+     "permission": "cases.write",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "assist.filterStatus",
+     "label": "Filter by status",
+     "intent": "show only assignments in one status",
+     "params": {
+      "status": "enum:all,todo,in_progress,blocked,done"
+     }
+    },
+    {
+     "id": "assist.prepareDocument",
+     "label": "Prepare",
+     "intent": "prepare a document from its template",
+     "permission": "documents.write",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "assist.fileClientUpload",
+     "label": "File it",
+     "intent": "file a client upload into the binder",
+     "permission": "documents.write",
+     "params": {
+      "id": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-UD-01",
+    "RULE-UD-03",
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "busy queue",
+    "nothing late",
+    "filtered by status",
+    "office queue",
+    "Spanish",
+    "dark"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "assistants module (T-043), folder src/modules/assist to match the `assist` surface and /assist route. Reads the provisional ops tables; T-054 / T-062 / T-066 supersede.",
+    "Preparing a document is a Placeholder until the template catalog lands (T-066)."
+   ]
+  }
+ },
+ {
+  "path": "/owner",
+  "code": "O-01",
+  "surface": "owner",
+  "status": "built",
+  "roles": [
+   "owner",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "O-01",
+   "name": "Owner dashboard",
+   "purpose": "The principal’s one screen over the whole network of regional offices: the late-work radar by office and by person, the caseload each attorney carries, what every SKU and every office brings in, the offices themselves, and how many callers this month became scheduled clients. Built to read from across the room on a wall screen as well as up close at 4K.",
+   "layout": [
+    "PageHeader (office filter)",
+    "StatTiles (open cases, late items, collected, outstanding)",
+    "LateRadarByOffice",
+    "LateRadarByPerson",
+    "CaseloadByAttorney",
+    "RevenueBySku",
+    "RevenueByOffice",
+    "NetworkOffices",
+    "IntakeConversion"
+   ],
+   "data": [
+    "cases",
+    "deadlines",
+    "assignments",
+    "invoices",
+    "intakes",
+    "users",
+    "tenants",
+    "feedback"
+   ],
+   "roles": [
+    "owner",
+    "super_admin"
+   ],
+   "logic": [
+    "The owner and super admin are network-wide (P-02); the office filter narrows every section at once.",
+    "Late = cases flagged late, deadlines missed or pending past due, and assignments flagged late or past due while not done.",
+    "Caseload = open cases grouped by attorney_user_id with their late count.",
+    "Revenue = invoices with status paid summed by SKU and by tenant; outstanding = status due. Amounts are \"as listed\", never a quote.",
+    "Intake conversion = intakes submitted in the current calendar month, scheduled / submitted.",
+    "Charts are Placeholders until the dataviz pass; the tables carry the numbers."
+   ],
+   "integrations": [
+    "Stripe / PayPal (seam)",
+    "Charts (dataviz pass)"
+   ],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "Section",
+    "Card",
+    "DataTable",
+    "ProgressBar",
+    "Badge",
+    "StatusBadge",
+    "Chip",
+    "Button",
+    "EmptyState",
+    "Placeholder",
+    "Tooltip"
+   ],
+   "actions": [
+    {
+     "id": "owner.filterOffice",
+     "label": "Office",
+     "intent": "show one office instead of the whole network",
+     "permission": "reports.read",
+     "params": {
+      "tenantId": "id"
+     }
+    },
+    {
+     "id": "owner.openFeedbackInbox",
+     "label": "Feedback inbox",
+     "intent": "open the feedback inbox to triage what testers reported",
+     "permission": "feedback.read"
+    },
+    {
+     "id": "owner.openLateRadar",
+     "label": "Open the full radar",
+     "intent": "open the full late-work radar",
+     "permission": "reports.read"
+    },
+    {
+     "id": "owner.showRevenueChart",
+     "label": "Show the chart",
+     "intent": "show the revenue chart",
+     "permission": "reports.financial"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-02",
+    "RULE-INTAKE-01"
+   ],
+   "states": [
+    "whole network",
+    "one office",
+    "nothing late",
+    "10-foot wall screen",
+    "Spanish",
+    "dark"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "owner module (T-044). Reads the provisional ops tables; T-061 replaces the radar and the dataviz pass replaces the chart Placeholders."
+   ]
+  }
+ },
+ {
+  "path": "/admin",
+  "code": "A-01",
+  "surface": "admin",
+  "status": "built",
+  "roles": [
+   "owner",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "A-01",
+   "name": "Admin home",
+   "purpose": "Everything the firm administers in one place: the people in the system with their roles and offices, links to the tables behind every page and to the rules registry, the feedback inbox, the settings seams, and who is on the system right now.",
+   "layout": [
+    "PageHeader",
+    "StatTiles (people, offices, new feedback, tables)",
+    "JumpTo (tables, rules, feedback, settings)",
+    "UsersAndRoles (table)",
+    "Presence"
+   ],
+   "data": [
+    "users",
+    "tenants",
+    "feedback",
+    "presence"
+   ],
+   "roles": [
+    "owner",
+    "super_admin"
+   ],
+   "logic": [
+    "Users come from the `users` table, grouped staff / clients / opposing counsel; permissions derive from the role (ROLE_PERMISSIONS), never compared inline.",
+    "Deactivating a person is a write by id through the provider; changing a role waits for the settings-roles pass.",
+    "Counts of new feedback drive the inbox tile (docs/reference/annotations-triage.md)."
+   ],
+   "integrations": [
+    "Supabase Auth (later, seam)"
+   ],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "Section",
+    "Card",
+    "DataTable",
+    "Badge",
+    "StatusBadge",
+    "Chip",
+    "Button",
+    "Avatar",
+    "Placeholder",
+    "Tooltip"
+   ],
+   "actions": [
+    {
+     "id": "admin.openTables",
+     "label": "Tables",
+     "intent": "open the table library",
+     "permission": "tables.read"
+    },
+    {
+     "id": "admin.openRules",
+     "label": "Rules registry",
+     "intent": "open the rules registry"
+    },
+    {
+     "id": "admin.openFeedback",
+     "label": "Feedback inbox",
+     "intent": "open the feedback inbox",
+     "permission": "feedback.read"
+    },
+    {
+     "id": "admin.inviteUser",
+     "label": "Invite a person",
+     "intent": "invite a person to an office with a role",
+     "permission": "staff.write",
+     "params": {
+      "email": "string",
+      "role": "string",
+      "tenantId": "id"
+     }
+    },
+    {
+     "id": "admin.changeRole",
+     "label": "Change role",
+     "intent": "change what role a person has",
+     "permission": "roles.write",
+     "params": {
+      "id": "id",
+      "role": "string"
+     }
+    },
+    {
+     "id": "admin.toggleUserActive",
+     "label": "Activate / deactivate",
+     "intent": "turn a person’s access on or off",
+     "permission": "staff.write",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "admin.openPresence",
+     "label": "Who is here",
+     "intent": "show who is on the system right now",
+     "permission": "audit.read"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-02",
+    "RULE-SYS-03"
+   ],
+   "states": [
+    "default",
+    "someone deactivated",
+    "Spanish",
+    "dark"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "admin module (T-045). Inviting, changing a role and live presence are Placeholders (settings-roles pass / realtime pass)."
+   ]
+  }
+ },
+ {
+  "path": "/opposition",
+  "code": "X-01",
+  "surface": "opposition",
+  "status": "built",
+  "roles": [
+   "opposing_counsel",
+   "attorney",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "X-01",
+   "name": "Opposing counsel portal",
+   "purpose": "The landlord-side attorney sees exactly what has been shared with them and nothing else: the matters on which they are a served party, the documents served on them (which they can acknowledge), the meet-and-confer requests open between the parties, and the hearings ahead. Professional and minimal by design.",
+   "layout": [
+    "PageHeader (scope note)",
+    "StatTiles (matters, awaiting acknowledgement, conferrals, next hearing)",
+    "ServedDocuments",
+    "MeetAndConfer",
+    "UpcomingHearings",
+    "Matters"
+   ],
+   "data": [
+    "service_events",
+    "documents",
+    "meet_confer",
+    "cases",
+    "deadlines",
+    "users"
+   ],
+   "roles": [
+    "opposing_counsel",
+    "attorney",
+    "super_admin"
+   ],
+   "logic": [
+    "Scope is derived, never chosen: a matter is visible only when a service_events row names me as served_to_user_id or a meet_confer row names me as opposing_user_id (the RLS intent on both tables).",
+    "Nothing internal is rendered: no assignments, invoices, paralegals, internal notes or board strategy - only the case number, county, court and attorney of record.",
+    "Acknowledging service writes acknowledged_at by id through the provider; it is idempotent.",
+    "Hearings = pending deadlines on the shared matters that name a hearing, trial or conference (the court calendar both sides share)."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "Section",
+    "Card",
+    "DataTable",
+    "Badge",
+    "StatusBadge",
+    "Chip",
+    "Button",
+    "EmptyState",
+    "Placeholder"
+   ],
+   "actions": [
+    {
+     "id": "opposition.acknowledgeService",
+     "label": "Acknowledge receipt",
+     "intent": "acknowledge receipt of a document served on me",
+     "permission": "opposition.read",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "opposition.respondMeetConfer",
+     "label": "Respond",
+     "intent": "respond to a meet-and-confer request",
+     "permission": "messages.write",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "opposition.downloadDocument",
+     "label": "Download",
+     "intent": "download a document served on me",
+     "permission": "documents.read_own",
+     "params": {
+      "id": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-UD-02",
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "documents awaiting acknowledgement",
+    "everything acknowledged",
+    "nothing shared",
+    "Spanish",
+    "dark"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "opposition module (T-046). Reads the provisional ops tables; T-054 / T-073 supersede service and conferral.",
+    "Responding and downloading are Placeholders (Pass 2 comms and document storage)."
+   ]
+  }
+ },
+ {
+  "path": "/board",
+  "code": "GB-01",
+  "surface": "board",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "GB-01",
+   "name": "Eviction game board",
+   "purpose": "The firm's hand-drawn Unlawful Detainer Game Board as an interactive board: every square of the eviction process, the five path types between them, what each move means and what can follow it. Public teaching tool as much as a staff reference - a tenant can read the whole procedure without an account.",
+   "layout": [
+    "BoardHeader (title, tagline, counts, credit)",
+    "Toolbar (search, phase chips, overlay switch)",
+    "GameBoard (SVG board: phase regions, squares, paths, minimap)",
+    "BoardKey (KEY: five paths as filters, shapes)",
+    "NodeDetail drawer (phase, square kind, who moves, what this means, documents, next moves, how you get here)"
+   ],
+   "data": [
+    "board_node_meta"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "Squares, paths, phases and the KEY come from docs/game-board/nodes.json; positions are computed by a deterministic serpentine layout (phase regions in a grid, nodes in topological order inside a region), so no coordinate is hand-placed (RULE-BOARD-01).",
+    "Square shape follows the poster: document = rounded rectangle, hearing / decision = circle, outcome or event = pill, START is its own square. Outcome and event tones are derived from the path types that reach them, never from an opinion.",
+    "Path colour follows the poster's KEY (normal amber, positive green, negative red, neutral slate, jump violet dashed); paths marked reconstructed: true are drawn with a finer dash and the drawer says the firm must confirm them (RULE-BOARD-02).",
+    "Phase chips fit the view to one phase region; the search matches labels and notes and opens the square it finds.",
+    "Turning a path type off in the KEY hides those paths so the board can be read without them.",
+    "Labels hide instead of shrinking below legibility when the board is zoomed out; the layout band (phase columns per row) follows the container width, so a phone gets one winding column and a 4K TV the whole poster."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "GameBoard",
+    "BoardKey",
+    "Drawer",
+    "SearchInput",
+    "Chip",
+    "Badge",
+    "SegmentedControl",
+    "Button",
+    "IconButton",
+    "Kbd",
+    "Placeholder",
+    "Section",
+    "EmptyState",
+    "Tooltip"
+   ],
+   "actions": [
+    {
+     "id": "board.selectNode",
+     "label": "Open a square",
+     "intent": "open the square {id} on the game board",
+     "params": {
+      "id": "string"
+     }
+    },
+    {
+     "id": "board.zoom",
+     "label": "Zoom the board",
+     "intent": "zoom the board in, out, to fit or back to the start",
+     "params": {
+      "direction": "enum:in,out,fit,reset"
+     }
+    },
+    {
+     "id": "board.fitPhase",
+     "label": "Go to a phase",
+     "intent": "show the {phase} phase of the board",
+     "params": {
+      "phase": "string"
+     }
+    },
+    {
+     "id": "board.search",
+     "label": "Search the board",
+     "intent": "find the square about {q}",
+     "params": {
+      "q": "string"
+     }
+    },
+    {
+     "id": "board.togglePath",
+     "label": "Show or hide a path type",
+     "intent": "hide the {type} paths on the board",
+     "params": {
+      "type": "enum:normal,positive,negative,neutral,jump"
+     }
+    },
+    {
+     "id": "board.setOverlay",
+     "label": "Set the overlay",
+     "intent": "show the {overlay} overlay on the board",
+     "params": {
+      "overlay": "enum:none,cost,deadline"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-BOARD-01",
+    "RULE-BOARD-02",
+    "RULE-BOARD-03",
+    "RULE-UD-01",
+    "RULE-UD-04",
+    "RULE-UD-05",
+    "RULE-NOTICE-01",
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "explore",
+    "phase fitted",
+    "square selected (drawer open)",
+    "search results",
+    "a path type hidden",
+    "cost overlay on",
+    "zoomed out (labels hidden)",
+    "Spanish chrome"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "board module (T-037). Node labels stay verbatim in the poster's English (quotations, terms of art); a Spanish label per square is a later pass.",
+    "GB-04 adds the 3D object view on the same data (T-076, D-020: 2D first)."
+   ]
+  }
+ },
+ {
+  "path": "/plan",
+  "code": "PM-01",
+  "surface": "plan",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "PM-01",
+   "name": "Plan board",
+   "purpose": "The build plan of CTL OS itself as a board: four columns (Backlog, Doing, Blocked, Done), swimlanes by lane or pass, filters, and a move that writes through the data provider so it survives a reload and a second viewer.",
+   "layout": [
+    "PageHeader + PlanViewNav",
+    "StatTiles (tasks, done, plan length in ticks, critical path)",
+    "Filter bar (search, pass, model, lane) + grouping switch",
+    "Kanban columns with per-column counts",
+    "TaskDetailDrawer"
+   ],
+   "data": [
+    "plan_tasks",
+    "plan_passes",
+    "plan_lanes"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Ticks are dependency depth, not calendar days (D-013): tick(t) = 0 without dependencies, else 1 + max(tick(dep)).",
+    "Critical path = every task whose depth + forward height equals the plan span (the longest dependency chain).",
+    "A card is blocked-flagged when any dependency is not done; the flag is recomputed on every status write, never read stale.",
+    "Moving a card calls DataProvider.update(plan_tasks, id, { status }) and re-derives blocked_by_ids for its dependents.",
+    "Reset to repo plan re-applies docs/plan/tasks.json over the stored rows.",
+    "Filters and the selected task live in the query string, so a view is addressable (P-06)."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "SearchInput",
+    "Select",
+    "SegmentedControl",
+    "Chip",
+    "Badge",
+    "StatusBadge",
+    "Button",
+    "Tooltip",
+    "Drawer",
+    "DependencyChip",
+    "EmptyState",
+    "Icon"
+   ],
+   "actions": [
+    {
+     "id": "plan.moveTask",
+     "label": "Move task",
+     "intent": "move a task to another column",
+     "permission": "projects.write",
+     "params": {
+      "id": "id",
+      "status": "enum:todo,doing,blocked,done"
+     }
+    },
+    {
+     "id": "plan.filter",
+     "label": "Filter",
+     "intent": "filter the plan by pass, model, lane or a search word",
+     "permission": "projects.read",
+     "params": {
+      "pass": "string",
+      "model": "enum:fable,opus-5,sonnet-5",
+      "lane": "string",
+      "q": "string"
+     }
+    },
+    {
+     "id": "plan.setGrouping",
+     "label": "Group by",
+     "intent": "group the board by lane, by pass or not at all",
+     "params": {
+      "grouping": "enum:lane,pass,flat"
+     }
+    },
+    {
+     "id": "plan.selectTask",
+     "label": "Open task",
+     "intent": "open the detail of a task",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "plan.toggleLane",
+     "label": "Collapse lane",
+     "intent": "collapse or expand a swimlane",
+     "params": {
+      "lane": "string"
+     }
+    },
+    {
+     "id": "plan.resetFromRepo",
+     "label": "Reset to repo plan",
+     "intent": "reset every task to the status in docs/plan/tasks.json",
+     "permission": "projects.write"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default",
+    "grouped by pass",
+    "lane collapsed",
+    "filtered",
+    "task drawer open",
+    "dragging a card",
+    "empty result"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "plan module (T-028). Cards are draggable AND carry a keyboard \"Move to…\" menu; nothing here is drag-only (P-03)."
+   ]
+  }
+ },
+ {
+  "path": "/manual",
+  "code": "M-01",
+  "surface": "manual",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "M-01",
+   "name": "Ops manual cover",
+   "purpose": "The manual's front door: parts I-IX with their chapters, a language toggle that keeps your place, a role filter so a person sees their own reading path first, and reading progress per chapter stored in manual_progress.",
+   "layout": [
+    "PageHeader (language, decisions link)",
+    "ProgressBar (chapters read)",
+    "Filters (language, role)",
+    "PartSections (chapter cards)"
+   ],
+   "data": [
+    "manual_progress",
+    "users"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Chapters come from docs/ops-manual/{en,es}/NN-slug.md indexed at build time; front matter gives title, role, part, version, updated and summary.",
+    "A chapter with no mirror in the chosen language falls back to the English source and the chapter page says so; the intro pair (00-introduction / 00-introduccion) is matched by chapter number.",
+    "The role filter reads the audience words in `role:` (all staff, front desk, attorney, paralegal, owner, marketing).",
+    "Progress is one manual_progress row per person per chapter, written through the DataProvider by id."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "LangToggle",
+    "SegmentedControl",
+    "Select",
+    "Card",
+    "Badge",
+    "Chip",
+    "ProgressBar",
+    "Button",
+    "EmptyState"
+   ],
+   "actions": [
+    {
+     "id": "manual.setLang",
+     "label": "Manual language",
+     "intent": "read the manual in English or Spanish",
+     "params": {
+      "lang": "enum:en,es"
+     }
+    },
+    {
+     "id": "manual.openChapter",
+     "label": "Open chapter",
+     "intent": "open a manual chapter by slug",
+     "permission": "manual.read",
+     "params": {
+      "slug": "string"
+     }
+    },
+    {
+     "id": "manual.filterRole",
+     "label": "Filter by role",
+     "intent": "show the chapters written for one role",
+     "params": {
+      "role": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "English",
+    "Spanish",
+    "filtered by role",
+    "progress recorded",
+    "no chapter matches"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "manual module (T-048)"
+   ]
+  }
+ },
+ {
+  "path": "/docs",
+  "code": "K-01",
+  "surface": "docs",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "K-01",
+   "name": "Docs viewer",
+   "purpose": "Every markdown file under docs/ rendered in-app with the folder tree, a heading outline, prev / next, pending-decision counts and resolved links between documents, so the project memory reads like part of the product instead of a folder on disk.",
+   "layout": [
+    "PageHeader (decisions chip, search and plan-log links)",
+    "Tree (groups with counts; Select on phones)",
+    "Document (MarkdownViewer)",
+    "Outline (right rail >= 1280, dropdown below)",
+    "PrevNext"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "src/docs/docsIndex.ts: `?docmeta` index (title, header meta, headings, decisions, capture placeholders) is eager; the `?raw` body loads only for the open document.",
+    "docsTree.ts groups by top-level folder in reading order (start here, prompts, changelog, pages, reference, legal, game board, ops manual, plan, qa, screenshots); prompts and changelog list newest first.",
+    "Relative links between docs resolve to /#/docs/<path>; ops-manual chapters resolve to /#/manual/<lang>/<slug>.",
+    "Bare page-code mentions (PM-03) become links to that page when the route manifest has it; the P- prefix is skipped in platform-principles.md, where P-01..P-15 are principles.",
+    "[screenshot: CODE — caption] lines render as a framed capture from docs/screenshots/<CODE>/ or a dashed box naming the code."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "MarkdownViewer",
+    "Select",
+    "Badge",
+    "Chip",
+    "Button",
+    "EmptyState",
+    "Spinner",
+    "Card"
+   ],
+   "actions": [
+    {
+     "id": "docs.open",
+     "label": "Open doc",
+     "intent": "open a docs file by path",
+     "permission": "docs.read",
+     "params": {
+      "path": "string"
+     }
+    },
+    {
+     "id": "docs.jumpToHeading",
+     "label": "Jump to section",
+     "intent": "scroll to a section of the open document",
+     "params": {
+      "id": "string"
+     }
+    },
+    {
+     "id": "docs.toggleGroup",
+     "label": "Toggle folder",
+     "intent": "collapse or expand a folder in the docs tree",
+     "params": {
+      "group": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "README (index)",
+    "one document",
+    "document with captures",
+    "unknown path",
+    "loading body"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "docs module (T-047)"
+   ]
+  }
+ },
+ {
+  "path": "/marketing",
+  "code": "MK-01",
+  "surface": "marketing",
+  "status": "stub",
+  "roles": [
+   "marketing",
+   "owner",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "MK-01",
+   "name": "Marketing engine",
+   "purpose": "City landing pages, video library, campaigns and the content calendar that feed the public site.",
+   "layout": [
+    "PageHeader",
+    "StatTiles",
+    "CityPages",
+    "VideoLibrary",
+    "Calendar"
+   ],
+   "data": [
+    "tenants"
+   ],
+   "roles": [
+    "marketing",
+    "owner"
+   ],
+   "logic": [
+    "A city page is a row rendered by the public site."
+   ],
+   "integrations": [
+    "YouTube",
+    "Search console (later)"
+   ],
+   "components": [
+    "StatTile",
+    "DataTable",
+    "Card"
+   ],
+   "actions": [
+    {
+     "id": "marketing.newCityPage",
+     "label": "New city page",
+     "intent": "create a landing page for a city",
+     "permission": "marketing.write",
+     "params": {
+      "city": "string"
+     }
+    },
+    {
+     "id": "marketing.publish",
+     "label": "Publish",
+     "intent": "publish pending site changes",
+     "permission": "site.publish"
+    }
+   ],
+   "rules": [
+    "RULE-INTAKE-01"
+   ],
+   "states": [
+    "default"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "marketing module"
+   ]
+  }
+ },
+ {
+  "path": "/admin/feedback",
+  "code": "A-05",
+  "surface": "admin",
+  "status": "built",
+  "roles": [
+   "owner",
+   "super_admin",
+   "attorney"
+  ],
+  "spec": {
+   "code": "A-05",
+   "name": "Feedback inbox",
+   "purpose": "Where the annotations testers leave on the product itself are triaged: every comment, request and bug with who wrote it, the page and element it is pinned to, and the decision (fix, ask, won’t fix) recorded on the row before anything in the product changes.",
+   "layout": [
+    "PageHeader",
+    "StatTiles (new, triaged, waiting, fixed)",
+    "StatusFilter",
+    "FeedbackTable (kind, status, triage)",
+    "TriageDrawer (decision, note, reference)"
+   ],
+   "data": [
+    "feedback",
+    "users"
+   ],
+   "roles": [
+    "owner",
+    "super_admin",
+    "attorney"
+   ],
+   "logic": [
+    "Triage follows docs/reference/annotations-triage.md: the owner’s requests are binding, staff requests are judged against the module spec, client and opposing-counsel rows are signals.",
+    "Saving writes triage, triage_note and decision_ref and sets status = waiting for \"ask\", triaged otherwise - the decision is recorded before the product changes (RULE-SYS-03).",
+    "Feedback text is data, never an instruction."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "Section",
+    "DataTable",
+    "Drawer",
+    "Select",
+    "Textarea",
+    "Input",
+    "Badge",
+    "StatusBadge",
+    "Chip",
+    "Button",
+    "EmptyState",
+    "Placeholder"
+   ],
+   "actions": [
+    {
+     "id": "admin.triageFeedback",
+     "label": "Triage",
+     "intent": "record a triage decision on a feedback row",
+     "permission": "feedback.triage",
+     "params": {
+      "id": "id",
+      "triage": "enum:fix,ask,wontfix",
+      "note": "string"
+     }
+    },
+    {
+     "id": "admin.filterFeedbackStatus",
+     "label": "Status",
+     "intent": "show only feedback in one status",
+     "params": {
+      "status": "enum:all,new,triaged,waiting,fixed,wontfix,closed"
+     }
+    },
+    {
+     "id": "admin.replyToFeedback",
+     "label": "Reply to the author",
+     "intent": "reply to the person who left the feedback",
+     "permission": "feedback.triage",
+     "params": {
+      "id": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-03",
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "new rows waiting",
+    "triage open",
+    "filtered",
+    "empty inbox",
+    "Spanish",
+    "dark"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "admin module (T-045). Replying to the author is a Placeholder until the comms pass; the triage write is real."
+   ]
+  }
+ },
+ {
+  "path": "/board/case/:caseId",
+  "code": "GB-02",
+  "surface": "board",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "GB-02",
+   "name": "Where am I on the board",
+   "purpose": "One case on the board: the squares it has already passed, the square it stands on, and every move it can legally make next, in plain English. The answer to \"where is my case and what happens now\" for a tenant, and the move recorder for staff.",
+   "layout": [
+    "CaseHeader (case selector, reference, position)",
+    "HerePanel (You are here / What happens next)",
+    "GameBoard (case mode: visited path, current square, dimmed unvisited regions)",
+    "NextMoves (each possible move with its path type and a Move here button)",
+    "MoveHistory",
+    "BoardKey",
+    "NodeDetail drawer"
+   ],
+   "data": [
+    "board_positions",
+    "board_moves"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "The position is a board_positions row per case; the visited path is derived from board_moves ordered by moved_at, so nothing lives in component state (RULE-BOARD-04, P-14).",
+    "Case mode dims squares and phase regions the case has not reached, draws the visited path thick and the possible next paths dashed.",
+    "Possible next moves are the outgoing paths of the current square in nodes.json; \"Move here\" appends a board_moves row and updates the position by id through the provider (needs board.play).",
+    "The plain-English panel reads the square's note from nodes.json and names who moves next; it never states a deadline, because deadlines are not wired yet (RULE-BOARD-03).",
+    "/board/case redirects to the first demo case so the route is never empty."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "GameBoard",
+    "BoardKey",
+    "Drawer",
+    "SegmentedControl",
+    "Card",
+    "Badge",
+    "StatusBadge",
+    "Button",
+    "EmptyState",
+    "Section",
+    "Placeholder"
+   ],
+   "actions": [
+    {
+     "id": "board.selectNode",
+     "label": "Open a square",
+     "intent": "open the square {id} on the game board",
+     "params": {
+      "id": "string"
+     }
+    },
+    {
+     "id": "board.zoom",
+     "label": "Zoom the board",
+     "intent": "zoom the board in, out, to fit or back to the start",
+     "params": {
+      "direction": "enum:in,out,fit,reset"
+     }
+    },
+    {
+     "id": "board.fitPhase",
+     "label": "Go to a phase",
+     "intent": "show the {phase} phase of the board",
+     "params": {
+      "phase": "string"
+     }
+    },
+    {
+     "id": "board.selectCase",
+     "label": "Choose a case",
+     "intent": "show where case {caseId} is on the board",
+     "params": {
+      "caseId": "id"
+     }
+    },
+    {
+     "id": "board.moveCase",
+     "label": "Move the case",
+     "intent": "move case {caseId} to the square {nodeId}",
+     "permission": "board.play",
+     "params": {
+      "caseId": "id",
+      "nodeId": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-BOARD-01",
+    "RULE-BOARD-02",
+    "RULE-BOARD-04",
+    "RULE-UD-01",
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "case selected",
+    "first square",
+    "mid-procedure",
+    "terminal square (nothing follows)",
+    "no permission to move",
+    "no demo cases"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "board module (T-038). Demo cases are fictional; real positions arrive with the cases module (T-055), which links L-10 to this page."
+   ]
+  }
+ },
+ {
+  "path": "/board/case",
+  "code": "GB-02",
+  "surface": "board",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "GB-02",
+   "name": "Where am I on the board",
+   "purpose": "One case on the board: the squares it has already passed, the square it stands on, and every move it can legally make next, in plain English. The answer to \"where is my case and what happens now\" for a tenant, and the move recorder for staff.",
+   "layout": [
+    "CaseHeader (case selector, reference, position)",
+    "HerePanel (You are here / What happens next)",
+    "GameBoard (case mode: visited path, current square, dimmed unvisited regions)",
+    "NextMoves (each possible move with its path type and a Move here button)",
+    "MoveHistory",
+    "BoardKey",
+    "NodeDetail drawer"
+   ],
+   "data": [
+    "board_positions",
+    "board_moves"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "The position is a board_positions row per case; the visited path is derived from board_moves ordered by moved_at, so nothing lives in component state (RULE-BOARD-04, P-14).",
+    "Case mode dims squares and phase regions the case has not reached, draws the visited path thick and the possible next paths dashed.",
+    "Possible next moves are the outgoing paths of the current square in nodes.json; \"Move here\" appends a board_moves row and updates the position by id through the provider (needs board.play).",
+    "The plain-English panel reads the square's note from nodes.json and names who moves next; it never states a deadline, because deadlines are not wired yet (RULE-BOARD-03).",
+    "/board/case redirects to the first demo case so the route is never empty."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "GameBoard",
+    "BoardKey",
+    "Drawer",
+    "SegmentedControl",
+    "Card",
+    "Badge",
+    "StatusBadge",
+    "Button",
+    "EmptyState",
+    "Section",
+    "Placeholder"
+   ],
+   "actions": [
+    {
+     "id": "board.selectNode",
+     "label": "Open a square",
+     "intent": "open the square {id} on the game board",
+     "params": {
+      "id": "string"
+     }
+    },
+    {
+     "id": "board.zoom",
+     "label": "Zoom the board",
+     "intent": "zoom the board in, out, to fit or back to the start",
+     "params": {
+      "direction": "enum:in,out,fit,reset"
+     }
+    },
+    {
+     "id": "board.fitPhase",
+     "label": "Go to a phase",
+     "intent": "show the {phase} phase of the board",
+     "params": {
+      "phase": "string"
+     }
+    },
+    {
+     "id": "board.selectCase",
+     "label": "Choose a case",
+     "intent": "show where case {caseId} is on the board",
+     "params": {
+      "caseId": "id"
+     }
+    },
+    {
+     "id": "board.moveCase",
+     "label": "Move the case",
+     "intent": "move case {caseId} to the square {nodeId}",
+     "permission": "board.play",
+     "params": {
+      "caseId": "id",
+      "nodeId": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-BOARD-01",
+    "RULE-BOARD-02",
+    "RULE-BOARD-04",
+    "RULE-UD-01",
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "case selected",
+    "first square",
+    "mid-procedure",
+    "terminal square (nothing follows)",
+    "no permission to move",
+    "no demo cases"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "board module (T-038). Demo cases are fictional; real positions arrive with the cases module (T-055), which links L-10 to this page."
+   ]
+  }
+ },
+ {
+  "path": "/board/overlay",
+  "code": "GB-03",
+  "surface": "board",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "GB-03",
+   "name": "Board costs & if-then",
+   "purpose": "What each move on the board costs and what it triggers: the cost / deadline overlay on the squares and an \"If this, then that\" reading of the branches out of one square. The scenario tree is real today; the numbers are marked placeholders until the cost model and the deadline engine land.",
+   "layout": [
+    "OverlayHeader (overlay switch, explanation)",
+    "GameBoard (with per-square cost or deadline badge)",
+    "IfThenPanel (branches of the selected square as positive / negative / neutral scenarios with a cost column)",
+    "OverlayLegend (why the badges are empty, what fills them)",
+    "BoardKey",
+    "NodeDetail drawer"
+   ],
+   "data": [
+    "board_node_meta"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "The overlay switch paints one badge per square from board_node_meta; every typical_cost_band and deadline_rule is null today, so each badge is a marked placeholder (data-placeholder) with a tooltip naming the task that fills it (RULE-BOARD-03, P-09).",
+    "The if-then tree is built from the real outgoing paths of the selected square, grouped by path type into positive / negative / neutral scenarios, and one level further so a reader sees where each branch leads.",
+    "No number is ever rendered: a guessed cost would be a wrong price and a guessed deadline unverified law (D-019, D-025)."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "GameBoard",
+    "BoardKey",
+    "Drawer",
+    "SegmentedControl",
+    "Card",
+    "Badge",
+    "Chip",
+    "Placeholder",
+    "Section",
+    "EmptyState"
+   ],
+   "actions": [
+    {
+     "id": "board.selectNode",
+     "label": "Open a square",
+     "intent": "open the square {id} on the game board",
+     "params": {
+      "id": "string"
+     }
+    },
+    {
+     "id": "board.zoom",
+     "label": "Zoom the board",
+     "intent": "zoom the board in, out, to fit or back to the start",
+     "params": {
+      "direction": "enum:in,out,fit,reset"
+     }
+    },
+    {
+     "id": "board.fitPhase",
+     "label": "Go to a phase",
+     "intent": "show the {phase} phase of the board",
+     "params": {
+      "phase": "string"
+     }
+    },
+    {
+     "id": "board.setOverlay",
+     "label": "Set the overlay",
+     "intent": "show the {overlay} overlay on the board",
+     "params": {
+      "overlay": "enum:none,cost,deadline"
+     }
+    },
+    {
+     "id": "board.togglePath",
+     "label": "Show or hide a path type",
+     "intent": "hide the {type} paths on the board",
+     "params": {
+      "type": "enum:normal,positive,negative,neutral,jump"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-BOARD-03",
+    "RULE-UD-01",
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "no overlay",
+    "cost overlay",
+    "deadline overlay",
+    "square with branches selected",
+    "terminal square selected"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "board module (T-039). T-076 turns this into the real cost overlay once the cost model (T-074) and the deadline engine (T-059) exist."
+   ]
+  }
+ },
+ {
+  "path": "/app/binder",
+  "code": "C-02",
+  "surface": "customer",
+  "status": "built",
+  "roles": [
+   "client",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "C-02",
+   "name": "Client binder",
+   "purpose": "Every paper on the tenant’s case in one place, grouped by the board square it belongs to, so nothing is hunted for in an inbox: what we filed, what was served, the evidence and what the tenant uploaded.",
+   "layout": [
+    "PageHeader",
+    "StageFilter (chips)",
+    "DocumentGroups (by board square)",
+    "UploadCard"
+   ],
+   "data": [
+    "cases",
+    "documents"
+   ],
+   "roles": [
+    "client",
+    "super_admin"
+   ],
+   "logic": [
+    "Documents of my case grouped by stage_node_id, ordered by the board phase.",
+    "Status badges use the shared vocabulary (draft, review, filed, served).",
+    "The stage chips filter in place; the selected square stays in component state (URL state arrives with the board pass)."
+   ],
+   "integrations": [
+    "File storage (later)"
+   ],
+   "components": [
+    "PageHeader",
+    "Card",
+    "Chip",
+    "StatusBadge",
+    "Badge",
+    "EmptyState",
+    "Placeholder",
+    "Icon"
+   ],
+   "actions": [
+    {
+     "id": "client.filterBinderStage",
+     "label": "Filter by square",
+     "intent": "show only the documents of one board square",
+     "params": {
+      "stageNodeId": "string"
+     }
+    },
+    {
+     "id": "client.openDocument",
+     "label": "Open document",
+     "intent": "open one of my documents",
+     "permission": "documents.read_own",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "client.uploadDocument",
+     "label": "Add a document",
+     "intent": "add a document or photo to my binder"
+    }
+   ],
+   "rules": [
+    "RULE-UD-01"
+   ],
+   "states": [
+    "all squares",
+    "filtered",
+    "empty binder",
+    "Spanish"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "tone": "list",
+   "notes": [
+    "client module (T-040). Reads the provisional ops tables (src/data/schema/ops.ts); T-054 / T-058 supersede the shapes.",
+    "Opening a document and uploading are Placeholders until the binder pass (T-070) and discovery gathering land."
+   ]
+  }
+ },
+ {
+  "path": "/app/learn",
+  "code": "C-03",
+  "surface": "customer",
+  "status": "built",
+  "roles": [
+   "client",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "C-03",
+   "name": "Client learning",
+   "purpose": "The firm’s free curriculum as a path: the videos in order, what the tenant has already watched, and which one matters at their square of the board right now.",
+   "layout": [
+    "PageHeader",
+    "NextUp",
+    "CurriculumList (progress per lesson)"
+   ],
+   "data": [
+    "cases",
+    "lessons",
+    "lesson_progress"
+   ],
+   "roles": [
+    "client",
+    "super_admin"
+   ],
+   "logic": [
+    "Lessons ordered by `order`; progress joined by client_user_id + lesson_id.",
+    "Next up = lowest-order unfinished lesson, lessons mapped to my square first.",
+    "Marking a lesson watched writes watched_pct = 100 and completed_at through the provider (insert when there is no row yet)."
+   ],
+   "integrations": [
+    "YouTube (the player is Pass 2, T-078)"
+   ],
+   "components": [
+    "PageHeader",
+    "Card",
+    "Section",
+    "ProgressBar",
+    "Button",
+    "Badge",
+    "Chip",
+    "Placeholder",
+    "Icon"
+   ],
+   "actions": [
+    {
+     "id": "client.playLesson",
+     "label": "Play",
+     "intent": "play a lesson video",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "client.markLessonWatched",
+     "label": "Mark as watched",
+     "intent": "mark a lesson as watched",
+     "params": {
+      "id": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "nothing watched",
+    "in progress",
+    "all watched",
+    "Spanish"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "tone": "list",
+   "notes": [
+    "client module (T-040). Reads the provisional ops tables (src/data/schema/ops.ts); T-054 / T-058 supersede the shapes.",
+    "Playing is a Placeholder (the player with watched state is T-078); marking watched is a real write."
+   ]
+  }
+ },
+ {
+  "path": "/app/pay",
+  "code": "C-04",
+  "surface": "customer",
+  "status": "built",
+  "roles": [
+   "client",
+   "super_admin"
+  ],
+  "spec": {
+   "code": "C-04",
+   "name": "Client payments",
+   "purpose": "What the tenant owes and what they have paid, piece by piece: the firm sells unbundled work, so every line is one SKU at the price listed on the site - never a quote.",
+   "layout": [
+    "PageHeader",
+    "TotalDue",
+    "DueList",
+    "HistoryList",
+    "AsListedNote"
+   ],
+   "data": [
+    "cases",
+    "invoices"
+   ],
+   "roles": [
+    "client",
+    "super_admin"
+   ],
+   "logic": [
+    "Invoices of my case split by status: due first, then paid and refunded newest first.",
+    "Total due = sum of amount_cents where status = due.",
+    "Amounts render \"as listed\" (docs/reference/firm-site-digest.md §4); payment itself is a seam."
+   ],
+   "integrations": [
+    "Stripe / PayPal (seam, not wired)"
+   ],
+   "components": [
+    "PageHeader",
+    "Card",
+    "Section",
+    "Badge",
+    "StatusBadge",
+    "Button",
+    "EmptyState",
+    "Placeholder"
+   ],
+   "actions": [
+    {
+     "id": "client.payInvoice",
+     "label": "Pay",
+     "intent": "pay one item on my account",
+     "permission": "store.buy",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "client.openReceipt",
+     "label": "Receipt",
+     "intent": "open the receipt for something I paid",
+     "permission": "payments.read",
+     "params": {
+      "id": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-INTAKE-01"
+   ],
+   "states": [
+    "nothing due",
+    "items due",
+    "refund present",
+    "Spanish"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "tone": "list",
+   "notes": [
+    "client module (T-040). Reads the provisional ops tables (src/data/schema/ops.ts); T-054 / T-058 supersede the shapes.",
+    "Paying and receipts are Placeholders while payments are a seam (no card data in this demo)."
+   ]
+  }
+ },
+ {
+  "path": "/dev",
+  "code": "D-03",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin"
+  ],
+  "spec": {
+   "code": "D-03",
+   "name": "Page specs index",
+   "purpose": "Every route with its page code, surface, built / stub status, roles and spec completeness (nine checks including actions); opens the inspector for any spec.",
+   "layout": [
+    "PageHeader",
+    "StatTiles (built, stubs, avg completeness)",
+    "SurfaceFilter",
+    "SpecsTable",
+    "InspectorPanel"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin"
+   ],
+   "logic": [
+    "specCompleteness(spec) scores 9 checks; a page with no controls passes actions with a \"no actions\" note.",
+    "status = PageStub element ? stub : built"
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "DataTable",
+    "Badge",
+    "InspectorPanel",
+    "Button",
+    "ProgressBar"
+   ],
+   "actions": [
+    {
+     "id": "dev.openSpec",
+     "label": "Spec",
+     "intent": "open the inspector for a page code",
+     "params": {
+      "code": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "all",
+    "filtered by surface",
+    "inspector open"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)"
+   ]
+  }
+ },
+ {
+  "path": "/dev/tokens",
+  "code": "D-01",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin"
+  ],
+  "spec": {
+   "code": "D-01",
+   "name": "Design tokens",
+   "purpose": "Every design value in one place: brand palettes (CTL navy & sky, Clear sky teal), neutrals, semantic roles per theme, status and game-board hues, type scale with the --scale bands, spacing, radii, shadows, motion. Generated into tokens.css.",
+   "layout": [
+    "PageHeader (theme + brand switch)",
+    "BrandPalettes",
+    "Neutrals",
+    "SemanticRoles",
+    "StatusAndBoardHues",
+    "Typography (scale bands)",
+    "Spacing & radii",
+    "Shadows & motion"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin"
+   ],
+   "logic": [
+    "buildTokensCss() renders :root + --scale bands + [data-brand] x [data-theme] blocks; ThemeProvider sets the attributes."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "Section",
+    "Card",
+    "SegmentedControl",
+    "Badge",
+    "StatusBadge"
+   ],
+   "actions": [
+    {
+     "id": "dev.setTheme",
+     "label": "Theme",
+     "intent": "switch between light and dark",
+     "params": {
+      "theme": "enum:light,dark"
+     }
+    },
+    {
+     "id": "dev.setBrand",
+     "label": "Brand",
+     "intent": "switch the brand palette",
+     "params": {
+      "brand": "enum:ctl,clearsky"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "light",
+    "dark",
+    "ctl",
+    "clearsky"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)"
+   ]
+  }
+ },
+ {
+  "path": "/dev/components",
+  "code": "D-02",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin"
+  ],
+  "spec": {
+   "code": "D-02",
+   "name": "Component library",
+   "purpose": "Every component with its meta: description, props, states, live usages, accessibility notes and the pages that use it. Rule: no component without a meta, no meta without a usage.",
+   "layout": [
+    "PageHeader",
+    "TierTabs",
+    "ComponentCards (props table, usages, a11y)"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin"
+   ],
+   "logic": [
+    "componentLibrary globs src/components/**/*.meta.ts."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "Tabs",
+    "Card",
+    "Badge",
+    "Chip",
+    "Section"
+   ],
+   "actions": [
+    {
+     "id": "dev.filterTier",
+     "label": "Tier",
+     "intent": "show only one tier of components",
+     "params": {
+      "tier": "enum:all,atom,molecule,organism,template"
+     }
+    },
+    {
+     "id": "dev.jumpToComponent",
+     "label": "Jump",
+     "intent": "scroll to a component by name",
+     "params": {
+      "name": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "by tier",
+    "anchor #Name"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)"
+   ]
+  }
+ },
+ {
+  "path": "/dev/specs",
+  "code": "D-03",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin"
+  ],
+  "spec": {
+   "code": "D-03",
+   "name": "Page specs index",
+   "purpose": "Every route with its page code, surface, built / stub status, roles and spec completeness (nine checks including actions); opens the inspector for any spec.",
+   "layout": [
+    "PageHeader",
+    "StatTiles (built, stubs, avg completeness)",
+    "SurfaceFilter",
+    "SpecsTable",
+    "InspectorPanel"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin"
+   ],
+   "logic": [
+    "specCompleteness(spec) scores 9 checks; a page with no controls passes actions with a \"no actions\" note.",
+    "status = PageStub element ? stub : built"
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "DataTable",
+    "Badge",
+    "InspectorPanel",
+    "Button",
+    "ProgressBar"
+   ],
+   "actions": [
+    {
+     "id": "dev.openSpec",
+     "label": "Spec",
+     "intent": "open the inspector for a page code",
+     "params": {
+      "code": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "all",
+    "filtered by surface",
+    "inspector open"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)"
+   ]
+  }
+ },
+ {
+  "path": "/dev/tables",
+  "code": "D-04",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin"
+  ],
+  "spec": {
+   "code": "D-04",
+   "name": "Table library",
+   "purpose": "Every table in the schema grouped by area with row counts, columns, RLS and access intent, plus the generic table manager that lists, adds, edits and deletes rows of any table through the DataProvider.",
+   "layout": [
+    "PageHeader",
+    "GroupSections (table cards)",
+    "TableManager (Breadcrumbs, DataTable, row Drawer, delete Modal)"
+   ],
+   "data": [
+    "tenants",
+    "users",
+    "feedback",
+    "page_layouts",
+    "presence",
+    "actions_log"
+   ],
+   "roles": [
+    "super_admin"
+   ],
+   "logic": [
+    "tableRegistry from src/data/schema/*.ts",
+    "Base columns (id, tenant_id, created_at, updated_at, version) are read-only in the editor.",
+    "Delete asks for confirmation and logs to actions_log."
+   ],
+   "integrations": [
+    "Supabase (later): same TableDef feeds supabase/schema.sql"
+   ],
+   "components": [
+    "PageHeader",
+    "Card",
+    "DataTable",
+    "Drawer",
+    "Modal",
+    "Input",
+    "Select",
+    "Textarea",
+    "Checkbox",
+    "Button",
+    "Badge",
+    "Breadcrumbs",
+    "EmptyState"
+   ],
+   "actions": [
+    {
+     "id": "dev.reseed",
+     "label": "Reseed",
+     "intent": "wipe the mock database and reseed it",
+     "permission": "tables.write"
+    },
+    {
+     "id": "dev.addRow",
+     "label": "Add row",
+     "intent": "add a row to the current table",
+     "permission": "tables.write",
+     "params": {
+      "table": "string"
+     }
+    },
+    {
+     "id": "dev.deleteRow",
+     "label": "Delete",
+     "intent": "delete a row by id from the current table",
+     "permission": "tables.write",
+     "params": {
+      "table": "string",
+      "id": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "library",
+    "one table",
+    "editing row",
+    "confirm delete"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)"
+   ]
+  }
+ },
+ {
+  "path": "/dev/tables/:table",
+  "code": "D-04",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin"
+  ],
+  "spec": {
+   "code": "D-04",
+   "name": "Table library",
+   "purpose": "Every table in the schema grouped by area with row counts, columns, RLS and access intent, plus the generic table manager that lists, adds, edits and deletes rows of any table through the DataProvider.",
+   "layout": [
+    "PageHeader",
+    "GroupSections (table cards)",
+    "TableManager (Breadcrumbs, DataTable, row Drawer, delete Modal)"
+   ],
+   "data": [
+    "tenants",
+    "users",
+    "feedback",
+    "page_layouts",
+    "presence",
+    "actions_log"
+   ],
+   "roles": [
+    "super_admin"
+   ],
+   "logic": [
+    "tableRegistry from src/data/schema/*.ts",
+    "Base columns (id, tenant_id, created_at, updated_at, version) are read-only in the editor.",
+    "Delete asks for confirmation and logs to actions_log."
+   ],
+   "integrations": [
+    "Supabase (later): same TableDef feeds supabase/schema.sql"
+   ],
+   "components": [
+    "PageHeader",
+    "Card",
+    "DataTable",
+    "Drawer",
+    "Modal",
+    "Input",
+    "Select",
+    "Textarea",
+    "Checkbox",
+    "Button",
+    "Badge",
+    "Breadcrumbs",
+    "EmptyState"
+   ],
+   "actions": [
+    {
+     "id": "dev.reseed",
+     "label": "Reseed",
+     "intent": "wipe the mock database and reseed it",
+     "permission": "tables.write"
+    },
+    {
+     "id": "dev.addRow",
+     "label": "Add row",
+     "intent": "add a row to the current table",
+     "permission": "tables.write",
+     "params": {
+      "table": "string"
+     }
+    },
+    {
+     "id": "dev.deleteRow",
+     "label": "Delete",
+     "intent": "delete a row by id from the current table",
+     "permission": "tables.write",
+     "params": {
+      "table": "string",
+      "id": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "library",
+    "one table",
+    "editing row",
+    "confirm delete"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)"
+   ]
+  }
+ },
+ {
+  "path": "/dev/rules",
+  "code": "D-05",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney"
+  ],
+  "spec": {
+   "code": "D-05",
+   "name": "Rules registry",
+   "purpose": "Every business and legal rule with id, category, status (requested / in dev / implemented / deprecated), authority, currency flag, the pages that use it and its source. Legal rules from docs/legal carry \"verify\" until confirmed.",
+   "layout": [
+    "PageHeader (add rule placeholder)",
+    "StatusTiles",
+    "Filters (category, status, search)",
+    "RulesTable"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "owner",
+    "attorney",
+    "super_admin"
+   ],
+   "logic": [
+    "Code registry (src/rules/*.ts) merged by id; pages union, most advanced status.",
+    "verify: true renders the currency caveat badge."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "DataTable",
+    "Badge",
+    "StatusBadge",
+    "Button",
+    "Placeholder",
+    "Tooltip"
+   ],
+   "actions": [
+    {
+     "id": "dev.addRule",
+     "label": "Add rule",
+     "intent": "request a new rule (Settings › Rules module will wire it)",
+     "permission": "rules.write"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01",
+    "RULE-UD-01"
+   ],
+   "states": [
+    "all",
+    "filtered",
+    "verify flagged"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)",
+    "Add rule / change status are Placeholders until the settings-rules module ships."
+   ]
+  }
+ },
+ {
+  "path": "/dev/routes",
+  "code": "D-19",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin"
+  ],
+  "spec": {
+   "code": "D-19",
+   "name": "Route manifest",
+   "purpose": "Every route as scripts see it (window.__ctl.routes): module, surface, shell, roles, menu entry, params, status and code family; collisions; download the JSON that screenshots and QA read.",
+   "layout": [
+    "PageHeader (copy / download)",
+    "StatTiles",
+    "RoutesTable",
+    "Modules",
+    "Collisions"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin"
+   ],
+   "logic": [
+    "buildManifest(routes) = the object published on window.__ctl",
+    "code family from the prefix (CODE_FAMILIES)"
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "DataTable",
+    "Badge",
+    "Button",
+    "Chip",
+    "Card",
+    "Section"
+   ],
+   "actions": [
+    {
+     "id": "dev.downloadManifest",
+     "label": "Download routes.json",
+     "intent": "download the route manifest as JSON"
+    },
+    {
+     "id": "dev.copyManifest",
+     "label": "Copy JSON",
+     "intent": "copy the route manifest to the clipboard"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default",
+    "filtered",
+    "collisions present"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)"
+   ]
+  }
+ },
+ {
+  "path": "/dev/actions",
+  "code": "D-20",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin"
+  ],
+  "spec": {
+   "code": "D-20",
+   "name": "Actions registry",
+   "purpose": "Every action every page declares (the WebMCP surface and the voice vocabulary): id, label, intent, permission, params, the page that owns it and whether a live handler is registered right now; run param-less actions from here.",
+   "layout": [
+    "PageHeader",
+    "StatTiles (declared, live, with permission)",
+    "Search + filters",
+    "ActionsTable (run button)",
+    "LastResult"
+   ],
+   "data": [
+    "actions_log"
+   ],
+   "roles": [
+    "super_admin"
+   ],
+   "logic": [
+    "listActions() = catalogActions(getRoutes()) + hasHandler(id)",
+    "runAction(id, {}, can) checks the permission and returns a readable result; each run is logged to actions_log."
+   ],
+   "integrations": [
+    "WebMCP (planned): one tool per action",
+    "Voice controller (planned): intents = these sentences"
+   ],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "DataTable",
+    "Badge",
+    "Button",
+    "SearchInput",
+    "DependencyChip",
+    "Spinner",
+    "Card"
+   ],
+   "actions": [
+    {
+     "id": "dev.runAction",
+     "label": "Run",
+     "intent": "run an action by id with no parameters",
+     "permission": "actions.run",
+     "params": {
+      "id": "string"
+     }
+    },
+    {
+     "id": "dev.copyActions",
+     "label": "Copy JSON",
+     "intent": "copy the actions manifest to the clipboard"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default",
+    "filtered",
+    "result shown"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "dev module (foundation)"
+   ]
+  }
+ },
+ {
+  "path": "/docs/search",
+  "code": "K-02",
+  "surface": "docs",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "K-02",
+   "name": "Knowledge search",
+   "purpose": "Full-text search across the docs tree: titles and headings answer from the build-time index, bodies load in the background and add snippets, with a folder filter and keyboard navigation of the results.",
+   "layout": [
+    "PageHeader",
+    "SearchInput",
+    "Filters (folder)",
+    "BodyLoadProgress",
+    "Results (snippets)"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Query words are matched (accent-insensitive) against title, header meta and headings from docmeta first, then against bodies once loaded.",
+    "Bodies load on demand in batches through loadDoc(); the count of ready bodies is shown so a result is never silently missing.",
+    "Snippets are the matched line with the query highlighted; up / down move the selection and Enter opens it."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "SearchInput",
+    "Select",
+    "Badge",
+    "Chip",
+    "EmptyState",
+    "Card",
+    "ProgressBar"
+   ],
+   "actions": [
+    {
+     "id": "docs.search",
+     "label": "Search docs",
+     "intent": "search every doc for a phrase",
+     "permission": "docs.read",
+     "params": {
+      "q": "string"
+     }
+    },
+    {
+     "id": "docs.filter",
+     "label": "Filter by folder",
+     "intent": "show results from one folder only",
+     "params": {
+      "folder": "string"
+     }
+    },
+    {
+     "id": "docs.openResult",
+     "label": "Open result",
+     "intent": "open the selected search result",
+     "params": {
+      "path": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "empty query",
+    "titles only (bodies loading)",
+    "full text",
+    "filtered by folder",
+    "no match"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "docs module (T-047)"
+   ]
+  }
+ },
+ {
+  "path": "/docs/plan-log",
+  "code": "K-03",
+  "surface": "docs",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "K-03",
+   "name": "Plan log",
+   "purpose": "Prompts, changelog entries and decisions in one chronological log: what was asked (verbatim), what shipped (version, intent, rejected alternatives, files, codes) and what was decided, filterable by pass, version or page code.",
+   "layout": [
+    "PageHeader",
+    "Tabs (everything, prompts, changelog, decisions)",
+    "Filter (pass or code)",
+    "Timeline of entries"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Prompts come from docs/prompts/NNNN-*.md (header bullets), changelog entries from docs/changelog/**.md header lines (version, date, prompt, intent, decision, rejected, files, codes) and decisions from the table in docs/decisions.md.",
+    "Entries sort by date then by number, newest first; _pending drafts are flagged as drafts because the integrator has not merged them yet.",
+    "The filter matches a pass id, a version, a decision id or a page code against the entry codes and text."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "Tabs",
+    "SearchInput",
+    "Card",
+    "Badge",
+    "Chip",
+    "EmptyState"
+   ],
+   "actions": [
+    {
+     "id": "docs.filterLog",
+     "label": "Filter log",
+     "intent": "filter the plan log by pass, version, decision or page code",
+     "params": {
+      "q": "string"
+     }
+    },
+    {
+     "id": "docs.setLogKind",
+     "label": "Log kind",
+     "intent": "show prompts, changelog entries or decisions only",
+     "params": {
+      "kind": "enum:all,prompt,changelog,decision"
+     }
+    },
+    {
+     "id": "docs.openEntry",
+     "label": "Open entry",
+     "intent": "open the document behind a log entry",
+     "params": {
+      "path": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "everything",
+    "prompts",
+    "changelog",
+    "decisions",
+    "filtered",
+    "no match"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "docs module (T-047)"
+   ]
+  }
+ },
+ {
+  "path": "/docs/*",
+  "code": "K-01",
+  "surface": "docs",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "K-01",
+   "name": "Docs viewer",
+   "purpose": "Every markdown file under docs/ rendered in-app with the folder tree, a heading outline, prev / next, pending-decision counts and resolved links between documents, so the project memory reads like part of the product instead of a folder on disk.",
+   "layout": [
+    "PageHeader (decisions chip, search and plan-log links)",
+    "Tree (groups with counts; Select on phones)",
+    "Document (MarkdownViewer)",
+    "Outline (right rail >= 1280, dropdown below)",
+    "PrevNext"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "src/docs/docsIndex.ts: `?docmeta` index (title, header meta, headings, decisions, capture placeholders) is eager; the `?raw` body loads only for the open document.",
+    "docsTree.ts groups by top-level folder in reading order (start here, prompts, changelog, pages, reference, legal, game board, ops manual, plan, qa, screenshots); prompts and changelog list newest first.",
+    "Relative links between docs resolve to /#/docs/<path>; ops-manual chapters resolve to /#/manual/<lang>/<slug>.",
+    "Bare page-code mentions (PM-03) become links to that page when the route manifest has it; the P- prefix is skipped in platform-principles.md, where P-01..P-15 are principles.",
+    "[screenshot: CODE — caption] lines render as a framed capture from docs/screenshots/<CODE>/ or a dashed box naming the code."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "MarkdownViewer",
+    "Select",
+    "Badge",
+    "Chip",
+    "Button",
+    "EmptyState",
+    "Spinner",
+    "Card"
+   ],
+   "actions": [
+    {
+     "id": "docs.open",
+     "label": "Open doc",
+     "intent": "open a docs file by path",
+     "permission": "docs.read",
+     "params": {
+      "path": "string"
+     }
+    },
+    {
+     "id": "docs.jumpToHeading",
+     "label": "Jump to section",
+     "intent": "scroll to a section of the open document",
+     "params": {
+      "id": "string"
+     }
+    },
+    {
+     "id": "docs.toggleGroup",
+     "label": "Toggle folder",
+     "intent": "collapse or expand a folder in the docs tree",
+     "params": {
+      "group": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "README (index)",
+    "one document",
+    "document with captures",
+    "unknown path",
+    "loading body"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "docs module (T-047)"
+   ]
+  }
+ },
+ {
+  "path": "/",
+  "code": "HUB-01",
+  "surface": "public",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "HUB-01",
+   "name": "Testing hub",
+   "purpose": "First screen for the team: open any surface family as the right demo role, switch demo user and view-as, toggle language, brand, theme and the builder tool; see the counts of what the system holds. Not customer-facing.",
+   "layout": [
+    "HubHeader (BrandMark lockup, LangToggle, brand cycle, theme, dev mode) on the ink hero band",
+    "Hero (eyebrow, display title, promise, tagline, clearing-sky art, floating session bar with RoleSwitcher)",
+    "SurfaceGrid grouped by audience (Outside the firm / Firm staff / Build & test): one card per family (P, C, GB, X, F, L, S, O, A, MK, PM, M, K, D) with hue medallion, built / in-progress / planned chip from the manifest, purpose, live preview of the family home as its demo role, \"Enter as <demo user>\" with role and path",
+    "TestingHub (canvas, simulator, plan, board, proposal, docs, manual, legal memory, dev tools)",
+    "Footer stat strip (routes, built, tables, rules, components, actions, plan tasks done)"
+   ],
+   "data": [
+    "users",
+    "tenants"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "Entering a surface calls switchUser(role) then navigates to ROLE_HOME[role] or the family home path.",
+    "Each card carries a live preview of its home page running as that family’s demo role: an iframe whose hash carries ?as=&dev=&lang=&theme= (src/modules/showcase/frameSession.ts applies it inside the frame only, so the preview never changes your own session).",
+    "Previews load only when they scroll into view (IntersectionObserver) and at most six are live at once; inside a frame the hub shows the drawn phone / a static icon instead, so frames never nest.",
+    "Status chips (built / in progress / planned) come from the route manifest: a path with no route yet is a Placeholder, not a dead link.",
+    "Dev toggle renders only for super_admin; theme, brand and language persist in localStorage (ctl.theme carries theme and brand, ctl.lang the language). Developer codes render only in dev mode.",
+    "Counts come from getRoutes(), tables, rules, componentLibrary, listActions() and docs/plan/tasks.json (imported as JSON)."
+   ],
+   "integrations": [],
+   "components": [
+    "Card",
+    "Button",
+    "Toggle",
+    "RoleSwitcher",
+    "LangToggle",
+    "Badge",
+    "Icon",
+    "IconButton",
+    "Kbd",
+    "Tooltip",
+    "Placeholder",
+    "BrandMark",
+    "BrandArt",
+    "PhoneFrame",
+    "DeviceFrame"
+   ],
+   "actions": [
+    {
+     "id": "hub.enterAs",
+     "label": "Enter as",
+     "intent": "open a surface as its demo role",
+     "params": {
+      "surface": "enum:site,app,desk,counsel,assist,owner,admin,opposition,board,plan,manual,docs,marketing,dev",
+      "role": "enum:super_admin,owner,attorney,paralegal,front_desk,marketing,client,opposing_counsel,public"
+     }
+    },
+    {
+     "id": "hub.openCanvas",
+     "label": "Canvas",
+     "intent": "open the canvas with every page laid out"
+    },
+    {
+     "id": "hub.openSimulator",
+     "label": "Demo simulator",
+     "intent": "open the demo simulator"
+    },
+    {
+     "id": "hub.openTool",
+     "label": "Open tool",
+     "intent": "open one of the testing-hub tools",
+     "params": {
+      "tool": "enum:canvas,simulator,plan,board,proposal,docs,manual,legal,dev"
+     }
+    },
+    {
+     "id": "hub.toggleDevMode",
+     "label": "Builder tool",
+     "intent": "turn the builder tool (dev mode) on or off",
+     "permission": "dev.tools"
+    },
+    {
+     "id": "hub.setLang",
+     "label": "Language",
+     "intent": "switch the interface language",
+     "params": {
+      "lang": "enum:en,es"
+     }
+    },
+    {
+     "id": "hub.toggleTheme",
+     "label": "Theme",
+     "intent": "switch between light and dark"
+    },
+    {
+     "id": "hub.cycleBrand",
+     "label": "Brand",
+     "intent": "cycle the brand palette"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default",
+    "dev mode on",
+    "viewing as another role",
+    "Spanish",
+    "previews loading",
+    "inside a frame (static previews)"
+   ],
+   "notes": [
+    "hub module: foundation base, design pass (ink hero, audience groups, medallions, stat strip; docs/design/design-system.md) and showcase enrichment (T-024: live role previews, testing-hub row, plan counts). Frame roles come from src/modules/showcase/frameSession.ts (D-21 / D-22 own it); no shared file is edited."
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ]
+  }
+ },
+ {
+  "path": "/no-access",
+  "code": "HUB-02",
+  "surface": "public",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "HUB-02",
+   "name": "No access",
+   "purpose": "Friendly page when the current role cannot open a route; offers the hub to switch demo user or the role home.",
+   "layout": [
+    "EmptyState (icon, title, body with role and target route)",
+    "Actions (hub, my home)"
+   ],
+   "data": [
+    "users"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "RequireRole redirects here with ?from=<path>."
+   ],
+   "integrations": [],
+   "components": [
+    "EmptyState",
+    "Button"
+   ],
+   "actions": [
+    {
+     "id": "hub.goHome",
+     "label": "Go to my home",
+     "intent": "go to the home page of my current role"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "hub module (foundation)"
+   ]
+  }
+ },
+ {
+  "path": "/legal",
+  "code": "K-10",
+  "surface": "docs",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "K-10",
+   "name": "Legal memory",
+   "purpose": "The front door of the firm's legal memory: the unmistakable \"nothing here is verified legal advice yet\" banner, counts of rows / unverified / flagged, the verification queue, the topics, and the newest changes in the law.",
+   "layout": [
+    "Banner (en/es, not dismissible)",
+    "StatTiles",
+    "VerificationQueue",
+    "Topics",
+    "RecentChanges"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "docs/legal/statute-index.md and law-change-log.md are parsed from their lazy `?raw` bodies (parseLegal.ts); the markdown files stay the single source of truth.",
+    "A row is verified only when verified_on holds a date; ⚠ in the flag column means a 2026 currency check is required and ◆ means the row was added for the game board.",
+    "The unverified banner cannot be dismissed while any statute row has verified_on empty (D-019).",
+    "Mark verified is a Placeholder: setting verified_on is the attorney's act, recorded by the legal verification workflow in Pass 2."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "StatTile",
+    "Card",
+    "Badge",
+    "Chip",
+    "Button",
+    "Placeholder",
+    "DataTable",
+    "EmptyState",
+    "Spinner"
+   ],
+   "actions": [
+    {
+     "id": "legal.openTopic",
+     "label": "Open topic",
+     "intent": "open the legal topic page for a practice area",
+     "permission": "docs.read",
+     "params": {
+      "slug": "string"
+     }
+    },
+    {
+     "id": "legal.markVerified",
+     "label": "Mark verified",
+     "intent": "record that an attorney verified a statute row today",
+     "permission": "rules.write",
+     "params": {
+      "citation": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01",
+    "RULE-UD-01"
+   ],
+   "states": [
+    "loading",
+    "rows unverified (banner)",
+    "queue",
+    "every row verified"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "legal module (T-049)",
+    "Mark verified is a Placeholder: the firm's attorney sets verified_on in the legal verification workflow (Pass 2).",
+    "The unverified banner cannot be dismissed while any statute row has verified_on empty (D-019)."
+   ]
+  }
+ },
+ {
+  "path": "/legal/statutes",
+  "code": "K-11",
+  "surface": "docs",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "K-11",
+   "name": "Statute index",
+   "purpose": "Every statute the product cites, as a table: citation (the key code uses), topic, the rule as understood, verified_on, source and currency flag, filterable by topic and by \"flagged for the 2026 currency check\".",
+   "layout": [
+    "Banner",
+    "Filters (topic, currency)",
+    "DataTable (citation, topic, rule, verified_on, source, flag)"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Rows come from the markdown table in docs/legal/statute-index.md, tagged with the `##` section they sit under.",
+    "Search matches citation, rule text and topic; the currency filter shows ⚠ rows or unverified rows only.",
+    "Each row links to its topic page and lists the law-change entries that name its citation."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "DataTable",
+    "Badge",
+    "Chip",
+    "Select",
+    "EmptyState",
+    "Spinner"
+   ],
+   "actions": [
+    {
+     "id": "legal.filterTopic",
+     "label": "Filter by topic",
+     "intent": "show the statutes of one topic",
+     "params": {
+      "topic": "string"
+     }
+    },
+    {
+     "id": "legal.filterCurrency",
+     "label": "Filter by currency",
+     "intent": "show only rows flagged for the 2026 currency check or only unverified rows",
+     "params": {
+      "flag": "enum:all,flagged,unverified"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01",
+    "RULE-UD-01"
+   ],
+   "states": [
+    "all rows",
+    "one topic",
+    "flagged only",
+    "unverified only",
+    "no match"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "legal module (T-049)",
+    "Mark verified is a Placeholder: the firm's attorney sets verified_on in the legal verification workflow (Pass 2)."
+   ]
+  }
+ },
+ {
+  "path": "/legal/changes",
+  "code": "K-12",
+  "surface": "docs",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "K-12",
+   "name": "Law-change log",
+   "purpose": "Changes in the law that touch a rule the product relies on, as a vertical timeline newest first: the instrument, the effective date, what changed, the citations and product surfaces affected, and whether anyone has verified it.",
+   "layout": [
+    "Banner",
+    "Timeline (LC id, dates, what changed, citations, surfaces, verification)"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Rows come from the append-only table in docs/legal/law-change-log.md; ids are permanent and sorted newest first.",
+    "Each affected citation links into the statute index so an agent can see the row the change hits."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "Card",
+    "Badge",
+    "Chip",
+    "EmptyState",
+    "Spinner"
+   ],
+   "actions": [
+    {
+     "id": "legal.openChange",
+     "label": "Open a citation",
+     "intent": "open the statute row a law change affects",
+     "params": {
+      "citation": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "loading",
+    "timeline",
+    "empty log"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "legal module (T-049)",
+    "Mark verified is a Placeholder: the firm's attorney sets verified_on in the legal verification workflow (Pass 2)."
+   ]
+  }
+ },
+ {
+  "path": "/legal/topics/:slug",
+  "code": "K-13",
+  "surface": "docs",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "K-13",
+   "name": "Legal topic",
+   "purpose": "One practice area from docs/legal/topics: what the firm covers, the statutes it relies on, the 2026 currency flags and what CTL OS does with it, with the related statute rows and law changes beside the text.",
+   "layout": [
+    "Breadcrumbs",
+    "Banner",
+    "Topic (MarkdownViewer)",
+    "RelatedStatutes",
+    "RelatedChanges"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "The topic body loads as a lazy `?raw` chunk; related rows are the statute rows whose topic column equals the slug.",
+    "Relative links inside a topic file resolve into the docs viewer (/#/docs/legal/...)."
+   ],
+   "integrations": [],
+   "components": [
+    "Breadcrumbs",
+    "PageHeader",
+    "MarkdownViewer",
+    "Card",
+    "Badge",
+    "Chip",
+    "EmptyState",
+    "Spinner"
+   ],
+   "actions": [
+    {
+     "id": "legal.openStatute",
+     "label": "Open the statute index",
+     "intent": "open the statute index filtered to this topic",
+     "params": {
+      "topic": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "loading",
+    "topic with related rows",
+    "unknown topic"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "legal module (T-049)",
+    "Mark verified is a Placeholder: the firm's attorney sets verified_on in the legal verification workflow (Pass 2)."
+   ]
+  }
+ },
+ {
+  "path": "/manual/decisions",
+  "code": "M-03",
+  "surface": "manual",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "M-03",
+   "name": "Manual decisions",
+   "purpose": "Every \"decision needed\" callout across the manual in one list, with the chapter and section it sits in, plus the captures the manual still asks for — so the questions the manual is waiting on are visible instead of buried.",
+   "layout": [
+    "PageHeader (language)",
+    "Filters (part)",
+    "DecisionList",
+    "CaptureGaps"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Callouts come from the build-time index (docmeta collects `> DECISION NEEDED:` / `> DECISIÓN PENDIENTE:` with the nearest `##` heading), so no chapter body is fetched.",
+    "`[screenshot: CODE — caption]` lines with no capture in docs/screenshots are listed as gaps with a link to the page."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "LangToggle",
+    "SegmentedControl",
+    "Card",
+    "Badge",
+    "Chip",
+    "EmptyState"
+   ],
+   "actions": [
+    {
+     "id": "manual.openDecision",
+     "label": "Open the chapter",
+     "intent": "open the chapter a decision sits in",
+     "permission": "manual.read",
+     "params": {
+      "slug": "string"
+     }
+    },
+    {
+     "id": "manual.filterPart",
+     "label": "Filter by part",
+     "intent": "show the pending decisions of one part of the manual",
+     "params": {
+      "part": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "all parts",
+    "one part",
+    "no decisions",
+    "capture gaps listed"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "manual module (T-048)"
+   ]
+  }
+ },
+ {
+  "path": "/manual/:lang/:slug",
+  "code": "M-02",
+  "surface": "manual",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "M-02",
+   "name": "Manual chapter",
+   "purpose": "One chapter: the front-matter header (title, role, part, version, updated), the markdown body, live blocks where the chapter quotes the system, styled callouts, a heading outline, read / in-person / in-CTL-OS progress and prev / next.",
+   "layout": [
+    "Breadcrumbs",
+    "ChapterHeader (part, role, version, reading time, progress buttons)",
+    "FallbackNotice",
+    "Body (MarkdownViewer + LiveBlock + captures)",
+    "Outline",
+    "PrevNext"
+   ],
+   "data": [
+    "manual_progress",
+    "users"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "The body loads as a `?raw` chunk on demand and is split into markdown runs, `{{directives}}` and `[screenshot: ...]` lines (segmentMarkdown).",
+    "A directive renders through the LiveBlock organism: {{roles}}, {{routes:<surface>}}, {{tables}}, {{table:<name>}}, {{rules}}, {{offices}}, {{demo-users}}; {{pricing}} and unknown directives render as a Placeholder that names itself.",
+    "Callouts `> DECISION NEEDED:` / `> DECISIÓN PENDIENTE:` (and NOTE / TIP / WARNING / IN PERSON / IN CTL OS) are styled and collected for M-03.",
+    "Read, in-person and in-CTL-OS are three booleans on one manual_progress row, written by id so two devices cannot clobber each other.",
+    "The language toggle swaps to the same chapter in the other language by slug, or by chapter number when the slugs differ."
+   ],
+   "integrations": [],
+   "components": [
+    "Breadcrumbs",
+    "PageHeader",
+    "LangToggle",
+    "MarkdownViewer",
+    "LiveBlock",
+    "Select",
+    "Badge",
+    "Chip",
+    "Button",
+    "Checkbox",
+    "Placeholder",
+    "EmptyState",
+    "Spinner"
+   ],
+   "actions": [
+    {
+     "id": "manual.markRead",
+     "label": "Mark read",
+     "intent": "mark this chapter read for me",
+     "permission": "manual.read",
+     "params": {
+      "slug": "string"
+     }
+    },
+    {
+     "id": "manual.markStep",
+     "label": "Mark a half of the lesson",
+     "intent": "record that I did the in-person or the in-CTL-OS half of this chapter",
+     "permission": "manual.read",
+     "params": {
+      "slug": "string",
+      "step": "enum:in_person,in_ctl_os"
+     }
+    },
+    {
+     "id": "manual.setChapterLang",
+     "label": "Chapter language",
+     "intent": "read this chapter in the other language",
+     "params": {
+      "lang": "enum:en,es"
+     }
+    },
+    {
+     "id": "manual.jumpToSection",
+     "label": "Jump to section",
+     "intent": "scroll to a section of this chapter",
+     "params": {
+      "id": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "English",
+    "Spanish",
+    "English fallback",
+    "read",
+    "loading",
+    "unknown slug (chapter picker)"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "manual module (T-048)"
+   ]
+  }
+ },
+ {
+  "path": "/plan/list",
+  "code": "PM-02",
+  "surface": "plan",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "PM-02",
+   "name": "Plan list",
+   "purpose": "Every task of the build plan in one sortable, groupable, searchable table, with the dependency ids on the row and a click into the detail.",
+   "layout": [
+    "PageHeader + PlanViewNav",
+    "Filter bar + grouping switch",
+    "DataTable (id, code, title, lane, pass, tick, model, status, size, depends on)",
+    "TaskDetailDrawer"
+   ],
+   "data": [
+    "plan_tasks",
+    "plan_passes",
+    "plan_lanes"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Ticks are dependency depth, not calendar days (D-013): tick(t) = 0 without dependencies, else 1 + max(tick(dep)).",
+    "Grouping buckets rows inside one table by lane, pass, model or status.",
+    "Export CSV writes the filtered rows (id, code, title, lane, pass, tick, model, status, size, depends_on)."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "DataTable",
+    "SearchInput",
+    "Select",
+    "SegmentedControl",
+    "Chip",
+    "Badge",
+    "StatusBadge",
+    "Button",
+    "Drawer",
+    "Icon"
+   ],
+   "actions": [
+    {
+     "id": "plan.filter",
+     "label": "Filter",
+     "intent": "filter the task list",
+     "permission": "projects.read",
+     "params": {
+      "pass": "string",
+      "model": "enum:fable,opus-5,sonnet-5",
+      "lane": "string",
+      "status": "enum:todo,doing,blocked,done",
+      "q": "string"
+     }
+    },
+    {
+     "id": "plan.setGrouping",
+     "label": "Group by",
+     "intent": "group the table by lane, pass, model or status",
+     "params": {
+      "grouping": "enum:none,lane,pass,model,status"
+     }
+    },
+    {
+     "id": "plan.selectTask",
+     "label": "Open task",
+     "intent": "open the detail of a task",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "plan.exportCsv",
+     "label": "Export CSV",
+     "intent": "download the filtered tasks as a CSV file",
+     "permission": "projects.read"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default",
+    "grouped",
+    "sorted",
+    "filtered",
+    "empty result"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "plan module (T-029). Under 768 px the DataTable renders rows as cards."
+   ]
+  }
+ },
+ {
+  "path": "/plan/timeline",
+  "code": "PM-03",
+  "surface": "plan",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "PM-03",
+   "name": "Plan timeline",
+   "purpose": "The plan laid out on dependency ticks (never calendar days): one row per task inside collapsible lanes, bars sized by S/M/L/XL, dependency lines between them, the critical path lit and \"now\" at the highest tick that holds a task in progress.",
+   "layout": [
+    "PageHeader + PlanViewNav",
+    "Filter bar + zoom + dependency-line toggle",
+    "Tick axis with the parallel count per tick",
+    "Lane rows with bars and SVG dependency links",
+    "Hover / focus detail strip"
+   ],
+   "data": [
+    "plan_tasks",
+    "plan_passes",
+    "plan_lanes"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Ticks are dependency depth, not calendar days (D-013): tick(t) = 0 without dependencies, else 1 + max(tick(dep)).",
+    "Critical path = every task whose depth + forward height equals the plan span (the longest dependency chain).",
+    "Bar length = SIZE_WEIGHT[size] x column width (relative size, never hours), minimum 44 px.",
+    "\"Now\" = the highest tick that has a task with status doing.",
+    "The parallel count per tick is how many filtered tasks share that tick.",
+    "Zoom 50-250 % with buttons and + / - keys; panning with the trackpad or the arrow keys."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "Button",
+    "Toggle",
+    "Badge",
+    "SearchInput",
+    "Select",
+    "EmptyState",
+    "Drawer",
+    "Icon"
+   ],
+   "actions": [
+    {
+     "id": "plan.zoom",
+     "label": "Zoom",
+     "intent": "zoom the timeline in, out or back to 100 %",
+     "params": {
+      "direction": "enum:in,out,reset"
+     }
+    },
+    {
+     "id": "plan.filter",
+     "label": "Filter",
+     "intent": "filter the timeline by pass, model, lane or a search word",
+     "permission": "projects.read",
+     "params": {
+      "pass": "string",
+      "model": "enum:fable,opus-5,sonnet-5",
+      "lane": "string",
+      "q": "string"
+     }
+    },
+    {
+     "id": "plan.selectTask",
+     "label": "Open task",
+     "intent": "open the detail of a task",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "plan.toggleLane",
+     "label": "Collapse lane",
+     "intent": "collapse or expand a lane",
+     "params": {
+      "lane": "string"
+     }
+    },
+    {
+     "id": "plan.toggleLinks",
+     "label": "Dependency lines",
+     "intent": "show or hide the dependency lines"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default",
+    "zoomed",
+    "lane collapsed",
+    "links hidden",
+    "task focused",
+    "empty result"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "plan module (T-030). The chart pans inside its own scroll container, so the page never scrolls sideways at 360 px."
+   ]
+  }
+ },
+ {
+  "path": "/plan/graph",
+  "code": "PM-04",
+  "surface": "plan",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "PM-04",
+   "name": "Dependency graph",
+   "purpose": "The dependency graph as an object view: each task is a card-like node identifiable by its lane icon, model tone and status ring, in two switchable layouts (lanes = swimlane per lane and column per tick; radial = passes as rings and lanes as sectors).",
+   "layout": [
+    "PageHeader + PlanViewNav",
+    "Filter bar + layout switch + zoom",
+    "Legend and selection summary",
+    "SVG canvas (lane bands or pass rings, dependency edges, object nodes)",
+    "TaskDetailDrawer"
+   ],
+   "data": [
+    "plan_tasks",
+    "plan_passes",
+    "plan_lanes"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Ticks are dependency depth, not calendar days (D-013): tick(t) = 0 without dependencies, else 1 + max(tick(dep)).",
+    "Critical path = every task whose depth + forward height equals the plan span (the longest dependency chain).",
+    "Lanes layout: y band per lane, x column per tick, tasks sharing a cell stack vertically.",
+    "Radial layout: ring radius per pass, angular sector per lane, tasks spread evenly inside their sector.",
+    "Selecting a node highlights every upstream and downstream task (transitive) and dims the rest.",
+    "Layout maths is written here (no d3 and no new dependency); node geometry scales with the --scale band so 2560 / 3840 stay legible."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "SegmentedControl",
+    "Button",
+    "Badge",
+    "SearchInput",
+    "Select",
+    "EmptyState",
+    "Drawer",
+    "Icon"
+   ],
+   "actions": [
+    {
+     "id": "plan.setLayout",
+     "label": "Layout",
+     "intent": "switch the graph between the lanes and the radial layout",
+     "params": {
+      "layout": "enum:lanes,radial"
+     }
+    },
+    {
+     "id": "plan.zoom",
+     "label": "Zoom",
+     "intent": "zoom the graph in, out or back to 100 %",
+     "params": {
+      "direction": "enum:in,out,reset"
+     }
+    },
+    {
+     "id": "plan.selectTask",
+     "label": "Select node",
+     "intent": "select a task node and show what it waits for",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "plan.filter",
+     "label": "Filter",
+     "intent": "filter the graph by pass, model, lane or a search word",
+     "permission": "projects.read",
+     "params": {
+      "pass": "string",
+      "model": "enum:fable,opus-5,sonnet-5",
+      "lane": "string",
+      "q": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "lanes layout",
+    "radial layout",
+    "node selected",
+    "zoomed",
+    "filtered",
+    "empty result"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "plan module (T-031). Nodes are focusable with Tab and open with Enter / Space; the canvas pans with the arrow keys."
+   ]
+  }
+ },
+ {
+  "path": "/plan/passes",
+  "code": "PM-05",
+  "surface": "plan",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "PM-05",
+   "name": "Passes and task detail",
+   "purpose": "The passes of the build plan with their goal, gate, progress and the work split per model and per status, and one page per task with every field, its dependencies and dependents as links, its deliverables and its status control.",
+   "layout": [
+    "PageHeader + PlanViewNav",
+    "StatTiles",
+    "One Section per pass (goal, gate, progress, counts by status and model, task list)"
+   ],
+   "data": [
+    "plan_tasks",
+    "plan_passes",
+    "plan_lanes"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Progress per pass = done tasks / tasks in that pass.",
+    "Ticks are dependency depth, not calendar days (D-013): tick(t) = 0 without dependencies, else 1 + max(tick(dep)).",
+    "Opening a pass navigates to the board filtered to it (/plan?pass=n)."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "Section",
+    "Card",
+    "StatTile",
+    "ProgressBar",
+    "Badge",
+    "StatusBadge",
+    "Button",
+    "Icon",
+    "EmptyState"
+   ],
+   "actions": [
+    {
+     "id": "plan.selectPass",
+     "label": "Open pass",
+     "intent": "open the board filtered to one pass",
+     "params": {
+      "pass": "number"
+     }
+    },
+    {
+     "id": "plan.selectTask",
+     "label": "Open task",
+     "intent": "open the detail page of a task",
+     "params": {
+      "id": "id"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default",
+    "no passes"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "plan module (T-032)."
+   ]
+  }
+ },
+ {
+  "path": "/plan/task/:id",
+  "code": "PM-05",
+  "surface": "plan",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing"
+  ],
+  "spec": {
+   "code": "PM-05",
+   "name": "Task detail",
+   "purpose": "One task of the build plan: lane, pass, tick, size, model, status, dependencies and dependents as links, deliverables with links to the page doc and the page itself, acceptance and notes.",
+   "layout": [
+    "PageHeader (back, code, open page)",
+    "Badges (status, model, lane, pass, tick, size)",
+    "Status control",
+    "Dependencies and dependents",
+    "Deliverables, acceptance, notes"
+   ],
+   "data": [
+    "plan_tasks",
+    "plan_passes",
+    "plan_lanes"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing"
+   ],
+   "logic": [
+    "Ticks are dependency depth, not calendar days (D-013): tick(t) = 0 without dependencies, else 1 + max(tick(dep)).",
+    "A dependency chip is marked waiting while that task is not done.",
+    "A deliverable that names a page code with a route in the manifest gets an \"open page\" link (/#/<route>).",
+    "The status control writes through DataProvider.update."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "Card",
+    "SegmentedControl",
+    "DependencyChip",
+    "Badge",
+    "Chip",
+    "StatusBadge",
+    "Button",
+    "EmptyState",
+    "Icon"
+   ],
+   "actions": [
+    {
+     "id": "plan.moveTask",
+     "label": "Set status",
+     "intent": "set the status of this task",
+     "permission": "projects.write",
+     "params": {
+      "id": "id",
+      "status": "enum:todo,doing,blocked,done"
+     }
+    },
+    {
+     "id": "plan.selectTask",
+     "label": "Open task",
+     "intent": "open another task by id",
+     "params": {
+      "id": "id"
+     }
+    },
+    {
+     "id": "plan.openPage",
+     "label": "Open page",
+     "intent": "open the page a task delivers by its page code",
+     "params": {
+      "code": "string"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default",
+    "task not found",
+    "blocked dependencies"
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ],
+   "notes": [
+    "plan module (T-032). Shares the PM-05 page code with the passes overview."
+   ]
+  }
+ },
+ {
+  "path": "/dev/canvas",
+  "code": "D-21",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner"
+  ],
+  "spec": {
+   "code": "D-21",
+   "name": "Canvas",
+   "purpose": "Every page of CTL OS laid out on one zoomable, pannable surface as live frames, grouped by surface family, so the whole system is visible at once and any page can be used right inside its frame instead of one page at a time.",
+   "layout": [
+    "PageHeader (title, live-frame counter, keyboard hint)",
+    "Toolbar (zoom out / level / zoom in, fit all, group select + fit group, surface filter, built-only, search, live cap, frame language, frame builder tool)",
+    "CanvasViewport (scrollable surface: labelled regions, frames with code + name + built/stub badge + Focus / Open, live iframes or a not-loaded card)",
+    "Minimap (region rectangles and the viewport window)",
+    "FocusOverlay (one frame enlarged to a working size)",
+    "ListView (under 700 px: every page as a list with Open links)"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner"
+   ],
+   "logic": [
+    "Frames come from the route manifest (window.__ctl.routes): one per page code, parameterised paths filled with sample values.",
+    "Regions are surface families in reading order; regions are shelf-packed into a 6600 px world and frames laid out in a grid inside their region (canvasLayout.ts).",
+    "Each frame runs as the natural role of its surface when the route allows it, else the first allowed role, passed through the iframe hash (?as=&dev=&lang=&theme=) and applied by frameSession.ts inside the frame only.",
+    "Live iframes are capped (default 12) and chosen by distance from the viewport centre; frames outside the cap show a not-loaded card with a Load button; IntersectionObserver decides what is in view.",
+    "Zoom 0.06..1 with buttons, + / - keys, ctrl + wheel (anchored on the pointer) and fit all / fit group; panning is the viewport's own scroll (drag, arrow keys, scrollbars, minimap).",
+    "Zoom, filters, live cap, frame language / builder tool and scroll position persist in localStorage ctl.canvas.",
+    "Under 700 px (and inside a frame) the page renders the list view instead of the surface, so a phone never scrolls the document sideways."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "Card",
+    "Button",
+    "IconButton",
+    "Select",
+    "Checkbox",
+    "SearchInput",
+    "Badge",
+    "StatusBadge",
+    "Chip",
+    "Toggle",
+    "LangToggle",
+    "DeviceFrame",
+    "EmptyState",
+    "Tooltip",
+    "Kbd",
+    "Placeholder"
+   ],
+   "actions": [
+    {
+     "id": "showcase.zoom",
+     "label": "Zoom",
+     "intent": "zoom the canvas in or out, or to a level",
+     "params": {
+      "step": "enum:in,out",
+      "level": "number"
+     }
+    },
+    {
+     "id": "showcase.fit",
+     "label": "Fit",
+     "intent": "fit everything, or one group, into the view",
+     "params": {
+      "region": "string"
+     }
+    },
+    {
+     "id": "showcase.pan",
+     "label": "Pan",
+     "intent": "move the canvas view by an amount",
+     "params": {
+      "dx": "number",
+      "dy": "number"
+     }
+    },
+    {
+     "id": "showcase.focusFrame",
+     "label": "Focus",
+     "intent": "enlarge one page frame to a working size",
+     "params": {
+      "code": "string"
+     }
+    },
+    {
+     "id": "showcase.closeFrame",
+     "label": "Close frame",
+     "intent": "close the enlarged frame"
+    },
+    {
+     "id": "showcase.openFrame",
+     "label": "Open page",
+     "intent": "leave the canvas and open a page for real",
+     "params": {
+      "code": "string"
+     }
+    },
+    {
+     "id": "showcase.loadFrame",
+     "label": "Load frame",
+     "intent": "load a page that is not live yet",
+     "params": {
+      "code": "string"
+     }
+    },
+    {
+     "id": "showcase.filter",
+     "label": "Filter",
+     "intent": "filter the canvas by surface, search text or built only",
+     "params": {
+      "surface": "string",
+      "q": "string",
+      "builtOnly": "boolean"
+     }
+    },
+    {
+     "id": "showcase.setLiveCap",
+     "label": "Live frames",
+     "intent": "set how many frames may be live at once",
+     "params": {
+      "cap": "number"
+     }
+    },
+    {
+     "id": "showcase.setFrameLang",
+     "label": "Frame language",
+     "intent": "set the language the frames run in",
+     "params": {
+      "lang": "enum:en,es"
+     }
+    },
+    {
+     "id": "showcase.setFrameDev",
+     "label": "Frame builder tool",
+     "intent": "turn the builder tool on or off inside the frames",
+     "params": {
+      "on": "boolean"
+     }
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "fit all",
+    "zoomed in",
+    "frame focused",
+    "filtered",
+    "narrow (list view)",
+    "inside a frame"
+   ],
+   "notes": [
+    "showcase module (T-025). Frame roles are set by the iframe hash and frameSession.ts, which shadows ctl.session / ctl.lang / ctl.theme inside the frame only - no shared file is edited."
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ]
+  }
+ },
+ {
+  "path": "/dev/simulator",
+  "code": "D-22",
+  "surface": "dev",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner"
+  ],
+  "spec": {
+   "code": "D-22",
+   "name": "Demo simulator",
+   "purpose": "Present any page of CTL OS at any size, as any demo role, in either language: phone, tablet, laptop, desktop and 4K TV frames with a present mode and a scripted tour, so a demo needs no screen sharing gymnastics.",
+   "layout": [
+    "PageHeader (title, share note, Present)",
+    "Controls (device segmented control, page select, role select, language, theme, builder tool, rotate, screenshot placeholder)",
+    "Stage (DeviceFrame at the chosen viewport, scaled to fit)",
+    "Tour (step counter, note, Back / Next)",
+    "ShortcutHint (shown once)"
+   ],
+   "data": [
+    "page_layouts"
+   ],
+   "roles": [
+    "super_admin",
+    "owner"
+   ],
+   "logic": [
+    "Device presets: phone 360 and 390, tablet 768, laptop 1280, desktop 1920, TV 2560 and 3840; the frame is scaled down to fit the stage and the real viewport width is what the page sees.",
+    "Orientation swaps width and height for phone and tablet only.",
+    "Pages come from the route manifest, grouped by surface; the role defaults to the natural role of the page's surface.",
+    "Role, language, theme and builder tool are passed through the iframe hash (?as=&dev=&lang=&theme=) and applied inside the frame only (frameSession.ts), so presenting never changes your own session.",
+    "Device, page, role, language, theme and present mode live in the URL query, so a link reopens the same demo.",
+    "The tour is a scripted sequence (hub, client home, board, attorney home, plan, proposal); a step whose page is not in the manifest falls back to the hub.",
+    "Present mode hides the chrome, enlarges the frame and shows the keyboard shortcuts once (remembered in localStorage ctl.simulator)."
+   ],
+   "integrations": [],
+   "components": [
+    "PageHeader",
+    "Card",
+    "Button",
+    "IconButton",
+    "Select",
+    "SegmentedControl",
+    "Toggle",
+    "Badge",
+    "DeviceFrame",
+    "Kbd",
+    "Placeholder",
+    "Tooltip"
+   ],
+   "actions": [
+    {
+     "id": "showcase.setDevice",
+     "label": "Device",
+     "intent": "show the demo at a device size",
+     "params": {
+      "device": "enum:phone360,phone390,tablet768,laptop1280,desktop1920,tv2560,tv3840"
+     }
+    },
+    {
+     "id": "showcase.setRoute",
+     "label": "Page",
+     "intent": "show a page in the simulator",
+     "params": {
+      "path": "string"
+     }
+    },
+    {
+     "id": "showcase.setRole",
+     "label": "Role",
+     "intent": "run the framed page as a demo role",
+     "params": {
+      "role": "enum:super_admin,owner,attorney,paralegal,front_desk,marketing,client,opposing_counsel,public"
+     }
+    },
+    {
+     "id": "showcase.setLang",
+     "label": "Language",
+     "intent": "run the framed page in English or Spanish",
+     "params": {
+      "lang": "enum:en,es"
+     }
+    },
+    {
+     "id": "showcase.setTheme",
+     "label": "Theme",
+     "intent": "run the framed page in light or dark",
+     "params": {
+      "theme": "enum:light,dark"
+     }
+    },
+    {
+     "id": "showcase.setDevMode",
+     "label": "Builder tool",
+     "intent": "turn the builder tool on or off inside the frame",
+     "params": {
+      "on": "boolean"
+     }
+    },
+    {
+     "id": "showcase.rotate",
+     "label": "Rotate",
+     "intent": "rotate the phone or tablet frame"
+    },
+    {
+     "id": "showcase.present",
+     "label": "Present",
+     "intent": "enter or leave present mode",
+     "params": {
+      "on": "boolean"
+     }
+    },
+    {
+     "id": "showcase.tourStart",
+     "label": "Start tour",
+     "intent": "start the scripted demo tour"
+    },
+    {
+     "id": "showcase.tourNext",
+     "label": "Next",
+     "intent": "go to the next step of the tour"
+    },
+    {
+     "id": "showcase.tourBack",
+     "label": "Back",
+     "intent": "go back one step of the tour"
+    },
+    {
+     "id": "showcase.tourStop",
+     "label": "End tour",
+     "intent": "end the scripted demo tour"
+    },
+    {
+     "id": "showcase.screenshot",
+     "label": "Screenshot",
+     "intent": "save a picture of the framed page"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01"
+   ],
+   "states": [
+    "default",
+    "present mode",
+    "tour running",
+    "rotated",
+    "Spanish",
+    "dark",
+    "inside a frame"
+   ],
+   "notes": [
+    "showcase module (T-026). Screenshot is a Placeholder (plannedIn: screenshot pass): a same-origin iframe cannot be rasterised from the page, so it needs the Playwright pass or a browser API."
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ]
+  }
+ },
+ {
+  "path": "/site/proposal",
+  "code": "P-02",
+  "surface": "public",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "P-02",
+   "name": "Proposal: the full-stack view",
+   "purpose": "The proposal for the firm’s decision makers: an interactive departments x roles matrix of every feature CTL OS covers, the case at the centre of it, the seven promises, and the method the system is being built with — so the depth of the thinking is visible rather than asserted.",
+   "layout": [
+    "SiteLayout",
+    "Hero (title, lead, stat tiles, print)",
+    "Matrix (9 departments x 7 roles, role filter, feature cells)",
+    "FeatureDrawer (what it does, who, which pass, page codes, planned tasks)",
+    "CaseAtTheCentre",
+    "Promises",
+    "Method",
+    "Links (plan, board, roadmap)"
+   ],
+   "data": [
+    "tenants"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "The matrix is a DataTable: rows are departments, columns are the seven role experiences, cells hold the features for that pair. Under 768 px the table renders as one card per department with labelled cells.",
+    "The role filter narrows the matrix to one role column; \"show all roles\" restores it.",
+    "Pass and status per feature are derived from docs/plan/tasks.json by page code (earliest pass, furthest-along status), so the proposal can never disagree with the plan (D-014).",
+    "Selecting a feature cell opens the detail drawer; Enter activates it from the keyboard."
+   ],
+   "integrations": [
+    "docs/plan/tasks.json (build-time import)"
+   ],
+   "components": [
+    "SiteLayout",
+    "Section",
+    "Card",
+    "DataTable",
+    "Drawer",
+    "Chip",
+    "Badge",
+    "Button",
+    "StatTile",
+    "SegmentedControl",
+    "Icon"
+   ],
+   "actions": [
+    {
+     "id": "site.filterRole",
+     "label": "Show one role",
+     "intent": "show only what one role does",
+     "params": {
+      "role": "enum:all,owner,attorney,paralegal,front_desk,marketing,client,opposing_counsel"
+     }
+    },
+    {
+     "id": "site.resetMatrix",
+     "label": "Show all roles",
+     "intent": "show every role column again"
+    },
+    {
+     "id": "site.openFeature",
+     "label": "Open a feature",
+     "intent": "explain one feature and say when it ships",
+     "params": {
+      "featureId": "string"
+     }
+    },
+    {
+     "id": "site.openPlan",
+     "label": "Open the project board",
+     "intent": "open the live project plan"
+    },
+    {
+     "id": "site.printProposal",
+     "label": "Print",
+     "intent": "print or save the proposal as a PDF"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01",
+    "RULE-SYS-02",
+    "RULE-SYS-03"
+   ],
+   "states": [
+    "all roles",
+    "one role filtered",
+    "feature drawer open",
+    "Spanish",
+    "dark",
+    "10-foot (>= 2560)"
+   ],
+   "notes": [
+    "site module (P-01..P-04). Firm facts are as indexed (D-025): prices and services are labelled \"as listed on the current site\" and never presented as confirmed.",
+    "Pass 5 (T-112) replaces the descriptions with real screenshots and verified prices and vendors."
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ]
+  }
+ },
+ {
+  "path": "/site/proposal/replaces",
+  "code": "P-03",
+  "surface": "public",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "P-03",
+   "name": "Replacement map",
+   "purpose": "What the firm stops paying for: every tool in the current stack with what it does today, why it hurts, the CTL OS module that replaces it and the pass it ships in — plus the two integrations kept on purpose as seams.",
+   "layout": [
+    "SiteLayout",
+    "Hero (title, lead, source note, print)",
+    "Filter (all / replaced / partly kept)",
+    "ReplacementTable (cards under 768 px)",
+    "ReplacementDrawer (pain, replacement, seam, pages)",
+    "KeptSeams"
+   ],
+   "data": [
+    "tenants"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "Rows are the observed stack. Each carries how the fact was established: seen on the indexed site, inferred from URLs and snippets, or told to us by the firm. Inferred vendors are never named as fact (D-025).",
+    "The pass each replacement ships in is read from docs/plan/tasks.json by page code, not typed here.",
+    "The filter narrows to replaced or partly kept; the count line reflects the filter."
+   ],
+   "integrations": [
+    "docs/plan/tasks.json (build-time import)",
+    "Stripe (kept seam)",
+    "Supabase (kept seam)"
+   ],
+   "components": [
+    "SiteLayout",
+    "Section",
+    "Card",
+    "DataTable",
+    "Drawer",
+    "Badge",
+    "Chip",
+    "Button",
+    "SegmentedControl",
+    "EmptyState"
+   ],
+   "actions": [
+    {
+     "id": "site.filterReplacements",
+     "label": "Filter the map",
+     "intent": "show only the tools that are replaced or partly kept",
+     "params": {
+      "view": "enum:all,replaced,partly"
+     }
+    },
+    {
+     "id": "site.openReplacement",
+     "label": "Open a tool",
+     "intent": "explain what replaces one tool and when",
+     "params": {
+      "toolId": "string"
+     }
+    },
+    {
+     "id": "site.printReplacements",
+     "label": "Print",
+     "intent": "print or save the replacement map"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01",
+    "RULE-SYS-02"
+   ],
+   "states": [
+    "all tools",
+    "filtered",
+    "tool drawer open",
+    "no match",
+    "Spanish",
+    "dark"
+   ],
+   "notes": [
+    "site module (P-01..P-04). Firm facts are as indexed (D-025): prices and services are labelled \"as listed on the current site\" and never presented as confirmed.",
+    "Vendors for the scheduler, the forms provider and the email / SMS tooling are unconfirmed; the table says so on the row."
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ]
+  }
+ },
+ {
+  "path": "/site/proposal/roadmap",
+  "code": "P-04",
+  "surface": "public",
+  "status": "built",
+  "roles": [
+   "super_admin",
+   "owner",
+   "attorney",
+   "paralegal",
+   "front_desk",
+   "marketing",
+   "client",
+   "opposing_counsel",
+   "public"
+  ],
+  "spec": {
+   "code": "P-04",
+   "name": "Client-facing roadmap",
+   "purpose": "The plan in the firm’s language: six passes with their goal, their gate and what each one ships, measured in dependency ticks rather than calendar days, with live progress from task statuses, how to give feedback on the product itself, and the five things only the firm can answer.",
+   "layout": [
+    "SiteLayout",
+    "Hero (title, lead, ticks explanation)",
+    "PassList (goal, gate, progress, areas, task list)",
+    "Feedback (annotation kinds and triage)",
+    "Asks (what we need from you)",
+    "Links"
+   ],
+   "data": [
+    "tenants"
+   ],
+   "roles": [
+    "super_admin",
+    "owner",
+    "attorney",
+    "paralegal",
+    "front_desk",
+    "marketing",
+    "client",
+    "opposing_counsel",
+    "public"
+   ],
+   "logic": [
+    "Passes, goals and gates come from docs/plan/tasks.json; progress is computed from task statuses (done = 1, in build = 0.5) so the page is never stale (D-014).",
+    "Units are dependency ticks (D-013): a task starts when everything it depends on is done, so the plan length is its longest chain.",
+    "Expanding a pass lists its tasks in a table with area and status.",
+    "The five asks mirror the \"Awaiting Justin\" section of docs/kanban.md."
+   ],
+   "integrations": [
+    "docs/plan/tasks.json (build-time import)",
+    "feedback table (annotations, A-05)"
+   ],
+   "components": [
+    "SiteLayout",
+    "Section",
+    "Card",
+    "DataTable",
+    "ProgressBar",
+    "Badge",
+    "Chip",
+    "Button",
+    "StatTile",
+    "Placeholder",
+    "Icon"
+   ],
+   "actions": [
+    {
+     "id": "site.selectPass",
+     "label": "Open a pass",
+     "intent": "show what one pass of the plan delivers",
+     "params": {
+      "pass": "number"
+     }
+    },
+    {
+     "id": "site.toggleTasks",
+     "label": "Show the tasks",
+     "intent": "show or hide the task list of the open pass"
+    },
+    {
+     "id": "site.giveFeedback",
+     "label": "Leave a note",
+     "intent": "comment on the product, request a change or report a bug"
+    }
+   ],
+   "rules": [
+    "RULE-SYS-01",
+    "RULE-SYS-03"
+   ],
+   "states": [
+    "pass 1 open",
+    "tasks expanded",
+    "Spanish",
+    "dark"
+   ],
+   "notes": [
+    "site module (P-01..P-04). Firm facts are as indexed (D-025): prices and services are labelled \"as listed on the current site\" and never presented as confirmed.",
+    "The feedback button itself lives on staff pages (A-05); the button here explains and points at it until the public annotation entry ships."
+   ],
+   "checkedAt": [
+    360,
+    390,
+    768,
+    1280,
+    1920,
+    2560,
+    3840
+   ]
+  }
+ }
+]

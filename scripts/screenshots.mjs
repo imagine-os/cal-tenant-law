@@ -37,6 +37,7 @@ async function main() {
   const list_ = manifest.filter(routeFilter(ONLY, CODES)).filter((r) => !r.path.includes('*'));
   const problems = [];
   console.log(`${list_.length} routes${ONLY.length ? ` · only ${ONLY.join(',')}` : ''}${CODES.length ? ` · codes ${CODES.join(',')}` : ''}${SMOKE ? ' · smoke' : ` · ${WIDTHS.join('/')} px · jpeg q${QUALITY}${LABEL ? ` · label ${LABEL}` : ''}`}`);
+  const FRAME_PAGES = new Set(['HUB-01', 'D-21', 'D-22']);
   const seenCode = new Set();
   let captured = 0;
   for (const { path, code } of list_) {
@@ -56,7 +57,8 @@ async function main() {
         try {
           await page.goto(`${BASE}${url}`, { waitUntil: 'load', timeout: 20000 });
           await page.waitForSelector('#root > *', { timeout: 10000 });
-          await page.waitForTimeout(450);
+          // pages that host live iframes (hub previews, canvas, simulator) need the frames to boot before a capture
+          await page.waitForTimeout(FRAME_PAGES.has(code) ? 3000 : 450);
           if (!SMOKE) {
             const dir = new URL(`../docs/screenshots/${safe(code)}/`, import.meta.url);
             mkdirSync(dir, { recursive: true });
