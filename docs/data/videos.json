@@ -1082,5 +1082,6 @@
    "evidence": "scraped-live",
    "scraped_at": "2026-09-18T20:45:00Z"
   }
- ]
+ ],
+ "display_order_note": "order_on_page verified against the rendered HTML button order of /pre-consultation-videos (33 titles, identical sequence): Legal Videos 1-17, Winning Your Eviction Series 18-23, The Game Board Series 24-33."
 }
