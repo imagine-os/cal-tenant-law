@@ -1,0 +1,82 @@
+/* Canvas (D-21) and demo simulator (D-22). Tokens only; the canvas world keeps --scale: 1 so the layout is a fixed
+   design surface the viewer zooms, while the page chrome scales with the screen band (P-01). */
+
+/* ---------- shared ---------- */
+.cv-bar, .sim-bar { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-4); align-items: center; }
+.cv-bar-group, .sim-bar-group { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.cv-hint { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: baseline; margin: var(--sp-3) 0; }
+.cv-hint-btn { background: none; border: 0; padding: 0; color: var(--color-text-muted); font: inherit; text-align: left; cursor: help; text-decoration: underline dotted; }
+.cv-zoom { min-width: 5ch; text-align: center; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--color-text); }
+.cv-search { min-width: 180px; }
+
+/* ---------- canvas surface ---------- */
+.cv-stagewrap { position: relative; }
+.cv-viewport {
+  position: relative; overflow: auto; overscroll-behavior: contain;
+  height: clamp(420px, 66vh, 1800px);
+  border: 1px solid var(--color-border-strong); border-radius: var(--r-lg);
+  background: var(--color-surface-2);
+  background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+  cursor: grab; touch-action: pan-x pan-y;
+}
+.cv-viewport.is-dragging { cursor: grabbing; }
+
+.cv-canvas { position: relative; }
+.cv-world { position: absolute; top: 0; left: 0; transform-origin: 0 0; --scale: 1; }
+
+.cv-region { position: absolute; border: 2px dashed var(--color-border-strong); border-radius: 24px; background: var(--color-surface-tint); }
+.cv-region-label { position: absolute; top: 24px; left: 32px; font-family: var(--font-display); font-size: 56px; line-height: 1.1; color: var(--color-heading); display: flex; gap: 16px; align-items: center; }
+.cv-region-count { font-size: 32px; color: var(--color-text-muted); font-family: var(--font-mono); }
+
+.cv-frame { position: absolute; display: flex; flex-direction: column; background: var(--color-surface); border: 1px solid var(--color-border-strong); border-radius: var(--r-lg); box-shadow: var(--shadow-md); overflow: hidden; }
+.cv-frame[data-status='stub'] { border-style: dashed; }
+.cv-frame-head { display: flex; align-items: center; gap: 12px; padding: 0 20px; border-bottom: 1px solid var(--color-border); flex-wrap: nowrap; overflow: hidden; }
+.cv-frame-code { font-family: var(--font-mono); font-size: var(--fs-sm); color: var(--color-primary-text); }
+.cv-frame-name { font-weight: var(--fw-semibold); color: var(--color-heading); font-size: var(--fs-sm); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cv-frame-btns { margin-left: auto; display: flex; gap: 8px; flex: 0 0 auto; }
+.cv-frame-body { position: relative; overflow: hidden; }
+.cv-frame-load { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; width: 100%; height: 100%; min-height: var(--target-min); border: 0; background: var(--color-surface-2); color: var(--color-text-muted); cursor: pointer; }
+.cv-frame-load:hover, .cv-frame-load:focus-visible { background: var(--color-surface-tint); color: var(--color-primary-text); }
+.cv-frame-load-title { font-size: var(--fs-md); }
+.cv-frame-load-cta { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--color-primary-text); }
+.cv-empty { position: absolute; top: 0; left: 0; padding: var(--sp-8); }
+
+/* ---------- minimap ---------- */
+.cv-mini { position: absolute; left: var(--sp-4); bottom: var(--sp-8); width: clamp(140px, 14vw, 320px); padding: 6px; background: var(--color-surface); border: 1px solid var(--color-border-strong); border-radius: var(--r-md); box-shadow: var(--shadow-lg); cursor: crosshair; }
+.cv-mini-inner { position: relative; width: 100%; background: var(--color-surface-2); border-radius: var(--r-sm); overflow: hidden; }
+.cv-mini-region { position: absolute; background: var(--color-primary-soft); border: 1px solid var(--color-primary); border-radius: 2px; }
+.cv-mini-view { position: absolute; border: 2px solid var(--color-primary-text); background: rgb(0 0 0 / 6%); border-radius: 2px; }
+.cv-foot { margin-top: var(--sp-2); }
+
+/* ---------- focused frame ---------- */
+.modal.cv-focus { max-width: min(2200px, 94vw); }
+
+/* ---------- list view (phones, and the canvas inside a frame) ---------- */
+.cv-narrow { margin-bottom: var(--sp-3); }
+.cv-list-title { font-size: var(--fs-lg); }
+.cv-list-items { list-style: none; margin: var(--sp-3) 0 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.cv-list-item { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; width: 100%; min-height: var(--target-min); padding: var(--sp-2) var(--sp-3); border: 0; border-radius: var(--r-md); background: var(--color-surface-2); color: var(--color-text); text-align: left; cursor: pointer; font-size: var(--fs-sm); }
+.cv-list-item:hover, .cv-list-item:focus-visible { background: var(--color-surface-tint); }
+.cv-list-item code { font-family: var(--font-mono); color: var(--color-primary-text); min-width: 7ch; }
+.cv-list-name { font-weight: var(--fw-semibold); color: var(--color-heading); }
+
+/* ---------- simulator ---------- */
+.sim-stage { display: flex; justify-content: center; padding: var(--sp-4); background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--r-lg); }
+.sim-stage > * { width: 100%; }
+.sim-note { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: center; margin: var(--sp-3) 0; }
+.sim-tour { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; justify-content: space-between; margin-top: var(--sp-4); }
+.sim-tour-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.sim-tour-note { font-size: var(--fs-md); color: var(--color-heading); font-family: var(--font-display); }
+.sim-keys { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.sim.is-present { position: fixed; inset: 0; z-index: 900; background: var(--color-bg); padding: var(--sp-4); overflow: auto; }
+.sim.is-present .sim-stage { border: 0; background: var(--color-bg); }
+.sim-present-bar { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; justify-content: space-between; margin-bottom: var(--sp-3); }
+
+@media (max-width: 700px) {
+  .cv-search { min-width: 120px; }
+  .sim-stage { padding: var(--sp-2); }
+}
+@media (min-width: 2560px) {
+  .cv-viewport { height: clamp(700px, 70vh, 2200px); }
+}

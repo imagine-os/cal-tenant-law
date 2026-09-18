@@ -11,6 +11,26 @@
 .hub-card h3, .hub-card-title { font-size: var(--fs-md); }
 .hub-card-icon { display: inline-flex; padding: 10px; border-radius: var(--r-md); background: var(--color-primary-soft); color: var(--color-primary-text); width: fit-content; }
 .hub-card-cta { color: var(--color-primary-text); font-weight: var(--fw-semibold); font-size: var(--fs-sm); margin-top: auto; }
+/* --- T-024 enrichment: card head, live preview, footer --- */
+.hub-card-top { display: flex; align-items: flex-start; gap: var(--sp-3); }
+.hub-card-heads { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }
+.hub-card-top .hub-card-icon { flex: 0 0 auto; }
+.hub-preview { margin-top: auto; display: flex; justify-content: center; align-items: flex-start; padding: var(--sp-2); background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--r-md); overflow: hidden; min-height: 120px; }
+.hub-preview > * { width: 100%; }
+/* the card head already names the surface and role; the DeviceFrame caption would repeat it */
+.hub-preview .dvf-cap { display: none; }
+.hub-preview .phoneframe-wrap { width: auto; }
+.hub-preview-idle { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 120px; color: var(--color-text-faint); }
+.hub-card-foot { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: center; justify-content: space-between; }
+.hub-card-foot code { font-family: var(--font-mono); }
+.hub-section-title { font-size: var(--fs-lg); margin-top: var(--sp-8); }
+.hub-tools { display: flex; flex-direction: column; gap: var(--sp-2); }
+.hub-tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--sp-3); margin-top: var(--sp-2); }
+.hub-tool { display: flex; align-items: center; gap: var(--sp-3); min-height: var(--target-min); }
+.hub-tool-icon { display: inline-flex; padding: 8px; border-radius: var(--r-md); background: var(--color-primary-soft); color: var(--color-primary-text); flex: 0 0 auto; }
+.hub-tool-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1 1 auto; }
+.hub-tool-text strong { color: var(--color-heading); font-size: var(--fs-sm); }
+.hub-tools-grid .ph, .hub-tools-grid .ph-wrap { display: block; width: 100%; }
 .hub-span-4 { grid-column: span 4; } .hub-span-6 { grid-column: span 6; } .hub-span-8 { grid-column: span 8; } .hub-span-12 { grid-column: span 12; }
 @media (max-width: 1100px) { .hub-span-4 { grid-column: span 6; } .hub-span-8 { grid-column: span 12; } }
 @media (max-width: 700px) { .hub-span-4, .hub-span-6, .hub-span-8 { grid-column: span 12; } }
@@ -25,4 +45,4 @@
 .hub-card { position: relative; }
 .hub-card-you { position: absolute; top: var(--sp-3); right: var(--sp-3); }
 .hub-card .row-between { margin-top: auto; }
-@media (min-width: 2560px) { .hub-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); } .hub .container { max-width: var(--w-content-wide); } }
+@media (min-width: 2560px) { .hub-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); } .hub .container { max-width: var(--w-content-wide); } .hub-preview { min-height: 200px; } .hub-tools-grid { grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); } }
