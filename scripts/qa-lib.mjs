@@ -65,14 +65,19 @@ export function userFor(path) {
   return 'usr_super';
 }
 
-/** Init script for a QA context: theme, language and session (per surface, devMode off unless `devMode`). */
+/** Visual direction under test: `--brand=` or QA_BRAND, default clearsky (docs/design/directions.md). */
+export const BRANDS = ['clearsky', 'boardgame', 'courthouse'];
+export const brandArg = (args) => { const b = arg(args, 'brand', process.env.QA_BRAND ?? 'clearsky'); if (!BRANDS.includes(b)) throw new Error(`--brand must be one of ${BRANDS.join(', ')}`); return b; };
+
+/** Init script for a QA context: theme, brand, language and session (per surface, devMode off unless `devMode`). */
 export function initScript(theme, path = '/', opts = {}) {
   const userId = opts.userId ?? userFor(path);
   const devMode = opts.devMode ?? false;
   const lang = opts.lang ?? 'en';
-  return [([th, uid, dev, lg]) => {
-    localStorage.setItem('ctl.theme', JSON.stringify({ theme: th, brand: 'ctl', skin: 'styled' }));
+  const brand = opts.brand ?? process.env.QA_BRAND ?? 'clearsky';
+  return [([th, br, uid, dev, lg]) => {
+    localStorage.setItem('ctl.theme', JSON.stringify({ theme: th, brand: br, skin: 'styled' }));
     localStorage.setItem('ctl.session', JSON.stringify({ userId: uid, devMode: dev, viewAs: null }));
     localStorage.setItem('ctl.lang', lg);
-  }, [theme, userId, devMode, lang]];
+  }, [theme, brand, userId, devMode, lang]];
 }

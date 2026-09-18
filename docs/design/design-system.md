@@ -2,6 +2,8 @@
 
 Model: Fable 5.1 (design lead, shared code). Source of truth for every value: `src/design/tokens.ts` (`npm run tokens` writes `src/styles/tokens.css`). Live reference: `/#/dev/tokens` (D-01) and `/#/dev/components` (D-02). This page explains the choices; the tokens file holds the numbers.
 
+> **Three directions, one to be chosen (prompt 0003).** The system now supports three switchable visual directions on the same components and layout: **Clear sky** (`clearsky`, the default and the skin this page describes; legacy alias `ctl`), **Board game** (`boardgame`) and **Courthouse** (`courthouse`). Each is a `data-brand` value with light and dark variants, its own display face and a brand-scoped block in `src/styles/brands.css`. Switch from the hub header or with `?brand=`; see `docs/design/directions.md` for intent, palette, type and when to choose each. Justin picks one; until then the principles below are the Clear sky rules and the other two override them where `directions.md` says so.
+
 ## Principles
 
 1. **Paper and ink.** Light mode is printed on warm paper stock (`paper-100` #F6F3EC) with white cards; dark mode is a calm night desk in navy-tinted darks (`night-950` #080E1A). Never generic SaaS grey.
@@ -12,29 +14,29 @@ Model: Fable 5.1 (design lead, shared code). Source of truth for every value: `s
 6. **Every input, no hover-only.** 44 px targets, a two-tone focus ring (halo + ring) that reads on paper and on navy, hover lifts only for fine pointers, `prefers-reduced-motion` respected everywhere.
 7. **Library only.** Pages compose `Card`, `Button`, `Badge`, `StatTile`, `DataTable`...; the skin lives in the component CSS, never inline in a page.
 
-## Palette (brand `ctl`)
+## Palette (brand `clearsky`, formerly `ctl`)
 
 | Role | Light | Dark | Token |
 | --- | --- | --- | --- |
-| Page background | `#F6F3EC` paper-100 | `#080E1A` night-950 | `--color-bg` |
+| Page background | `#F7F1E6` (warmer than the foundation's paper-100) | `#080E1A` night-950 | `--color-bg` |
 | Raised surface (cards) | `#FFFFFF` | `#121D33` night-850 | `--color-surface-raised` |
 | Overlay (menus, toasts, session bar) | `#FFFFFF` | `#182542` night-800 | `--color-surface-overlay` |
 | Ink surface (hero, footer, sidebar) | `#0B1730` primary-900 | `#05090F` night-1000 | `--color-surface-ink`, `--color-sidebar` |
-| Hero gradient stops | `#0A1428` -> `#14305E` -> `#2F7FC7` | `#05090F` -> `#0E2148` -> `#2A6FB0` | `--color-hero-a/b/c`, `--grad-hero` |
+| Hero gradient stops | `#071022` -> `#12305F` -> `#3E93DC` | `#05090F` -> `#0E2148` -> `#2F7FC7` | `--color-hero-a/b/c`, `--grad-hero` |
 | Text | `#141A24` ink | `#EAEEF3` n-100 | `--color-text` |
 | Headings | `#102142` primary-800 | `#FFFFFF` | `--color-heading` |
 | Primary (navy) | `#1F3B6E` primary-600 | `#9FBFEE` primary-on-dark | `--color-primary` |
-| Sky accent | `#3E9BE0` / strong `#1C74B8` / soft `#E3F1FC` | `#3E9BE0` | `--color-accent*` |
+| Sky accent | `#3E9BE0` / text `#1A66A3` / soft `#E3F1FC` | `#3E9BE0` | `--color-accent*` |
 | Amber call to action | `#E1891C`, hover `#C6741A`, text `#1B1408` | same | `--color-cta*`, `--grad-cta` |
-| Hairline | `rgba(20,26,36,.08)` | `rgba(255,255,255,.08)` | `--color-hairline` |
+| Hairline | `rgba(20,26,36,.11)` (strong `.18`) | `rgba(255,255,255,.08)` | `--color-hairline` |
 | Sidebar text / muted / active | `rgba(255,255,255,.74)` / `.46` / `.12` | same | `--color-sidebar-*` |
 | Focus | `#1C74B8` ring + white halo | `#FFD27A` ring + night halo | `--color-focus`, `--color-focus-halo` |
 
-Status (success `#1E8E4E`, warn `#B96A00`, danger `#C93B3B`, info `#1C74B8` in light; lifted pastels in dark) and the game-board hues are unchanged from the foundation. Hub medallions use one hue per surface family (`.hub-hue-*`, HSL with matched lightness: 93 % tint / 34 % glyph in light, 20 % / 78 % in dark).
+Status (success `#177A43`, warn `#8F5200`, danger `#B93030`, info `#1A66A3` in light, darkened in the directions pass so badge text passes AA on its tint; lifted pastels in dark) and the game-board hues (normal `#9A5A10`, positive `#177A43`, negative `#B93030`, jump `#6247AF`, document `#1A66A3`) follow the same rule. `--color-text-on-primary` is ink in dark mode (primary is a light tint there). Board game and Courthouse carry their own status and KEY hues (`directions.md`). Hub medallions use one hue per surface family (`.hub-hue-*`, HSL with matched lightness: 93 % tint / 34 % glyph in light, 20 % / 78 % in dark).
 
 ## Type scale
 
-Fonts: `--font-display` Source Serif 4 (400 / 600 / 700), `--font-sans` Source Sans 3 (400 / 600 / 700). Sizes are rem x `--scale`.
+Fonts: `--font-display` Source Serif 4 (400 / 500 / 600 / 700; Board game swaps in Bricolage Grotesque variable, Courthouse uses the serif at 500), `--font-sans` Source Sans 3 (400 / 600 / 700). Sizes are rem x `--scale`.
 
 | Token | Size at 1x | Use |
 | --- | --- | --- |
@@ -48,7 +50,7 @@ Fonts: `--font-display` Source Serif 4 (400 / 600 / 700), `--font-sans` Source S
 | `--fs-sm` | 16 px | body, buttons, table cells |
 | `--fs-xs` / `--fs-2xs` | 13 / 12 px, floored at `--fs-floor` (16 px from 1920) | meta, eyebrows, chips |
 
-Line heights: display 1.02, title 1.25, lead 1.45, body 1.6. Tracking: display -0.025em, titles -0.015em, eyebrows +0.12em uppercase, buttons +0.01em.
+Line heights: display 0.98 (Clear sky), title 1.25, lead 1.45, body 1.6. Tracking: display -0.035em, titles -0.02em, eyebrows +0.12em uppercase, buttons +0.01em.
 
 ## Spacing, radii, layers
 
@@ -71,7 +73,7 @@ Line heights: display 1.02, title 1.25, lead 1.45, body 1.6. Tracking: display -
 - **TopBar**: translucent paper with one hairline; **BottomNav**: paper, top hairline, active tab = filled pill + heavier glyph + label, safe-area padding.
 - **DesktopShell**: content in `--w-content-wide` with generous padding; **PhoneShell**: floating column; **SiteLayout**: editorial header (lockup, pill nav, amber CTA) and an ink footer with the firm's line set large; public stubs now render inside it.
 - **PageStub**: a coming-soon page (title, purpose, wireframe blueprint from `spec.layout`, planned actions as Placeholders); spec internals only in dev mode.
-- **New atoms**: `BrandMark` (tile + wordmark, tones auto / ink / paper) and `BrandArt` (`sky` hero illustration, `phone` compact preview), both inline SVG.
+- **New atoms**: `BrandMark` (tile + wordmark, tones auto / ink / paper) and `BrandArt` (`sky` hero illustration, `board` path for the Board game direction, `ledger` rules for Courthouse, `phone` compact preview), all inline SVG.
 
 ## Do / don't
 

@@ -24,3 +24,33 @@
 .ba-square-0, .ba-square-1 { fill: var(--board-positive-bg); stroke: var(--board-positive-fg); } .ba-square-2 { fill: var(--board-document-bg); stroke: var(--board-document-fg); } .ba-square-3 { fill: var(--board-hearing-bg); } .ba-square-4 { fill: var(--board-neutral-bg); stroke: var(--board-neutral-fg); } .ba-square-5 { fill: var(--board-jump-bg); stroke: var(--board-jump-fg); }
 .ba-nav { fill: var(--color-border); } .ba-nav-active { fill: var(--color-primary); }
 :root[data-theme="dark"] .ba-phone-body { fill: #2A2E3D; }
+/* board: the KEY colours from the board tokens, ink strokes, a hard offset shadow (the Board game direction's material) */
+.brandart-board { height: 100%; }
+.ba-felt-dot { fill: rgba(255,255,255,.12); }
+.ba-path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.ba-path-halo { stroke: rgba(255,255,255,.14); stroke-width: 26; }
+.ba-path-normal { stroke: var(--board-normal-fg); stroke-width: 12; }
+.ba-path-negative { stroke: var(--board-negative-fg); stroke-width: 10; }
+.ba-path-jump { stroke: var(--board-jump-fg); stroke-width: 9; stroke-dasharray: 18 14; }
+.ba-arrow-negative { fill: var(--board-negative-fg); } .ba-arrow-jump { fill: var(--board-jump-fg); }
+.ba-square-shape { stroke: var(--color-border-card, #1A2420); stroke-width: 4; }
+.ba-square-shadow { fill: var(--color-border-card, #1A2420); stroke: none; }
+.ba-square-start .ba-square-shape:not(.ba-square-shadow) { fill: var(--color-cta); }
+.ba-square-document .ba-square-shape:not(.ba-square-shadow) { fill: var(--board-document-bg); } .ba-square-document .ba-square-icon { stroke: var(--board-document-fg); }
+.ba-square-neutral .ba-square-shape:not(.ba-square-shadow) { fill: var(--board-neutral-bg); }
+.ba-square-positive .ba-square-shape:not(.ba-square-shadow) { fill: var(--board-positive-bg); } .ba-square-positive .ba-square-icon { stroke: var(--board-positive-fg); }
+.ba-square-hearing .ba-square-shape:not(.ba-square-shadow) { fill: var(--board-hearing-bg); } .ba-square-hearing .ba-square-icon { stroke: var(--board-hearing-fg); }
+.ba-square-negative .ba-square-shape:not(.ba-square-shadow) { fill: var(--board-negative-bg); } .ba-square-negative .ba-square-icon { stroke: var(--board-negative-fg); }
+.ba-square-jump .ba-square-shape:not(.ba-square-shadow) { fill: var(--board-jump-bg); }
+.ba-square-icon { fill: none; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+.ba-square-text { fill: var(--color-cta-text); font-family: var(--font-display); font-weight: 800; font-size: 22px; letter-spacing: .06em; }
+.ba-token-body { fill: var(--color-primary); stroke: var(--color-border-card, #1A2420); stroke-width: 4; }
+.ba-token-shine { fill: rgba(255,255,255,.55); } .ba-token-shadow { fill: rgba(0,0,0,.28); }
+:root[data-theme="dark"] .ba-felt-dot { fill: rgba(255,255,255,.07); }
+/* ledger: hairline rules, a section mark and citations in mono; the vermilion square is the one accent */
+.brandart-ledger { height: 100%; }
+.ba-rule { stroke: currentColor; stroke-opacity: .14; stroke-width: 1; }
+.ba-rule-margin { stroke: var(--color-accent); stroke-opacity: .7; stroke-width: 1.5; }
+.ba-section { fill: currentColor; fill-opacity: .9; font-family: var(--font-display); font-size: 96px; font-weight: 400; }
+.ba-cite { fill: currentColor; fill-opacity: .55; font-family: var(--font-mono); font-size: 18px; letter-spacing: .08em; }
+.ba-mark { fill: var(--color-accent); }

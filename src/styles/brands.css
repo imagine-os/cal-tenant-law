@@ -1,0 +1,196 @@
+/* Brand-scoped rules for the three visual directions (docs/design/directions.md). Tokens carry 95 % of each skin; this
+   file holds the few rules a token cannot: hero treatment, card material, sidebar accents, type roles per brand.
+   Component APIs and layout are identical across brands; only the skin changes. Default (no data-brand) = clearsky. */
+
+/* ============================== 1. Clear sky: the trustworthy firm, refined ============================== */
+:root[data-brand="clearsky"] .hub-hero-art, :root:not([data-brand]) .hub-hero-art { opacity: 1; }
+:root[data-brand="clearsky"] .ba-sun-halo, :root:not([data-brand]) .ba-sun-halo { opacity: .3; }
+:root[data-brand="clearsky"] .ba-ray-b, :root:not([data-brand]) .ba-ray-b { stop-opacity: .22; }
+:root[data-brand="clearsky"] .hub-top::before, :root:not([data-brand]) .hub-top::before { background: radial-gradient(80% 70% at 100% 0%, var(--color-glow), transparent 62%); }
+
+/* ============================== 2. Board game: the firm's metaphor made visual ============================== */
+/* felt with a dot grid; the KEY is the palette; strokes are ink; shadows are hard */
+:root[data-brand="boardgame"] body { font-weight: var(--fw-regular); }
+:root[data-brand="boardgame"] .hub-top { background: var(--grad-hero); }
+:root[data-brand="boardgame"] .hub-top::before { background: radial-gradient(60% 60% at 8% 0%, var(--color-glow), transparent 60%); }
+:root[data-brand="boardgame"] .hub-hero-art { opacity: 1; inset: 0 0 0 38%; mask-image: linear-gradient(90deg, transparent, #000 22%); -webkit-mask-image: linear-gradient(90deg, transparent, #000 22%); }
+:root[data-brand="boardgame"] .grain::after { display: none; }
+:root[data-brand="boardgame"] .hub-hero-copy .display { text-transform: uppercase; letter-spacing: -0.02em; }
+:root[data-brand="boardgame"] .hub-hero-copy .eyebrow, :root[data-brand="boardgame"] .hub-group-head .eyebrow { color: var(--color-cta); }
+:root[data-brand="boardgame"] .hub-hero-line { font-family: var(--font-display); font-style: normal; font-weight: 600; color: var(--color-cta); opacity: 1; }
+:root[data-brand="boardgame"] .hub-hero-line::before { content: '\2192  '; }
+:root[data-brand="boardgame"] .hub-controls .seg, :root[data-brand="boardgame"] .hub-controls .langtoggle, :root[data-brand="boardgame"] .hub-controls .iconbtn-outline { background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 2px rgba(250,246,236,.55); }
+:root[data-brand="boardgame"] .hub-controls .seg-item.is-active, :root[data-brand="boardgame"] .hub-controls .langtoggle-btn.is-active { background: var(--color-cta); color: var(--color-cta-text); }
+/* eyebrows and small caps read as KEY labels */
+:root[data-brand="boardgame"] .eyebrow { font-weight: var(--fw-bold); letter-spacing: .1em; }
+:root[data-brand="boardgame"] .eyebrow-rule::after { height: 3px; border-radius: 2px; background: var(--color-cta); opacity: .8; }
+/* cards: chunky squares with ink strokes and a hard offset shadow; hovering lifts toward the light */
+:root[data-brand="boardgame"] .card, :root[data-brand="boardgame"] .stat, :root[data-brand="boardgame"] .datatable-scroll, :root[data-brand="boardgame"] .datatable.is-framed, :root[data-brand="boardgame"] .homes-item, :root[data-brand="boardgame"] .plan-card, :root[data-brand="boardgame"] .board-results, :root[data-brand="boardgame"] .board-move, :root[data-brand="boardgame"] .st-book, :root[data-brand="boardgame"] .gb { border: 0; box-shadow: var(--shadow-raised); }
+:root[data-brand="boardgame"] .homes-item.is-late { box-shadow: inset 0 0 0 2px var(--color-danger), 5px 5px 0 0 var(--color-danger); }
+:root[data-brand="boardgame"] .plan-card { border-left-width: 8px; }
+@media (hover: hover) and (pointer: fine) { :root[data-brand="boardgame"] .card.is-interactive:hover, :root[data-brand="boardgame"] .hub-card:hover, :root[data-brand="boardgame"] button.stat:hover { transform: translate(-2px, -2px); } }
+:root[data-brand="boardgame"] .card.is-selected { box-shadow: inset 0 0 0 3px var(--color-primary), 5px 5px 0 0 var(--color-primary); }
+:root[data-brand="boardgame"] .hub-medallion { background: var(--color-cta-soft); color: var(--color-text); box-shadow: inset 0 0 0 2px var(--color-border-card), 3px 3px 0 0 var(--color-border-card); border-radius: 14px; }
+:root[data-brand="boardgame"][data-theme="dark"] .hub-medallion { background: var(--color-surface-3); color: var(--color-cta); }
+:root[data-brand="boardgame"] .hub-card-feature { background: var(--color-surface-raised); }
+:root[data-brand="boardgame"] .hub-group-build { background: var(--color-surface-3); box-shadow: inset 0 2px 0 var(--color-border-card), inset 0 -2px 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .hub-session { box-shadow: var(--shadow-overlay); }
+:root[data-brand="boardgame"] .hub-preview-desktop { box-shadow: inset 0 0 0 2px var(--color-border-card); border-radius: var(--r-md); }
+:root[data-brand="boardgame"] .hub-stats { border-top: 3px solid var(--color-border-card); }
+/* buttons: stroked tokens; the CTA is the path amber */
+:root[data-brand="boardgame"] .btn { border-width: 2px; font-weight: var(--fw-bold); letter-spacing: .01em; }
+:root[data-brand="boardgame"] .btn-primary { background: var(--color-primary); border-color: var(--color-border-card); box-shadow: 3px 3px 0 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .btn-primary:hover:not(:disabled) { background: var(--color-primary-hover); box-shadow: 4px 4px 0 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .btn-cta { background: var(--color-cta); color: var(--color-cta-text); border-color: var(--color-border-card); box-shadow: 3px 3px 0 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .btn-cta:hover:not(:disabled) { background: var(--color-cta-hover); box-shadow: 4px 4px 0 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .btn-secondary, :root[data-brand="boardgame"] .btn-outline { background: var(--color-surface); color: var(--color-text); border-color: var(--color-border-card); box-shadow: 3px 3px 0 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .btn-secondary:hover:not(:disabled), :root[data-brand="boardgame"] .btn-outline:hover:not(:disabled) { background: var(--color-cta-soft); color: var(--color-text); box-shadow: 4px 4px 0 0 var(--color-border-card); }
+:root[data-brand="boardgame"][data-theme="dark"] .btn-secondary:hover:not(:disabled), :root[data-brand="boardgame"][data-theme="dark"] .btn-outline:hover:not(:disabled) { background: var(--color-surface-3); }
+:root[data-brand="boardgame"] .btn:active:not(:disabled) { transform: translate(2px, 2px); box-shadow: 1px 1px 0 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .surface-ink .btn-outline, :root[data-brand="boardgame"] .on-ink .btn-outline { background: transparent; color: var(--color-hero-text); border-color: rgba(250,246,236,.7); box-shadow: none; }
+:root[data-brand="boardgame"] .iconbtn-outline { box-shadow: inset 0 0 0 2px var(--color-border-card); }
+/* segmented / tabs / chips / badges: stroked, active = felt */
+:root[data-brand="boardgame"] .seg, :root[data-brand="boardgame"] .tabs-pills, :root[data-brand="boardgame"] .langtoggle { background: var(--color-surface); box-shadow: inset 0 0 0 2px var(--color-border-card); }
+:root[data-brand="boardgame"] .seg-item.is-active, :root[data-brand="boardgame"] .tabs-pills .tab.is-active, :root[data-brand="boardgame"] .langtoggle-btn.is-active { background: var(--color-primary); color: var(--color-text-on-primary); box-shadow: none; }
+:root[data-brand="boardgame"][data-theme="dark"] .seg-item.is-active, :root[data-brand="boardgame"][data-theme="dark"] .tabs-pills .tab.is-active, :root[data-brand="boardgame"][data-theme="dark"] .langtoggle-btn.is-active { color: var(--inkboard-950); }
+:root[data-brand="boardgame"] .tabs-underline .tab.is-active { border-bottom: 3px solid var(--color-cta); }
+:root[data-brand="boardgame"] .chip { box-shadow: inset 0 0 0 2px var(--color-border-card); font-weight: var(--fw-semibold); }
+:root[data-brand="boardgame"] .chip.is-selected, :root[data-brand="boardgame"] .chip-primary { background: var(--color-primary-soft); color: var(--color-primary-text); box-shadow: inset 0 0 0 2px var(--color-primary); }
+:root[data-brand="boardgame"][data-theme="dark"] .chip.is-selected, :root[data-brand="boardgame"][data-theme="dark"] .chip-primary { background: var(--color-primary-soft); color: var(--color-primary-text); }
+:root[data-brand="boardgame"] .badge { box-shadow: inset 0 0 0 1.5px currentColor; font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: .04em; font-size: var(--fs-2xs); }
+:root[data-brand="boardgame"] .input, :root[data-brand="boardgame"] .select, :root[data-brand="boardgame"] .textarea { border-width: 2px; box-shadow: none; }
+:root[data-brand="boardgame"] .input:focus, :root[data-brand="boardgame"] .select:focus, :root[data-brand="boardgame"] .textarea:focus { box-shadow: 3px 3px 0 0 var(--color-focus); }
+/* sidebar: felt with the path as the active marker */
+:root[data-brand="boardgame"] .sidebar { background: var(--color-sidebar); box-shadow: inset -2px 0 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .sidebar-link.is-active { background: var(--color-sidebar-active); color: var(--color-sidebar-active-text); box-shadow: inset 0 0 0 2px var(--color-border-card), 3px 3px 0 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .sidebar-link.is-active .sidebar-link-icon { color: var(--color-sidebar-active-text); }
+:root[data-brand="boardgame"] .sidebar-link.is-active::before { display: none; }
+:root[data-brand="boardgame"] .sidebar-cat { color: var(--color-cta); font-weight: var(--fw-bold); }
+:root[data-brand="boardgame"] .topbar { box-shadow: 0 2px 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .shell-presence { box-shadow: none; }
+/* tables: the head is a felt band like the poster's KEY */
+:root[data-brand="boardgame"] .datatable th { color: var(--color-table-head-text); font-weight: var(--fw-bold); border-bottom: 2px solid var(--color-border-card); }
+:root[data-brand="boardgame"] .datatable thead tr:last-child th:first-child { border-top-left-radius: calc(var(--r-card) - 2px); } :root[data-brand="boardgame"] .datatable thead tr:last-child th:last-child { border-top-right-radius: calc(var(--r-card) - 2px); }
+/* titles: the grotesque at 800 */
+:root[data-brand="boardgame"] .pagehead-title, :root[data-brand="boardgame"] .stat-value, :root[data-brand="boardgame"] .hub-stat-value, :root[data-brand="boardgame"] .hub-group-title, :root[data-brand="boardgame"] .display-sm, :root[data-brand="boardgame"] .st-price { font-weight: 800; }
+:root[data-brand="boardgame"] .stat-icon { background: var(--color-cta-soft); color: var(--color-text); box-shadow: inset 0 0 0 2px var(--color-border-card); }
+:root[data-brand="boardgame"][data-theme="dark"] .stat-icon { background: var(--color-surface-3); color: var(--color-cta); }
+:root[data-brand="boardgame"] .stat-primary { background: var(--color-primary); color: var(--color-hero-text); box-shadow: var(--shadow-glow); }
+:root[data-brand="boardgame"] .stat-primary .stat-icon { background: rgba(255,255,255,.14); color: #fff; box-shadow: inset 0 0 0 2px rgba(255,255,255,.5); }
+/* the board itself: squares get thicker strokes, the surface is cardstock with a dot grid */
+:root[data-brand="boardgame"] .gb-surface { background: radial-gradient(circle, rgba(26,36,32,.14) 1.4px, transparent 1.6px) 0 0 / 26px 26px, var(--color-surface-2); }
+:root[data-brand="boardgame"][data-theme="dark"] .gb-surface { background: radial-gradient(circle, rgba(255,255,255,.09) 1.4px, transparent 1.6px) 0 0 / 26px 26px, var(--color-surface-2); }
+:root[data-brand="boardgame"] .gb-node .gb-shape { stroke-width: 3.5; }
+:root[data-brand="boardgame"] .gb-phase-plate { stroke: var(--color-border-card); stroke-width: 2.5; }
+:root[data-brand="boardgame"] .gb-edge-line { stroke-width: 6; }
+:root[data-brand="boardgame"] .boardkey-item, :root[data-brand="boardgame"] .plan-viewlink, :root[data-brand="boardgame"] .board-open-detail { border-width: 2px; border-color: var(--color-border-card); }
+:root[data-brand="boardgame"] .plan-viewlink.is-active { background: var(--color-primary); border-color: var(--color-border-card); box-shadow: 3px 3px 0 0 var(--color-border-card); }
+/* site: the landing hero is felt; the footer band too */
+:root[data-brand="boardgame"] .site2-link.is-active { background: var(--color-cta-soft); color: var(--color-text); box-shadow: inset 0 0 0 2px var(--color-border-card); }
+:root[data-brand="boardgame"] .site2-head { box-shadow: 0 2px 0 var(--color-border-card); }
+:root[data-brand="boardgame"] .st-hero { background: var(--grad-hero); }
+:root[data-brand="boardgame"] .st-icon-badge { background: var(--color-cta-soft); color: var(--color-text); box-shadow: inset 0 0 0 2px var(--color-border-card); }
+:root[data-brand="boardgame"] .st-boardcard-art i { border: 2px solid var(--color-border-card); border-radius: 8px; }
+:root[data-brand="boardgame"] .brandmark-bg { fill: var(--color-primary); }
+:root[data-brand="boardgame"] .kbd { box-shadow: inset 0 0 0 2px var(--color-border-card); }
+
+/* ============================== 3. Courthouse: modern editorial legal ============================== */
+/* the hub hero is paper, not ink: a large serif headline, a hairline above and below, the eyebrow in vermilion mono */
+:root[data-brand="courthouse"] .hub-top { background: var(--color-bg); color: var(--color-text); box-shadow: inset 0 -1px 0 var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .hub-top::before { display: none; }
+:root[data-brand="courthouse"] .grain::after { display: none; }
+:root[data-brand="courthouse"] .hub-head { box-shadow: inset 0 -1px 0 var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .hub-brand .brandmark-name { color: var(--color-heading); } :root[data-brand="courthouse"] .hub-brand .brandmark-sub { color: var(--color-text-muted); }
+:root[data-brand="courthouse"] .brandmark-tile.tone-paper .brandmark-bg { fill: var(--color-primary); }
+:root[data-brand="courthouse"] .hub-controls { color: var(--color-text); }
+:root[data-brand="courthouse"] .hub-controls .iconbtn, :root[data-brand="courthouse"] .hub-controls .toggle { color: var(--color-text); }
+:root[data-brand="courthouse"] .hub-controls .iconbtn-outline { background: var(--color-surface); box-shadow: inset 0 0 0 1px var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .hub-controls .iconbtn:hover { background: var(--color-surface-tint); color: var(--color-heading); }
+:root[data-brand="courthouse"] .hub-controls .toggle-track { background: var(--color-border-strong); }
+:root[data-brand="courthouse"] .hub-controls .langtoggle, :root[data-brand="courthouse"] .hub-controls .seg { background: var(--color-surface); box-shadow: inset 0 0 0 1px var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .hub-controls .langtoggle-btn, :root[data-brand="courthouse"] .hub-controls .seg-item { color: var(--color-text-muted); }
+:root[data-brand="courthouse"] .hub-controls .langtoggle-btn.is-active, :root[data-brand="courthouse"] .hub-controls .seg-item.is-active { background: var(--color-primary); color: var(--color-text-on-primary); box-shadow: none; }
+:root[data-brand="courthouse"][data-theme="dark"] .hub-controls .langtoggle-btn.is-active, :root[data-brand="courthouse"][data-theme="dark"] .hub-controls .seg-item.is-active { color: var(--ink-1000); }
+:root[data-brand="courthouse"] .hub-controls :focus-visible { outline-color: var(--color-focus); box-shadow: 0 0 0 2px var(--color-bg); }
+:root[data-brand="courthouse"] .hub-hero { padding-top: var(--sp-12); }
+:root[data-brand="courthouse"] .hub-hero-copy .eyebrow { color: var(--color-accent-text); }
+:root[data-brand="courthouse"] .hub-hero-copy .display { color: var(--color-heading); font-weight: 500; max-width: 16ch; }
+:root[data-brand="courthouse"] .hub-hero-copy .lead { color: var(--color-text-secondary); }
+:root[data-brand="courthouse"] .hub-hero-line { color: var(--color-text); font-style: italic; opacity: 1; position: relative; padding-left: var(--sp-4); }
+:root[data-brand="courthouse"] .hub-hero-line::before { content: ''; position: absolute; left: 0; top: .2em; bottom: .2em; width: 2px; background: var(--color-accent); }
+:root[data-brand="courthouse"] .hub-hero-art { opacity: 1; color: var(--color-heading); mask-image: none; -webkit-mask-image: none; inset: 0 0 0 52%; }
+@media (max-width: 900px) { :root[data-brand="courthouse"] .hub-hero-art { display: none; } }
+:root[data-brand="courthouse"] .hub-session { box-shadow: inset 0 0 0 1px var(--color-hairline-strong), 0 24px 48px -28px rgba(var(--shadow-color),.35); }
+/* mono for anything that is a label, a code or a column head; sentence case stays for people */
+:root[data-brand="courthouse"] .eyebrow, :root[data-brand="courthouse"] .stat-label, :root[data-brand="courthouse"] .datatable th, :root[data-brand="courthouse"] .sidebar-cat, :root[data-brand="courthouse"] .badge, :root[data-brand="courthouse"] .st-step-n, :root[data-brand="courthouse"] .st-video-series, :root[data-brand="courthouse"] .board-detail-h, :root[data-brand="courthouse"] .boardkey-title, :root[data-brand="courthouse"] .brandmark-sub, :root[data-brand="courthouse"] .hub-card-meta, :root[data-brand="courthouse"] .plan-card-id, :root[data-brand="courthouse"] .site2-foot .eyebrow { font-family: var(--font-mono); letter-spacing: .08em; font-weight: var(--fw-medium); }
+:root[data-brand="courthouse"] .eyebrow-rule::after { background: var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .badge { text-transform: uppercase; font-size: var(--fs-2xs); box-shadow: inset 0 0 0 1px currentColor; background: transparent; }
+:root[data-brand="courthouse"] .badge-status[data-status], :root[data-brand="courthouse"] .badge-pill { background: transparent; }
+/* material: flat, hairline-framed; the only shadow is on overlays */
+:root[data-brand="courthouse"] .card, :root[data-brand="courthouse"] .stat, :root[data-brand="courthouse"] .homes-item, :root[data-brand="courthouse"] .plan-card, :root[data-brand="courthouse"] .board-results, :root[data-brand="courthouse"] .board-move, :root[data-brand="courthouse"] .st-book, :root[data-brand="courthouse"] .gb { border: 0; box-shadow: inset 0 0 0 1px var(--color-border-card); }
+:root[data-brand="courthouse"] .homes-item.is-late { box-shadow: inset 0 0 0 1px var(--color-danger), inset 4px 0 0 var(--color-danger); background: var(--color-surface); }
+:root[data-brand="courthouse"] .plan-card { border-left-width: 3px; }
+:root[data-brand="courthouse"] .card.is-interactive:hover, :root[data-brand="courthouse"] .hub-card:hover, :root[data-brand="courthouse"] button.stat:hover { box-shadow: inset 0 0 0 1px var(--color-heading); }
+@media (hover: hover) and (pointer: fine) { :root[data-brand="courthouse"] .card.is-interactive:hover, :root[data-brand="courthouse"] .hub-card:hover, :root[data-brand="courthouse"] button.stat:hover { transform: none; } }
+:root[data-brand="courthouse"] .hub-medallion { background: transparent; color: var(--color-heading); box-shadow: inset 0 0 0 1px var(--color-hairline-strong); border-radius: var(--r-sm); width: 48px; height: 48px; }
+:root[data-brand="courthouse"] .hub-medallion-sm { width: 40px; height: 40px; }
+:root[data-brand="courthouse"] .hub-card-feature { background: var(--color-surface-raised); }
+:root[data-brand="courthouse"] .hub-card-title { font-weight: 500; font-size: var(--fs-lg-2); }
+:root[data-brand="courthouse"] .hub-group { padding: var(--sp-12) 0; }
+:root[data-brand="courthouse"] .hub-group + .hub-group, :root[data-brand="courthouse"] .hub-group-tools { border-top: 1px solid var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .hub-group-build { background: var(--color-bg); box-shadow: none; }
+:root[data-brand="courthouse"] .hub-group-title { font-weight: 500; }
+:root[data-brand="courthouse"] .hub-preview-desktop { background: var(--color-surface-2); box-shadow: inset 0 0 0 1px var(--color-hairline); border-radius: var(--r-sm); }
+:root[data-brand="courthouse"] .hub-stats { border-top: 2px solid var(--color-heading); }
+:root[data-brand="courthouse"] .hub-stat-value { font-weight: 500; }
+:root[data-brand="courthouse"] .stat-icon { background: transparent; color: var(--color-heading); box-shadow: inset 0 0 0 1px var(--color-hairline-strong); border-radius: var(--r-sm); }
+:root[data-brand="courthouse"] .stat-value { font-weight: 500; letter-spacing: -0.02em; }
+:root[data-brand="courthouse"] .stat-primary { background: var(--color-surface-ink); color: var(--color-hero-text); box-shadow: none; }
+:root[data-brand="courthouse"] .stat-primary .stat-icon { color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.4); }
+/* type: serif titles at 500, tight; the display is large and plain */
+:root[data-brand="courthouse"] h1, :root[data-brand="courthouse"] h2, :root[data-brand="courthouse"] h3 { font-weight: 500; }
+:root[data-brand="courthouse"] .pagehead-title, :root[data-brand="courthouse"] .display, :root[data-brand="courthouse"] .display-sm, :root[data-brand="courthouse"] .st-price, :root[data-brand="courthouse"] .board-here-title, :root[data-brand="courthouse"] .site2-foot-line { font-weight: 500; }
+:root[data-brand="courthouse"] .pagehead { padding-bottom: var(--sp-5); border-bottom: 1px solid var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .prose a, :root[data-brand="courthouse"] .homes-link-inline { text-decoration: underline; text-decoration-color: var(--color-accent); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+/* controls: square, hairline, ink fill on primary; the vermilion CTA is the only colour */
+:root[data-brand="courthouse"] .btn { font-weight: var(--fw-semibold); letter-spacing: .02em; }
+:root[data-brand="courthouse"] .btn-primary { box-shadow: none; }
+:root[data-brand="courthouse"][data-theme="dark"] .btn-primary { color: var(--ink-1000); }
+:root[data-brand="courthouse"] .btn-cta { background: var(--color-cta); box-shadow: none; }
+:root[data-brand="courthouse"] .btn-cta:hover:not(:disabled) { background: var(--color-cta-hover); box-shadow: none; }
+:root[data-brand="courthouse"] .btn-secondary, :root[data-brand="courthouse"] .btn-outline { background: transparent; color: var(--color-heading); border-color: var(--color-hairline-strong); box-shadow: none; }
+:root[data-brand="courthouse"] .btn-secondary:hover:not(:disabled), :root[data-brand="courthouse"] .btn-outline:hover:not(:disabled) { background: var(--color-surface-tint); border-color: var(--color-heading); box-shadow: none; color: var(--color-heading); }
+:root[data-brand="courthouse"] .iconbtn-outline { background: transparent; box-shadow: inset 0 0 0 1px var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .seg, :root[data-brand="courthouse"] .tabs-pills, :root[data-brand="courthouse"] .langtoggle { background: transparent; box-shadow: inset 0 0 0 1px var(--color-hairline-strong); padding: 3px; }
+:root[data-brand="courthouse"] .seg-item.is-active, :root[data-brand="courthouse"] .tabs-pills .tab.is-active, :root[data-brand="courthouse"] .langtoggle-btn.is-active { background: var(--color-primary); color: var(--color-text-on-primary); box-shadow: none; }
+:root[data-brand="courthouse"][data-theme="dark"] .seg-item.is-active, :root[data-brand="courthouse"][data-theme="dark"] .tabs-pills .tab.is-active, :root[data-brand="courthouse"][data-theme="dark"] .langtoggle-btn.is-active { color: var(--ink-1000); }
+:root[data-brand="courthouse"] .tabs-underline .tab.is-active { border-bottom-color: var(--color-heading); }
+:root[data-brand="courthouse"] .chip { box-shadow: inset 0 0 0 1px var(--color-hairline-strong); background: transparent; border-radius: var(--r-sm); }
+:root[data-brand="courthouse"] .chip.is-selected, :root[data-brand="courthouse"] .chip-primary { background: var(--color-primary); color: var(--color-text-on-primary); box-shadow: none; }
+:root[data-brand="courthouse"][data-theme="dark"] .chip.is-selected, :root[data-brand="courthouse"][data-theme="dark"] .chip-primary { color: var(--ink-1000); }
+:root[data-brand="courthouse"] .plan-viewlink, :root[data-brand="courthouse"] .boardkey-item, :root[data-brand="courthouse"] .board-open-detail { border-radius: var(--r-sm); }
+:root[data-brand="courthouse"] .input, :root[data-brand="courthouse"] .select, :root[data-brand="courthouse"] .textarea { box-shadow: none; }
+/* sidebar: charcoal, vermilion marker */
+:root[data-brand="courthouse"] .sidebar-link.is-active { background: transparent; box-shadow: none; color: #fff; }
+:root[data-brand="courthouse"] .sidebar-link.is-active::before { background: var(--color-sidebar-accent); width: 2px; top: 10px; bottom: 10px; }
+:root[data-brand="courthouse"] .sidebar-link { border-radius: var(--r-sm); }
+:root[data-brand="courthouse"] .topbar { background: var(--color-bg); backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: 0 1px 0 var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .shell-presence { box-shadow: 0 1px 0 var(--color-hairline); }
+/* tables: ruled */
+:root[data-brand="courthouse"] .datatable th { background: var(--color-surface); color: var(--color-heading); border-bottom: 1px solid var(--color-heading); text-transform: uppercase; }
+:root[data-brand="courthouse"] .datatable-scroll, :root[data-brand="courthouse"] .datatable.is-framed { box-shadow: inset 0 0 0 1px var(--color-border-card); }
+/* game board: ink strokes, paper plates */
+:root[data-brand="courthouse"] .gb-surface { background: var(--color-surface-2); }
+:root[data-brand="courthouse"] .gb-phase-plate { stroke: var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .gb-node .gb-shape { stroke-width: 1.75; }
+/* site: editorial header with a rule, ink footer */
+:root[data-brand="courthouse"] .site2-head { background: var(--color-bg); backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: 0 1px 0 var(--color-heading); }
+:root[data-brand="courthouse"] .site2-link { border-radius: 0; color: var(--color-text); }
+:root[data-brand="courthouse"] .site2-link.is-active { background: transparent; color: var(--color-heading); box-shadow: inset 0 -2px 0 var(--color-accent); }
+:root[data-brand="courthouse"] .site2-link:hover { background: transparent; box-shadow: inset 0 -2px 0 var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .site2-foot { background: var(--color-surface-ink); }
+:root[data-brand="courthouse"] .st-hero { background: var(--color-surface-ink); }
+:root[data-brand="courthouse"] .st-hero .eyebrow { color: var(--vermilion-light); }
+:root[data-brand="courthouse"] .st-icon-badge { background: transparent; color: var(--color-heading); box-shadow: inset 0 0 0 1px var(--color-hairline-strong); }
+:root[data-brand="courthouse"] .st-centre-hub { background: var(--color-surface); border-color: var(--color-heading); }
+:root[data-brand="courthouse"] .brandmark-sun { fill: var(--color-accent); }

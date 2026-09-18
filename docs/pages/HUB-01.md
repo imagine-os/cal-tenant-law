@@ -57,6 +57,7 @@ Plan counts come from `docs/plan/tasks.json`, imported as JSON at build time (no
 | `hub.toggleDevMode` | turn the builder tool on or off | `dev.tools` | none | yes |
 | `hub.setLang` | switch the interface language | none | `lang: enum:en,es` | yes |
 | `hub.toggleTheme` | switch between light and dark | none | none | yes |
+| `hub.setBrand` | switch the visual direction (clear sky, board game or courthouse) | none | `brand: enum:clearsky,boardgame,courthouse` | yes |
 | `hub.cycleBrand` | cycle the brand palette | none | none | yes |
 
 ## Logic
@@ -65,7 +66,7 @@ Plan counts come from `docs/plan/tasks.json`, imported as JSON at build time (no
 - Each card's preview is an iframe of the family home whose hash carries `?as=<role>&dev=0&lang=<lang>&theme=<theme>`; `src/modules/showcase/frameSession.ts` applies those inside the frame only, so a preview never changes your own session (see `docs/pages/D-21.md`, "Real vs mock")
 - Previews load only once they scroll into view (IntersectionObserver) and at most six are live at a time; inside a frame the hub shows static icons instead, so frames never nest
 - Status badges come from the manifest: no route at a path yet -> `planned` and the card is wrapped in `Placeholder` with the module that will build it
-- Dev toggle renders only for super_admin; theme and brand persist in `ctl.theme`, language in `ctl.lang`, session in `ctl.session`
+- Dev toggle renders only for super_admin; theme and brand persist in `ctl.theme`, language in `ctl.lang`, session in `ctl.session`; `?brand=clearsky|boardgame|courthouse` on the hash sets the visual direction on load (docs/design/directions.md) and the hero art follows it (sky / board / ledger)
 - Counts: `getRoutes()`, `tables`, `rules`, `componentLibrary`, `listActions()` and `docs/plan/tasks.json`
 
 ## Components

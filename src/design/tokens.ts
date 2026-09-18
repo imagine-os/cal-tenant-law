@@ -3,47 +3,193 @@
  * src/styles/tokens.css is GENERATED from this file (npm run tokens) and imported once in main.tsx.
  * Nothing invents a value off this file.
  *
- * Theming = two axes on <html>: data-theme (light|dark) and data-brand (ctl|clearsky). A brand supplies its palette;
- * a theme picks the semantic roles. The `ctl` brand derives from the firm's "Your cloudy day is about to clear up"
- * identity: deep navy primary (trust, the law), sky-blue accent (the clearing sky), warm amber for calls to action
- * (the sun coming through). `clearsky` is the second brand that proves theming (lighter, teal-led).
+ * Theming = two axes on <html>: data-theme (light|dark) and data-brand (clearsky|boardgame|courthouse). A brand is one
+ * of the three visual directions (docs/design/directions.md); a theme picks the semantic roles. `clearsky` (default,
+ * legacy alias `ctl`) is the firm's "Your cloudy day is about to clear up" identity: navy, sky accent, amber CTA.
+ * `boardgame` is the eviction game board made visual (felt green, cardstock, the poster's KEY). `courthouse` is
+ * editorial legal (near-black ink, warm off-white, one vermilion accent, hairlines). Justin picks one; the others stay
+ * switchable from the hub header until then.
  *
  * P-01 quality bar: `--scale` on :root steps type and spacing up at >= 2560 and again at >= 3840 (10-foot legibility);
  * body text is >= 16 px from 1920 up; the focus ring is 3 px high-contrast (`--focus-ring`).
  */
 
 export type ThemeName = 'light' | 'dark';
-export type BrandName = 'ctl' | 'clearsky';
+/** The three visual directions (docs/design/directions.md). `ctl` is a legacy alias of `clearsky` (ThemeProvider maps it). */
+export type BrandName = 'clearsky' | 'boardgame' | 'courthouse';
+export const DEFAULT_BRAND: BrandName = 'clearsky';
+export const BRAND_ALIASES: Record<string, BrandName> = { ctl: 'clearsky' };
 
-/** Brand palette: primary ramp + accent + CTA. Everything semantic derives from these. */
+/**
+ * Brand = one visual direction: a primary ramp + accent + CTA (everything semantic derives from these), plus optional
+ * per-theme semantic overrides (`light` / `dark`, `{placeholders}` allowed against the palette, `extra` and the neutrals),
+ * brand-scoped static tokens (`statics`: display font, radii, tracking, shadows) and its own game-board KEY hues.
+ */
 export interface BrandPalette {
   label: string;
+  /** One line for the picker and D-01. */
+  description: string;
+  displayFont: string;
   primary25: string; primary50: string; primary100: string; primary200: string; primary400: string;
   primary600: string; primary700: string; primary800: string; primary900: string;
-  /** Sky accent (links, selected states, informational). */
+  /** Accent (links, selected states, informational). */
   accent: string; accentSoft: string; accentStrong: string;
-  /** Warm call-to-action (buy a consultation, book, send). */
+  /** Call-to-action (buy a consultation, book, send). */
   cta: string; ctaHover: string; ctaSoft: string; ctaText: string;
   /** Primary lifted for contrast on dark surfaces. */
   primaryOnDark: string; primaryOnDarkHover: string;
+  /** Brand-specific named colours, emitted as `--<name>` and usable as `{name}` placeholders. */
+  extra?: Record<string, string>;
+  /** Semantic role overrides per theme (keys of `semantic`, `color-<status>` or `board-<hue>-fg/bg`). */
+  light?: Record<string, string>;
+  dark?: Record<string, string>;
+  /** Static token overrides scoped to the brand (font-display, radii, ls-*, shadows, gradients). */
+  statics?: Record<string, string>;
 }
 
+const SERIF = "'Source Serif 4', 'Source Serif 4 Fallback', Georgia, 'Times New Roman', serif";
+const GROTESQUE = "'Bricolage Grotesque Variable', 'Source Sans 3', 'Source Sans 3 Fallback', system-ui, sans-serif";
+
 export const brands: Record<BrandName, BrandPalette> = {
-  ctl: {
-    label: 'CTL navy & sky',
+  /* 1. Clear sky - the trustworthy law firm. Paper / ink / sky / amber, evolved: warmer paper, stronger hero, more contrast in cards, tighter type. */
+  clearsky: {
+    label: 'Clear sky', description: 'Calm, premium paper and ink with the clearing-sky hero; the trustworthy law firm.', displayFont: 'Source Serif 4',
     primary25: '#F6F8FC', primary50: '#EEF3FA', primary100: '#DCE6F5', primary200: '#B9CDE8', primary400: '#4F79B8',
     primary600: '#1F3B6E', primary700: '#172E57', primary800: '#102142', primary900: '#0B1730',
     accent: '#3E9BE0', accentSoft: '#E3F1FC', accentStrong: '#1C74B8',
     cta: '#E1891C', ctaHover: '#C6741A', ctaSoft: '#FCEBD2', ctaText: '#1B1408',
     primaryOnDark: '#9FBFEE', primaryOnDarkHover: '#B9D2F5',
+    light: {
+      'color-bg': '#F7F1E6', 'color-surface-2': '#FBF7F0', 'color-surface-3': '#EFE7D9', 'color-bg-phone-list': '#FBF7F0', 'color-bg-phone-form': '#F7F1E6',
+      'color-hairline': 'rgba(20,26,36,.11)', 'color-hairline-strong': 'rgba(20,26,36,.18)', 'color-border-card': 'rgba(20,26,36,.11)', 'color-border': '#E2D8C6', 'color-border-input': '#C9BEA9',
+      'color-hero-a': '#071022', 'color-hero-b': '#12305F', 'color-hero-c': '#3E93DC', 'color-glow': 'rgba(80,170,240,.45)',
+      'color-text-muted': '#59667C', 'color-label': '#59667C', 'color-text-faint': '#5F6C82', 'color-accent-text': '#1A66A3', 'color-band': '#EFE7D9', 'color-placeholder': '#E2D8C6',
+    },
+    dark: { 'color-hero-c': '#2F7FC7', 'color-glow': 'rgba(62,155,224,.34)' },
+    statics: {
+      'ls-display': '-0.035em', 'ls-title': '-0.02em', 'lh-display': '0.98',
+      'shadow-raised': 'inset 0 0 0 1px var(--color-hairline), 0 1px 2px rgba(var(--shadow-color),.06), 0 14px 32px -16px rgba(var(--shadow-color),.28)',
+      'shadow-raised-hover': 'inset 0 0 0 1px var(--color-hairline-strong), 0 2px 4px rgba(var(--shadow-color),.07), 0 24px 48px -20px rgba(var(--shadow-color),.36)',
+    },
   },
-  clearsky: {
-    label: 'Clear sky teal',
-    primary25: '#F4FAFA', primary50: '#E8F4F4', primary100: '#CFE8E8', primary200: '#9FD1D1', primary400: '#3F9E9E',
-    primary600: '#1F6B6B', primary700: '#175454', primary800: '#103E3E', primary900: '#0A2A2A',
-    accent: '#5A8DEE', accentSoft: '#E7EEFD', accentStrong: '#3566C9',
-    cta: '#D9662D', ctaHover: '#BD5624', ctaSoft: '#FBE4D8', ctaText: '#1B1B1B',
-    primaryOnDark: '#7CC9C9', primaryOnDarkHover: '#9ADADA',
+  /* 2. Board game - the firm's own metaphor made visual. Felt green, cardstock, the poster's KEY (path amber, positive green, negative red, jump violet), chunky strokes, a grotesque with character. */
+  boardgame: {
+    label: 'Board game', description: 'Bold, saturated game-board palette with chunky stroked cards; take the awful out of unlawful detainer.', displayFont: 'Bricolage Grotesque',
+    primary25: '#F1F8F5', primary50: '#E3F1EA', primary100: '#C9E4D6', primary200: '#9CCDB3', primary400: '#3F9A75',
+    primary600: '#1B6B52', primary700: '#14523F', primary800: '#0F4033', primary900: '#0B2E26',
+    accent: '#7A4FD6', accentSoft: '#EDE6FB', accentStrong: '#5B36B0',
+    cta: '#F2A21B', ctaHover: '#D98C0E', ctaSoft: '#FFEFCF', ctaText: '#1A1408',
+    primaryOnDark: '#5FD1A5', primaryOnDarkHover: '#7EDDB8',
+    extra: {
+      'felt-950': '#0B2E26', 'felt-900': '#0F4033', 'felt-800': '#14523F', 'felt-700': '#1B6B52', 'felt-600': '#22855F',
+      'stock-50': '#FAF6EC', 'stock-100': '#F4EDDD', 'stock-200': '#EADFC6', 'stock-300': '#DCCDA9', 'stock-400': '#C5B38A',
+      'stroke-ink': '#1A2420', 'inkboard-950': '#0F171D', 'inkboard-900': '#16212A', 'inkboard-850': '#1B2832', 'inkboard-800': '#22313C', 'stroke-night': '#3A4A52',
+    },
+    light: {
+      'color-bg': '{stock-100}', 'color-bg-phone': '{stock-50}', 'color-bg-phone-list': '{stock-100}', 'color-bg-phone-form': '{stock-100}',
+      'color-surface': '#FFFFFF', 'color-surface-2': '{stock-50}', 'color-surface-3': '{stock-200}', 'color-surface-raised': '#FFFFFF', 'color-surface-overlay': '#FFFFFF', 'color-surface-ink': '{felt-950}',
+      'color-surface-tint': '{primary50}', 'color-surface-tint-2': '{stock-50}',
+      'color-hairline': 'rgba(26,36,32,.9)', 'color-hairline-strong': '{stroke-ink}',
+      'color-sidebar': '{felt-900}', 'color-sidebar-text': 'rgba(250,246,236,.82)', 'color-sidebar-muted': 'rgba(250,246,236,.56)', 'color-sidebar-hover': 'rgba(255,255,255,.09)', 'color-sidebar-border': 'rgba(255,255,255,.14)', 'color-sidebar-active': '{cta}', 'color-sidebar-active-text': '{stroke-ink}', 'color-sidebar-accent': '{cta}',
+      'color-hero-a': '{felt-950}', 'color-hero-b': '{felt-800}', 'color-hero-c': '{felt-600}', 'color-hero-text': '{stock-50}', 'color-hero-muted': 'rgba(250,246,236,.76)', 'color-glow': 'rgba(242,162,27,.38)', 'color-cta-glow': 'rgba(242,162,27,.4)',
+      'color-text': '{stroke-ink}', 'color-title': '{felt-950}', 'color-heading': '{felt-950}', 'color-text-secondary': '#3A4742', 'color-text-muted': '#55635D', 'color-label': '#55635D', 'color-text-faint': '#5F6D67',
+      'color-primary': '{felt-700}', 'color-primary-hover': '{felt-800}', 'color-primary-soft': '{primary100}', 'color-primary-text': '{felt-700}', 'color-icon-primary': '{felt-600}', 'color-icon-muted': '#8A9690',
+      'color-accent-text': '{accentStrong}',
+      'color-border': '{stock-300}', 'color-border-card': '{stroke-ink}', 'color-border-input': '{stroke-ink}', 'color-border-row': 'rgba(26,36,32,.14)', 'color-border-strong': '{stroke-ink}', 'color-border-subtle': 'rgba(26,36,32,.10)', 'color-border-primary': '{felt-700}',
+      'color-table-head': '{felt-900}', 'color-table-head-text': '{stock-50}', 'color-table-zebra': 'rgba(15,64,51,.04)',
+      'color-focus': '{felt-900}', 'color-focus-halo': '#FFFFFF', 'color-scrim': 'rgba(11,46,38,.72)', 'color-scrim-soft': 'rgba(11,46,38,.3)',
+      'color-placeholder': '{stock-300}', 'color-placeholder-outline': '{accent}', 'color-band': '{stock-200}', 'color-border-bar': '{stroke-ink}', 'color-border-grid': 'rgba(26,36,32,.14)', 'color-border-track': '{stock-400}', 'color-icon-header': '{felt-950}', 'color-text-option': '#3A4742', 'color-badge': '#D93838',
+      'shadow-color': '26,36,32',
+      'color-success': '#177A41', 'color-success-bg': '#DDF5E6', 'color-success-strong': '#126535', 'color-warn': '#935200', 'color-warn-bg': '#FFEFCF', 'color-danger': '#C22B2B', 'color-danger-bg': '#FDE3E3', 'color-info': '#1766AE', 'color-info-bg': '#DDEEFC', 'color-completed': '{felt-700}', 'color-completed-bg': '{primary100}',
+      'board-normal-fg': '#9E5A06', 'board-normal-bg': '#FFEFCF', 'board-positive-fg': '#177A41', 'board-positive-bg': '#DDF5E6', 'board-negative-fg': '#C22B2B', 'board-negative-bg': '#FDE3E3', 'board-neutral-fg': '#4E5B55', 'board-neutral-bg': '#EADFC6', 'board-jump-fg': '#6640C4', 'board-jump-bg': '#EDE6FB', 'board-document-fg': '#1766AE', 'board-document-bg': '#DDEEFC', 'board-hearing-fg': '{stock-50}', 'board-hearing-bg': '{felt-900}',
+    },
+    dark: {
+      'color-bg': '{inkboard-950}', 'color-bg-phone': '{inkboard-950}', 'color-bg-phone-list': '{inkboard-900}', 'color-bg-phone-form': '{inkboard-900}',
+      'color-surface': '{inkboard-900}', 'color-surface-2': '{inkboard-850}', 'color-surface-3': '{inkboard-800}', 'color-surface-raised': '{inkboard-900}', 'color-surface-overlay': '{inkboard-850}', 'color-surface-ink': '#07211B',
+      'color-surface-tint': 'rgba(95,209,165,.14)', 'color-surface-tint-2': 'rgba(95,209,165,.08)',
+      'color-hairline': '{stroke-night}', 'color-hairline-strong': '#4C5E67',
+      'color-sidebar': '#07211B', 'color-sidebar-active': '{cta}', 'color-sidebar-active-text': '{stroke-ink}', 'color-sidebar-accent': '{cta}',
+      'color-hero-a': '#06201A', 'color-hero-b': '{felt-900}', 'color-hero-c': '{felt-700}', 'color-hero-text': '{stock-50}', 'color-glow': 'rgba(242,162,27,.3)',
+      'color-text': '#ECE6D8', 'color-title': '#FFFFFF', 'color-heading': '#FFFFFF', 'color-text-secondary': '#CBC5B6', 'color-text-muted': '#A9A394', 'color-label': '#A9A394', 'color-text-faint': '#948E7F',
+      'color-primary-soft': 'rgba(95,209,165,.2)', 'color-accent-soft': 'rgba(122,79,214,.28)', 'color-accent-text': '#B9A4F2', 'color-cta-soft': 'rgba(242,162,27,.2)',
+      'color-border': 'rgba(255,255,255,.14)', 'color-border-card': '{stroke-night}', 'color-border-input': '#4C5E67', 'color-border-row': 'rgba(255,255,255,.1)', 'color-border-strong': '#5E727C', 'color-border-primary': '{primaryOnDark}',
+      'color-table-head': '{felt-900}', 'color-table-head-text': '{stock-50}', 'color-field-fill': '{inkboard-850}', 'color-placeholder': '#4C5E67', 'color-scrim': 'rgba(0,0,0,.72)',
+      'color-focus': '{cta}', 'color-focus-halo': '{inkboard-950}', 'color-text-on-primary': '{inkboard-950}', 'color-placeholder-outline': '{cta}', 'color-border-bar': '{stroke-night}', 'color-border-grid': 'rgba(255,255,255,.14)', 'color-icon-header': '#ECE6D8', 'color-text-option': '#CBC5B6',
+      'color-success': '#4FD184', 'color-success-bg': '#12402A', 'color-success-strong': '#7EE0A5', 'color-warn': '#F2B65A', 'color-warn-bg': '#4A3510', 'color-danger': '#F27A7A', 'color-danger-bg': '#4E1F1F', 'color-info': '#6DB6F0', 'color-info-bg': '#183652', 'color-completed': '{primaryOnDark}', 'color-completed-bg': 'rgba(95,209,165,.2)',
+      'board-normal-fg': '#F2A21B', 'board-normal-bg': '#4A3510', 'board-positive-fg': '#4FD184', 'board-positive-bg': '#12402A', 'board-negative-fg': '#F27A7A', 'board-negative-bg': '#4E1F1F', 'board-neutral-fg': '#CBC5B6', 'board-neutral-bg': '{inkboard-800}', 'board-jump-fg': '#B9A4F2', 'board-jump-bg': '#2E2454', 'board-document-fg': '#6DB6F0', 'board-document-bg': '#183652', 'board-hearing-fg': '{inkboard-950}', 'board-hearing-bg': '#9CCDB3',
+    },
+    statics: {
+      'font-display': GROTESQUE, 'fw-bold': '800', 'ls-display': '-0.03em', 'ls-title': '-0.02em', 'ls-eyebrow': '0.1em', 'lh-display': '0.96', 'lh-title': '1.15',
+      'r-xs': '6px', 'r-sm': '8px', 'r-md': '12px', 'r-input': '12px', 'r-card': '20px', 'r-lg': '20px', 'r-xl': '28px', 'r-2xl': '36px',
+      'hairline': 'inset 0 0 0 2px var(--color-border-card)', 'hairline-strong': 'inset 0 0 0 2px var(--color-border-card)',
+      'shadow-sm': '2px 2px 0 0 var(--color-border-card)',
+      'shadow-raised': 'inset 0 0 0 2px var(--color-border-card), 5px 5px 0 0 var(--color-border-card)',
+      'shadow-raised-hover': 'inset 0 0 0 2px var(--color-border-card), 7px 7px 0 0 var(--color-border-card)',
+      'shadow-overlay': 'inset 0 0 0 2px var(--color-border-card), 8px 8px 0 0 var(--color-border-card)',
+      'shadow-glow': 'inset 0 0 0 2px var(--color-border-card), 5px 5px 0 0 var(--color-cta)',
+      'shadow-desk': 'inset 0 0 0 2px var(--color-border-card), 5px 5px 0 0 var(--color-border-card)',
+      'shadow-md': '3px 3px 0 0 var(--color-border-card)', 'shadow-lg': '6px 6px 0 0 var(--color-border-card)', 'shadow-xl': '8px 8px 0 0 var(--color-border-card)',
+      'grad-hero': 'linear-gradient(160deg, var(--color-hero-a) 0%, var(--color-hero-b) 58%, var(--color-hero-c) 100%)',
+      'grad-cta': 'var(--color-cta)', 'grad-sheen': 'none',
+    },
+  },
+  /* 3. Courthouse - modern editorial legal. Near-black ink on warm off-white, one vermilion accent, hairline rules, large serif display, mono labels, charcoal sidebar. */
+  courthouse: {
+    label: 'Courthouse', description: 'Editorial and exact: near-black ink, warm off-white, one vermilion accent, hairlines and a large serif; the grown-ups in the room.', displayFont: 'Source Serif 4',
+    primary25: '#F7F6F4', primary50: '#EFEDE9', primary100: '#DDDAD3', primary200: '#BDB8AE', primary400: '#6E6A62',
+    primary600: '#2E2E33', primary700: '#1F1F22', primary800: '#161618', primary900: '#0E0E0F',
+    accent: '#C8321A', accentSoft: '#FBE7E2', accentStrong: '#A5280F',
+    cta: '#C8321A', ctaHover: '#A5280F', ctaSoft: '#FBE7E2', ctaText: '#FFFFFF',
+    primaryOnDark: '#EDEAE4', primaryOnDarkHover: '#FFFFFF',
+    extra: {
+      'ink-1000': '#0E0E0F', 'ink-900': '#161618', 'ink-800': '#1F1F22', 'ink-700': '#2E2E33',
+      'bone-50': '#FAF8F4', 'bone-100': '#F4F1EB', 'bone-200': '#ECE7DE', 'bone-300': '#DED7CB', 'bone-400': '#C4BBAB',
+      'vermilion': '#C8321A', 'vermilion-dark': '#A5280F', 'vermilion-light': '#F26A50', 'vermilion-soft': '#FBE7E2',
+    },
+    light: {
+      'color-bg': '{bone-100}', 'color-bg-phone': '#FFFFFF', 'color-bg-phone-list': '{bone-50}', 'color-bg-phone-form': '{bone-100}',
+      'color-surface': '#FFFFFF', 'color-surface-2': '{bone-50}', 'color-surface-3': '{bone-200}', 'color-surface-raised': '#FFFFFF', 'color-surface-overlay': '#FFFFFF', 'color-surface-ink': '{ink-1000}',
+      'color-surface-tint': '{bone-200}', 'color-surface-tint-2': '{bone-50}',
+      'color-hairline': 'rgba(14,14,15,.14)', 'color-hairline-strong': 'rgba(14,14,15,.3)',
+      'color-sidebar': '{ink-800}', 'color-sidebar-text': 'rgba(255,255,255,.8)', 'color-sidebar-muted': 'rgba(255,255,255,.5)', 'color-sidebar-hover': 'rgba(255,255,255,.07)', 'color-sidebar-border': 'rgba(255,255,255,.12)', 'color-sidebar-active': 'rgba(255,255,255,.1)', 'color-sidebar-active-text': '#FFFFFF', 'color-sidebar-accent': '{vermilion-light}',
+      'color-hero-a': '{ink-1000}', 'color-hero-b': '{ink-900}', 'color-hero-c': '{ink-800}', 'color-hero-text': '{bone-100}', 'color-hero-muted': 'rgba(244,241,235,.72)', 'color-glow': 'rgba(200,50,26,.16)', 'color-cta-glow': 'rgba(200,50,26,.3)',
+      'color-text': '#141414', 'color-title': '{ink-1000}', 'color-heading': '{ink-1000}', 'color-text-secondary': '#3D3B37', 'color-text-muted': '#5E5B55', 'color-label': '#5E5B55', 'color-text-faint': '#6A675F',
+      'color-text-on-primary': '#FFFFFF', 'color-primary': '{ink-900}', 'color-primary-hover': '#000000', 'color-primary-soft': '{bone-200}', 'color-primary-text': '{ink-1000}', 'color-icon-primary': '{ink-700}', 'color-icon-muted': '#9B948A',
+      'color-accent-text': '{vermilion-dark}',
+      'color-border': '{bone-300}', 'color-border-card': 'rgba(14,14,15,.16)', 'color-border-input': '#9B948A', 'color-border-row': 'rgba(14,14,15,.1)', 'color-border-strong': '#6E6A62', 'color-border-subtle': 'rgba(14,14,15,.08)', 'color-border-primary': '{ink-1000}',
+      'color-table-head': '{bone-50}', 'color-table-head-text': '{ink-1000}', 'color-table-zebra': 'rgba(14,14,15,.025)',
+      'color-focus': '{vermilion}', 'color-focus-halo': '#FFFFFF', 'color-scrim': 'rgba(14,14,15,.7)', 'color-scrim-soft': 'rgba(14,14,15,.25)',
+      'color-placeholder': '{bone-300}', 'color-placeholder-outline': '{vermilion}', 'color-band': '{bone-200}', 'color-border-bar': 'rgba(14,14,15,.14)', 'color-border-grid': 'rgba(14,14,15,.12)', 'color-border-track': '{bone-400}', 'color-icon-header': '{ink-1000}', 'color-text-option': '#3D3B37', 'color-badge': '{vermilion}',
+      'shadow-color': '14,14,15',
+      'color-success': '#2E7D4F', 'color-success-bg': '#E1F0E6', 'color-success-strong': '#22603C', 'color-warn': '#8A5A00', 'color-warn-bg': '#F6EBD2', 'color-danger': '{vermilion-dark}', 'color-danger-bg': '{vermilion-soft}', 'color-info': '#2F5D8A', 'color-info-bg': '#E2EAF2', 'color-completed': '#6E6A62', 'color-completed-bg': '{bone-200}',
+      'board-normal-fg': '#8A5A00', 'board-normal-bg': '#F6EBD2', 'board-positive-fg': '#28704A', 'board-positive-bg': '#E1F0E6', 'board-negative-fg': '{vermilion-dark}', 'board-negative-bg': '{vermilion-soft}', 'board-neutral-fg': '#5E5B55', 'board-neutral-bg': '{bone-200}', 'board-jump-fg': '#5B4A9E', 'board-jump-bg': '#ECE8F6', 'board-document-fg': '#2F5D8A', 'board-document-bg': '#E2EAF2', 'board-hearing-fg': '{bone-100}', 'board-hearing-bg': '{ink-1000}',
+    },
+    dark: {
+      'color-bg': '{ink-1000}', 'color-bg-phone': '{ink-1000}', 'color-bg-phone-list': '{ink-900}', 'color-bg-phone-form': '{ink-900}',
+      'color-surface': '{ink-900}', 'color-surface-2': '#1B1B1E', 'color-surface-3': '#232326', 'color-surface-raised': '{ink-900}', 'color-surface-overlay': '{ink-800}', 'color-surface-ink': '#000000',
+      'color-surface-tint': 'rgba(255,255,255,.08)', 'color-surface-tint-2': 'rgba(255,255,255,.05)',
+      'color-hairline': 'rgba(255,255,255,.14)', 'color-hairline-strong': 'rgba(255,255,255,.26)',
+      'color-sidebar': '#090909', 'color-sidebar-accent': '{vermilion-light}',
+      'color-hero-a': '#090909', 'color-hero-b': '{ink-1000}', 'color-hero-c': '{ink-900}', 'color-hero-text': '{bone-100}', 'color-glow': 'rgba(242,106,80,.18)',
+      'color-text': '#EDEAE4', 'color-title': '#FFFFFF', 'color-heading': '#FFFFFF', 'color-text-secondary': '#C9C4B9', 'color-text-muted': '#A19C91', 'color-label': '#A19C91', 'color-text-faint': '#8F8A7F',
+      'color-primary-soft': 'rgba(255,255,255,.1)', 'color-accent-soft': 'rgba(242,106,80,.2)', 'color-accent-text': '{vermilion-light}', 'color-cta': '#C8321A', 'color-cta-hover': '#A5280F', 'color-cta-soft': 'rgba(242,106,80,.2)',
+      'color-border': 'rgba(255,255,255,.14)', 'color-border-card': 'rgba(255,255,255,.14)', 'color-border-input': 'rgba(255,255,255,.28)', 'color-border-row': 'rgba(255,255,255,.1)', 'color-border-strong': 'rgba(255,255,255,.4)',
+      'color-table-head': '#1B1B1E', 'color-table-head-text': '#FFFFFF', 'color-field-fill': '#1B1B1E', 'color-placeholder': '#4A4A4F', 'color-sidebar-active': 'rgba(255,255,255,.1)', 'color-sidebar-text': 'rgba(255,255,255,.8)', 'color-sidebar-muted': 'rgba(255,255,255,.5)',
+      'color-focus': '{vermilion-light}', 'color-focus-halo': '{ink-1000}', 'color-text-on-primary': '{ink-1000}', 'color-placeholder-outline': '{vermilion-light}', 'color-icon-header': '#EDEAE4', 'color-text-option': '#C9C4B9', 'color-badge': '{vermilion-light}',
+      'color-success': '#7FD0A0', 'color-success-bg': '#15321F', 'color-success-strong': '#9FDDB8', 'color-warn': '#E0B45A', 'color-warn-bg': '#3B2E10', 'color-danger': '{vermilion-light}', 'color-danger-bg': '#3F1A14', 'color-info': '#8FB8E0', 'color-info-bg': '#1B2C3D', 'color-completed': '#B5B0A5', 'color-completed-bg': '#2A2A2E',
+      'board-normal-fg': '#E0B45A', 'board-normal-bg': '#3B2E10', 'board-positive-fg': '#7FD0A0', 'board-positive-bg': '#15321F', 'board-negative-fg': '{vermilion-light}', 'board-negative-bg': '#3F1A14', 'board-neutral-fg': '#B5B0A5', 'board-neutral-bg': '#2A2A2E', 'board-jump-fg': '#B7A6EE', 'board-jump-bg': '#2A2350', 'board-document-fg': '#8FB8E0', 'board-document-bg': '#1B2C3D', 'board-hearing-fg': '{ink-1000}', 'board-hearing-bg': '#EDEAE4',
+    },
+    statics: {
+      'font-display': SERIF, 'fw-bold': '500', 'ls-display': '-0.02em', 'ls-title': '-0.01em', 'ls-eyebrow': '0.14em', 'lh-display': '1.0',
+      'r-xs': '2px', 'r-cb': '3px', 'r-sm': '3px', 'r-md': '4px', 'r-input': '4px', 'r-card': '6px', 'r-lg': '6px', 'r-xl': '8px', 'r-2xl': '12px',
+      'shadow-sm': 'none',
+      'shadow-raised': 'inset 0 0 0 1px var(--color-border-card)',
+      'shadow-raised-hover': 'inset 0 0 0 1px var(--color-hairline-strong)',
+      'shadow-overlay': 'inset 0 0 0 1px var(--color-border-card), 0 16px 40px -16px rgba(var(--shadow-color),.3)',
+      'shadow-glow': 'inset 0 0 0 1px var(--color-border-card)', 'shadow-desk': 'inset 0 0 0 1px var(--color-border-card)',
+      'shadow-md': 'inset 0 0 0 1px var(--color-border-card)', 'shadow-lg': '0 16px 40px -16px rgba(var(--shadow-color),.3)',
+      'grad-hero': 'linear-gradient(180deg, var(--color-hero-a), var(--color-hero-b))', 'grad-cta': 'var(--color-cta)', 'grad-sheen': 'none',
+    },
   },
 };
 
@@ -62,8 +208,8 @@ export const neutrals = {
 /** Status colours per theme (WCAG AA on their bg). */
 export const status = {
   light: {
-    success: '#1E8E4E', successBg: '#E3F5EA', successStrong: '#156B3B', completed: '#4F79B8', completedBg: '#DCE6F5', warn: '#B96A00', warnBg: '#FFF1DB', danger: '#C93B3B', dangerBg: '#FBE7E7',
-    info: '#1C74B8', infoBg: '#E3F1FC', neutral: '#66738A', neutralBg: '#EAEEF3',
+    success: '#177A43', successBg: '#E3F5EA', successStrong: '#136238', completed: '#3E689F', completedBg: '#DCE6F5', warn: '#8F5200', warnBg: '#FFF1DB', danger: '#B93030', dangerBg: '#FBE7E7',
+    info: '#1A66A3', infoBg: '#E3F1FC', neutral: '#66738A', neutralBg: '#EAEEF3',
   },
   dark: {
     success: '#5CCB86', successBg: '#153A24', successStrong: '#7FDBA0', completed: '#8FB3E8', completedBg: '#1E2F4D', warn: '#F0B35A', warnBg: '#3E2B0B', danger: '#F08383', dangerBg: '#4A1F1F',
@@ -78,8 +224,8 @@ export const status = {
  */
 export const boardHues = {
   light: {
-    normal: { fg: '#C9771A', bg: '#FBEEDC' }, positive: { fg: '#1E8E4E', bg: '#E3F5EA' }, negative: { fg: '#C93B3B', bg: '#FBE7E7' }, neutral: { fg: '#4B586E', bg: '#EAEEF3' },
-    jump: { fg: '#6B4FBB', bg: '#EEE8FB' }, document: { fg: '#1C74B8', bg: '#E3F1FC' }, hearing: { fg: '#F6F8FA', bg: '#172E57' },
+    normal: { fg: '#9A5A10', bg: '#FBEEDC' }, positive: { fg: '#177A43', bg: '#E3F5EA' }, negative: { fg: '#B93030', bg: '#FBE7E7' }, neutral: { fg: '#4B586E', bg: '#EAEEF3' },
+    jump: { fg: '#6247AF', bg: '#EEE8FB' }, document: { fg: '#1A66A3', bg: '#E3F1FC' }, hearing: { fg: '#F6F8FA', bg: '#172E57' },
   },
   dark: {
     normal: { fg: '#F0A94A', bg: '#4A3210' }, positive: { fg: '#5CCB86', bg: '#153A24' }, negative: { fg: '#F08383', bg: '#4A1F1F' }, neutral: { fg: '#C3CCD8', bg: '#2B3444' },
@@ -199,7 +345,7 @@ export const semantic: Record<ThemeName, Record<string, string>> = {
     'color-text-muted': '{n-400}',
     'color-label': '{n-400}',
     'color-text-faint': '{n-500}',
-    'color-text-on-primary': '{n-0}',
+    'color-text-on-primary': '{night-950}',
     'color-primary': '{primaryOnDark}',
     'color-primary-hover': '{primaryOnDarkHover}',
     'color-primary-soft': 'rgba(159,191,238,.18)',
@@ -321,19 +467,26 @@ function vars(obj: Record<string, string>): string {
 
 function resolve(value: string, brand: BrandPalette): string {
   return value.replace(/\{(\w[\w-]*)\}/g, (_, key: string) => {
-    if (key in brand) return (brand as unknown as Record<string, string>)[key];
+    if (key in brand && typeof (brand as unknown as Record<string, unknown>)[key] === 'string') return (brand as unknown as Record<string, string>)[key];
+    if (brand.extra && key in brand.extra) return brand.extra[key];
     if (key in neutrals) return (neutrals as Record<string, string>)[key];
     throw new Error(`unknown token placeholder {${key}}`);
   });
 }
 
-function themeBlock(theme: ThemeName, brand: BrandPalette): string {
+/** Semantic + status + board vars for one brand x theme, with the brand's per-theme overrides merged on top (placeholders resolved). */
+export function themeVars(theme: ThemeName, brand: BrandPalette): Record<string, string> {
   const sem = Object.fromEntries(Object.entries(semantic[theme]).map(([k, v]) => [k, resolve(v, brand)]));
   const st = status[theme];
   const stVars: Record<string, string> = {};
-  for (const [k, v] of Object.entries(st)) stVars[`color-${k.replace(/Bg$/, '-bg')}`] = v;
+  for (const [k, v] of Object.entries(st)) stVars[`color-${k.replace(/Bg$/, '-bg').replace(/([A-Z])/g, '-$1').toLowerCase()}`] = v;
   const board = Object.fromEntries(Object.entries(boardHues[theme]).flatMap(([k, h]) => [[`board-${k}-fg`, h.fg], [`board-${k}-bg`, h.bg]]));
-  return `${vars(sem)}\n${vars(stVars)}\n${vars(board)}\n  color-scheme: ${theme};`;
+  const over = Object.fromEntries(Object.entries(brand[theme] ?? {}).map(([k, v]) => [k, resolve(v, brand)]));
+  return { ...sem, ...stVars, ...board, ...over };
+}
+
+function themeBlock(theme: ThemeName, brand: BrandPalette): string {
+  return `${vars(themeVars(theme, brand))}\n  color-scheme: ${theme};`;
 }
 
 /** Builds the full tokens stylesheet: static scales on :root, `--scale` bands, then one block per brand x theme. */
@@ -346,8 +499,9 @@ export function buildTokensCss(): string {
   let css = `/* GENERATED from src/design/tokens.ts by scripts/gen-tokens.mjs - do not edit by hand */\n:root {\n  --scale: 1;\n  --fs-floor: 12px;\n${vars(neutrals)}\n${vars(type)}\n${vars(spacing)}\n${vars(radii)}\n${vars(motion)}\n${vars(layoutTokens)}\n${vars(shadows)}\n${vars(gradients)}\n}\n`;
   for (const band of scaleBands.filter((b) => b.minWidth > 0)) css += `@media (min-width: ${band.minWidth}px) { :root { --scale: ${band.scale}; --fs-floor: ${band.floor}; } }\n`;
   for (const [name, b] of Object.entries(brands) as [BrandName, BrandPalette][]) {
-    const sel = name === 'ctl' ? `:root, :root[data-brand="${name}"]` : `:root[data-brand="${name}"]`;
-    css += `${sel} {\n${brandRamp(b)}\n${themeBlock('light', b)}\n}\n`;
+    const aliases = Object.entries(BRAND_ALIASES).filter(([, to]) => to === name).map(([from]) => `:root[data-brand="${from}"]`);
+    const sel = [...(name === DEFAULT_BRAND ? [':root'] : []), `:root[data-brand="${name}"]`, ...aliases].join(', ');
+    css += `${sel} {\n${brandRamp(b)}\n${b.extra ? `${vars(b.extra)}\n` : ''}${b.statics ? `${vars(b.statics)}\n` : ''}${themeBlock('light', b)}\n}\n`;
     css += `${sel.split(', ').map((s) => `${s}[data-theme="dark"]`).join(', ')} {\n${themeBlock('dark', b)}\n}\n`;
   }
   css += `:root[data-skin="wireframe"] { --color-primary: #3A3A3A; --color-primary-hover: #232323; --color-primary-text: #3A3A3A; --color-cta: #3A3A3A; --color-cta-hover: #232323; --color-cta-text: #FFFFFF; --color-surface-tint: #F2F1ED; --color-sidebar: #2A2A2A; --shadow-md: none; --shadow-lg: none; --shadow-xl: none; --shadow-raised: inset 0 0 0 1px var(--color-hairline); --shadow-overlay: inset 0 0 0 1px var(--color-hairline); --grad-hero: #2A2A2A; }\n`;

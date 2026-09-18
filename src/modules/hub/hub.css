@@ -11,7 +11,8 @@
 .hub-controls { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; color: var(--color-hero-text); }
 .hub-controls .toggle { color: var(--color-hero-text); } .hub-controls .toggle-track { background: rgba(255,255,255,.22); }
 .hub-controls .iconbtn { color: var(--color-hero-text); } .hub-controls .iconbtn-outline { background: rgba(255,255,255,.06); box-shadow: inset 0 0 0 1px rgba(255,255,255,.22); } .hub-controls .iconbtn:hover { background: rgba(255,255,255,.14); color: #fff; }
-.hub-controls .langtoggle { background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); } .hub-controls .langtoggle-btn { color: var(--color-hero-muted); } .hub-controls .langtoggle-btn.is-active { background: rgba(255,255,255,.94); color: var(--navy); }
+.hub-controls .langtoggle { background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); } .hub-controls .langtoggle-btn { color: var(--color-hero-muted); } .hub-controls .langtoggle-btn.is-active { background: rgba(255,255,255,.94); color: var(--color-hero-a); }
+.hub-controls .seg { background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); } .hub-controls .seg-item { color: var(--color-hero-muted); } .hub-controls .seg-item:hover { color: #fff; } .hub-controls .seg-item.is-active { background: rgba(255,255,255,.94); color: var(--color-hero-a); box-shadow: none; }
 .hub-controls :focus-visible { outline-color: #fff; box-shadow: 0 0 0 2px var(--color-hero-a); }
 
 .hub-hero { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: var(--sp-8); align-items: end; padding-top: var(--sp-8); padding-bottom: calc(var(--sp-12) + var(--sp-8)); min-height: var(--h-hero-min); }
