@@ -1,3 +1,5 @@
+# 0015 - Release 0.1.2: hub previews at a desktop viewport, filling their frames
+
 version: 0.1.2
 date: 2026-09-18
 prompt: 0005
@@ -7,7 +9,7 @@ rejected: Four columns at >= 1920 (six staff cards leave two orphans, and spanni
 files: src/components/organism/DeviceFrame/DeviceFrame.tsx, src/components/organism/DeviceFrame/DeviceFrame.css, src/components/organism/DeviceFrame/DeviceFrame.meta.ts, src/components/atom/BrandArt/BrandArt.tsx, src/components/atom/BrandArt/BrandArt.css, src/components/atom/BrandArt/BrandArt.meta.ts, src/modules/hub/HubPage.tsx, src/modules/hub/hub.css, docs/pages/HUB-01.md, docs/prompts/0005-homepage-thumbnails.md, docs/changelog/_pending/hubfix.md, docs/screenshots/HUB-01/*, docs/qa/responsive-report.*
 codes: HUB-01
 
-# Hub previews render at a desktop viewport and fill their frames (0.1.2 draft)
+# Release 0.1.2
 
 Model: Fable 5.1 (shared code: `DeviceFrame`, `BrandArt`; hub layout).
 
@@ -26,3 +28,13 @@ Model: Fable 5.1 (shared code: `DeviceFrame`, `BrandArt`; hub layout).
 
 - D-21 canvas and D-22 simulator inherit the fix (same component); re-capture their page docs at the next screenshot pass.
 - Version bump to 0.1.2 and this draft's merge into a numbered changelog belong to the integrator.
+
+## Release
+
+- `package.json` 0.1.2 (the hub header shows `v0.1.2` through `__APP_VERSION__`); `README.md` version line; this entry folds `docs/changelog/_pending/hubfix.md`.
+- Landed as a fast-forward of `mod/hubfix` (rebased onto 0.1.1, cf5ccf5) onto `main`, then `chore(release): 0.1.2`; pushed; `.github/workflows/pages.yml` deploys to https://imagine-os.github.io/cal-tenant-law/. Workflow conclusion for the release SHA: recorded in the hand-back.
+- Counts unchanged from 0.1.1 (56 routes, 55 built; no route, table, rule or action changed), so `docs/reference/surfaces.md` needs no update.
+
+## Resumen en español
+
+Versión 0.1.2 (Fable): Justin vio en un monitor grande, en modo oscuro, "una miniatura de móvil en un espacio ancho". La causa era la regla global `iframe { max-width: 100% }`, que encogía el iframe de 1280 px al ancho de la tarjeta; la página se maquetaba como teléfono y luego se escalaba a un cuarto del marco. `DeviceFrame` ahora maqueta el iframe a su viewport y lo escala al contenedor, conserva la proporción y recorta por abajo, con un borde fino y sombra interior para el modo oscuro. En el centro de pruebas cada vista previa se renderiza a 1280 x 800 y llena una caja 16:10; una tarjeta sin marco vivo muestra un esquema de ventana en su tono; la barra de sesión ya no queda cortada por la banda; el teléfono de la app del cliente queda dentro de su tarjeta.
