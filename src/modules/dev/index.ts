@@ -7,7 +7,8 @@ import { TablesPage, TableManagerPage } from './TablesPage';
 import { RulesPage } from './RulesPage';
 import { RouteManifestPage } from './RouteManifestPage';
 import { ActionsPage } from './ActionsPage';
-import { tokensSpec, componentsSpec, specsIndexSpec, tablesSpec, rulesSpec, routeManifestSpec, actionsSpec } from './specs';
+import { IllustrationsPage } from './IllustrationsPage';
+import { tokensSpec, componentsSpec, specsIndexSpec, tablesSpec, rulesSpec, routeManifestSpec, actionsSpec, illustrationsSpec } from './specs';
 
 export const strings = {};
 const base = { roles: ['super_admin' as const], surface: 'dev' as const, layout: 'desktop' as const };
@@ -21,6 +22,7 @@ export const routes: RouteDef[] = [
   { ...base, path: '/dev/tables', element: h(TablesPage), spec: tablesSpec, nav: { label: 'Tables', icon: 'table', order: 4, group: G } },
   { ...base, path: '/dev/tables/:table', element: h(TableManagerPage), spec: tablesSpec },
   { ...base, roles: ['super_admin', 'owner', 'attorney'], path: '/dev/rules', element: h(RulesPage), spec: rulesSpec, nav: { label: 'Rules registry', icon: 'flag', order: 5, group: G } },
+  { ...base, path: '/dev/illustrations', element: h(IllustrationsPage), spec: illustrationsSpec, nav: { label: 'Illustrations', icon: 'image', order: 6, group: G } },
   { ...base, path: '/dev/routes', element: h(RouteManifestPage), spec: routeManifestSpec, nav: { label: 'Route manifest', icon: 'map', order: 19, group: G } },
   { ...base, path: '/dev/actions', element: h(ActionsPage), spec: actionsSpec, nav: { label: 'Actions registry', icon: 'play', order: 20, group: G } },
 ];

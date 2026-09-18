@@ -40,7 +40,7 @@ pre, table, img, svg, video, iframe { max-width: 100%; }
 /* ---------- material: surface layers ---------- */
 .surface-raised { background: var(--color-surface-raised); border-radius: var(--r-card); box-shadow: var(--shadow-raised); }
 .surface-overlay { background: var(--color-surface-overlay); border-radius: var(--r-card); box-shadow: var(--shadow-overlay); }
-.surface-ink { background: var(--grad-hero); color: var(--color-hero-text); border-radius: var(--r-xl); }
+.surface-ink, .card.surface-ink { background: var(--grad-hero); color: var(--color-hero-text); border-radius: var(--r-xl); } /* .card.surface-ink: the Card skin loads after this file and would otherwise win with its own background (0.1.1 fix) */
 .surface-ink h1, .surface-ink h2, .surface-ink h3, .surface-ink .display, .surface-ink .display-sm { color: var(--color-hero-text); }
 .surface-ink .muted, .surface-ink .lead { color: var(--color-hero-muted); }
 /* a faint paper grain (CSS only, ~600 bytes) for hero and ink panels; off with reduced-data */

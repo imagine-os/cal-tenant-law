@@ -4,6 +4,9 @@ import { useI18n } from '../../i18n/I18nProvider';
 import { bi } from '../../i18n/types';
 import { useTable } from '../../data/DataContext';
 import type { TenantRow } from '../../data/schema/core';
+import type { ServiceRow } from '../../data/schema/catalog';
+import type { IllustrationRow } from '../../data/schema/illustrations';
+import { illustrationUrl } from '../../data/illustrationAssets';
 import { useActions } from '../../actions/useActions';
 import { Section } from '../../components/molecule/Section/Section';
 import { Card } from '../../components/molecule/Card/Card';
@@ -16,7 +19,12 @@ import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 import { SiteFrame } from './chrome';
 import { landingSpec } from './specs';
 import { HOW_STEPS, LESSONS, STAGES, type StageId } from './siteData';
-import { SITE_STAGE_PHASE } from '../catalog/catalogData';
+import { SITE_STAGE_PHASE, dollars, scrapedDate } from '../catalog/catalogData';
+
+/** The firm's own artwork used on this page where docs/data/illustrations.json says `brand` / `nav-tile` (D-042). */
+const HERO_ART = 'hero-poster';
+const BOARD_ART = 'game-board-2021';
+const STEP_TILES = ['icon_advice', 'icon_paid-services', 'icon_consultation'];
 
 /** P-01's renter-facing stage -> the services menu filtered to that board phase (P-10). */
 const servicesHref = (stage: StageId): string => `/site/services?stage=${SITE_STAGE_PHASE[stage] ?? ''}`;
@@ -30,6 +38,16 @@ export function LandingPage() {
   const navigate = useNavigate();
   const [stage, setStage] = useState<StageId | null>('served');
   const { rows: offices } = useTable<TenantRow>('tenants', { where: { kind: 'office' }, orderBy: { column: 'sort_order' } });
+  const { rows: services } = useTable<ServiceRow>('services');
+  const { rows: illustrations } = useTable<IllustrationRow>('illustrations');
+  const art = (key: string): string | null => illustrationUrl(illustrations.find((i) => i.key === key)?.file);
+  /** The live price for a SKU from the catalog table (P-10's source), never the hand-typed figure. */
+  const priceOf = (sku: string): string | null => {
+    const row = services.find((x) => x.sku === sku);
+    if (!row || row.price_cents == null) return null;
+    return row.price_cents === 0 ? t('site.free') : `${dollars(row.price_cents)}${row.unit === 'minimum' ? ' min.' : row.unit === 'per_item' ? ' ea.' : ''}`;
+  };
+  const scraped = scrapedDate(services[0]?.scraped_at);
   const current = STAGES.find((s) => s.id === stage) ?? null;
 
   useActions(landingSpec, {
@@ -58,7 +76,7 @@ export function LandingPage() {
 
   return (
     <SiteFrame>
-      <div className="st-hero">
+      <div className="st-hero" style={art(HERO_ART) ? { ['--st-hero-art' as string]: `url("${art(HERO_ART)}")` } : undefined}>
         <div className="container st-hero-inner">
           <div className="eyebrow">{t('p1.hero.eyebrow')}</div>
           <h1>{t('p1.hero.title')}</h1>
@@ -95,7 +113,7 @@ export function LandingPage() {
               <Card key={s.id}>
                 <div className="stack">
                   <div className="st-cardhead">
-                    <span className="st-icon-badge"><Icon name={s.icon} size={22} /></span>
+                    {art(STEP_TILES[i] ?? '') ? <img className="st-step-tile" src={art(STEP_TILES[i] ?? '') as string} alt="" loading="lazy" decoding="async" /> : <span className="st-icon-badge"><Icon name={s.icon} size={22} /></span>}
                     <div>
                       <div className="st-step-n">{t('p1.how.step', { n: i + 1 })}</div>
                       <h3>{bi(s.title, lang)}</h3>
@@ -118,11 +136,17 @@ export function LandingPage() {
               <p className="st-body">{t('p1.board.body')}</p>
               <div><Link to="/board"><Button icon="gamepad">{t('p1.board.cta')}</Button></Link></div>
             </div>
-            <div className="st-boardcard-art" aria-hidden>
-              <i /><i className="is-pos" /><i /><i className="is-neg" />
-              <i className="is-neg" /><i /><i className="is-now" /><i />
-              <i /><i className="is-pos" /><i /><i />
-            </div>
+            {art(BOARD_ART) ? (
+              <Link to="/board" className="st-boardcard-poster" aria-label={t('p1.board.cta')}>
+                <img src={art(BOARD_ART) as string} alt={t('p1.board.posterAlt')} loading="lazy" decoding="async" />
+              </Link>
+            ) : (
+              <div className="st-boardcard-art" aria-hidden>
+                <i /><i className="is-pos" /><i /><i className="is-neg" />
+                <i className="is-neg" /><i /><i className="is-now" /><i />
+                <i /><i className="is-pos" /><i /><i />
+              </div>
+            )}
           </div>
         </Card>
       </div>
@@ -157,11 +181,11 @@ export function LandingPage() {
                     {current.skus.map((s) => (
                       <li key={`${current.id}-${s.sku}`} className="st-sku">
                         <span><code>{s.sku}</code> {bi(s.name, lang)}</span>
-                        <span className="st-sku-price">{s.price ?? '—'}</span>
+                        <span className="st-sku-price">{priceOf(s.sku) ?? s.price ?? '—'}</span>
                       </li>
                     ))}
                   </ul>
-                  <p className="xs muted">{t('site.asListed')}</p>
+                  <p className="xs muted">{t('site.asListed', { date: scraped })}</p>
                   <div>
                     <Link to={servicesHref(current.id)}>
                       <Button variant="secondary" iconRight="arrow-right">{t('p1.stages.open')}</Button>
@@ -208,7 +232,7 @@ export function LandingPage() {
               </Card>
             ))}
           </div>
-          <p className="xs muted">{t('p1.offices.demoNote')}</p>
+          <p className="xs muted">{t('p1.offices.demoNote', { date: scraped })}</p>
         </Section>
       </div>
 

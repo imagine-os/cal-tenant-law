@@ -58,3 +58,7 @@
 /* A Chip inside a DataTable card-mode cell (a flex row) must be allowed to shrink so its label ellipsizes
    instead of pushing the page sideways at 360-390 px. */
 .homes-chip { min-width: 0; }
+
+/* C-03: the firm's own video thumbnails (illustrations table, D-042 / D-043) */
+.homes-thumb { flex: 0 0 auto; width: calc(64px * var(--scale)); height: calc(36px * var(--scale)); object-fit: cover; border-radius: var(--r-sm); background: var(--color-surface-2); }
+.homes-thumb.is-lg { width: calc(96px * var(--scale)); height: calc(54px * var(--scale)); }

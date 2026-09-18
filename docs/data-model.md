@@ -17,13 +17,13 @@ _Generated from `src/data/schema/*.ts` by `npm run sql`. The TypeScript files ar
 | `demoUsers` + `SessionProvider` | Supabase Auth + `user_roles` |
 | `tenant_id` on every row | JWT claim `tenant_id` + RLS |
 
-## Tables (24)
+## Tables (27)
 
 ### Core & tenants
 
 #### `tenants`
 The CTL network and each regional attorney office under the banner. tenant_id on every row points here; the network row is its own tenant.  
-_Source: brief 1.3 (seven regional offices) · D-foundation_
+_Source: docs/data/offices.json (eight offices as posted on caltenantlaw.com, 2026-09-18) · brief 1.3 · D-044_
 
 | column | type | notes |
 | --- | --- | --- |
@@ -361,6 +361,85 @@ _Source: firm-site-digest §4 store catalog · T-040 / T-044_
 
 **RLS intent:** client: read own case invoices; front_desk: read and write own tenant; owner: read every tenant, refund
 
+#### `service_categories`
+The store's own categories. Visible rows are the 20 entries of the /store menu in the firm's order (Request a Consultation, Changes to Prepared Paperwork, Motion to Quash, Default, Discovery by Us / by Them, Demurrer, Answer, Trial Preparation, Settling, Judgment, Appeal, Suing the Landlord, Supplemental, Game Board, Legal Kits, Judges Gone Wild, Extra Services, Free Resources, Legal Ethics Musical). Hidden rows (hidden = true) are the firm's older stage-based Ecwid tree still attached to the products (Paid Legal Services > I'm Being Evicted... > Start Here ...), nested through parent_id; P-13 shows that tree as the outline's top level. Each points at the game-board phase it belongs to so the menu can be read stage by stage.  
+_Source: docs/data/services-catalog.json (live scrape 2026-09-18, D-038) · T-079 (pulled forward) · D-041_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `slug` | text | Stable id: the site's own /store/<slug> for visible categories (schedule-a-consultation, legal-kits ...) or legacy/<path> for hidden ones; the URL anchor and the seed key |
+| `parent_id` | uuid, null | -> `service_categories` Parent category in the hidden stage tree (Paid Legal Services > I'm Being Evicted... > The Discovery Phase > Making Them Answer); null for a visible menu category or a hidden root |
+| `hidden` | bool | True for the legacy stage-based Ecwid categories that are not in the /store menu but are still attached to products; P-10 hides them, P-13 shows them as the top level |
+| `path` | text, null | Full path of a hidden category as the store names it ("Paid Legal Services > I'm Being Evicted... > Start Here"); null for visible categories |
+| `icon` | text, null | Icon name from the library (src/components/atom/Icon) for the outline tree and the menu; decoration only |
+| `label` | text | Category name shown on P-10 / P-13 (the /store menu label; the Ecwid name when it differs is in description) |
+| `sort_order` | int | Position in the firm's own order (the /store menu; for hidden categories the order the store's older navigation used) |
+| `phase` | text, null | Game-board phase id (docs/game-board/nodes.json phases[].id); null = applies at any stage |
+| `description` | text, null | One line in the firm voice, shown under the category heading |
+| `store_description` | text, null | The category's own description as the store prints it (visible categories) |
+| `ecwid_name` | text, null | The Ecwid name when it differs from the /store menu label ("Scheduled Consultation" for Request a Consultation) |
+| `depth` | int, null | Depth in the tree the row belongs to: 1 for a visible menu category, 1..4 for the hidden legacy tree |
+| `illustration_id` | text, null | illustrations.id of the firm's own category image (flat circle icon or cartoon tile), shown as the category header on P-10 / P-13 |
+| `store_url` | text, null | The category page on caltenantlaw.com (visible categories only) |
+| `ecwid_category_id` | int, null | Ecwid category id (store 1197002) for visible categories; null for hidden ones (the storefront API returns them by name only) |
+| `active` | bool | Hidden from the public menu when false (an admin choice; distinct from hidden, which is a fact about the store) |
+
+**RLS intent:** everyone incl. public: read (the menu is the shop window); owner / super_admin: write
+
+**Access:** public: read; owner / super_admin: reorder, rename, describe (A-10)
+
+#### `services`
+One purchasable piece of legal work: a SKU number, what it is, which board squares it belongs to, the price as posted on caltenantlaw.com on 2026-09-18 and the plain-language "what you get" (the full store description). Prices carry price_note, evidence, scraped_at and verified so the UI can never present an unconfirmed figure as a quote (RULE-CATALOG-01, D-038).  
+_Source: docs/data/services-catalog.json (live scrape 2026-09-18: /all-services + Ecwid storefront API, D-038) · T-079 (pulled forward)_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `sku` | text | Store SKU as printed on the site (101, 400, 610, HOTLINE, HOURLY); the public id, the /site/services/:sku URL and the key invoices.sku joins on |
+| `sku_listed` | bool | False when the firm lists the item by name with no SKU number: the card says "no SKU listed" instead of showing an invented one (every scraped row has one; kept for the two non-store rows and future items) |
+| `title` | text | Service name as posted (without the "NNN - " prefix the store prints; that full form is store_title) |
+| `store_title` | text, null | The product title exactly as the store prints it ("001 - Habitability Worksheet") |
+| `category_id` | uuid | -> `service_categories` Visible /store menu category this service is filed under |
+| `store_order` | int, null | Position of the product inside its category as the store lists it (the order P-13 uses); null for the two non-store rows |
+| `legacy_category_ids` | json | Row ids of the hidden stage-tree leaves this product is also filed under ([] = only in the visible menu); P-13's top level |
+| `store_paths` | json | Every category path the store attaches to the product, as arrays of names, exactly as Ecwid returns them |
+| `stage_node_ids` | json | Board square ids from docs/game-board/nodes.json this service belongs to; [] = not on the eviction board (deposit, lease, hourly top-ups); the board link is left off |
+| `phase` | text, null | Primary game-board phase; null = any stage / a matter of its own |
+| `price_cents` | int, null | USD cents as posted; 0 = free; null only when the site lists no price (none today) |
+| `price_note` | text, null | What qualifies the price ("minimum charge; extra time at $330/h", "per item") |
+| `unit` | enum (flat \| per_hour \| per_10min \| per_item \| minimum \| deposit \| free) | How it is charged |
+| `deliverable` | text | The thing the client receives, in one line (our reading of the store description) |
+| `what_you_get` | text | The store's full product description, in the firm's own words |
+| `prerequisites` | text, null | What has to be true first (a consultation, a filed answer, a trial date), from the store copy |
+| `turnaround_note` | text, null | Timing the store states (download links expire in 72 hours; responses due 10 days after mailing); never a promised date |
+| `not_included` | text, null | What the store says this item does NOT include ("not filed in court; a motion to compel needs an attorney"); null when the description says nothing |
+| `illustration_id` | text, null | illustrations.id of the firm's own product icon (the navy / orange circle from the Ecwid listing), shown on cards and outline rows in place of a library glyph |
+| `source_urls` | json | Where the fact came from on the live site (store product URL, /all-services) |
+| `icon` | text, null | Icon name from the library, chosen from the category and the deliverable format; decoration only |
+| `time_expectation` | text, null | How long it takes or how much time it buys, quoted from the item's own store text ("30-minute", "about an hour", "an extra 3 weeks up front"); null = to be confirmed |
+| `client_inputs` | json, null | What the client has to provide before we can start, read from the item's own store description and its order form ("What you received (PDF or fax), when you got it, how you physically got it"). [] = nothing needed (free download); null = the store does not say, so it is to be confirmed |
+| `deliverable_format` | enum (pdf \| call \| kit \| filing \| letter \| review \| print), null | What arrives: a PDF, a call, a kit, a court filing, a letter, a written review or a printed item; CTL OS's reading of the category and title, null = to be confirmed |
+| `stage_scope` | text, null | The board phases this service covers, in words, for the outline view |
+| `image_url` | text, null | Product image on the Ecwid CDN, as the store shows it |
+| `ecwid_product_id` | int, null | Ecwid product id (store 1197002); null for the hotline and hourly rows, which are not store items |
+| `evidence` | enum (scraped-live \| verified-snippet \| inferred) | scraped-live = read from the live store on scraped_at (D-038); verified-snippet / inferred = the 0.1.0 reconstruction (D-025, superseded) |
+| `scraped_at` | timestamptz, null | When the live site was read for this row; the "as listed on caltenantlaw.com on <date>" badge shows this date |
+| `verified` | bool | An attorney confirmed the price and description; false shows the "as listed on caltenantlaw.com on <date> · unverified" badge everywhere |
+| `active` | bool | Hidden from the public menu when false |
+
+**RLS intent:** everyone incl. public: read where active; owner / super_admin: write price, title, active and verified; nobody else writes: a price change is a business decision, logged through A-10
+
+**Access:** public / client: read (P-10, P-11, P-13); front_desk / attorney: read when quoting the next move; owner / super_admin: edit and verify (A-10)
+
 ### Messages, hotline & feedback
 
 #### `feedback`
@@ -416,8 +495,8 @@ _Source: brief line 18 · superseded by T-078_
 **RLS intent:** client: read and write own rows; attorney / paralegal: read rows of own clients; owner: read every tenant
 
 #### `lessons`
-The firm's free videos and articles as an ordered curriculum mapped to board squares: "Winning Your Eviction" 1-7, the procedural Eviction Series, and the topic videos. T-077 replaces this with the full catalog.  
-_Source: firm-site-digest §5 · brief line 70 · superseded by T-077_
+The firm's free video library as an ordered curriculum mapped to board squares: the 33 videos of caltenantlaw.com/pre-consultation-videos in the page's own order and three groups (Legal Videos, Winning Your Eviction Series, The Game Board Series) plus three videos embedded on article pages only, seeded from docs/data/videos.json (live scrape 2026-09-18, D-038, D-043). The player (T-078) and articles (T-077) come later.  
+_Source: docs/data/videos.json (live scrape 2026-09-18) · brief line 70 · T-077_
 
 | column | type | notes |
 | --- | --- | --- |
@@ -428,8 +507,21 @@ _Source: firm-site-digest §5 · brief line 70 · superseded by T-077_
 | `version` | int | Optimistic-concurrency counter, bumped on every update |
 | `title` | text |  |
 | `kind` | enum (video \| article) |  |
-| `order` | int | Position in the curriculum |
-| `stage_node_id` | text, null | Board node the lesson explains |
+| `order` | int | Position in the curriculum (the page order on caltenantlaw.com; embedded-only videos follow) |
+| `stage_node_id` | text, null | Board node the lesson explains (first of teaches_stage_node_ids) |
+| `group` | text, null | The site's grouping: Legal Videos, Winning Your Eviction Series, The Game Board Series, or embedded only |
+| `group_order` | int, null | Position inside the group |
+| `duration_seconds` | int, null | Length from YouTube; null when YouTube returned no player data |
+| `youtube_id` | text, null |  |
+| `youtube_url` | text, null |  |
+| `thumbnail_url` | text, null | Thumbnail on the firm site |
+| `illustration_id` | text, null | illustrations.key of the scraped thumbnail (video:<slug>) |
+| `teaches_stage_node_ids` | json, null | Every board square the video teaches |
+| `teaches_phases` | json, null |  |
+| `presenter` | text, null |  |
+| `source_url` | text, null |  |
+| `evidence` | text, null | scraped-live (D-038) |
+| `scraped_at` | timestamptz, null |  |
 
 **RLS intent:** everyone: read (the curriculum is free); marketing / owner: write
 
@@ -548,6 +640,40 @@ _Source: P-14_
 **RLS intent:** signed in: upsert own row; staff: read rows of own tenant
 
 ### Design & layout
+
+#### `illustrations`
+Every image the firm publishes on caltenantlaw.com and in its store, with where it is used, its alt text, subject tags, style family and the board node / SKU / article / office it illustrates. The assets database behind the store icons on P-10 / P-13, the video thumbnails on C-03 and the D-23 gallery. Copied for the proposal to the firm only; rights stay with the firm.  
+_Source: docs/data/illustrations.json (live scrape 2026-09-18, D-038) · D-042_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `key` | text | illustrations.json id (product-101, category-answer, video-rent-eviction, hero-poster); stable, the seed key |
+| `file` | text | Path in the repo (reference/site-scrape/assets/<file>); the bundle resolves it to a URL |
+| `source_url` | text | Where the file was downloaded from |
+| `pages_used` | json | Site pages that reference the image |
+| `alt` | text | Alt text as the site sets it (or the product title) |
+| `caption` | text, null | Caption or the nearest heading on the page |
+| `subject_tags` | json | What is depicted ("judge", "sheriff", "calendar/clock", "handshake") |
+| `style_family` | enum (flat-circle-icons \| outline-cartoon-tiles \| video-thumbnails \| pleading-thumbnails \| photos-and-art) | One of the five style families the scrape identified |
+| `style_note` | text | The scrape's description of the style |
+| `width` | int |  |
+| `height` | int |  |
+| `bytes` | int |  |
+| `content_type` | text |  |
+| `suggested_use` | json | Where CTL OS may use it: brand, store-category:<slug>, service:<sku>, game-board:<node>, video:<slug>, article:<slug>, office:<slug>, nav-tile:<name> |
+| `rights` | text | Copyright line from the scrape; the firm's assets, copied for the proposal only |
+| `evidence` | text | scraped-live (D-038) |
+| `scraped_at` | timestamptz |  |
+| `verified` | bool | The firm confirmed CTL OS may use the image where suggested_use says; false until then |
+
+**RLS intent:** everyone incl. public: read (the images are already public on the firm site); marketing / owner / super_admin: write tags and suggested use
+
+**Access:** public: read (rendered where suggested_use says); super_admin: browse and tag (D-23)
 
 #### `page_layouts`
 Per page code: section order and hidden sections (builder tool layout editor, useLayout).  

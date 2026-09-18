@@ -14,8 +14,8 @@ import { Chip } from '../../components/atom/Chip/Chip';
 import { Icon } from '../../components/atom/Icon/Icon';
 import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 import { SiteFrame } from '../site/chrome';
-import { DeliverableFormatText, PriceTag, ServiceCard, SkuPill, ToBeConfirmed, UnverifiedBadge, boardHref, serviceHref } from './catalogChrome';
-import { ANY_PHASE, CONSULT_SKU, iconOf, nextMovesOf, nodeLabel, phaseLabel, phaseOfNode, phasesOf, useCatalog, useService } from './catalogData';
+import { DeliverableFormatText, FirmIcon, PriceTag, ServiceCard, SkuPill, ToBeConfirmed, UnverifiedBadge, boardHref, serviceHref } from './catalogChrome';
+import { ANY_PHASE, CONSULT_SKU, iconOf, nextMovesOf, nodeLabel, phaseLabel, phaseOfNode, phasesOf, useCatalog, useService, scrapedDate, useIllustrationSrc } from './catalogData';
 import { serviceDetailSpec } from './specs';
 import './catalog.css';
 
@@ -30,6 +30,7 @@ export function ServiceDetailPage() {
   const { sku } = useParams<{ sku: string }>();
   const service = useService(sku);
   const { categories, services } = useCatalog();
+  const illustrationSrc = useIllustrationSrc();
 
   const category = useMemo(() => categories.find((c) => c.id === service?.category_id) ?? null, [categories, service]);
   const related = useMemo(() => {
@@ -88,8 +89,13 @@ export function ServiceDetailPage() {
             {category && <Chip size="sm">{category.label}</Chip>}
             {phasesOf(service).map((p) => <Chip key={p} size="sm" icon="gamepad">{p === ANY_PHASE ? t('catalog.anyStage') : phaseLabel(p)}</Chip>)}
           </div>
-          <h1 className="cat-detail-title">{service.title}</h1>
-          <p className="lead">{service.deliverable}</p>
+          <div className="cat-detail-media">
+            <FirmIcon illustrationKey={service.illustration_id} fallback={iconOf(service.icon)} size={96} />
+            <div className="stack-sm">
+              <h1 className="cat-detail-title">{service.title}</h1>
+              <p className="lead">{service.deliverable}</p>
+            </div>
+          </div>
           <div className="cat-detail-price">
             <PriceTag service={service} />
             {service.price_note && <span className="xs faint">{service.price_note}</span>}
@@ -125,6 +131,7 @@ export function ServiceDetailPage() {
               <dt>{t('catalog.youReceive')}</dt><dd><Icon name={iconOf(service.icon)} size={15} /> <DeliverableFormatText service={service} /></dd>
               <dt>{t('catalog.needsFirst')}</dt><dd>{service.prerequisites ?? <ToBeConfirmed />}</dd>
               <dt>{t('catalog.turnaround')}</dt><dd>{service.turnaround_note ? service.turnaround_note : <ToBeConfirmed />}</dd>
+              {service.not_included && <><dt>{t('catalog.p11.notIncluded')}</dt><dd>{service.not_included}</dd></>}
               <dt>{t('catalog.p11.category')}</dt><dd>{category?.label ?? '—'}</dd>
             </dl>
           </Card>
@@ -172,10 +179,11 @@ export function ServiceDetailPage() {
         <Section title={t('catalog.p11.sourcesTitle')}>
           <Card padding="md" className="stack-sm">
             <div className="row wrap" style={{ gap: 8 }}>
-              <Badge tone={service.evidence === 'verified-snippet' ? 'info' : 'warn'} size="sm">{service.evidence}</Badge>
-              <UnverifiedBadge verified={service.verified} />
+              <Badge tone={service.evidence === 'scraped-live' ? 'success' : service.evidence === 'verified-snippet' ? 'info' : 'warn'} size="sm">{service.evidence}</Badge>
+              <UnverifiedBadge verified={service.verified} scrapedAt={service.scraped_at} />
             </div>
-            <p className="small">{service.evidence === 'verified-snippet' ? t('catalog.p11.evidenceSnippet') : t('catalog.p11.evidenceInferred')}</p>
+            <p className="small">{service.evidence === 'scraped-live' ? t('catalog.p11.evidenceLive', { date: scrapedDate(service.scraped_at) }) : service.evidence === 'verified-snippet' ? t('catalog.p11.evidenceSnippet') : t('catalog.p11.evidenceInferred')}</p>
+            {illustrationSrc(service.illustration_id) && <p className="xs faint">{t('catalog.firmIconNote', { date: scrapedDate(service.scraped_at) })}</p>}
             <ul className="cat-sources">
               {(service.source_urls ?? []).map((u) => (
                 <li key={u}><a href={u} target="_blank" rel="noreferrer noopener">{t('catalog.p11.sourceLink')} <Icon name="external" size={12} /></a> <span className="xs faint mono">{u}</span></li>

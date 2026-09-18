@@ -109,3 +109,10 @@
   .site2-head, .site2-foot, .st-print-hide { display: none !important; }
   .sitepage { gap: var(--sp-6); }
 }
+
+/* the firm's own artwork (illustrations table, D-042): hero poster behind the gradient, Game Board poster, cartoon tiles */
+.st-hero { background-image: linear-gradient(160deg, color-mix(in srgb, var(--primary-700) 88%, transparent) 0%, color-mix(in srgb, var(--primary-900) 90%, transparent) 58%, color-mix(in srgb, var(--primary-600) 86%, transparent) 140%), var(--st-hero-art, none); background-size: cover; background-position: center; }
+.st-boardcard-poster { display: block; border-radius: var(--r-md); overflow: hidden; border: 1px solid var(--color-border); background: var(--color-surface-2); max-width: 320px; margin-inline: auto; }
+.st-boardcard-poster img { display: block; width: 100%; height: auto; }
+.st-boardcard-poster:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.st-step-tile { width: calc(56px * var(--scale)); height: calc(56px * var(--scale)); object-fit: contain; border-radius: var(--r-md); background: var(--color-surface-2); flex: 0 0 auto; }

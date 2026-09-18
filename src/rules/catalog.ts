@@ -8,9 +8,9 @@ import { defineRules } from './types';
 export const rules = defineRules([
   {
     id: 'RULE-CATALOG-01', title: 'Prices are shown as listed until an attorney verifies them',
-    description: "Every price in the catalog came from the firm's current site with an unknown crawl date and is unverified for 2026. Until `services.verified` is true the price renders with the \"as listed on the current site, unverified\" badge and its tooltip, next to `price_note` (\"listed as a minimum\", \"more than three causes of action is $1,500\"). A service with no indexed price shows \"price not listed\" and never a guess, an average or a range we invented. Nothing in the catalog is a quote.",
+    description: "Every price in the catalog was read from the firm's live site, caltenantlaw.com, on the row's `scraped_at` date (2026-09-18, D-038) and has not been confirmed by the firm in CTL OS. Until `services.verified` is true the price renders with the \"as listed on caltenantlaw.com on <date> · unverified\" badge and its tooltip, next to `price_note` (\"minimum charge; extra time at $330/h\", \"per item\"). A service with no posted price would show \"price not listed\" and never a guess, an average or a range we invented. Nothing in the catalog is a quote.",
     category: 'billing', status: 'implemented', pages: ['P-10', 'P-11', 'P-12', 'A-10', 'C-04', 'GB-03'],
-    source: 'docs/reference/firm-site-digest.md §4 · D-025', implementedIn: 'src/modules/catalog/catalogData.ts (PriceTag); services.verified toggled from A-10',
+    source: 'docs/reference/services-catalog.md (live scrape) · D-038 · D-040', implementedIn: 'src/modules/catalog/catalogChrome.tsx (PriceTag, UnverifiedBadge with scraped_at); services.verified toggled from A-10',
   },
   {
     id: 'RULE-CATALOG-02', title: 'Every service says where it sits on the game board, or says it is off the board',
@@ -26,7 +26,7 @@ export const rules = defineRules([
   },
   {
     id: 'RULE-CATALOG-04', title: 'The repo JSON is the catalog, the database is a copy of it',
-    description: 'docs/data/services-catalog.json is the source of truth; the seed builds service_categories and services from it and A-10 can reset back to it at any time. Edits made in A-10 are a demo of the future admin write path, not a second catalog: the firm\'s confirmed answers land in the JSON in the same turn, exactly as the game board lands in nodes.json (RULE-BOARD-01).',
+    description: 'docs/data/services-catalog.json (the live scrape of caltenantlaw.com, 2026-09-18) is the source of truth; the seed builds service_categories (visible menu + hidden stage tree) and services from it and A-10 can reset back to it at any time. Edits made in A-10 are a demo of the future admin write path, not a second catalog: the firm\'s confirmed answers land in the JSON in the same turn, exactly as the game board lands in nodes.json (RULE-BOARD-01).',
     category: 'billing', status: 'implemented', pages: ['A-10'],
     source: 'RULE-BOARD-01 · docs/platform-principles.md P-11', implementedIn: 'src/data/seed/catalog.ts; catalog.resetFromRepo action',
   },
@@ -38,7 +38,7 @@ export const rules = defineRules([
   },
   {
     id: 'RULE-CATALOG-06', title: 'Unknown stays empty and says "to be confirmed"',
-    description: "time_expectation, client_inputs, deliverable_format, stage_scope and every price are null wherever the firm's current site does not state them. The UI renders a marked \"to be confirmed\" with a tooltip explaining why, never a plausible-looking default: no \"2-3 business days\" we made up, no empty list standing in for \"we do not know\" (an empty client_inputs list means \"nothing needed\" and is a different fact). client_inputs is CTL OS's structured reading of the store's own prerequisites plus the case papers a filing necessarily needs, and it says so on the page until the firm confirms it.",
+    description: "time_expectation, client_inputs, deliverable_format, not_included and stage_scope are read from each product's own store description in the live scrape and are null wherever that description does not state them. The UI renders a marked \"to be confirmed\" with a tooltip explaining why, never a plausible-looking default: no \"2-3 business days\" we made up, no empty list standing in for \"we do not know\" (an empty client_inputs list means \"nothing needed\", a free download, and is a different fact). The store's own order-form questions are the fallback for client_inputs; nothing is invented.",
     category: 'billing', status: 'implemented', pages: ['P-10', 'P-11', 'P-13', 'A-10'],
     source: 'D-025 · docs/platform-principles.md P-09 · prompt 0003 (follow-up)', implementedIn: 'ToBeConfirmed in src/modules/catalog/catalogChrome.tsx; nulls preserved through the seed',
   },

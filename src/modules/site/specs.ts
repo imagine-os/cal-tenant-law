@@ -12,7 +12,7 @@ export const landingSpec = defineSpec({
   logic: [
     'Stage picker is a single-select chip group; the selected stage renders its "where you are", "what we do" and the services indexed under it. "Open this stage" now links into the services menu at /site/services?stage=<board phase> (P-10).',
     'Services list SKU numbers and prices exactly as last indexed from the current site, behind an "unverified" badge and a note; nothing is presented as a confirmed 2026 price (D-025).',
-    'Offices come from the tenants table (kind = office, ordered by sort_order); names are fictional demo offices until the firm confirms the real network (D-023).',
+    'Offices come from the tenants table (kind = office, ordered by sort_order): the eight real offices, cities and coverage as posted on caltenantlaw.com on 2026-09-18 (docs/data/offices.json, D-044); attorney names stay out until the firm confirms (D-023).', 'Stage-picker prices are read from the services table (the live catalog), never from the hand-typed list; the hero poster, the Game Board poster and the three how-it-works tiles are the firm’s own artwork from the illustrations table (D-042).',
     'Video cards come from the curriculum preview in siteData.ts; play opens the tracked lesson in the client app once the learning module ships (C-40, Pass 2).',
   ],
   integrations: ['Services menu (P-10, live)', 'Store checkout (T-080, Pass 2)', 'Intake forms (F-10, Pass 2)', 'Scheduling (F-11, Pass 2)', 'Learning player (C-40, Pass 2)'],

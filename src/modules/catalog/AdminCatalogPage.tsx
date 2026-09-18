@@ -19,7 +19,7 @@ import { IconButton } from '../../components/atom/IconButton/IconButton';
 import { Input } from '../../components/atom/Input/Input';
 import { Toggle } from '../../components/atom/Toggle/Toggle';
 import { serviceHref } from './catalogChrome';
-import { ANY_PHASE, matchesQuery, phaseLabel, phasesOf, servicesCsv, downloadText } from './catalogData';
+import { ANY_PHASE, matchesQuery, phaseLabel, phasesOf, servicesCsv, downloadText, scrapedDate } from './catalogData';
 import { adminCatalogSpec } from './specs';
 import './catalog.css';
 
@@ -38,7 +38,7 @@ export function AdminCatalogPage() {
   const [q, setQ] = useState('');
 
   const catById = useMemo(() => indexById(categories), [categories]);
-  const ordered = useMemo(() => [...categories].sort((a, b) => a.sort_order - b.sort_order), [categories]);
+  const ordered = useMemo(() => categories.filter((c) => !c.hidden).sort((a, b) => a.sort_order - b.sort_order), [categories]);
   const rows = useMemo(
     () => [...services].sort((a, b) => a.sku.localeCompare(b.sku, 'en', { numeric: true })).filter((s) => matchesQuery(s, q)),
     [services, q],
@@ -79,13 +79,13 @@ export function AdminCatalogPage() {
     await data.update<ServiceCategoryRow>('service_categories', b.id, { sort_order: a.sort_order });
     return true;
   };
-  /** Rewrite every row from the repo JSON; returns how many rows actually changed. */
+  /** Rewrite the editable fields of every row from the repo JSON (RULE-CATALOG-04); returns how many rows actually changed. */
   const resetFromRepo = async (): Promise<number> => {
     let changed = 0;
     for (const c of CATALOG.categories) {
       const row = categories.find((r) => r.slug === c.id);
       if (!row) continue;
-      const patch = { label: c.label, sort_order: c.order, phase: phaseId(c.phase), description: c.description ?? null, active: true };
+      const patch: Partial<ServiceCategoryRow> = { label: c.label, sort_order: c.order ?? row.sort_order, phase: phaseId(c.phase), description: c.description ?? null, active: true };
       if (row.label !== patch.label || row.sort_order !== patch.sort_order || row.phase !== patch.phase || row.active !== true) {
         await data.update<ServiceCategoryRow>('service_categories', row.id, patch); changed++;
       }
@@ -94,11 +94,11 @@ export function AdminCatalogPage() {
       const key = serviceKey(s);
       const row = services.find((r) => r.sku === key);
       if (!row) continue;
-      const patch = {
+      const patch: Partial<ServiceRow> = {
         title: cleanTitle(s), category_id: categoryRowId(s.category_id), phase: phaseId(s.phase),
-        price_cents: s.price_cents ?? null, price_note: s.price_note ?? null, verified: !!s.verified, active: true,
+        price_cents: s.price_cents ?? null, price_note: s.price_note || null, verified: !!s.verified, active: true,
       };
-      if (row.title !== patch.title || row.price_cents !== patch.price_cents || row.verified !== patch.verified || row.active !== true || row.phase !== patch.phase) {
+      if (row.title !== patch.title || row.price_cents !== patch.price_cents || row.verified !== patch.verified || row.active !== true || row.phase !== patch.phase || row.price_note !== patch.price_note) {
         await data.update<ServiceRow>('services', row.id, patch); changed++;
       }
     }
@@ -175,7 +175,7 @@ export function AdminCatalogPage() {
         onKeyDown={(e) => { if (e.key === 'Enter') (e.target as HTMLInputElement).blur(); }} />
     ) },
     { key: 'unit', label: t('catalog.a10.colUnit'), value: (r) => r.unit, render: (r) => <span className="xs mono">{r.unit}</span>, hideOnCard: true },
-    { key: 'evidence', label: t('catalog.a10.colEvidence'), value: (r) => r.evidence, render: (r) => <Badge size="sm" tone={r.evidence === 'verified-snippet' ? 'info' : 'warn'}>{r.evidence}</Badge>, hideOnCard: true },
+    { key: 'evidence', label: t('catalog.a10.colEvidence'), value: (r) => r.evidence, render: (r) => <Badge size="sm" tone={r.evidence === 'scraped-live' ? 'success' : r.evidence === 'verified-snippet' ? 'info' : 'warn'}>{r.evidence}</Badge>, hideOnCard: true },
     { key: 'verified', label: t('catalog.a10.colVerified'), align: 'center', width: 110, value: (r) => (r.verified ? 1 : 0), render: (r) => (
       <Toggle size="sm" checked={r.verified} onChange={() => { void toggle(r, 'verified'); }} label={<span className="sr-only">{`${t('catalog.a10.colVerified')} ${r.sku}`}</span>} />
     ) },
@@ -198,7 +198,7 @@ export function AdminCatalogPage() {
       <div className="grid grid-4 cat-admin-stats">
         <StatTile icon="briefcase" label={t('catalog.a10.statTotal')} value={stats.total} />
         <StatTile icon="dollar" label={t('catalog.a10.statPriced')} value={stats.priced} hint={`${stats.total - stats.priced} ${t('catalog.noPrice').toLowerCase()}`} />
-        <StatTile icon="check" label={t('catalog.a10.statVerified')} value={stats.verified} hint={t('catalog.unverified')} />
+        <StatTile icon="check" label={t('catalog.a10.statVerified')} value={stats.verified} hint={t('catalog.unverified', { date: scrapedDate(services[0]?.scraped_at) })} />
         <StatTile icon="gamepad" label={t('catalog.a10.statOffBoard')} value={stats.offBoard} />
       </div>
 
@@ -227,7 +227,7 @@ export function AdminCatalogPage() {
       </Section>
 
       <Section title={t('catalog.a10.sourceTitle')}>
-        <Card padding="md"><p className="small">{t('catalog.a10.sourceBody')}</p></Card>
+        <Card padding="md"><p className="small">{t('catalog.a10.sourceBody', { date: scrapedDate(services[0]?.scraped_at) })}</p></Card>
       </Section>
     </div>
   );

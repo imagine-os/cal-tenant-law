@@ -41,9 +41,9 @@ export const clientBinderSpec = defineSpec({
 
 export const clientLearnSpec = defineSpec({
   code: 'C-03', name: 'Client learning', purpose: 'The firm’s free curriculum as a path: the videos in order, what the tenant has already watched, and which one matters at their square of the board right now.',
-  layout: ['PageHeader', 'NextUp', 'CurriculumList (progress per lesson)'],
-  data: ['cases', 'lessons', 'lesson_progress'], roles: ROLES,
-  logic: ['Lessons ordered by `order`; progress joined by client_user_id + lesson_id.', 'Next up = lowest-order unfinished lesson, lessons mapped to my square first.', 'Marking a lesson watched writes watched_pct = 100 and completed_at through the provider (insert when there is no row yet).'],
+  layout: ['PageHeader', 'Progress (watched / total, hours of video)', 'NextUp (thumbnail, group, length, play / YouTube / mark watched)', 'GroupSections (Legal Videos, Winning Your Eviction Series, The Game Board Series, embedded only) with a row per lesson (thumbnail, length, square, progress)'],
+  data: ['cases', 'lessons', 'lesson_progress', 'illustrations'], roles: ROLES,
+  logic: ['Lessons are the firm’s real library: 33 videos of caltenantlaw.com/pre-consultation-videos in the page’s order and three groups plus three embedded-only videos (docs/data/videos.json, live scrape 2026-09-18, D-043); ordered by `order`, grouped by `group`; progress joined by client_user_id + lesson_id.', 'Next up = lowest-order unfinished lesson, lessons that teach my square (teaches_stage_node_ids) first.', 'Marking a lesson watched writes watched_pct = 100 and completed_at through the provider (insert when there is no row yet).', 'Play opens the YouTube video in a new tab (client.playLesson) until the in-app player with watched state lands (T-078); thumbnails are the firm’s own from the illustrations table.'],
   integrations: ['YouTube (the player is Pass 2, T-078)'], components: ['PageHeader', 'Card', 'Section', 'ProgressBar', 'Button', 'Badge', 'Chip', 'Placeholder', 'Icon'],
   actions: [
     { id: 'client.playLesson', label: 'Play', intent: 'play a lesson video', params: { id: 'id' } },

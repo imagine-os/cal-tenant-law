@@ -59,9 +59,13 @@ export const tables = defineTables([
   { name: 'invoices', label: 'Invoices', description: 'One SKU-priced piece of work (the "legal vending machine"): the store SKU, what it was, the amount as listed and whether it is due, paid or refunded. Stripe is a seam, not wired.', group: 'commerce', titleColumn: 'title', source: 'firm-site-digest §4 store catalog · T-040 / T-044',
     rls: ['client: read own case invoices', 'front_desk: read and write own tenant', 'owner: read every tenant, refund'],
     columns: [col.ref('case_id', 'cases'), col.text('sku', false, 'Store SKU, e.g. 400 Answer to Unlawful Detainer Complaint'), col.text('title'), col.money('amount_cents', false, 'USD cents, as listed'), col.en('status', INVOICE_STATUSES), col.ts('paid_at', true)] },
-  { name: 'lessons', label: 'Lessons (curriculum)', description: 'The firm\'s free videos and articles as an ordered curriculum mapped to board squares: "Winning Your Eviction" 1-7, the procedural Eviction Series, and the topic videos. T-077 replaces this with the full catalog.', group: 'marketing', titleColumn: 'title', source: 'firm-site-digest §5 · brief line 70 · superseded by T-077',
+  { name: 'lessons', label: 'Lessons (curriculum)', description: 'The firm\'s free video library as an ordered curriculum mapped to board squares: the 33 videos of caltenantlaw.com/pre-consultation-videos in the page\'s own order and three groups (Legal Videos, Winning Your Eviction Series, The Game Board Series) plus three videos embedded on article pages only, seeded from docs/data/videos.json (live scrape 2026-09-18, D-038, D-043). The player (T-078) and articles (T-077) come later.', group: 'marketing', titleColumn: 'title', source: 'docs/data/videos.json (live scrape 2026-09-18) · brief line 70 · T-077',
     rls: ['everyone: read (the curriculum is free)', 'marketing / owner: write'],
-    columns: [col.text('title'), col.en('kind', LESSON_KINDS), col.int('order', false, 'Position in the curriculum'), col.text('stage_node_id', true, 'Board node the lesson explains')] },
+    columns: [col.text('title'), col.en('kind', LESSON_KINDS), col.int('order', false, 'Position in the curriculum (the page order on caltenantlaw.com; embedded-only videos follow)'), col.text('stage_node_id', true, 'Board node the lesson explains (first of teaches_stage_node_ids)'),
+      col.text('group', true, 'The site\'s grouping: Legal Videos, Winning Your Eviction Series, The Game Board Series, or embedded only'), col.int('group_order', true, 'Position inside the group'),
+      col.int('duration_seconds', true, 'Length from YouTube; null when YouTube returned no player data'), col.text('youtube_id', true), col.text('youtube_url', true), col.text('thumbnail_url', true, 'Thumbnail on the firm site'),
+      col.text('illustration_id', true, 'illustrations.key of the scraped thumbnail (video:<slug>)'), col.json('teaches_stage_node_ids', true, 'Every board square the video teaches'), col.json('teaches_phases', true), col.text('presenter', true),
+      col.text('source_url', true), col.text('evidence', true, 'scraped-live (D-038)'), col.ts('scraped_at', true)] },
   { name: 'lesson_progress', label: 'Lesson progress', description: 'What a client has watched and how far. Attorneys check this before a consultation (T-078 / L-40); the player itself is Pass 2.', group: 'marketing', titleColumn: 'lesson_id', source: 'brief line 18 · superseded by T-078',
     rls: ['client: read and write own rows', 'attorney / paralegal: read rows of own clients', 'owner: read every tenant'],
     columns: [col.ref('client_user_id', 'users'), col.ref('lesson_id', 'lessons'), col.int('watched_pct'), col.ts('completed_at', true)] },
@@ -80,7 +84,11 @@ export interface ConsultationRow extends BaseRow { client_user_id: string; attor
 export interface IntakeRow extends BaseRow { client_name: string; submitted_at: string; stage_hint: string | null; status: (typeof INTAKE_STATUSES)[number] }
 export interface DocumentRow extends BaseRow { case_id: string; title: string; kind: (typeof DOCUMENT_KINDS)[number]; stage_node_id: string | null; status: (typeof DOCUMENT_STATUSES)[number]; owner_user_id: string | null; served_to: (typeof SERVED_TO)[number] | null }
 export interface InvoiceRow extends BaseRow { case_id: string; sku: string; title: string; amount_cents: number; status: (typeof INVOICE_STATUSES)[number]; paid_at: string | null }
-export interface LessonRow extends BaseRow { title: string; kind: (typeof LESSON_KINDS)[number]; order: number; stage_node_id: string | null }
+export interface LessonRow extends BaseRow {
+  title: string; kind: (typeof LESSON_KINDS)[number]; order: number; stage_node_id: string | null;
+  group: string | null; group_order: number | null; duration_seconds: number | null; youtube_id: string | null; youtube_url: string | null; thumbnail_url: string | null;
+  illustration_id: string | null; teaches_stage_node_ids: string[] | null; teaches_phases: string[] | null; presenter: string | null; source_url: string | null; evidence: string | null; scraped_at: string | null;
+}
 export interface LessonProgressRow extends BaseRow { client_user_id: string; lesson_id: string; watched_pct: number; completed_at: string | null }
 export interface ServiceEventRow extends BaseRow { case_id: string; document_id: string; served_to_user_id: string; served_at: string; method: string; acknowledged_at: string | null }
 export interface MeetConferRow extends BaseRow { case_id: string; requested_by_user_id: string; opposing_user_id: string; topic: string; status: (typeof MEET_CONFER_STATUSES)[number] }

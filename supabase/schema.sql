@@ -390,6 +390,59 @@ alter table public.feedback enable row level security;
 create policy "feedback: tenant read" on public.feedback for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "feedback: staff write" on public.feedback for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
+-- design · Illustrations (firm assets): Every image the firm publishes on caltenantlaw.com and in its store, with where it is used, its alt text, subject tags, style family and the board node / SKU / article / office it illustrates. The assets database behind the store icons on P-10 / P-13, the video thumbnails on C-03 and the D-23 gallery. Copied for the proposal to the firm only; rights stay with the firm.
+-- access / rls intent:
+--   · everyone incl. public: read (the images are already public on the firm site)
+--   · marketing / owner / super_admin: write tags and suggested use
+--   · public: read (rendered where suggested_use says)
+--   · super_admin: browse and tag (D-23)
+create table if not exists public.illustrations (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- illustrations.json id (product-101, category-answer, video-rent-eviction, hero-poster); stable, the seed key
+  key text not null,
+  -- Path in the repo (reference/site-scrape/assets/<file>); the bundle resolves it to a URL
+  file text not null,
+  -- Where the file was downloaded from
+  source_url text not null,
+  -- Site pages that reference the image
+  pages_used jsonb not null,
+  -- Alt text as the site sets it (or the product title)
+  alt text not null,
+  -- Caption or the nearest heading on the page
+  caption text,
+  -- What is depicted ("judge", "sheriff", "calendar/clock", "handshake")
+  subject_tags jsonb not null,
+  -- One of the five style families the scrape identified
+  style_family text not null check (style_family in ('flat-circle-icons', 'outline-cartoon-tiles', 'video-thumbnails', 'pleading-thumbnails', 'photos-and-art')),
+  -- The scrape's description of the style
+  style_note text not null,
+  width integer not null,
+  height integer not null,
+  bytes integer not null,
+  content_type text not null,
+  -- Where CTL OS may use it: brand, store-category:<slug>, service:<sku>, game-board:<node>, video:<slug>, article:<slug>, office:<slug>, nav-tile:<name>
+  suggested_use jsonb not null,
+  -- Copyright line from the scrape; the firm's assets, copied for the proposal only
+  rights text not null,
+  -- scraped-live (D-038)
+  evidence text not null,
+  scraped_at timestamptz not null,
+  -- The firm confirmed CTL OS may use the image where suggested_use says; false until then
+  verified boolean not null default false
+);
+create index if not exists illustrations_tenant_idx on public.illustrations(tenant_id);
+create trigger illustrations_touch before update on public.illustrations for each row execute function public.touch_updated_at();
+alter table public.illustrations enable row level security;
+create policy "illustrations: tenant read" on public.illustrations for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "illustrations: staff write" on public.illustrations for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
 -- people · Intake queue: A caller or web form that is not a client yet: fictional name, what stage they describe, and whether the desk has reviewed or scheduled them. T-063 turns this into the real triage queue.
 -- access / rls intent:
 --   · front_desk / attorney / owner: read and write own tenant
@@ -473,7 +526,7 @@ alter table public.lesson_progress enable row level security;
 create policy "lesson_progress: tenant read" on public.lesson_progress for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "lesson_progress: staff write" on public.lesson_progress for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
--- marketing · Lessons (curriculum): The firm's free videos and articles as an ordered curriculum mapped to board squares: "Winning Your Eviction" 1-7, the procedural Eviction Series, and the topic videos. T-077 replaces this with the full catalog.
+-- marketing · Lessons (curriculum): The firm's free video library as an ordered curriculum mapped to board squares: the 33 videos of caltenantlaw.com/pre-consultation-videos in the page's own order and three groups (Legal Videos, Winning Your Eviction Series, The Game Board Series) plus three videos embedded on article pages only, seeded from docs/data/videos.json (live scrape 2026-09-18, D-038, D-043). The player (T-078) and articles (T-077) come later.
 -- access / rls intent:
 --   · everyone: read (the curriculum is free)
 --   · marketing / owner: write
@@ -488,10 +541,30 @@ create table if not exists public.lessons (
   version integer not null default 1,
   title text not null,
   kind text not null check (kind in ('video', 'article')),
-  -- Position in the curriculum
+  -- Position in the curriculum (the page order on caltenantlaw.com; embedded-only videos follow)
   order integer not null,
-  -- Board node the lesson explains
-  stage_node_id text
+  -- Board node the lesson explains (first of teaches_stage_node_ids)
+  stage_node_id text,
+  -- The site's grouping: Legal Videos, Winning Your Eviction Series, The Game Board Series, or embedded only
+  group text,
+  -- Position inside the group
+  group_order integer,
+  -- Length from YouTube; null when YouTube returned no player data
+  duration_seconds integer,
+  youtube_id text,
+  youtube_url text,
+  -- Thumbnail on the firm site
+  thumbnail_url text,
+  -- illustrations.key of the scraped thumbnail (video:<slug>)
+  illustration_id text,
+  -- Every board square the video teaches
+  teaches_stage_node_ids jsonb,
+  teaches_phases jsonb,
+  presenter text,
+  source_url text,
+  -- scraped-live (D-038)
+  evidence text,
+  scraped_at timestamptz
 );
 create index if not exists lessons_tenant_idx on public.lessons(tenant_id);
 create trigger lessons_touch before update on public.lessons for each row execute function public.touch_updated_at();
@@ -718,6 +791,61 @@ alter table public.presence enable row level security;
 create policy "presence: tenant read" on public.presence for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "presence: staff write" on public.presence for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
+-- commerce · Service categories: The store's own categories. Visible rows are the 20 entries of the /store menu in the firm's order (Request a Consultation, Changes to Prepared Paperwork, Motion to Quash, Default, Discovery by Us / by Them, Demurrer, Answer, Trial Preparation, Settling, Judgment, Appeal, Suing the Landlord, Supplemental, Game Board, Legal Kits, Judges Gone Wild, Extra Services, Free Resources, Legal Ethics Musical). Hidden rows (hidden = true) are the firm's older stage-based Ecwid tree still attached to the products (Paid Legal Services > I'm Being Evicted... > Start Here ...), nested through parent_id; P-13 shows that tree as the outline's top level. Each points at the game-board phase it belongs to so the menu can be read stage by stage.
+-- access / rls intent:
+--   · everyone incl. public: read (the menu is the shop window)
+--   · owner / super_admin: write
+--   · public: read
+--   · owner / super_admin: reorder, rename, describe (A-10)
+create table if not exists public.service_categories (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- Stable id: the site's own /store/<slug> for visible categories (schedule-a-consultation, legal-kits ...) or legacy/<path> for hidden ones; the URL anchor and the seed key
+  slug text not null,
+  -- Parent category in the hidden stage tree (Paid Legal Services > I'm Being Evicted... > The Discovery Phase > Making Them Answer); null for a visible menu category or a hidden root
+  parent_id uuid references public.service_categories(id) on delete set null,
+  -- True for the legacy stage-based Ecwid categories that are not in the /store menu but are still attached to products; P-10 hides them, P-13 shows them as the top level
+  hidden boolean not null default false,
+  -- Full path of a hidden category as the store names it ("Paid Legal Services > I'm Being Evicted... > Start Here"); null for visible categories
+  path text,
+  -- Icon name from the library (src/components/atom/Icon) for the outline tree and the menu; decoration only
+  icon text,
+  -- Category name shown on P-10 / P-13 (the /store menu label; the Ecwid name when it differs is in description)
+  label text not null,
+  -- Position in the firm's own order (the /store menu; for hidden categories the order the store's older navigation used)
+  sort_order integer not null,
+  -- Game-board phase id (docs/game-board/nodes.json phases[].id); null = applies at any stage
+  phase text,
+  -- One line in the firm voice, shown under the category heading
+  description text,
+  -- The category's own description as the store prints it (visible categories)
+  store_description text,
+  -- The Ecwid name when it differs from the /store menu label ("Scheduled Consultation" for Request a Consultation)
+  ecwid_name text,
+  -- Depth in the tree the row belongs to: 1 for a visible menu category, 1..4 for the hidden legacy tree
+  depth integer,
+  -- illustrations.id of the firm's own category image (flat circle icon or cartoon tile), shown as the category header on P-10 / P-13
+  illustration_id text,
+  -- The category page on caltenantlaw.com (visible categories only)
+  store_url text,
+  -- Ecwid category id (store 1197002) for visible categories; null for hidden ones (the storefront API returns them by name only)
+  ecwid_category_id integer,
+  -- Hidden from the public menu when false (an admin choice; distinct from hidden, which is a fact about the store)
+  active boolean not null default false
+);
+create index if not exists service_categories_tenant_idx on public.service_categories(tenant_id);
+create index if not exists service_categories_parent_id_idx on public.service_categories(parent_id);
+create trigger service_categories_touch before update on public.service_categories for each row execute function public.touch_updated_at();
+alter table public.service_categories enable row level security;
+create policy "service_categories: tenant read" on public.service_categories for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "service_categories: staff write" on public.service_categories for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
 -- documents · Service events: A document served on someone, with the method and the acknowledgement. The opposing-counsel portal (X-01) acknowledges here; proof of service objects arrive with T-054.
 -- access / rls intent:
 --   · staff: read and write own tenant
@@ -747,6 +875,93 @@ create trigger service_events_touch before update on public.service_events for e
 alter table public.service_events enable row level security;
 create policy "service_events: tenant read" on public.service_events for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "service_events: staff write" on public.service_events for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- commerce · Services (SKUs): One purchasable piece of legal work: a SKU number, what it is, which board squares it belongs to, the price as posted on caltenantlaw.com on 2026-09-18 and the plain-language "what you get" (the full store description). Prices carry price_note, evidence, scraped_at and verified so the UI can never present an unconfirmed figure as a quote (RULE-CATALOG-01, D-038).
+-- access / rls intent:
+--   · everyone incl. public: read where active
+--   · owner / super_admin: write price, title, active and verified
+--   · nobody else writes: a price change is a business decision, logged through A-10
+--   · public / client: read (P-10, P-11, P-13)
+--   · front_desk / attorney: read when quoting the next move
+--   · owner / super_admin: edit and verify (A-10)
+create table if not exists public.services (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- Store SKU as printed on the site (101, 400, 610, HOTLINE, HOURLY); the public id, the /site/services/:sku URL and the key invoices.sku joins on
+  sku text not null,
+  -- False when the firm lists the item by name with no SKU number: the card says "no SKU listed" instead of showing an invented one (every scraped row has one; kept for the two non-store rows and future items)
+  sku_listed boolean not null default false,
+  -- Service name as posted (without the "NNN - " prefix the store prints; that full form is store_title)
+  title text not null,
+  -- The product title exactly as the store prints it ("001 - Habitability Worksheet")
+  store_title text,
+  -- Visible /store menu category this service is filed under
+  category_id uuid not null references public.service_categories(id) on delete set null,
+  -- Position of the product inside its category as the store lists it (the order P-13 uses); null for the two non-store rows
+  store_order integer,
+  -- Row ids of the hidden stage-tree leaves this product is also filed under ([] = only in the visible menu); P-13's top level
+  legacy_category_ids jsonb not null,
+  -- Every category path the store attaches to the product, as arrays of names, exactly as Ecwid returns them
+  store_paths jsonb not null,
+  -- Board square ids from docs/game-board/nodes.json this service belongs to; [] = not on the eviction board (deposit, lease, hourly top-ups); the board link is left off
+  stage_node_ids jsonb not null,
+  -- Primary game-board phase; null = any stage / a matter of its own
+  phase text,
+  -- USD cents as posted; 0 = free; null only when the site lists no price (none today)
+  price_cents integer,
+  -- What qualifies the price ("minimum charge; extra time at $330/h", "per item")
+  price_note text,
+  -- How it is charged
+  unit text not null check (unit in ('flat', 'per_hour', 'per_10min', 'per_item', 'minimum', 'deposit', 'free')),
+  -- The thing the client receives, in one line (our reading of the store description)
+  deliverable text not null,
+  -- The store's full product description, in the firm's own words
+  what_you_get text not null,
+  -- What has to be true first (a consultation, a filed answer, a trial date), from the store copy
+  prerequisites text,
+  -- Timing the store states (download links expire in 72 hours; responses due 10 days after mailing); never a promised date
+  turnaround_note text,
+  -- What the store says this item does NOT include ("not filed in court; a motion to compel needs an attorney"); null when the description says nothing
+  not_included text,
+  -- illustrations.id of the firm's own product icon (the navy / orange circle from the Ecwid listing), shown on cards and outline rows in place of a library glyph
+  illustration_id text,
+  -- Where the fact came from on the live site (store product URL, /all-services)
+  source_urls jsonb not null,
+  -- Icon name from the library, chosen from the category and the deliverable format; decoration only
+  icon text,
+  -- How long it takes or how much time it buys, quoted from the item's own store text ("30-minute", "about an hour", "an extra 3 weeks up front"); null = to be confirmed
+  time_expectation text,
+  -- What the client has to provide before we can start, read from the item's own store description and its order form ("What you received (PDF or fax), when you got it, how you physically got it"). [] = nothing needed (free download); null = the store does not say, so it is to be confirmed
+  client_inputs jsonb,
+  -- What arrives: a PDF, a call, a kit, a court filing, a letter, a written review or a printed item; CTL OS's reading of the category and title, null = to be confirmed
+  deliverable_format text check (deliverable_format in ('pdf', 'call', 'kit', 'filing', 'letter', 'review', 'print')),
+  -- The board phases this service covers, in words, for the outline view
+  stage_scope text,
+  -- Product image on the Ecwid CDN, as the store shows it
+  image_url text,
+  -- Ecwid product id (store 1197002); null for the hotline and hourly rows, which are not store items
+  ecwid_product_id integer,
+  -- scraped-live = read from the live store on scraped_at (D-038); verified-snippet / inferred = the 0.1.0 reconstruction (D-025, superseded)
+  evidence text not null check (evidence in ('scraped-live', 'verified-snippet', 'inferred')),
+  -- When the live site was read for this row; the "as listed on caltenantlaw.com on <date>" badge shows this date
+  scraped_at timestamptz,
+  -- An attorney confirmed the price and description; false shows the "as listed on caltenantlaw.com on <date> · unverified" badge everywhere
+  verified boolean not null default false,
+  -- Hidden from the public menu when false
+  active boolean not null default false
+);
+create index if not exists services_tenant_idx on public.services(tenant_id);
+create index if not exists services_category_id_idx on public.services(category_id);
+create trigger services_touch before update on public.services for each row execute function public.touch_updated_at();
+alter table public.services enable row level security;
+create policy "services: tenant read" on public.services for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "services: staff write" on public.services for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
 -- core · Tenants (offices): The CTL network and each regional attorney office under the banner. tenant_id on every row points here; the network row is its own tenant.
 -- access / rls intent:
@@ -834,6 +1049,7 @@ alter table public.documents add constraint documents_tenant_id_fk foreign key (
 alter table public.documents add constraint documents_owner_user_id_fk foreign key (owner_user_id) references public.users(id) on delete set null;
 alter table public.feedback add constraint feedback_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.feedback add constraint feedback_user_id_fk foreign key (user_id) references public.users(id) on delete set null;
+alter table public.illustrations add constraint illustrations_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.intakes add constraint intakes_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.invoices add constraint invoices_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.lesson_progress add constraint lesson_progress_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
@@ -851,8 +1067,10 @@ alter table public.plan_passes add constraint plan_passes_tenant_id_fk foreign k
 alter table public.plan_tasks add constraint plan_tasks_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.presence add constraint presence_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.presence add constraint presence_user_id_fk foreign key (user_id) references public.users(id) on delete set null;
+alter table public.service_categories add constraint service_categories_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.service_events add constraint service_events_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.service_events add constraint service_events_served_to_user_id_fk foreign key (served_to_user_id) references public.users(id) on delete set null;
+alter table public.services add constraint services_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 
 -- ---------------------------------------------------------------------------------------------
 -- RLS notes per role (refine per table when the Supabase backend lands; the intent lines above each table are the spec):

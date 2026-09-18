@@ -8,6 +8,8 @@
  */
 import type { SeedCtx } from './index';
 import { addDays, at } from './rng';
+import videosJson from '../../../docs/data/videos.json';
+import { illustrationFor } from './illustrations';
 
 export const order = 50;
 
@@ -156,31 +158,21 @@ const SKUS: [sku: string, title: string, cents: number][] = [
 ];
 
 /** The firm's free curriculum (firm-site-digest §5); T-077 replaces it with the full catalog and the real video ids. */
-const LESSONS: [id: string, title: string, kind: string, order: number, node: string | null][] = [
-  ['les_wye_1', 'Winning Your Eviction, Part 1: Taking Control', 'video', 1, 'start'],
-  ['les_wye_2', 'Winning Your Eviction, Part 2: Nonpayment of Rent', 'video', 2, 'eviction-notice-or-lease-ends'],
-  ['les_wye_3', 'Winning Your Eviction, Part 3: Perform Covenant or Quit', 'video', 3, 'eviction-notice-or-lease-ends'],
-  ['les_wye_4', 'Winning Your Eviction, Part 4: Notice to Quit', 'video', 4, 'eviction-notice-or-lease-ends'],
-  ['les_wye_5', 'Winning Your Eviction, Part 5: Foreclosure Eviction', 'video', 5, 'foreclosure-tenants-remove-to-federal-court'],
-  ['les_wye_6', 'Winning Your Eviction, Part 6: No Fault Eviction', 'video', 6, 'eviction-notice-or-lease-ends'],
-  ['les_wye_7', 'Winning Your Eviction, Part 7: The Game Board', 'video', 7, 'start'],
-  ['les_es_quash', 'Eviction Series: Motion to Quash', 'video', 10, 'service-bad-file-motion-to-quash'],
-  ['les_es_demurrer', 'Eviction Series: Demurrer', 'video', 11, 'demurrer'],
-  ['les_es_default', 'Eviction Series: Default', 'video', 12, 'default-entered-by-clerk'],
-  ['les_es_answer', 'Eviction Series: Answer', 'video', 13, 'answer-to-complaint'],
-  ['les_es_discovery', 'Eviction Series: Discovery', 'video', 14, 'discovery-requests'],
-  ['les_es_sj', 'Eviction Series: Summary Judgment', 'video', 15, 'summary-judgment-motion-filed-by-landlord'],
-  ['les_es_trial', 'Eviction Series: Trial', 'video', 16, 'trial'],
-  ['les_es_appeal', 'Eviction Series: Appeal', 'video', 17, 'notice-of-appeal'],
-  ['les_renters_rights', 'General Renters’ Rights', 'video', 20, null],
-  ['les_sue_landlord', 'Sue Your Landlord', 'video', 21, 'you-stay-and-sue'],
-  ['les_how_we_do_this', 'How We Do This', 'video', 22, null],
-];
+/**
+ * The curriculum is the firm's real video library (docs/data/videos.json, scraped live 2026-09-18, D-043): 33 videos
+ * in the page's own order and groups, plus three embedded only on article pages. Lesson ids are `les_<video id>`.
+ */
+interface VideoJson { id: string; title: string; order_on_page: number | null; group: string; group_order: number | null; youtube_id: string; youtube_url: string; duration_seconds: number | null; thumbnail: string | null; teaches_stage_node_ids: string[]; teaches_phases: string[]; presenter: string | null; source_url: string; evidence: string; scraped_at: string }
+const VIDEOS = (videosJson as unknown as { videos: VideoJson[] }).videos;
+const lessonId = (videoId: string): string => `les_${videoId.replace(/[^a-z0-9]+/gi, '_')}`;
+const LESSONS = [...VIDEOS]
+  .sort((a, b) => (a.order_on_page ?? 900 + a.id.length) - (b.order_on_page ?? 900 + b.id.length))
+  .map((v, i) => ({ v, id: lessonId(v.id), order: v.order_on_page ?? 100 + i }));
 
-/** [client user id, watched %, completed] for the demo client (Dana Morales). */
+/** [lesson, watched %] for the demo client (Dana Morales): the Winning Your Eviction series first, then the stage she is at. */
 const DEMO_PROGRESS: [lesson: string, pct: number][] = [
-  ['les_wye_1', 100], ['les_wye_2', 100], ['les_wye_7', 100], ['les_es_quash', 100],
-  ['les_wye_3', 62], ['les_es_answer', 45], ['les_es_discovery', 12], ['les_renters_rights', 100],
+  [lessonId('take-control'), 100], [lessonId('nonpayment-of-rent'), 100], [lessonId('the-game-board'), 100], [lessonId('motion-to-quash'), 100],
+  [lessonId('perform-covenant'), 62], [lessonId('answer'), 45], [lessonId('discovery'), 12], [lessonId('dont-panic'), 100],
 ];
 
 const INTAKE_NAMES: [name: string, node: string | null, status: string][] = [
@@ -280,15 +272,20 @@ export function seed(ctx: SeedCtx): void {
   }
 
   // --- curriculum ---------------------------------------------------------
-  for (const [id, title, kind, ord, node] of LESSONS) {
-    add('lessons', { id, tenant_id: 'ten_network', title, kind, order: ord, stage_node_id: node });
+  for (const { v, id, order: ord } of LESSONS) {
+    add('lessons', {
+      id, tenant_id: 'ten_network', title: v.title, kind: 'video', order: ord, stage_node_id: v.teaches_stage_node_ids?.[0] ?? null,
+      group: v.group, group_order: v.group_order ?? null, duration_seconds: v.duration_seconds ?? null, youtube_id: v.youtube_id, youtube_url: v.youtube_url, thumbnail_url: v.thumbnail ?? null,
+      illustration_id: illustrationFor(`video:${v.id}`)?.id ?? null, teaches_stage_node_ids: v.teaches_stage_node_ids ?? [], teaches_phases: v.teaches_phases ?? [], presenter: v.presenter ?? null,
+      source_url: v.source_url, evidence: v.evidence, scraped_at: v.scraped_at,
+    });
   }
   let lp = 0;
   for (const [lesson, pct] of DEMO_PROGRESS) {
     add('lesson_progress', { id: `lpr_${String(++lp).padStart(3, '0')}`, tenant_id: 'ten_inland', client_user_id: 'usr_client', lesson_id: lesson, watched_pct: pct, completed_at: pct >= 100 ? iso(addDays(now, -r.int(1, 20))) : null });
   }
   // a few other clients have started, so L-40 ("what my client has watched") is not empty in Pass 2
-  for (const [i, lesson] of ['les_wye_1', 'les_es_answer', 'les_es_discovery', 'les_wye_2'].entries()) {
+  for (const [i, lesson] of [lessonId('take-control'), lessonId('answer'), lessonId('discovery'), lessonId('nonpayment-of-rent')].entries()) {
     add('lesson_progress', { id: `lpr_${String(++lp).padStart(3, '0')}`, tenant_id: CASES[i + 3][3], client_user_id: CASES[i + 3][1], lesson_id: lesson, watched_pct: [100, 80, 30, 100][i], completed_at: [100, 80, 30, 100][i] >= 100 ? iso(addDays(now, -r.int(2, 30))) : null });
   }
 

@@ -10,7 +10,7 @@ export const FEEDBACK_STATUSES = ['new', 'triaged', 'waiting', 'fixed', 'wontfix
 export const FEEDBACK_TRIAGE = ['fix', 'ask', 'wontfix'] as const;
 
 export const tables = defineTables([
-  { name: 'tenants', label: 'Tenants (offices)', description: 'The CTL network and each regional attorney office under the banner. tenant_id on every row points here; the network row is its own tenant.', group: 'core', titleColumn: 'name', source: 'brief 1.3 (seven regional offices) · D-foundation',
+  { name: 'tenants', label: 'Tenants (offices)', description: 'The CTL network and each regional attorney office under the banner. tenant_id on every row points here; the network row is its own tenant.', group: 'core', titleColumn: 'name', source: 'docs/data/offices.json (eight offices as posted on caltenantlaw.com, 2026-09-18) · brief 1.3 · D-044',
     rls: ['everyone signed in: read own tenant and the network row', 'owner / super_admin: write'],
     columns: [col.text('slug'), col.text('name'), col.text('short_name'), col.en('kind', ['network', 'office']), col.text('city', true), col.text('region', true, 'Coverage copy, e.g. Inland Empire'), col.text('address', true), col.text('phone', true), col.text('email', true), col.text('timezone'), col.json('settings', true), col.int('sort_order'), col.bool('active')] },
   { name: 'users', label: 'Users', description: 'Login principals: staff, clients, opposing counsel. Role is the primary role; permissions derive from it (src/auth/permissions.ts).', group: 'core', titleColumn: 'name', source: 'foundation',

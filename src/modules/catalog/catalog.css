@@ -161,3 +161,15 @@
   .cat-meta { grid-template-columns: 1fr; }
   .cat-meta dd { margin-bottom: var(--sp-2); }
 }
+
+/* ---- the firm's own store artwork (illustrations table, D-042) ---- */
+.cat-firmicon { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 auto; border-radius: 50%; object-fit: contain; background: var(--color-surface-2); }
+.cat-firmicon.is-glyph { color: var(--color-text-muted); border: 1px solid var(--color-border); }
+.cat-cathead { display: flex; align-items: center; gap: var(--sp-4); margin-bottom: var(--sp-4); }
+.cat-cathead img { width: calc(64px * var(--scale)); height: calc(64px * var(--scale)); object-fit: contain; border-radius: var(--r-md); background: var(--color-surface-2); flex: 0 0 auto; }
+.cat-cathead p { margin: 0; color: var(--color-text-muted); font-size: var(--fs-sm); max-width: 78ch; }
+.cat-row .cat-firmicon { width: calc(24px * var(--scale)); height: calc(24px * var(--scale)); }
+.cat-outline-tools .seg { flex-wrap: wrap; }
+.cat-detail-media { display: flex; gap: var(--sp-4); align-items: flex-start; }
+.cat-detail-media img { width: calc(96px * var(--scale)); height: calc(96px * var(--scale)); object-fit: contain; border-radius: var(--r-md); background: var(--color-surface-2); flex: 0 0 auto; }
+@media print { .cat-firmicon { display: none; } .cat-cathead img { display: none; } }

@@ -16,7 +16,7 @@ import { SiteFrame } from '../site/chrome';
 import { PriceTag, ServiceCard, SkuPill, boardHref, serviceHref } from './catalogChrome';
 import {
   ANY_PHASE, KIT_CATEGORY, inBand, matchesPhase, matchesQuery, nodeLabel, phaseLabel, phasesOf, useCatalog, usePhaseOptions,
-  type PriceBand,
+  type PriceBand, scrapedDate, useIllustrationSrc,
 } from './catalogData';
 import { servicesSpec } from './specs';
 import './catalog.css';
@@ -33,7 +33,8 @@ export function ServicesPage() {
   const { t, lang } = useI18n();
   const navigate = useNavigate();
   const [params, setParams] = useSearchParams();
-  const { categories, services } = useCatalog();
+  const { menuCategories: categories, services } = useCatalog();
+  const illustrationSrc = useIllustrationSrc();
 
   const stage = params.get('stage');
   const [q, setQ] = useState('');
@@ -193,6 +194,12 @@ export function ServicesPage() {
             return (
               <Section key={c.id} id={c.slug} title={c.label} description={c.description ?? undefined}
                 actions={c.phase ? <Chip size="sm" icon="gamepad">{phaseLabel(c.phase)}</Chip> : undefined}>
+                {(illustrationSrc(c.illustration_id) || c.store_description) && (
+                  <div className="cat-cathead">
+                    {illustrationSrc(c.illustration_id) && <img src={illustrationSrc(c.illustration_id) as string} alt="" loading="lazy" decoding="async" />}
+                    {c.store_description && <p>{c.store_description}</p>}
+                  </div>
+                )}
                 <div className="cat-grid">
                   {rows.map((s) => <ServiceCard key={s.id} service={s} />)}
                 </div>
@@ -205,7 +212,8 @@ export function ServicesPage() {
       <div className="container">
         <Section title={t('catalog.p10.sourceTitle')}>
           <Card padding="md" className="cat-sourcenote">
-            <p className="small">{t('catalog.p10.sourceBody')}</p>
+            <p className="small">{t('catalog.p10.sourceBody', { date: scrapedDate(services[0]?.scraped_at) })}</p>
+            <p className="xs faint">{t('catalog.firmIconNote', { date: scrapedDate(services[0]?.scraped_at) })}</p>
             <p className="xs faint">{lang === 'es' ? 'Fuente: docs/data/services-catalog.json' : 'Source: docs/data/services-catalog.json'}</p>
             <div className="row wrap" style={{ gap: 8 }}>
               <Link to="/site/services/outline"><Button variant="secondary" size="sm" icon="list">{t('catalog.nav.outline')}</Button></Link>

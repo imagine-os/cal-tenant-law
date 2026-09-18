@@ -14,7 +14,8 @@ import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
 import { Card } from '../../components/molecule/Card/Card';
 import { Tooltip } from '../../components/molecule/Tooltip/Tooltip';
 import { useI18n } from '../../i18n/I18nProvider';
-import { dollars, formatKey, nodeLabel, phaseLabel, phasesOf, priceKind, unitSuffix, ANY_PHASE } from './catalogData';
+import { dollars, formatKey, iconOf, nodeLabel, phaseLabel, phasesOf, priceKind, unitSuffix, scrapedDate, useIllustrationSrc, ANY_PHASE } from './catalogData';
+import type { IconName } from '../../components/atom/Icon/Icon';
 
 /** Where the menu links into the board. GB-01 reads `?node=` and opens that square. */
 export const boardHref = (nodeId: string): string => `/board?node=${encodeURIComponent(nodeId)}`;
@@ -41,20 +42,35 @@ export function PriceTag({ service, size = 'md' }: { service: ServiceRow; size?:
         {kind === 'free' ? t('catalog.free') : kind === 'none' ? t('catalog.noPrice') : dollars(service.price_cents as number)}
       </span>
       {kind === 'listed' && suffix && <span className="cat-price-unit">{suffix}</span>}
-      {kind !== 'none' && <UnverifiedBadge verified={service.verified} />}
+      {kind !== 'none' && <UnverifiedBadge verified={service.verified} scrapedAt={service.scraped_at} />}
     </span>
   );
 }
 
-/** The badge every unverified figure carries, with the tooltip that explains what "as listed" means. */
-export function UnverifiedBadge({ verified }: { verified: boolean }) {
+/**
+ * The badge every unverified figure carries: "as listed on caltenantlaw.com on <date> · unverified", with the tooltip
+ * that explains what that means (RULE-CATALOG-01, D-038). The date is the row's scraped_at.
+ */
+export function UnverifiedBadge({ verified, scrapedAt }: { verified: boolean; scrapedAt?: string | null }) {
   const { t } = useI18n();
   if (verified) return <Badge tone="success" size="sm" variant="text">{t('catalog.verified')}</Badge>;
+  const date = scrapedDate(scrapedAt);
   return (
-    <Tooltip content={t('catalog.unverifiedTip')}>
-      <span className="cat-unverified" tabIndex={0}>{t('catalog.unverified')}</span>
+    <Tooltip content={t('catalog.unverifiedTip', { date })}>
+      <span className="cat-unverified" tabIndex={0}>{t('catalog.unverified', { date })}</span>
     </Tooltip>
   );
+}
+
+/**
+ * The firm's own icon for a service or category (the navy / orange circle from the Ecwid listing, or the cartoon
+ * category tile), from the illustrations table; the library glyph when the scrape has none (D-042). Decorative:
+ * the row's text carries the meaning, so the image has an empty alt.
+ */
+export function FirmIcon({ illustrationKey, fallback, size = 28, className = '' }: { illustrationKey: string | null | undefined; fallback: IconName; size?: number; className?: string }) {
+  const src = useIllustrationSrc()(illustrationKey);
+  if (src) return <img className={`cat-firmicon ${className}`} src={src} alt="" width={size} height={size} loading="lazy" decoding="async" />;
+  return <span className={`cat-firmicon is-glyph ${className}`} aria-hidden style={{ width: size, height: size }}><Icon name={fallback} size={Math.round(size * 0.6)} /></span>;
 }
 
 /** "Where this fits on the board": one chip per square, each opening GB-01 on that square. */
@@ -107,7 +123,10 @@ export function ServiceCard({ service: s, onOpen, compact = false }: ServiceCard
   return (
     <Card padding="md" className={`cat-card ${compact ? 'is-compact' : ''}`}>
       <div className="cat-card-top">
-        <SkuPill service={s} />
+        <span className="row" style={{ gap: 8, alignItems: 'center' }}>
+          <FirmIcon illustrationKey={s.illustration_id} fallback={iconOf(s.icon)} size={32} />
+          <SkuPill service={s} />
+        </span>
         <PriceTag service={s} />
       </div>
       <h3 className="cat-card-title">

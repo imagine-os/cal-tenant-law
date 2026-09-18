@@ -6,6 +6,8 @@
 import { useMemo } from 'react';
 import { useTable } from '../../data/DataContext';
 import type { DeliverableFormat, ServiceCategoryRow, ServiceRow, ServiceUnit } from '../../data/schema/catalog';
+import type { IllustrationRow } from '../../data/schema/illustrations';
+import { illustrationUrl } from '../../data/illustrationAssets';
 import { ICON_NAMES, type IconName } from '../../components/atom/Icon/Icon';
 import { PHASES, nodeById, phaseById, nextIdsOf } from '../board/boardData';
 import type { Lang } from '../../i18n/types';
@@ -64,7 +66,16 @@ export function matchesQuery(s: ServiceRow, q: string): boolean {
   return hay.includes(n);
 }
 
-export function useCatalog(): { categories: ServiceCategoryRow[]; services: ServiceRow[]; byCategory: Record<string, ServiceRow[]> } {
+/** Store order inside a category (the position the store lists the product at), SKU order as the tie-break. */
+export const byStoreOrder = (a: ServiceRow, b: ServiceRow): number =>
+  (a.store_order ?? 999) - (b.store_order ?? 999) || a.sku.localeCompare(b.sku, 'en', { numeric: true });
+
+/**
+ * The catalog from the provider. `categories` is every row (visible menu + hidden legacy tree, D-041);
+ * `menuCategories` is the 20 visible /store menu categories P-10 and A-10 iterate; `byCategory` lists services in
+ * store order under their visible category.
+ */
+export function useCatalog(): { categories: ServiceCategoryRow[]; menuCategories: ServiceCategoryRow[]; services: ServiceRow[]; byCategory: Record<string, ServiceRow[]> } {
   const { rows: categories } = useTable<ServiceCategoryRow>('service_categories');
   const { rows: services } = useTable<ServiceRow>('services');
   return useMemo(() => {
@@ -72,9 +83,22 @@ export function useCatalog(): { categories: ServiceCategoryRow[]; services: Serv
     const svcs = [...services].sort((a, b) => a.sku.localeCompare(b.sku, 'en', { numeric: true }));
     const byCategory: Record<string, ServiceRow[]> = {};
     for (const s of svcs) (byCategory[s.category_id] ??= []).push(s);
-    return { categories: cats, services: svcs, byCategory };
+    for (const k of Object.keys(byCategory)) byCategory[k].sort(byStoreOrder);
+    return { categories: cats, menuCategories: cats.filter((c) => !c.hidden), services: svcs, byCategory };
   }, [categories, services]);
 }
+
+/** illustrations.key -> bundled URL, for the firm's own icons on cards, rows and category headers (D-042). */
+export function useIllustrationSrc(): (key: string | null | undefined) => string | null {
+  const { rows } = useTable<IllustrationRow>('illustrations');
+  return useMemo(() => {
+    const byKey: Record<string, string> = Object.fromEntries(rows.map((r) => [r.key, r.file]));
+    return (key) => (key ? illustrationUrl(byKey[key]) : null);
+  }, [rows]);
+}
+
+/** The day the row was read from the live site, for the "as listed on caltenantlaw.com on <date>" badge. */
+export const scrapedDate = (iso: string | null | undefined): string => (iso ? iso.slice(0, 10) : '2026-09-18');
 
 export function useService(sku: string | undefined): ServiceRow | null {
   const { services } = useCatalog();
@@ -157,37 +181,62 @@ export interface OutlineNode {
   kind: 'category' | 'service';
   label: string;
   icon: IconName;
+  /** illustrations.key of the firm's own icon / tile for this row, when the scrape has one (D-042). */
+  illustrationKey: string | null;
   category?: ServiceCategoryRow;
   service?: ServiceRow;
   children: OutlineNode[];
 }
 
+/** P-13 has two trees: the store as the firm shows it today, and the firm's older stage map still attached to the products (D-041). */
+export type OutlineView = 'store' | 'stages';
+export const OUTLINE_VIEWS: OutlineView[] = ['store', 'stages'];
+
 /**
- * P-13: the catalog as a tree. Root categories in menu order, their child categories nested, services under
- * whichever category owns them. A category with no services and no children is still shown, because an empty
- * shelf in the store is a fact about the store.
+ * P-13: the catalog as a tree.
+ *  - `store`: the 20 visible /store menu categories in menu order, each with its products in the order the store
+ *    lists them (two levels, exactly what a visitor sees on caltenantlaw.com/store).
+ *  - `stages`: the hidden legacy tree ("Consultation", "I'm Being Evicted...", "Legal Papers", "Sue Your Landlord",
+ *    four levels deep) with every product under each hidden leaf it is filed in, plus a trailing "Store menu only"
+ *    branch for the products the old tree never filed (kits, supplemental payments, free items).
+ * A category with no services and no children is still shown: an empty shelf in the store is a fact about the store.
  */
-export function useOutline(): { roots: OutlineNode[]; allIds: string[]; branchIds: string[] } {
+export function useOutline(view: OutlineView = 'store'): { roots: OutlineNode[]; allIds: string[]; branchIds: string[]; unfiledCount: number } {
   const { categories, services } = useCatalog();
   return useMemo(() => {
     const active = services.filter((s) => s.active);
-    const kids: Record<string, ServiceCategoryRow[]> = {};
-    for (const c of categories) if (c.parent_id) (kids[c.parent_id] ??= []).push(c);
-    const svcOf = (catId: string): OutlineNode[] =>
-      active.filter((s) => s.category_id === catId).map((s) => ({
-        id: `svc:${s.sku}`, kind: 'service' as const, label: s.title, icon: iconOf(s.icon), service: s, children: [],
-      }));
-    const build = (c: ServiceCategoryRow): OutlineNode => ({
-      id: `cat:${c.slug}`, kind: 'category', label: c.label, icon: iconOf(c.icon, 'layers'), category: c,
-      children: [...(kids[c.id] ?? []).sort((a, b) => a.sort_order - b.sort_order).map(build), ...svcOf(c.id)],
+    const svcNode = (s: ServiceRow, scope: string): OutlineNode => ({
+      id: `svc:${s.sku}@${scope}`, kind: 'service', label: s.title, icon: iconOf(s.icon), illustrationKey: s.illustration_id ?? null, service: s, children: [],
     });
-    const roots = categories.filter((c) => !c.parent_id).sort((a, b) => a.sort_order - b.sort_order).map(build);
+    const catNode = (c: ServiceCategoryRow, children: OutlineNode[]): OutlineNode => ({
+      id: `cat:${c.slug}`, kind: 'category', label: c.label, icon: iconOf(c.icon, 'layers'), illustrationKey: c.illustration_id ?? null, category: c, children,
+    });
+    let roots: OutlineNode[] = [];
+    let unfiledCount = 0;
+    if (view === 'store') {
+      roots = categories.filter((c) => !c.hidden).sort((a, b) => a.sort_order - b.sort_order)
+        .map((c) => catNode(c, active.filter((s) => s.category_id === c.id).sort(byStoreOrder).map((s) => svcNode(s, c.slug))));
+    } else {
+      const hidden = categories.filter((c) => c.hidden);
+      const kids: Record<string, ServiceCategoryRow[]> = {};
+      for (const c of hidden) if (c.parent_id) (kids[c.parent_id] ??= []).push(c);
+      const build = (c: ServiceCategoryRow): OutlineNode => catNode(c, [
+        ...(kids[c.id] ?? []).sort((a, b) => a.sort_order - b.sort_order).map(build),
+        ...active.filter((s) => (s.legacy_category_ids ?? []).includes(c.id)).sort(byStoreOrder).map((s) => svcNode(s, c.slug)),
+      ]);
+      roots = hidden.filter((c) => !c.parent_id).sort((a, b) => a.sort_order - b.sort_order).map(build);
+      const unfiled = active.filter((s) => (s.legacy_category_ids ?? []).length === 0).sort(byStoreOrder);
+      unfiledCount = unfiled.length;
+      if (unfiled.length) {
+        roots.push({ id: 'cat:legacy-unfiled', kind: 'category', label: 'Store menu only', icon: 'grid', illustrationKey: null, children: unfiled.map((s) => svcNode(s, 'unfiled')) });
+      }
+    }
     const allIds: string[] = [];
     const branchIds: string[] = [];
     const walk = (n: OutlineNode) => { allIds.push(n.id); if (n.children.length) branchIds.push(n.id); n.children.forEach(walk); };
     roots.forEach(walk);
-    return { roots, allIds, branchIds };
-  }, [categories, services]);
+    return { roots, allIds, branchIds, unfiledCount };
+  }, [categories, services, view]);
 }
 
 /** Depth-first list of the rows a given expansion state actually shows (the tree's roving-focus order). */

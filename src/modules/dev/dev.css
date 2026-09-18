@@ -25,3 +25,24 @@
 .rule-verify { margin-left: 6px; vertical-align: middle; }
 .rule-status-btn { border: 0; background: none; padding: 0; min-height: 32px; display: inline-flex; align-items: center; }
 .actions-result pre { max-height: 240px; }
+
+/* D-23 illustrations gallery */
+.ill-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(calc(150px * var(--scale)), 100%), 1fr)); gap: var(--sp-3); }
+.ill-grid > li { min-width: 0; }
+.ill-card { display: flex; flex-direction: column; gap: 4px; width: 100%; min-width: 0; overflow: hidden; min-height: 44px; padding: var(--sp-2); text-align: left; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--r-md); color: inherit; cursor: pointer; font: inherit; }
+.ill-card:hover { border-color: var(--color-primary); }
+.ill-card:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+.ill-card.is-open { border-color: var(--color-primary); box-shadow: 0 0 0 2px var(--color-focus-halo); }
+.ill-thumb { display: flex; align-items: center; justify-content: center; aspect-ratio: 1; background: var(--color-surface-2); border-radius: var(--r-sm); overflow: hidden; }
+.ill-thumb img { max-width: 100%; max-height: 100%; object-fit: contain; }
+.ill-alt { font-size: var(--fs-sm); line-height: 1.3; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.ill-meta { color: var(--color-text-muted); }
+.ill-uses { display: flex; flex-wrap: wrap; gap: 4px; min-width: 0; }
+.ill-uses > * { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ill-meta { overflow-wrap: anywhere; }
+.ill-missing { font-size: var(--fs-xs); color: var(--color-text-muted); padding: var(--sp-2); }
+.ill-preview { display: flex; justify-content: center; background: var(--color-surface-2); border-radius: var(--r-md); padding: var(--sp-3); }
+.ill-preview img { max-width: 100%; max-height: 360px; object-fit: contain; }
+.ill-dl { display: grid; grid-template-columns: minmax(110px, auto) 1fr; gap: var(--sp-2) var(--sp-4); margin: 0; }
+.ill-dl dt { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-text-muted); }
+.ill-dl dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }

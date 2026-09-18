@@ -1,14 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useActions } from '../../actions/useActions';
 import { useI18n } from '../../i18n/I18nProvider';
 import { Section } from '../../components/molecule/Section/Section';
 import { Card } from '../../components/molecule/Card/Card';
 import { Button } from '../../components/atom/Button/Button';
 import { Icon } from '../../components/atom/Icon/Icon';
+import { SegmentedControl } from '../../components/molecule/SegmentedControl/SegmentedControl';
 import { SiteFrame } from '../site/chrome';
-import { DeliverableFormatText, PriceTag, SkuPill, ToBeConfirmed, serviceHref } from './catalogChrome';
-import { flattenOutline, useCatalog, useOutline, type OutlineNode } from './catalogData';
+import { DeliverableFormatText, FirmIcon, PriceTag, SkuPill, ToBeConfirmed, serviceHref } from './catalogChrome';
+import { OUTLINE_VIEWS, flattenOutline, scrapedDate, useCatalog, useOutline, type OutlineNode, type OutlineView } from './catalogData';
 import { outlineSpec } from './specs';
 import './catalog.css';
 
@@ -24,14 +25,17 @@ import './catalog.css';
 export function OutlinePage() {
   const { t } = useI18n();
   const navigate = useNavigate();
-  const { roots, branchIds } = useOutline();
-  const { categories, services } = useCatalog();
+  const [params, setParams] = useSearchParams();
+  const view: OutlineView = params.get('view') === 'stages' ? 'stages' : 'store';
+  const setView = useCallback((v: OutlineView) => { setParams((p) => { const n = new URLSearchParams(p); if (v === 'store') n.delete('view'); else n.set('view', v); return n; }, { replace: true }); }, [setParams]);
+  const { roots, branchIds, unfiledCount } = useOutline(view);
+  const { menuCategories, services } = useCatalog();
   const [open, setOpen] = useState<Set<string>>(() => new Set(roots.map((r) => r.id)));
   const [focusId, setFocusId] = useState<string | null>(null);
   const treeRef = useRef<HTMLDivElement | null>(null);
 
-  // Roots open on first load, so the page reads as a table of contents rather than a wall.
-  useEffect(() => { setOpen((o) => (o.size === 0 && roots.length ? new Set(roots.map((r) => r.id)) : o)); }, [roots]);
+  // Roots open on first load and whenever the view switches, so the page reads as a table of contents rather than a wall.
+  useEffect(() => { setOpen(new Set(roots.map((r) => r.id))); }, [roots]);
 
   const rows = useMemo(() => flattenOutline(roots, open), [roots, open]);
   const current = focusId && rows.some((r) => r.node.id === focusId) ? focusId : rows[0]?.node.id ?? null;
@@ -93,9 +97,16 @@ export function OutlinePage() {
       return { ok: true, message: `Opened ${hit.title}` };
     },
     'catalog.printOutline': () => { window.print(); return { ok: true, message: 'Opened the print dialog' }; },
+    'catalog.outlineView': ({ view: v }) => {
+      const key = String(v ?? '') as OutlineView;
+      if (!OUTLINE_VIEWS.includes(key)) return { ok: false, message: `view must be one of ${OUTLINE_VIEWS.join(', ')}` };
+      setView(key);
+      return { ok: true, message: key === 'stages' ? "Showing the firm's stage map" : 'Showing the store menu' };
+    },
   });
 
   const priced = services.filter((s) => s.active && s.price_cents != null).length;
+  const date = scrapedDate(services[0]?.scraped_at);
 
   return (
     <SiteFrame>
@@ -104,13 +115,15 @@ export function OutlinePage() {
           <div className="eyebrow eyebrow-accent">{t('catalog.p13.eyebrow')}</div>
           <h1 className="display-sm">{t('catalog.p13.title')}</h1>
           <p className="lead">{t('catalog.p13.lead')}</p>
-          <p className="xs" style={{ color: 'var(--color-hero-muted)' }}>{t('catalog.p13.counts', { cats: categories.length, svcs: services.filter((s) => s.active).length, priced })}</p>
+          <p className="xs" style={{ color: 'var(--color-hero-muted)' }}>{t('catalog.p13.counts', { cats: menuCategories.length, svcs: services.filter((s) => s.active).length, priced, date })}</p>
         </Card>
       </div>
 
       <div className="container">
-        <Section title={t('catalog.p13.treeLabel')} description={t('catalog.p13.keys')}
+        <Section title={t('catalog.p13.treeLabel')} description={<>{view === 'store' ? t('catalog.p13.storeDesc') : t('catalog.p13.stagesDesc', { unfiled: unfiledCount })} {t('catalog.p13.keys')}</>}
           actions={<div className="row wrap cat-outline-tools" style={{ gap: 8 }}>
+            <SegmentedControl size="sm" ariaLabel={t('catalog.p13.view')} value={view} onChange={setView}
+              options={[{ value: 'store', label: t('catalog.p13.viewStore'), icon: 'grid' }, { value: 'stages', label: t('catalog.p13.viewStages'), icon: 'gamepad' }]} />
             <Button size="sm" variant="outline" icon="expand" onClick={expandAll}>{t('catalog.p13.expandAll')}</Button>
             <Button size="sm" variant="outline" icon="collapse" onClick={collapseAll}>{t('catalog.p13.collapseAll')}</Button>
             <Button size="sm" variant="secondary" icon="copy" onClick={() => window.print()}>{t('catalog.p13.print')}</Button>
@@ -141,7 +154,7 @@ export function OutlinePage() {
                       {branch ? (
                         <span className="cat-row-chev" aria-hidden><Icon name={isOpen ? 'chevron-down' : 'chevron-right'} size={16} /></span>
                       ) : <span className="cat-row-chev is-empty" aria-hidden />}
-                      <span className="cat-row-icon" aria-hidden><Icon name={node.icon} size={16} /></span>
+                      <span className="cat-row-icon" aria-hidden><FirmIcon illustrationKey={node.illustrationKey} fallback={node.icon} size={24} /></span>
                       {s ? <SkuPill service={s} /> : null}
                       <span className="cat-row-label">{node.label}</span>
                       {node.kind === 'category' && <span className="cat-row-count xs faint">{node.children.length}</span>}
@@ -166,7 +179,7 @@ export function OutlinePage() {
               })}
             </div>
           </Card>
-          <p className="xs faint cat-printnote">{t('catalog.p13.printNote')}</p>
+          <p className="xs faint cat-printnote">{t('catalog.p13.printNote', { date })} {t('catalog.firmIconNote', { date })}</p>
         </Section>
       </div>
     </SiteFrame>
