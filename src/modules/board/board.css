@@ -1,0 +1,70 @@
+/* Board module pages (GB-01..GB-03). The board itself is styled by the GameBoard organism. */
+
+.board-toolbar { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; width: 100%; }
+.board-search { flex: 1 1 260px; min-width: 0; max-width: 520px; }
+
+.board-chips { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
+
+.board-results {
+  display: flex; flex-direction: column; gap: var(--sp-2);
+  padding: var(--sp-3);
+  border: 1px solid var(--color-border-card); border-radius: var(--r-card);
+  background: var(--color-surface);
+}
+
+.board-credit { margin-top: var(--sp-3); max-width: 90ch; }
+
+.board-drawer-title { font-size: var(--fs-lg-2); line-height: 1.25; margin: 0; color: var(--color-title); }
+
+.board-detail-h { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-text-faint); margin: 0; }
+.board-detail-note { border-left: 3px solid var(--color-warn); padding-left: var(--sp-3); }
+
+.board-moves { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.board-move {
+  display: flex; flex-direction: column; gap: var(--sp-2);
+  padding: var(--sp-3);
+  border: 1px solid var(--color-border-card); border-radius: var(--r-md);
+  background: var(--color-surface-2);
+}
+.board-move-head { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+.board-move-label { margin: 0; font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--color-heading); }
+
+/* GB-02 "You are here" / "What happens next" */
+.board-here { display: grid; gap: var(--sp-4); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 900px) { .board-here { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.board-here-title { margin: 0; font-family: var(--font-display); font-size: var(--fs-xl-2); line-height: 1.2; color: var(--color-title); }
+
+.board-history { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.board-history li { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.board-history-when { font-size: var(--fs-2xs); color: var(--color-text-faint); min-width: 7ch; }
+
+/* GB-03 board + if-then panel */
+.board-split { display: grid; gap: var(--sp-4); grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 1200px) { .board-split { grid-template-columns: minmax(0, 1.6fr) minmax(320px, .9fr); } }
+.board-split-panel { max-height: none; }
+@media (min-width: 1200px) { .board-split-panel { max-height: 78vh; overflow-y: auto; } }
+
+.board-open-detail {
+  min-height: 44px; padding: var(--sp-1) var(--sp-3);
+  border: 1px solid var(--color-border-primary); border-radius: var(--r-pill);
+  background: transparent; color: var(--color-primary-text);
+  font-size: var(--fs-xs); font-weight: var(--fw-semibold); cursor: pointer;
+}
+.board-open-detail:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
+
+.board-ifthen-title { margin: 0; font-family: var(--font-display); font-size: var(--fs-lg); color: var(--color-title); }
+.board-scenario { border-top: 1px solid var(--color-border-subtle); padding-top: var(--sp-3); }
+.board-scenario-title { margin: 0 0 var(--sp-2); font-size: var(--fs-xs); }
+.board-scenario-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-3); }
+.board-scenario-item {
+  display: flex; flex-direction: column; gap: var(--sp-2);
+  padding: var(--sp-3);
+  border-radius: var(--r-md);
+  background: var(--color-surface-2);
+  border-left: 4px solid var(--color-border-strong);
+}
+.board-scenario[data-scenario='positive'] .board-scenario-item { border-left-color: var(--board-positive-fg); }
+.board-scenario[data-scenario='negative'] .board-scenario-item { border-left-color: var(--board-negative-fg); }
+.board-scenario[data-scenario='neutral'] .board-scenario-item { border-left-color: var(--board-neutral-fg); }
+.board-scenario-then { margin: 0; font-size: var(--fs-sm); color: var(--color-heading); }
+.board-scenario-item p { margin: 0; }
