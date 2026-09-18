@@ -1,0 +1,26 @@
+import type { StringTable } from '../../i18n/types';
+
+export const strings: StringTable = {
+  'desk.title': { en: 'Front desk today', es: 'Recepción hoy' },
+  'desk.sub': { en: 'Run the day: consultations, the intake queue, calls to return and what is waiting to be paid.', es: 'Organice el día: consultas, la fila de admisión, llamadas por devolver y lo que falta pagar.' },
+  'desk.consultsToday': { en: 'Consultations today', es: 'Consultas de hoy' },
+  'desk.consultsWeek': { en: 'Later this week', es: 'Más adelante esta semana' },
+  'desk.intakeQueue': { en: 'Intake queue', es: 'Fila de admisión' },
+  'desk.callsToReturn': { en: 'Calls to return', es: 'Llamadas por devolver' },
+  'desk.paymentsPending': { en: 'Payments pending', es: 'Pagos pendientes' },
+  'desk.quickActions': { en: 'Quick actions', es: 'Acciones rápidas' },
+  'desk.newIntake': { en: 'New intake', es: 'Nueva admisión' },
+  'desk.bookConsult': { en: 'Book a consultation', es: 'Reservar consulta' },
+  'desk.review': { en: 'Review', es: 'Revisar' },
+  'desk.schedule': { en: 'Schedule', es: 'Programar' },
+  'desk.markHeld': { en: 'Mark as held', es: 'Marcar como realizada' },
+  'desk.noConsults': { en: 'No consultations booked for today.', es: 'No hay consultas reservadas para hoy.' },
+  'desk.noIntakes': { en: 'The intake queue is empty.', es: 'La fila de admisión está vacía.' },
+  'desk.noPayments': { en: 'Nothing waiting to be paid.', es: 'Nada pendiente de pago.' },
+  'desk.callsBody': { en: 'The call log with hotline minutes (VoiceStamps) arrives with the front-desk pass; until then, calls live in the phone system.', es: 'El registro de llamadas con los minutos de la línea directa (VoiceStamps) llega en la siguiente etapa; por ahora, las llamadas viven en el sistema telefónico.' },
+  'desk.openCallLog': { en: 'Open the call log', es: 'Abrir el registro de llamadas' },
+  'desk.asListed': { en: 'Prices as listed on the firm site; not a quote.', es: 'Precios según el sitio del bufete; no es una cotización.' },
+  'desk.office': { en: 'Office', es: 'Oficina' },
+  'desk.unpaid': { en: 'Unpaid', es: 'Sin pagar' },
+  'desk.network': { en: 'Whole network', es: 'Toda la red' },
+};

@@ -1,0 +1,60 @@
+/* Layout for the seven role homes. Tokens only (no raw colours, no fixed design width): the grids widen with the
+   viewport so 1920-3840 gains columns instead of whitespace (P-01), and every row keeps a 44 px target (P-03). */
+
+.homes-tiles { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.homes-cols { display: grid; gap: var(--sp-4); grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 1100px) { .homes-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 2200px) { .homes-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.homes-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--sp-2); }
+.homes-item {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap;
+  min-height: var(--target-min); padding: var(--sp-3); border: 1px solid var(--color-border-card);
+  border-radius: var(--r-card); background: var(--color-surface);
+}
+.homes-item.is-late { border-color: var(--color-danger); background: var(--color-danger-bg); }
+.homes-item-main { flex: 1 1 14rem; min-width: 0; }
+.homes-item-title { font-weight: var(--fw-semibold); color: var(--color-heading); }
+.homes-item-meta { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; font-size: var(--fs-xs); color: var(--color-text-muted); }
+.homes-item-side { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+
+.homes-link { color: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: var(--sp-1); min-height: var(--target-min); }
+.homes-link:hover .homes-item-title, .homes-link:focus-visible .homes-item-title { text-decoration: underline; }
+.homes-link-inline { color: var(--color-primary); text-decoration: none; font-weight: var(--fw-medium); }
+.homes-link-inline:hover { text-decoration: underline; }
+
+.homes-late { color: var(--color-danger); font-weight: var(--fw-semibold); }
+.homes-num { font-variant-numeric: tabular-nums; }
+
+/* Bilingual body copy: English first, Spanish under it in muted type (P-11). */
+.homes-bi { display: grid; gap: var(--sp-1); }
+.homes-bi .homes-bi-alt { color: var(--color-text-muted); font-size: var(--fs-sm); }
+
+/* Front-desk / client day list: time on the left, rule down the middle. */
+.homes-timeline { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.homes-timeline > li { display: flex; gap: var(--sp-4); padding: var(--sp-3) 0; border-top: 1px solid var(--color-border-subtle); min-height: var(--target-min); }
+.homes-timeline > li:first-child { border-top: 0; }
+.homes-time { flex: 0 0 5.5rem; font-variant-numeric: tabular-nums; font-weight: var(--fw-semibold); color: var(--color-heading); }
+
+/* Client app (PhoneShell) cards. */
+.homes-phone { display: flex; flex-direction: column; gap: var(--sp-4); padding: var(--sp-4) var(--sp-4) var(--sp-8); }
+.homes-phone h1 { font-size: var(--fs-xl); line-height: var(--lh-title); margin: 0; }
+.homes-phone h2 { font-size: var(--fs-md); margin: 0 0 var(--sp-2); }
+.homes-hero { display: grid; gap: var(--sp-2); }
+.homes-hero-stage { font-family: var(--font-display); font-size: var(--fs-lg); color: var(--color-heading); }
+.homes-pay-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-3); }
+.homes-amount { font-variant-numeric: tabular-nums; font-weight: var(--fw-bold); color: var(--color-heading); }
+
+/* Stage grouping headers (assistant home, binder). */
+.homes-stage-head { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; margin: var(--sp-4) 0 var(--sp-2); }
+.homes-stage-head h3 { margin: 0; font-size: var(--fs-md); color: var(--color-heading); }
+
+/* Owner radar: office rows with a bar. */
+.homes-bar-row { display: grid; grid-template-columns: minmax(7rem, 12rem) 1fr auto; gap: var(--sp-3); align-items: center; min-height: var(--target-min); }
+@media (max-width: 520px) { .homes-bar-row { grid-template-columns: 1fr auto; } .homes-bar-row > .homes-bar { grid-column: 1 / -1; } }
+
+.homes-bar { min-width: 0; }
+
+/* A Chip inside a DataTable card-mode cell (a flex row) must be allowed to shrink so its label ellipsizes
+   instead of pushing the page sideways at 360-390 px. */
+.homes-chip { min-width: 0; }

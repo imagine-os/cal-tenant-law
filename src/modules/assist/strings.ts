@@ -1,0 +1,25 @@
+import type { StringTable } from '../../i18n/types';
+
+export const strings: StringTable = {
+  'assist.title': { en: 'My queue', es: 'Mi fila' },
+  'assist.sub': { en: 'Everything assigned to you, the documents to prepare by board square, the filings due and the client uploads to file.', es: 'Todo lo asignado a usted, los documentos por preparar según la casilla del tablero, los escritos por presentar y los archivos del cliente por guardar.' },
+  'assist.lateItems': { en: 'Late items', es: 'Pendientes con retraso' },
+  'assist.myAssignments': { en: 'My assignments', es: 'Mis tareas' },
+  'assist.docsToPrepare': { en: 'Documents to prepare', es: 'Documentos por preparar' },
+  'assist.filingsDue': { en: 'Filings due', es: 'Escritos por presentar' },
+  'assist.uploadsToFile': { en: 'Client uploads to file', es: 'Archivos del cliente por guardar' },
+  'assist.all': { en: 'All', es: 'Todas' },
+  'assist.todo': { en: 'To do', es: 'Por hacer' },
+  'assist.inProgress': { en: 'In progress', es: 'En curso' },
+  'assist.blocked': { en: 'Blocked', es: 'Bloqueadas' },
+  'assist.done': { en: 'Done', es: 'Hechas' },
+  'assist.start': { en: 'Start', es: 'Empezar' },
+  'assist.complete': { en: 'Complete', es: 'Completar' },
+  'assist.prepare': { en: 'Prepare', es: 'Preparar' },
+  'assist.fileIt': { en: 'File it', es: 'Guardar' },
+  'assist.nothingLate': { en: 'Nothing is late. Good.', es: 'Nada va con retraso. Bien.' },
+  'assist.nothingHere': { en: 'Nothing here.', es: 'Nada por aquí.' },
+  'assist.noUploads': { en: 'No client uploads waiting.', es: 'No hay archivos del cliente esperando.' },
+  'assist.networkView': { en: 'Whole network', es: 'Toda la red' },
+  'assist.open': { en: 'Open', es: 'Abiertas' },
+};
