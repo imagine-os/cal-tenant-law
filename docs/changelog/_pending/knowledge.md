@@ -45,7 +45,7 @@ New routes (13, all `built`):
 | `/legal/changes` | K-12 | docs | staff |
 | `/legal/topics/:slug` | K-13 | docs | staff |
 
-New actions (18, the WebMCP tools and voice vocabulary these pages add):
+New actions (24, the WebMCP tools and voice vocabulary these pages add):
 
 `docs.open {path}`, `docs.jumpToHeading {id}`, `docs.toggleGroup {group}`, `docs.search {q}`, `docs.filter {folder}`, `docs.openResult {path}`, `docs.filterLog {q}`, `docs.setLogKind {kind}`, `docs.openEntry {path}`, `manual.setLang {lang}`, `manual.openChapter {slug}`, `manual.filterRole {role}`, `manual.markRead {slug}`, `manual.markStep {slug, step}`, `manual.setChapterLang {lang}`, `manual.jumpToSection {id}`, `manual.openDecision {slug}`, `manual.filterPart {part}`, `legal.openTopic {slug}`, `legal.markVerified {citation}` (Placeholder), `legal.filterTopic {topic}`, `legal.filterCurrency {flag}`, `legal.openChange {citation}`, `legal.openStatute {topic}`.
 
