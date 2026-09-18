@@ -2,6 +2,8 @@
 
 CTL OS is the operations system for California Tenant Law (caltenantlaw.com): public website, tenant app, staff and attorney dashboards, the eviction game board, ops manual, docs and dev tools in one codebase, live at https://imagine-os.github.io/cal-tenant-law/.
 
+**Version 0.1.1** (2026-09-18): the firm's site scraped live (96 store products with posted prices, both store hierarchies, 33 videos, 8 offices, 202 illustrations, 51 statutes cited; every fact `scraped-live`, `verified: false`, D-038), the services menu as a surface (P-10 menu by board stage, P-11 service detail, P-12 how it works, P-13 outline as store menu or the firm's stage map, A-10 catalog admin; real cost bands on 45 board squares), three switchable visual directions (Clear sky / Board game / Courthouse from every top bar and `?brand=`; Justin picks one), the client curriculum from the real video library, real offices (no attorney names), the firm's illustrations as an assets table with the D-23 gallery: 56 routes, 55 built. Release notes: `docs/changelog/0014-release-0.1.1.md`.
+
 **Version 0.1.0** (Pass 1, 2026-09-18): foundation (scaffold, paper / ink / sky / amber design system light / dark with `--scale` bands to 4K, 54-component library with metas, mock data layer with tenant-scoped schema and generated RLS SQL, actions bus, rules registry, en / es), the testing hub with live role previews, the D-21 canvas and D-22 simulator, the PM viewer (kanban, list, tick timeline, dependency graph, passes), the public site and proposal, the Unlawful Detainer game board (explore, case mode, cost / if-then overlay), seven role homes, the docs viewer, the ops manual with live blocks and the legal memory viewer: 50 routes, 49 built. Mock data only; Supabase, Stripe and Company-OS are seams. Release notes: `docs/changelog/0010-pass-1-integration-and-release-0.1.0.md`.
 
 **Live:** https://imagine-os.github.io/cal-tenant-law/ deploys from `main` by `.github/workflows/pages.yml` once Pages is enabled (Settings > Pages > Source = "GitHub Actions"; the workflow token cannot create the site). The hub at `/#/` opens every surface with demo users per role. Locally `npm run build && npm run preview` serves the same build at `http://localhost:4173/#/`.
@@ -28,6 +30,7 @@ npm run plan:sync      # regenerate docs/kanban.md task lines from tasks.json
 | --- | --- | --- | --- |
 | Testing hub | `/#/` (HUB-01), `/#/no-access` (HUB-02) | HUB | everyone |
 | Public website + proposal | `/#/site` (P-01), `/#/site/proposal` (P-02), `/replaces` (P-03), `/roadmap` (P-04) | P | visitors |
+| Services menu (the store as a menu) | `/#/site/services` (P-10), `/#/site/services/:sku` (P-11), `/#/site/how-it-works` (P-12), `/#/site/services/outline?view=store\|stages` (P-13); admin `/#/admin/catalog` (A-10) | P, A | visitors; owner / super admin for A-10 |
 | Client (tenant) app | `/#/app` (C-01), `/app/binder` (C-02), `/app/learn` (C-03), `/app/pay` (C-04); PhoneShell | C | clients |
 | Front desk | `/#/desk` (F-01) | F | front desk |
 | Attorneys | `/#/counsel` (L-01) | L | attorneys |
@@ -41,7 +44,7 @@ npm run plan:sync      # regenerate docs/kanban.md task lines from tasks.json
 | Docs & knowledge | `/#/docs` (K-01), `/docs/search` (K-02), `/docs/plan-log` (K-03) | K | staff |
 | Legal memory | `/#/legal` (K-10), `/legal/statutes` (K-11), `/legal/changes` (K-12), `/legal/topics/:slug` (K-13) | K | staff |
 | Marketing engine | `/#/marketing` (MK-01, stub) | MK | marketing |
-| Dev tools | `/#/dev/tokens` `components` `specs` `tables` `rules` `routes` `actions` (D-01..D-20), `/#/dev/canvas` (D-21), `/#/dev/simulator` (D-22) | D | super admin |
+| Dev tools | `/#/dev/tokens` `components` `specs` `tables` `rules` `routes` `actions` (D-01..D-20), `/#/dev/canvas` (D-21), `/#/dev/simulator` (D-22), `/#/dev/illustrations` (D-23, the firm's illustrations as an assets database) | D | super admin |
 
 Stack: Vite 5 + React 18 + TypeScript strict, HashRouter, CSS tokens, Source Serif 4 + Source Sans 3, mock data in localStorage behind a `DataProvider`, actions bus (`window.__ctl.actions`), en / es everywhere. All demo people are fictional.
 
