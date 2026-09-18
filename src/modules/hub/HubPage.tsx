@@ -24,7 +24,7 @@ import { BrandArt } from '../../components/atom/BrandArt/BrandArt';
 import { RoleSwitcher } from '../../components/molecule/RoleSwitcher/RoleSwitcher';
 import { LangToggle } from '../../components/molecule/LangToggle/LangToggle';
 import { SegmentedControl } from '../../components/molecule/SegmentedControl/SegmentedControl';
-import type { BrandName } from '../../design/tokens';
+import { scaleBands, type BrandName } from '../../design/tokens';
 import { PhoneFrame } from '../../components/organism/PhoneFrame/PhoneFrame';
 import { DeviceFrame } from '../../components/organism/DeviceFrame/DeviceFrame';
 import { frameRoute, frameSrc, isFramed } from '../showcase/frameSession';
@@ -110,8 +110,23 @@ function useLivePreviews(cap = PREVIEW_CAP) {
     if (prev && prev !== el) { ioRef.current?.unobserve(prev); map.delete(key); }
     if (el) { map.set(key, el); ioRef.current?.observe(el); }
   }, []);
-  const live = useMemo(() => new Set([...visible].slice(0, cap)), [visible, cap]);
+  const live = useMemo(() => new Set([...visible].sort((a, b) => PREVIEW_ORDER.indexOf(a) - PREVIEW_ORDER.indexOf(b)).slice(0, cap)), [visible, cap]);
   return { register, live };
+}
+
+/** Cards in document order, so the cap always favours the ones highest on the page. */
+const PREVIEW_ORDER = HUB_GROUPS.flatMap((g) => g.surfaces);
+
+/** The `--scale` band in force (tokens.ts), so JS-sized art (the phone preview) grows with the type at 2560 / 3840. */
+function useUiScale(): number {
+  const pick = () => (typeof window === 'undefined' ? 1 : [...scaleBands].reverse().find((b) => window.innerWidth >= b.minWidth)?.scale ?? 1);
+  const [scale, setScale] = useState(pick);
+  useEffect(() => {
+    const on = () => setScale(pick());
+    window.addEventListener('resize', on);
+    return () => window.removeEventListener('resize', on);
+  }, []);
+  return scale;
 }
 
 /* ---------- sections ---------- */
@@ -138,7 +153,6 @@ const HERO_ART: Record<BrandName, 'sky' | 'board' | 'ledger'> = { clearsky: 'sky
 
 function Hero() {
   const { t } = useI18n();
-  const { devMode } = useSession();
   const { brand } = useTheme();
   return (
     <section className="container container-wide hub-hero">
@@ -149,34 +163,49 @@ function Hero() {
         <p className="hub-hero-line">{t('hub.tagline')}</p>
       </div>
       <div className="hub-hero-art" aria-hidden><BrandArt variant={HERO_ART[brand]} /></div>
+    </section>
+  );
+}
+
+/** Floating session bar: sits on the band's bottom edge from outside it, so the band's overflow clipping can never cut it (it did, in dark mode on a wide monitor). */
+function SessionBar() {
+  const { t } = useI18n();
+  const { devMode } = useSession();
+  return (
+    <div className="container container-wide hub-session-wrap">
       <div className="hub-session">
         <span className="hub-session-label"><Icon name="user" size={18} /> {t('hub.session')}</span>
         <RoleSwitcher />
         {devMode && <p className="hub-session-dev xs"><Icon name="spec" size={14} /> {t('hub.devModeOn')} <Kbd>Ctrl</Kbd> + <Kbd>.</Kbd></p>}
       </div>
-    </section>
+    </div>
   );
 }
 
 interface PreviewProps { card: SurfaceCard; path: string; live: boolean; register: (key: string, el: Element | null) => void }
 
-/** Small live preview of a surface, as its own demo role (frame params), loaded only once it is in view. The client app previews in a phone; the rest in a desktop frame. */
+/** The desktop preview renders its page at this CSS viewport (a real desktop layout), then DeviceFrame scales it to fill the 16:10 box edge to edge. */
+const PREVIEW_VIEWPORT = { width: 1280, height: 800 } as const;
+const PREVIEW_ASPECT = PREVIEW_VIEWPORT.width / PREVIEW_VIEWPORT.height;
+
+/** Small live preview of a surface, as its own demo role (frame params), loaded only once it is in view. The client app previews in a phone; the rest at a desktop viewport. While a frame is not live (out of view, over the cap, or inside another frame) a static window wireframe in the card's hue fills the same box. */
 function SurfacePreview({ card, path, live, register }: PreviewProps) {
   const { t, lang } = useI18n();
   const { theme, brand } = useTheme();
+  const ui = useUiScale();
   const framed = isFramed();
   const opts = { as: card.role, dev: false, lang, theme, brand } as const;
   const label = `${t(`hub.surface.${card.key}`)} · ${roleLabel(card.role, lang)}`;
   const phone = card.preview === 'phone';
   return (
-    <div className={`hub-preview ${phone ? 'hub-preview-phone' : 'hub-preview-desktop'}`} data-preview={card.key} ref={(el) => register(card.key, el)}>
+    <div className={`hub-preview ${phone ? 'hub-preview-phone' : 'hub-preview-desktop'}`} data-preview={card.key} data-live={live && !framed ? 'true' : 'false'} ref={(el) => register(card.key, el)}>
       {live && !framed
         ? (phone
-            ? <PhoneFrame src={frameSrc(path, opts)} scale={0.4} title={label} />
-            : <DeviceFrame device="desktop" width={1280} height={800} label={label} route={frameRoute(path, opts)} />)
+            ? <PhoneFrame src={frameSrc(path, opts)} scale={0.4 * ui} title={label} />
+            : <DeviceFrame viewport={PREVIEW_VIEWPORT} aspect={PREVIEW_ASPECT} caption={false} edge label={label} route={frameRoute(path, opts)} />)
         : (phone
             ? <div className="hub-card-art" aria-hidden><BrandArt variant="phone" /></div>
-            : <div className="hub-preview-idle" aria-hidden><Icon name={card.icon} size={28} /></div>)}
+            : <div className="hub-preview-idle" aria-hidden><BrandArt variant="window" /><span className="hub-preview-idle-mark"><Icon name={card.icon} size={24} strokeWidth={1.75} /></span></div>)}
     </div>
   );
 }
@@ -333,6 +362,7 @@ export function HubPage() {
         <HubHeader />
         <Hero />
       </div>
+      <SessionBar />
       <main className="hub-main" id="main">
         <SurfaceGrid enter={enter} />
         <TestingHub open={openTool} />

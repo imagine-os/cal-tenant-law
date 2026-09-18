@@ -1,8 +1,8 @@
 import './BrandArt.css';
 
-export type BrandArtVariant = 'sky' | 'phone' | 'board' | 'ledger';
+export type BrandArtVariant = 'sky' | 'phone' | 'board' | 'ledger' | 'window';
 export interface BrandArtProps {
-  /** sky = the clearing sky (hero art, fills its box); board = the game-board path (hero art for the Board game direction); ledger = ruled paper with a section mark (Courthouse); phone = a compact client-app phone with a board-position card. */
+  /** sky = the clearing sky (hero art, fills its box); board = the game-board path (hero art for the Board game direction); ledger = ruled paper with a section mark (Courthouse); phone = a compact client-app phone with a board-position card; window = a desktop app window wireframe in `currentColor` (the hub's static preview tile while a live frame is not loaded). */
   variant?: BrandArtVariant;
   className?: string;
   /** Accessible name; omit for decorative use (aria-hidden). */
@@ -13,7 +13,8 @@ export interface BrandArtProps {
  * Brand illustration, inline SVG only (no images): the firm's line "Your cloudy day is about to clear up" drawn as a
  * sky where clouds part around an amber sun (Clear sky), the eviction board as a winding path of squares in the
  * poster's KEY colours with a token on "you are here" (Board game), ruled paper with a section mark (Courthouse), and a
- * compact phone for the client-app card. Colours come from tokens, so every variant reads in light and dark and on ink.
+ * compact phone for the client-app card, and a desktop window wireframe (`window`, currentColor only) that stands in for a live
+ * preview. Colours come from tokens, so every variant reads in light and dark and on ink.
  */
 export function BrandArt({ variant = 'sky', className = '', title }: BrandArtProps) {
   const a11y = title ? { role: 'img' as const, 'aria-label': title } : { 'aria-hidden': true as const };
@@ -44,6 +45,30 @@ export function BrandArt({ variant = 'sky', className = '', title }: BrandArtPro
         <rect x="26" y="252" width="168" height="32" className="ba-phone-nav" />
         <rect x="26" y="252" width="168" height="32" rx="24" className="ba-phone-nav" />
         {[0, 1, 2, 3].map((i) => <rect key={i} x={54 + i * 34} y={262} width="16" height="12" rx="4" className={i === 0 ? 'ba-nav-active' : 'ba-nav'} />)}
+      </svg>
+    );
+  }
+  if (variant === 'window') {
+    return (
+      <svg className={`brandart brandart-window ${className}`} viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" {...a11y}>
+        {title && <title>{title}</title>}
+        <rect width="320" height="200" className="ba-win-bg" />
+        <rect width="320" height="22" className="ba-win-bar" />
+        {[12, 24, 36].map((x) => <circle key={x} cx={x} cy="11" r="3.5" className="ba-win-dot" />)}
+        <rect x="0" y="22" width="76" height="178" className="ba-win-side" />
+        <rect x="12" y="36" width="30" height="7" rx="3.5" className="ba-win-side-active" />
+        {[56, 72, 88, 104, 120].map((y, i) => <rect key={y} x="12" y={y} width={i === 1 ? 48 : 38} height="6" rx="3" className={i === 1 ? 'ba-win-side-active' : 'ba-win-side-line'} />)}
+        <rect x="96" y="40" width="112" height="12" rx="4" className="ba-win-title" />
+        <rect x="96" y="60" width="172" height="6" rx="3" className="ba-win-line" />
+        {[0, 1, 2].map((i) => (
+          <g key={i}>
+            <rect x={96 + i * 72} y="80" width="64" height="44" rx="8" className="ba-win-card" />
+            <rect x={106 + i * 72} y="90" width="30" height="6" rx="3" className="ba-win-line" />
+            <rect x={106 + i * 72} y="104" width="20" height="10" rx="3" className="ba-win-num" />
+          </g>
+        ))}
+        <rect x="96" y="138" width="208" height="62" rx="8" className="ba-win-card" />
+        {[150, 164, 178].map((y) => <rect key={y} x="106" y={y} width={y === 150 ? 120 : 188} height="5" rx="2.5" className="ba-win-line" />)}
       </svg>
     );
   }

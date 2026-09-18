@@ -24,6 +24,12 @@
 .ba-square-0, .ba-square-1 { fill: var(--board-positive-bg); stroke: var(--board-positive-fg); } .ba-square-2 { fill: var(--board-document-bg); stroke: var(--board-document-fg); } .ba-square-3 { fill: var(--board-hearing-bg); } .ba-square-4 { fill: var(--board-neutral-bg); stroke: var(--board-neutral-fg); } .ba-square-5 { fill: var(--board-jump-bg); stroke: var(--board-jump-fg); }
 .ba-nav { fill: var(--color-border); } .ba-nav-active { fill: var(--color-primary); }
 :root[data-theme="dark"] .ba-phone-body { fill: #2A2E3D; }
+/* window: a desktop app wireframe in currentColor (the hub's static preview tile); the tile sets the hue */
+.brandart-window { width: 100%; height: 100%; display: block; }
+.ba-win-bg { fill: currentColor; opacity: .06; } .ba-win-bar { fill: currentColor; opacity: .18; } .ba-win-dot { fill: currentColor; opacity: .5; }
+.ba-win-side { fill: currentColor; opacity: .1; } .ba-win-side-line { fill: currentColor; opacity: .28; } .ba-win-side-active { fill: currentColor; opacity: .7; }
+.ba-win-title { fill: currentColor; opacity: .62; } .ba-win-line { fill: currentColor; opacity: .22; } .ba-win-num { fill: currentColor; opacity: .5; }
+.ba-win-card { fill: var(--color-surface-raised); stroke: currentColor; stroke-opacity: .28; }
 /* board: the KEY colours from the board tokens, ink strokes, a hard offset shadow (the Board game direction's material) */
 .brandart-board { height: 100%; }
 .ba-felt-dot { fill: rgba(255,255,255,.12); }
