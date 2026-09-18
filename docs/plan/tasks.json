@@ -1,0 +1,2478 @@
+{
+  "version": 1,
+  "updated_at": "2026-09-18T18:30:00Z",
+  "units": "dependency ticks, not calendar days",
+  "lanes": [
+    "Foundation",
+    "Hub & Dev tools",
+    "PM",
+    "Proposal & Site",
+    "Game board",
+    "Client",
+    "Legal team",
+    "Front desk",
+    "Owner/Admin",
+    "Opposition",
+    "Documents",
+    "Discovery",
+    "Learning",
+    "Commerce & Marketing",
+    "Comms",
+    "Legal memory",
+    "Platform",
+    "Appliance",
+    "QA & Docs"
+  ],
+  "passes": [
+    {
+      "id": 0,
+      "title": "Discovery",
+      "goal": "Understand the client, the reference conventions and the law; write the brief, the game board as data, the legal topic index and the plan.",
+      "gate": "Justin's brief received (prompt 0001)."
+    },
+    {
+      "id": 1,
+      "title": "Foundation, first modules, release 0.1.0",
+      "goal": "Stand up the platform every module builds on (scaffold, tokens, library, registry, specs + actions bus, roles, data provider, i18n, Placeholder, annotations, dev tools, Pages CI, docs tree, CLAUDE.md), then build the hub, canvas, simulator, PM viewer, proposal, game board, role homes, docs viewer, legal memory viewer in parallel and release 0.1.0.",
+      "gate": "Pass 0 done. Modules start when the foundation gate (build green, HUB-01 renders every role, contract in CLAUDE.md) is true."
+    },
+    {
+      "id": 2,
+      "title": "Core operations, release 0.2.0",
+      "goal": "Cases and matters, deadline engine, assignments and late-work radar, front desk intake and scheduling, document templates per board stage, pleading-paper spike, client binder and discovery gathering, cost roadmap, LMS, store redesign, CRM and marketing, opposing-counsel portal.",
+      "gate": "Release 0.1.0 shipped; case domain schema (T-054) merged before the pages that read it."
+    },
+    {
+      "id": 3,
+      "title": "Communications and documents, release 0.3.0",
+      "goal": "Every channel the firm uses (video with recording and AI summary, telephone, email, SMS, WhatsApp) through one message log, e-sign, drafting assistant, legal research seam, multi-editor pleading paper on a realtime provider.",
+      "gate": "Release 0.2.0 shipped; comms seam (message_log, CommsProvider) merged first."
+    },
+    {
+      "id": 4,
+      "title": "Platform",
+      "goal": "Supabase provider and auth, Stripe payments and payroll, realtime / presence / offline queue, WebMCP tools generated from the actions registry, voice controller, d-pad spatial navigation, annotations triage automation.",
+      "gate": "Release 0.3.0 shipped; Justin confirms Supabase project and Stripe account; Company-OS stays a seam (D-016) unless he says otherwise."
+    },
+    {
+      "id": 5,
+      "title": "Appliance and polish, release 1.0.0",
+      "goal": "A Linux appliance image that boots straight into CTL OS, the 4K / 10-foot pass, the ops manual complete in English and Spanish, full QA matrices, proposal polish.",
+      "gate": "Pass 4 done; firm content verified (prices, videos, attorney names) for the manual and the proposal."
+    }
+  ],
+  "models": {
+    "fable": "Claude Fable 5.1: judgment, architecture, shared code, schemas, engines, seams, integration, releases, docs tree",
+    "opus-5": "Claude Opus 5: building modules and pages against the contract, one worker per module, disjoint folders",
+    "sonnet-5": "Claude Sonnet 5: mechanical passes (screenshots, responsive QA matrices, Spanish fill, spec sweeps)"
+  },
+  "tasks": [
+    {
+      "id": "T-001",
+      "code": "DOC",
+      "title": "Prompt log 0001 (verbatim brief) and project brief",
+      "lane": "QA & Docs",
+      "pass": 0,
+      "depends_on": [],
+      "model": "fable",
+      "status": "done",
+      "size": "M",
+      "deliverables": [
+        "docs/prompts/0001-ctl-os-brief.md",
+        "docs/project-brief.md"
+      ],
+      "acceptance": "Brief verbatim with ## Response; project-brief organises every item Justin listed plus the firm research, with an explicit unverified list.",
+      "notes": "Slack thread 2026-09-18.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-002",
+      "code": "DOC",
+      "title": "Reference study: hoy, petrock, graph-gallery, portfolio, Company-OS digest; firm research",
+      "lane": "QA & Docs",
+      "pass": 0,
+      "depends_on": [],
+      "model": "fable",
+      "status": "done",
+      "size": "L",
+      "deliverables": [
+        "docs/reference/hoy-petrock-patterns.md",
+        "docs/reference/graph-gallery-views.md",
+        "docs/reference/company-os.md",
+        "docs/reference/firm-site-digest.md"
+      ],
+      "acceptance": "Every adopted convention cites a path in the reference clones; firm facts flagged verified-snippet vs unverified.",
+      "notes": "caltenantlaw.com unreachable from the build environment; facts are as indexed.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-003",
+      "code": "GB",
+      "title": "Game board extraction to data (phases, nodes, edges, key)",
+      "lane": "Game board",
+      "pass": 0,
+      "depends_on": [],
+      "model": "fable",
+      "status": "done",
+      "size": "M",
+      "deliverables": [
+        "docs/game-board/README.md",
+        "docs/game-board/nodes.json",
+        "reference/game-board.pdf"
+      ],
+      "acceptance": "Every node label from the PDF present; edges typed by the five path types; cost and deadline fields null with a note.",
+      "notes": "Edges reconstructed from the poster layout; the firm should confirm.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-004",
+      "code": "K",
+      "title": "Legal memory scaffold: statute index, law-change log, topic files, currency flags",
+      "lane": "Legal memory",
+      "pass": 0,
+      "depends_on": [],
+      "model": "fable",
+      "status": "done",
+      "size": "M",
+      "deliverables": [
+        "docs/legal/README.md",
+        "docs/legal/statute-index.md",
+        "docs/legal/law-change-log.md",
+        "docs/legal/topics/*.md"
+      ],
+      "acceptance": "Every statute row has verified_on: null and a source; 2026 currency flags listed; unmistakable \"not verified legal advice\" banner.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-005",
+      "code": "DOC",
+      "title": "Platform principles P-01..P-15 for CTL OS and decision log D-001..",
+      "lane": "QA & Docs",
+      "pass": 0,
+      "depends_on": [],
+      "model": "fable",
+      "status": "done",
+      "size": "M",
+      "deliverables": [
+        "docs/platform-principles.md",
+        "docs/decisions.md"
+      ],
+      "acceptance": "Principles marked binding (Justin 2026-09-18) with today / queued lines and the checklist; decisions carry status and source.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-006",
+      "code": "PM",
+      "title": "Build plan (order of operations), tasks.json seed and kanban",
+      "lane": "PM",
+      "pass": 0,
+      "depends_on": [
+        "T-001",
+        "T-002",
+        "T-003",
+        "T-004",
+        "T-005"
+      ],
+      "model": "fable",
+      "status": "done",
+      "size": "L",
+      "deliverables": [
+        "docs/build-plan.md",
+        "docs/plan/tasks.json",
+        "docs/kanban.md",
+        "docs/README.md"
+      ],
+      "acceptance": "tasks.json parses; every depends_on id exists; kanban mirrors statuses; README explains how /#/plan reads the file.",
+      "notes": "Units are dependency ticks, not days (D-013).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-007",
+      "code": "M",
+      "title": "Ops manual scaffold (en/es, parts I-IX) and changelog 0001",
+      "lane": "QA & Docs",
+      "pass": 0,
+      "depends_on": [
+        "T-001"
+      ],
+      "model": "fable",
+      "status": "done",
+      "size": "S",
+      "deliverables": [
+        "docs/ops-manual/README.md",
+        "docs/ops-manual/en/00-introduction.md",
+        "docs/ops-manual/es/00-introduccion.md",
+        "docs/changelog/README.md",
+        "docs/changelog/_pending/README.md",
+        "docs/changelog/0001-discovery-and-plan.md"
+      ],
+      "acceptance": "Front matter complete; parts outline present; changelog header lines complete.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-008",
+      "code": "CORE",
+      "title": "Scaffold: Vite 5 + React 18 + TS strict, HashRouter, base \"./\", package.json scripts, tsconfig, index.html",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-006"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "M",
+      "deliverables": [
+        "package.json",
+        "vite.config.ts",
+        "tsconfig.json",
+        "index.html",
+        "src/main.tsx",
+        "src/app/App.tsx"
+      ],
+      "acceptance": "npm run build green on an empty hub; __APP_VERSION__ defined; data-theme / data-brand / data-skin on <html>.",
+      "notes": "Adapted from petrock (D-001).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-009",
+      "code": "CORE",
+      "title": "Registry, shells, navGroups, manifest (window.__ctl.routes)",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "M",
+      "deliverables": [
+        "src/app/registry.ts",
+        "src/app/shells.tsx",
+        "src/app/navGroups.ts",
+        "src/app/manifest.ts"
+      ],
+      "acceptance": "Modules register by glob; a built route beats a stub at the same path; manifest exposes specs to scripts.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-010",
+      "code": "D-01",
+      "title": "Design tokens, light / dark, second proof brand, --scale band at >= 2560, focus-ring token",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "M",
+      "deliverables": [
+        "src/design/tokens.ts",
+        "src/styles/tokens.css (generated)",
+        "src/design/ThemeProvider.tsx",
+        "scripts/gen-tokens.mjs"
+      ],
+      "acceptance": "D-01 shows every token; body text >= 16 px at >= 1920; ring >= 3 px.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-011",
+      "code": "D-02",
+      "title": "Component library core with metas (atoms, molecules, organisms, templates)",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "L",
+      "deliverables": [
+        "src/components/**",
+        "src/design/meta.ts",
+        "src/design/library.ts"
+      ],
+      "acceptance": "Every component has a .meta.ts with props, states, usages, a11y; D-02 renders them; 44 px targets by default.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-012",
+      "code": "D-03",
+      "title": "PageSpec, defineSpec, specCompleteness, code-family regex (HUB, P, C, F, L, S, O, A, X, GB, PM, M, K, D, MK)",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "S",
+      "deliverables": [
+        "src/specs/types.ts",
+        "src/specs/defineSpec.ts",
+        "src/specs/index.ts"
+      ],
+      "acceptance": "Unknown code prefixes warn in DEV; completeness includes actions and checkedAt.",
+      "notes": "D-003.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-013",
+      "code": "D-20",
+      "title": "Actions manifest on PageSpec, actions bus, /#/dev/actions",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "M",
+      "deliverables": [
+        "src/actions/bus.ts",
+        "src/actions/types.ts",
+        "src/modules/dev/ActionsPage.tsx"
+      ],
+      "acceptance": "D-20 lists every action with page, permission, live handler; run(id, params) works from the console.",
+      "notes": "This registry is the WebMCP surface (P-05, D-007).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-014",
+      "code": "HUB-01",
+      "title": "Session, roles, permissions, fictional demo users, RequireRole, RoleSwitcher, HUB-01 base, HUB-02 no-access",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "M",
+      "deliverables": [
+        "src/auth/roles.ts",
+        "src/auth/permissions.ts",
+        "src/auth/demoUsers.ts",
+        "src/auth/SessionProvider.tsx",
+        "src/auth/RequireRole.tsx",
+        "src/modules/hub/"
+      ],
+      "acceptance": "Nine roles (D-004) each with a demo user and a home; super admin view-as and dev mode; guards real, identity mocked.",
+      "notes": "No real attorney names (D-023).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-015",
+      "code": "D-04",
+      "title": "DataProvider, MockProvider, schema registry (id, tenant_id, created_at, updated_at, version), seeds, gen-sql",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "L",
+      "deliverables": [
+        "src/data/provider.ts",
+        "src/data/MockProvider.ts",
+        "src/data/schema/",
+        "src/data/seed/",
+        "scripts/gen-sql.mjs",
+        "supabase/schema.sql (generated)",
+        "docs/data-model.md (generated)"
+      ],
+      "acceptance": "useTable re-renders from subscribe; every table has the base columns; SQL draft with RLS helpers generated.",
+      "notes": "D-006.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-016",
+      "code": "CORE",
+      "title": "i18n: StringTable { en, es? }, useT, EN / ES toggle, English default",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "S",
+      "deliverables": [
+        "src/i18n/"
+      ],
+      "acceptance": "Missing es falls back to en; toggle on every shell; document lang updates.",
+      "notes": "D-010, D-011.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-017",
+      "code": "D-02",
+      "title": "Placeholder atom (tooltip, \"not wired yet\" toast, dev-mode outline, data-placeholder) and PageStub on it",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "S",
+      "deliverables": [
+        "src/components/atom/Placeholder/",
+        "src/components/template/PageStub/"
+      ],
+      "acceptance": "A click on any unwired control toasts; D-09 counts data-placeholder.",
+      "notes": "D-008.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-018",
+      "code": "A-05",
+      "title": "Annotations: feedback table with kind, element_path, component, viewport, theme, screenshot_url, triage columns; FeedbackButton; inbox A-05; triage doc",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "M",
+      "deliverables": [
+        "src/data/schema/feedback.ts",
+        "src/components/organism/FeedbackButton/",
+        "src/modules/admin/FeedbackInboxPage.tsx",
+        "docs/reference/annotations-triage.md"
+      ],
+      "acceptance": "A tester can annotate any staff page; rows carry every column; triage workflow documented.",
+      "notes": "D-009.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-019",
+      "code": "D-05",
+      "title": "Dev tools D-01..D-07 (tokens, components, specs, tables, rules, docs, knowledge) and DevTools inspector (Ctrl+.)",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "L",
+      "deliverables": [
+        "src/modules/dev/",
+        "src/dev/DevTools.tsx",
+        "src/dev/inspectorBus.ts",
+        "src/rules/"
+      ],
+      "acceptance": "Dev mode shows the SpecChip and inspector on every page with spec, tables, rules, actions, completeness.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-020",
+      "code": "CORE",
+      "title": "GitHub Pages CI, README, CLAUDE.md (module contract), .gitignore, package-lock",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "S",
+      "deliverables": [
+        ".github/workflows/pages.yml",
+        "README.md",
+        "CLAUDE.md",
+        ".gitignore",
+        "package-lock.json"
+      ],
+      "acceptance": "Workflow green on push to main; README lead is one sentence with the live URL; CLAUDE.md points at platform-principles.",
+      "notes": "Justin must enable Pages once (D-024).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-021",
+      "code": "D-12",
+      "title": "QA scripts: screenshots, qa-responsive (360..3840 + legibility >= 16 px at >= 1920), qa-bundle, gen-specs, surfaces.md",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "M",
+      "deliverables": [
+        "scripts/screenshots.mjs",
+        "scripts/qa-responsive.mjs",
+        "scripts/qa-bundle.mjs",
+        "scripts/gen-specs.mjs",
+        "scripts/qa-lib.mjs",
+        "docs/reference/surfaces.md"
+      ],
+      "acceptance": "All seven widths in the matrix; report written to docs/qa/; surfaces.md lists routes, provider methods, scripts, actions.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-022",
+      "code": "STUB",
+      "title": "Stub homes for every role and surface (C-01, F-01, L-01, S-01, O-01, A-01, X-01, GB-01, PM-01, P-01, K-01, M-01) on Placeholder",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "S",
+      "deliverables": [
+        "src/modules/_stubs/"
+      ],
+      "acceptance": "Every role lands somewhere from the hub; stubs name the task that replaces them.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-023",
+      "code": "CORE",
+      "title": "Foundation gate: build green, HUB-01 opens every role, CLAUDE.md contract published, release 0.0.1",
+      "lane": "Foundation",
+      "pass": 1,
+      "depends_on": [
+        "T-008",
+        "T-009",
+        "T-010",
+        "T-011",
+        "T-012",
+        "T-013",
+        "T-014",
+        "T-015",
+        "T-016",
+        "T-017",
+        "T-018",
+        "T-019",
+        "T-020",
+        "T-021",
+        "T-022"
+      ],
+      "model": "fable",
+      "status": "doing",
+      "size": "S",
+      "deliverables": [
+        "docs/changelog/0002-foundation.md",
+        "CLAUDE.md"
+      ],
+      "acceptance": "npm run build green; every stub reachable; module workers can start in disjoint folders.",
+      "notes": "Everything below depends on this.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-024",
+      "code": "HUB-01",
+      "title": "HUB-01 enrichment: role cards with live previews, per-role buttons, counts footer, canvas / simulator / plan entries",
+      "lane": "Hub & Dev tools",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/hub/",
+        "docs/pages/HUB-01.md"
+      ],
+      "acceptance": "Every surface opens as any demo user; dev-mode toggle; language and theme controls; counts from registry.",
+      "notes": "Group A (one worker with canvas + simulator).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-025",
+      "code": "D-21",
+      "title": "Canvas: every page laid out on a zoomable, pannable surface, each page live and usable inside its frame",
+      "lane": "Hub & Dev tools",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/dev-canvas/",
+        "docs/pages/D-21.md"
+      ],
+      "acceptance": "Zoom with buttons and wheel; filter by surface / role; click into a frame to use the page; keyboard reachable.",
+      "notes": "Group A. Justin: \"open all the individual pages and lay them out\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-026",
+      "code": "D-22",
+      "title": "Demo simulator: phone and desktop device frames with presets (360, 390, 768, 1280, 1920, 3840), role and language switches",
+      "lane": "Hub & Dev tools",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/dev-simulator/",
+        "docs/pages/D-22.md"
+      ],
+      "acceptance": "Any route renders in any frame; rotate; dark mode; shareable hash.",
+      "notes": "Group A.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-027",
+      "code": "PM",
+      "title": "PM data: build-time import of docs/plan/tasks.json, tick computation, npm run plan:check (ids, deps, kanban mirror)",
+      "lane": "PM",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "src/modules/plan/data.ts",
+        "scripts/plan-check.mjs"
+      ],
+      "acceptance": "plan:check fails on a missing dependency id or a kanban mismatch; ticks computed.",
+      "notes": "Group B (one worker for PM-01..PM-05).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-028",
+      "code": "PM-01",
+      "title": "PM-01 kanban: Backlog / Doing / Blocked / Done by lane, filters (pass, model, lane), keyboard \"move to\"",
+      "lane": "PM",
+      "pass": 1,
+      "depends_on": [
+        "T-027"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/plan/KanbanPage.tsx",
+        "docs/pages/PM-01.md"
+      ],
+      "acceptance": "Cards show id, code, model, size, dependents count; move writes through the provider (plan_tasks table seeded from JSON).",
+      "notes": "Group B.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-029",
+      "code": "PM-02",
+      "title": "PM-02 list view: sortable, groupable table of every task with search",
+      "lane": "PM",
+      "pass": 1,
+      "depends_on": [
+        "T-027"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "src/modules/plan/ListPage.tsx",
+        "docs/pages/PM-02.md"
+      ],
+      "acceptance": "DataTable from the library; group by pass / lane / model; export CSV.",
+      "notes": "Group B.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-030",
+      "code": "PM-03",
+      "title": "PM-03 timeline: tasks on dependency ticks with dependency lines, critical path, parallel groups",
+      "lane": "PM",
+      "pass": 1,
+      "depends_on": [
+        "T-027"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/plan/TimelinePage.tsx",
+        "docs/pages/PM-03.md"
+      ],
+      "acceptance": "Tick axis (not days); hover / focus shows deps; critical path highlighted; readable at 360 and 3840.",
+      "notes": "Group B.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-031",
+      "code": "PM-04",
+      "title": "PM-04 dependency graph as an object view (icons per lane, previews per deliverable), radial and lanes layouts",
+      "lane": "PM",
+      "pass": 1,
+      "depends_on": [
+        "T-027"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/plan/GraphPage.tsx",
+        "docs/pages/PM-04.md"
+      ],
+      "acceptance": "Nodes identifiable by icon; click opens PM-05; layouts switchable; keyboard navigation between nodes.",
+      "notes": "Group B. graph-gallery lanes / radial patterns (docs/reference/graph-gallery-views.md).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-032",
+      "code": "PM-05",
+      "title": "PM-05 task detail and passes overview (goal, gate, progress per pass, per model)",
+      "lane": "PM",
+      "pass": 1,
+      "depends_on": [
+        "T-027"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/plan/TaskPage.tsx",
+        "src/modules/plan/PassesPage.tsx",
+        "docs/pages/PM-05.md"
+      ],
+      "acceptance": "Detail shows deps and dependents as links, deliverables as page-code chips, acceptance; passes page shows counts.",
+      "notes": "Group B.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-033",
+      "code": "P-01",
+      "title": "Public site landing concept: educate-first funnel (videos, game board, consultation), en / es, store entry",
+      "lane": "Proposal & Site",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/site/",
+        "docs/pages/P-01.md"
+      ],
+      "acceptance": "Renders the firm's positioning without unverified facts marked as facts; CTA to consultation and videos; 360-3840.",
+      "notes": "Group C (one worker for P-01..P-04). Firm brand visuals unverified (D-025).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-034",
+      "code": "P-02",
+      "title": "Proposal: the full-stack view of CTL OS (departments x features x roles) for the firm",
+      "lane": "Proposal & Site",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/proposal/OverviewPage.tsx",
+        "docs/pages/P-02.md"
+      ],
+      "acceptance": "Every module and role experience shown with status (built / planned) read from tasks.json; printable.",
+      "notes": "Group C.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-035",
+      "code": "P-03",
+      "title": "Replacement map: what the firm stops paying for (WordPress, Ecwid, PayPal, Teams, VoiceStamps, scheduler, forms, YouTube gating, WordPerfect)",
+      "lane": "Proposal & Site",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/proposal/ReplacementPage.tsx",
+        "docs/pages/P-03.md"
+      ],
+      "acceptance": "Each current tool mapped to the CTL OS module and pass that replaces it; unknown vendors marked unverified.",
+      "notes": "Group C.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-036",
+      "code": "P-04",
+      "title": "Client-facing roadmap: passes, what ships when (in ticks), how to give feedback (annotations)",
+      "lane": "Proposal & Site",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "src/modules/proposal/RoadmapPage.tsx",
+        "docs/pages/P-04.md"
+      ],
+      "acceptance": "Reads passes from tasks.json; explains ticks vs days; links to the annotation workflow.",
+      "notes": "Group C.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-037",
+      "code": "GB-01",
+      "title": "Game board 2D: interactive SVG board from nodes.json, phases, five path types, node detail panel",
+      "lane": "Game board",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/game-board/BoardPage.tsx",
+        "src/modules/game-board/layout.ts",
+        "docs/pages/GB-01.md"
+      ],
+      "acceptance": "Every node and edge from nodes.json rendered; keyboard moves between connected nodes; zoom buttons; legend = key.",
+      "notes": "Group D (one worker for GB-01..GB-03).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-038",
+      "code": "GB-02",
+      "title": "Game board \"where am I\": case mode highlighting the current node, visited path and possible next moves",
+      "lane": "Game board",
+      "pass": 1,
+      "depends_on": [
+        "T-037"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/game-board/CaseBoardPage.tsx",
+        "docs/pages/GB-02.md"
+      ],
+      "acceptance": "Given a case (seed) the board shows position and history; next moves list documents per node.",
+      "notes": "Group D. Reads case_board_positions seed until Pass 2 cases land.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-039",
+      "code": "GB-03",
+      "title": "Game board cost / if-then overlay stub: per-node typical cost band and deadline rule from nodes.json (null today) with Placeholder",
+      "lane": "Game board",
+      "pass": 1,
+      "depends_on": [
+        "T-037"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "src/modules/game-board/CostOverlay.tsx",
+        "docs/pages/GB-03.md"
+      ],
+      "acceptance": "Overlay toggles; null fields show \"filled in Pass 2 from docs/legal\"; no fabricated numbers.",
+      "notes": "Group D.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-040",
+      "code": "C-01",
+      "title": "Client home: my case position on the board, next steps, what to watch, what to pay next, my binder (seed data)",
+      "lane": "Client",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/client/HomePage.tsx",
+        "docs/pages/C-01.md"
+      ],
+      "acceptance": "PhoneShell; every tile reads seed tables; Pass 2 controls on Placeholder.",
+      "notes": "Group E (one worker for all seven homes).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-041",
+      "code": "F-01",
+      "title": "Front desk home: today's consultations, intake queue, calls to return, payments pending (seed data)",
+      "lane": "Front desk",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/frontdesk/HomePage.tsx",
+        "docs/pages/F-01.md"
+      ],
+      "acceptance": "DesktopShell; lists from seed; legible at 3840 on a wall screen.",
+      "notes": "Group E.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-042",
+      "code": "L-01",
+      "title": "Attorney home: my cases, deadlines this week, running late, discovery due, documents to review (seed data)",
+      "lane": "Legal team",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/attorney/HomePage.tsx",
+        "docs/pages/L-01.md"
+      ],
+      "acceptance": "Dense multi-column at >= 1920 without losing legibility; every tile keyboard-reachable.",
+      "notes": "Group E.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-043",
+      "code": "S-01",
+      "title": "Paralegal / assistant home: assignments, documents to prepare by board stage, filings due, client uploads to file (seed data)",
+      "lane": "Legal team",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/paralegal/HomePage.tsx",
+        "docs/pages/S-01.md"
+      ],
+      "acceptance": "Reads assignments and document_tasks seeds.",
+      "notes": "Group E.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-044",
+      "code": "O-01",
+      "title": "Owner home: late-work radar, caseload by attorney, revenue by SKU, network offices (seed data)",
+      "lane": "Owner/Admin",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/owner/HomePage.tsx",
+        "docs/pages/O-01.md"
+      ],
+      "acceptance": "Charts from the library (dataviz rules); works as a 10-foot dashboard.",
+      "notes": "Group E.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-045",
+      "code": "A-01",
+      "title": "Admin home: users and roles, tables, feedback inbox link, settings, rules (seed data)",
+      "lane": "Owner/Admin",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "src/modules/admin/HomePage.tsx",
+        "docs/pages/A-01.md"
+      ],
+      "acceptance": "Links to D-04 tables, A-05 inbox, rules registry.",
+      "notes": "Group E.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-046",
+      "code": "X-01",
+      "title": "Opposing counsel home: cases where they are served, documents served to them, meet-and-confer requests (seed data)",
+      "lane": "Opposition",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "src/modules/opposition/HomePage.tsx",
+        "docs/pages/X-01.md"
+      ],
+      "acceptance": "Strictly scoped by party; no internal data leaks; Placeholder on Pass 2 actions.",
+      "notes": "Group E.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-047",
+      "code": "K-01",
+      "title": "Docs viewer K-01 and knowledge search K-02: renders docs/** at build time (docmeta plugin, ?raw bodies)",
+      "lane": "Hub & Dev tools",
+      "pass": 1,
+      "depends_on": [
+        "T-023"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "scripts/lib/docmeta.mjs",
+        "src/modules/docs/",
+        "docs/pages/K-01.md",
+        "docs/pages/K-02.md"
+      ],
+      "acceptance": "Adding a doc needs no code; prompts split on ## Response; search across headings.",
+      "notes": "Group F (one worker for K-01, K-02, M-01, K-10).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-048",
+      "code": "M-01",
+      "title": "Ops manual cover and chapter routes from docs/ops-manual/{en,es}, LiveBlock directives, decisions page",
+      "lane": "Hub & Dev tools",
+      "pass": 1,
+      "depends_on": [
+        "T-047"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/ops-manual/",
+        "docs/pages/M-01.md"
+      ],
+      "acceptance": "Chapters from front matter; en / es switch keeps the chapter; {{directives}} render from tables.",
+      "notes": "Group F.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-049",
+      "code": "K-10",
+      "title": "Legal memory viewer: statute index with verified_on, law-change log timeline, topic pages, \"unverified\" banner",
+      "lane": "Legal memory",
+      "pass": 1,
+      "depends_on": [
+        "T-047"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/legal-memory/",
+        "docs/pages/K-10.md"
+      ],
+      "acceptance": "Every row shows verification state; filter by topic; change log newest first; banner cannot be dismissed while any row is unverified.",
+      "notes": "Group F.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-050",
+      "code": "CORE",
+      "title": "Pass 1 integration: merge _pending changelogs, resolve route / component / table collisions, regenerate data-model and specs",
+      "lane": "QA & Docs",
+      "pass": 1,
+      "depends_on": [
+        "T-024",
+        "T-025",
+        "T-026",
+        "T-028",
+        "T-029",
+        "T-030",
+        "T-031",
+        "T-032",
+        "T-033",
+        "T-034",
+        "T-035",
+        "T-036",
+        "T-037",
+        "T-038",
+        "T-039",
+        "T-040",
+        "T-041",
+        "T-042",
+        "T-043",
+        "T-044",
+        "T-045",
+        "T-046",
+        "T-047",
+        "T-048",
+        "T-049"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "docs/changelog/00nn-*.md",
+        "docs/data-model.md",
+        "docs/specs.md"
+      ],
+      "acceptance": "One numbered changelog per module; build green; no duplicate routes.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-051",
+      "code": "QA",
+      "title": "Pass 1 screenshots and responsive QA (360..3840, light / dark), promote target-size to error",
+      "lane": "QA & Docs",
+      "pass": 1,
+      "depends_on": [
+        "T-050"
+      ],
+      "model": "sonnet-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "docs/screenshots/**",
+        "docs/qa/responsive-report.md"
+      ],
+      "acceptance": "Every built route captured at 390 + 1280 (dark + 3840 for key pages); matrix green or issues filed as annotations.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-052",
+      "code": "QA",
+      "title": "Pass 1 Spanish fill (module strings, hub, PM, proposal, game board labels)",
+      "lane": "QA & Docs",
+      "pass": 1,
+      "depends_on": [
+        "T-050"
+      ],
+      "model": "sonnet-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/*/strings.ts"
+      ],
+      "acceptance": "es side present for every key; legal terms keep the English term of art in parentheses.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-053",
+      "code": "CORE",
+      "title": "Release 0.1.0: version bump, changelog, kanban, tasks.json statuses, Pages deploy verified",
+      "lane": "QA & Docs",
+      "pass": 1,
+      "depends_on": [
+        "T-051",
+        "T-052"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "docs/changelog/00nn-release-0.1.0.md",
+        "package.json"
+      ],
+      "acceptance": "Live URL answers; counts in the release note; open questions for Justin listed.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-054",
+      "code": "CORE",
+      "title": "Case domain: schema and lifecycle (cases, matters, parties, people, roles-on-case, events, board positions, assignments)",
+      "lane": "Legal team",
+      "pass": 2,
+      "depends_on": [
+        "T-053"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/data/schema/cases.ts",
+        "src/domain/case.ts",
+        "src/data/seed/cases.ts",
+        "docs/data-model.md"
+      ],
+      "acceptance": "One lifecycle function moves a case along the board; every write versioned; seed covers every board phase.",
+      "notes": "Architecture (Fable) before pages.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-055",
+      "code": "L-10",
+      "title": "Case list and case detail (board position, parties, deadlines, documents, comms, costs tabs)",
+      "lane": "Legal team",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/cases/",
+        "docs/pages/L-10.md"
+      ],
+      "acceptance": "Detail tabs read their tables; position links to GB-02; actions manifest complete.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-056",
+      "code": "L-11",
+      "title": "Parties and people directory: clients, co-tenants, landlords, property managers, opposing counsel, judges, courts",
+      "lane": "Legal team",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/people/",
+        "docs/pages/L-11.md"
+      ],
+      "acceptance": "People are rows, not free text; link to every case they appear in; \"Check out the judge\" notes.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-057",
+      "code": "L-12",
+      "title": "Case events timeline: lanes by actor (tenant, landlord, court), documents and hearings as objects, from board moves and comms",
+      "lane": "Legal team",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/cases/TimelinePage.tsx",
+        "docs/pages/L-12.md"
+      ],
+      "acceptance": "Lanes layout (graph-gallery); every event links its source row; export as PDF timeline for trial prep.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-058",
+      "code": "C-10",
+      "title": "Client \"my case\": position, what happened, what is next, who is involved, my deadlines in plain English / Spanish",
+      "lane": "Client",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/client/CasePage.tsx",
+        "docs/pages/C-10.md"
+      ],
+      "acceptance": "Reads the same tables as L-10 filtered by party; no internal notes leak.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-059",
+      "code": "CORE",
+      "title": "Deadline engine: California UD rules, court days, holidays, service-method extensions; every rule cites a statute row in docs/legal",
+      "lane": "Legal team",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/domain/deadlines.ts",
+        "src/rules/deadlines.ts",
+        "scripts/test-deadlines.mjs",
+        "docs/legal/statute-index.md"
+      ],
+      "acceptance": "Pure functions with tests; a rule without a citation fails the test; unverified rows flagged in the UI.",
+      "notes": "Fable. Uses the 10-court-day response rule (AB 2347) only after verification (docs/legal).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-060",
+      "code": "L-20",
+      "title": "Deadlines calendar and rules explorer (L-20 calendar, L-21 rule -> statute -> cases)",
+      "lane": "Legal team",
+      "pass": 2,
+      "depends_on": [
+        "T-059"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/deadlines/",
+        "docs/pages/L-20.md",
+        "docs/pages/L-21.md"
+      ],
+      "acceptance": "Month / week / list; every deadline explains its rule; click-through to K-10.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-061",
+      "code": "O-10",
+      "title": "Late-work radar and \"needs help\": overdue and at-risk work by attorney / paralegal, escalation to owner",
+      "lane": "Owner/Admin",
+      "pass": 2,
+      "depends_on": [
+        "T-059"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/owner/RadarPage.tsx",
+        "docs/pages/O-10.md"
+      ],
+      "acceptance": "Risk = deadline proximity x open work; 10-foot legible; reassign action.",
+      "notes": "Justin: \"anything that is running late, anything where the lawyers need help\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-062",
+      "code": "L-22",
+      "title": "Assignments board: who does what by case and board stage, workload per person, hand-offs",
+      "lane": "Legal team",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/assignments/",
+        "docs/pages/L-22.md"
+      ],
+      "acceptance": "Kanban by person with keyboard move; writes assignments rows; feeds O-10.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-063",
+      "code": "F-10",
+      "title": "Front desk intake queue: initial and follow-up consultation forms as records, triage, convert to case",
+      "lane": "Front desk",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/frontdesk/IntakePage.tsx",
+        "src/data/schema/intake.ts",
+        "docs/pages/F-10.md"
+      ],
+      "acceptance": "Form fields from the site's intake (as indexed); a copy is emailed (comms seam Pass 3, Placeholder now); convert creates a case.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-064",
+      "code": "F-11",
+      "title": "Scheduling: consultations (phone / video), attorney availability, network offices, reminders",
+      "lane": "Front desk",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/frontdesk/SchedulePage.tsx",
+        "src/data/schema/appointments.ts",
+        "docs/pages/F-11.md"
+      ],
+      "acceptance": "Book, reschedule, cancel through actions; client sees it in C-01; video link is a Placeholder until Pass 3.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-065",
+      "code": "F-12",
+      "title": "Call log and client directory (F-12 calls with hotline minutes, F-13 clients)",
+      "lane": "Front desk",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "src/modules/frontdesk/CallsPage.tsx",
+        "src/modules/frontdesk/ClientsPage.tsx",
+        "docs/pages/F-12.md",
+        "docs/pages/F-13.md"
+      ],
+      "acceptance": "Calls are message_log rows (kind call); minutes and charges recorded; directory links to cases.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-066",
+      "code": "CORE",
+      "title": "Document template catalog: template <-> board node <-> SKU <-> court form mapping, variables from case data",
+      "lane": "Documents",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/data/schema/documents.ts",
+        "src/data/seed/templates.ts",
+        "docs/game-board/nodes.json (documents[])"
+      ],
+      "acceptance": "Every document node on the board has at least one template row; SKUs from the store catalog mapped; variables typed.",
+      "notes": "Fable. Store prices as indexed, unverified (D-025).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-067",
+      "code": "S-10",
+      "title": "Template manager: browse by board stage, edit variables and body, versions, preview on pleading paper",
+      "lane": "Documents",
+      "pass": 2,
+      "depends_on": [
+        "T-066"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/documents/TemplateManagerPage.tsx",
+        "docs/pages/S-10.md"
+      ],
+      "acceptance": "Library-only UI; every template versioned; preview uses the pleading-paper renderer.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-068",
+      "code": "S-11",
+      "title": "Document assembly: generate a document for a case from a template, fill variables, review, file to the binder",
+      "lane": "Documents",
+      "pass": 2,
+      "depends_on": [
+        "T-067",
+        "T-069"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/documents/AssemblyPage.tsx",
+        "docs/pages/S-11.md"
+      ],
+      "acceptance": "Generated document is a documents row with revision; missing variables listed; PDF export.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-069",
+      "code": "CORE",
+      "title": "Pleading-paper editor spike: browser rich-text with numbered-line ruler, caption block, footer, PDF and DOCX export",
+      "lane": "Documents",
+      "pass": 2,
+      "depends_on": [
+        "T-053"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/components/organism/PleadingEditor/",
+        "scripts/test-pleading.mjs"
+      ],
+      "acceptance": "Line numbers align with California pleading paper (28 lines, rule-compliant margins) in PDF; DOCX opens in Word; component in D-02.",
+      "notes": "Fable. D-018 (proposed). Replaces WordPerfect.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-070",
+      "code": "C-20",
+      "title": "Client binder: every document, evidence item and court paper organised by board stage, with status and what is missing",
+      "lane": "Discovery",
+      "pass": 2,
+      "depends_on": [
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/binder/",
+        "src/data/schema/binder.ts",
+        "docs/pages/C-20.md"
+      ],
+      "acceptance": "Objects view with previews; missing items are requests; staff see the same binder (L-31).",
+      "notes": "Justin: \"helping the customers to keep track of all their documents and essentially their binder\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-071",
+      "code": "C-21",
+      "title": "Discovery requests to the client: staff ask for documents, client uploads from phone, reminders, checklist by request",
+      "lane": "Discovery",
+      "pass": 2,
+      "depends_on": [
+        "T-070"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/binder/RequestsPage.tsx",
+        "docs/pages/C-21.md"
+      ],
+      "acceptance": "Request -> upload -> accepted / rejected; camera upload on phone; progress on C-01.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-072",
+      "code": "CORE",
+      "title": "Evidence import seams: email and text-message ingestion (forward-to address, screenshot / export parsing), tagging, chain of custody fields",
+      "lane": "Discovery",
+      "pass": 2,
+      "depends_on": [
+        "T-070"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/data/schema/evidence.ts",
+        "src/evidence/import.ts",
+        "docs/reference/surfaces.md"
+      ],
+      "acceptance": "An imported message becomes an evidence row with source, hash, dates; tag to a board node; Pass 3 wires live channels.",
+      "notes": "Fable. Justin: \"connecting things like their email and their text messages for evidence\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-073",
+      "code": "L-30",
+      "title": "Discovery tracker: requests for admission, interrogatories, requests for production (ours and theirs), responses, meet and confer, motion to compel, cut-offs",
+      "lane": "Discovery",
+      "pass": 2,
+      "depends_on": [
+        "T-059",
+        "T-066",
+        "T-070"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/discovery/",
+        "docs/pages/L-30.md"
+      ],
+      "acceptance": "Mirrors the board's Discovery phase; deadlines from the engine; documents from templates; opposing counsel sees served items in X-10.",
+      "notes": "Justin: \"Discovery in particular is a big issue\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-074",
+      "code": "CORE",
+      "title": "Cost model: typical cost bands per board node and edge (from SKUs), if / then scenarios along the board, probability-free ranges",
+      "lane": "Commerce & Marketing",
+      "pass": 2,
+      "depends_on": [
+        "T-054",
+        "T-066"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/domain/costs.ts",
+        "docs/game-board/nodes.json (typical_cost_band)",
+        "scripts/test-costs.mjs"
+      ],
+      "acceptance": "Given a position and chosen paths, returns a dated range of potential costs; every band cites a SKU; unverified prices flagged.",
+      "notes": "Fable. Justin: \"estimate the roadmap of costs over time\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-075",
+      "code": "C-30",
+      "title": "Cost calendar and \"what to pay next\" (C-30 calendar of potential costs by scenario, C-31 next payment with why)",
+      "lane": "Commerce & Marketing",
+      "pass": 2,
+      "depends_on": [
+        "T-074"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/costs/",
+        "docs/pages/C-30.md",
+        "docs/pages/C-31.md"
+      ],
+      "acceptance": "Scenario switches re-render the calendar; next payment links to checkout (Placeholder until C-50).",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-076",
+      "code": "GB-03",
+      "title": "Game board cost / if-then overlay for real and GB-04 3D object view (three.js objects per node kind, path tubes)",
+      "lane": "Game board",
+      "pass": 2,
+      "depends_on": [
+        "T-074",
+        "T-037"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/game-board/CostOverlay.tsx",
+        "src/modules/game-board/Board3DPage.tsx",
+        "docs/pages/GB-03.md",
+        "docs/pages/GB-04.md"
+      ],
+      "acceptance": "Overlay reads costmodel; 3D view has a 2D fallback and keyboard navigation; objects identifiable by shape.",
+      "notes": "Justin: \"turn into something more three-dimensional\". graph-gallery Objects 3D pattern.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-077",
+      "code": "CORE",
+      "title": "Curriculum data: videos (Winning Your Eviction 1-7, Eviction Series, 2025 refresh, topics), articles, kits, prerequisites, board-node mapping",
+      "lane": "Learning",
+      "pass": 2,
+      "depends_on": [
+        "T-053"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/data/schema/learning.ts",
+        "src/data/seed/learning.ts"
+      ],
+      "acceptance": "Every video and article from the firm digest is a row with URL, series, order (unverified), board nodes; watched_state table.",
+      "notes": "Fable. Order and 2025 episodes unverified (D-025).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-078",
+      "code": "C-40",
+      "title": "Learning: C-40 home (what to watch next by board position), player with watched state, C-41 journey drip rules, L-40 \"what my client has watched\"",
+      "lane": "Learning",
+      "pass": 2,
+      "depends_on": [
+        "T-077",
+        "T-054"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/learning/",
+        "docs/pages/C-40.md",
+        "docs/pages/C-41.md",
+        "docs/pages/L-40.md"
+      ],
+      "acceptance": "Watched state persists per user; drip rule engine picks content by position; attorney sees completion before a consultation; TV-remote friendly player.",
+      "notes": "Justin: \"knowing what a customer has and has not watched\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-079",
+      "code": "P-10",
+      "title": "Store redesign: SKU catalog by board stage (data), P-10 store, product pages, bundles (kits), plain-language \"what this buys you\"",
+      "lane": "Commerce & Marketing",
+      "pass": 2,
+      "depends_on": [
+        "T-066"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/data/schema/catalog.ts",
+        "src/modules/store/",
+        "docs/pages/P-10.md"
+      ],
+      "acceptance": "Every SKU from the firm digest present with as-indexed price flagged unverified; browse by board node; cart.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-080",
+      "code": "C-50",
+      "title": "Checkout and payments (C-50 cart / pay, C-51 receipts, hourly top-ups replaced by time tracking), PaymentProvider seam (Stripe later)",
+      "lane": "Commerce & Marketing",
+      "pass": 2,
+      "depends_on": [
+        "T-079"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/payments/",
+        "src/modules/store/CheckoutPage.tsx",
+        "docs/pages/C-50.md",
+        "docs/pages/C-51.md"
+      ],
+      "acceptance": "Mock payment writes orders and invoices; Stripe seam typed; PayPal not assumed.",
+      "notes": "D-017.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-081",
+      "code": "O-20",
+      "title": "Owner revenue and operations dashboards: revenue by SKU / stage / attorney, consultations, conversion from videos to consults, network offices",
+      "lane": "Owner/Admin",
+      "pass": 2,
+      "depends_on": [
+        "T-080",
+        "T-078"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/owner/RevenuePage.tsx",
+        "docs/pages/O-20.md"
+      ],
+      "acceptance": "Dataviz rules; filters by office; export.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-082",
+      "code": "MK-01",
+      "title": "CRM: leads (form fills, calls, city pages), funnel stages (visitor -> video -> intake -> consult -> client), follow-ups",
+      "lane": "Commerce & Marketing",
+      "pass": 2,
+      "depends_on": [
+        "T-063"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/marketing/LeadsPage.tsx",
+        "src/data/schema/crm.ts",
+        "docs/pages/MK-01.md"
+      ],
+      "acceptance": "Lead converts to person and case without re-typing; funnel chart; tasks for front desk.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-083",
+      "code": "MK-02",
+      "title": "Marketing engine: MK-02 content calendar (videos, shorts, articles), MK-03 city landing page generator, MK-04 reviews and testimonials",
+      "lane": "Commerce & Marketing",
+      "pass": 2,
+      "depends_on": [
+        "T-082",
+        "T-077"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/marketing/",
+        "docs/pages/MK-02.md",
+        "docs/pages/MK-03.md",
+        "docs/pages/MK-04.md"
+      ],
+      "acceptance": "City pages generated from data (offices, coverage lists); calendar entries link to curriculum rows; reviews imported as rows.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-084",
+      "code": "X-10",
+      "title": "Opposing counsel portal: service of documents (receive / acknowledge), meet-and-confer log (X-11), case-scoped access",
+      "lane": "Opposition",
+      "pass": 2,
+      "depends_on": [
+        "T-073"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/opposition/",
+        "docs/pages/X-10.md",
+        "docs/pages/X-11.md"
+      ],
+      "acceptance": "Served document rows with proof of service; acknowledgement is an action; strictly scoped by case party.",
+      "notes": "Justin: \"even the experience for opposition lawyers\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-085",
+      "code": "CORE",
+      "title": "Pass 2 integration: merge _pending changelogs, collisions, regenerate data-model / specs, fill nodes.json cost and deadline fields from docs/legal",
+      "lane": "QA & Docs",
+      "pass": 2,
+      "depends_on": [
+        "T-055",
+        "T-056",
+        "T-057",
+        "T-058",
+        "T-060",
+        "T-061",
+        "T-062",
+        "T-063",
+        "T-064",
+        "T-065",
+        "T-067",
+        "T-068",
+        "T-071",
+        "T-072",
+        "T-073",
+        "T-075",
+        "T-076",
+        "T-078",
+        "T-079",
+        "T-080",
+        "T-081",
+        "T-082",
+        "T-083",
+        "T-084"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "docs/changelog/00nn-*.md",
+        "docs/game-board/nodes.json"
+      ],
+      "acceptance": "Build green; every board document node has templates; deadline_rule fields reference statute rows.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-086",
+      "code": "QA",
+      "title": "Pass 2 screenshots, responsive QA matrix, a11y scan",
+      "lane": "QA & Docs",
+      "pass": 2,
+      "depends_on": [
+        "T-085"
+      ],
+      "model": "sonnet-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "docs/screenshots/**",
+        "docs/qa/"
+      ],
+      "acceptance": "Matrix green; a11y errors zero.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-087",
+      "code": "QA",
+      "title": "Pass 2 Spanish fill (client app first: case, binder, learning, costs)",
+      "lane": "QA & Docs",
+      "pass": 2,
+      "depends_on": [
+        "T-085"
+      ],
+      "model": "sonnet-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/*/strings.ts"
+      ],
+      "acceptance": "Client surfaces 100 % es; staff surfaces >= 80 %.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-088",
+      "code": "CORE",
+      "title": "Release 0.2.0",
+      "lane": "QA & Docs",
+      "pass": 2,
+      "depends_on": [
+        "T-086",
+        "T-087"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "docs/changelog/00nn-release-0.2.0.md"
+      ],
+      "acceptance": "Deployed; release note with counts and open questions.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-089",
+      "code": "CORE",
+      "title": "Comms seam: one message_log (channel, direction, thread, external_id, transcript, summary, evidence link), CommsProvider interface, consent and recording fields",
+      "lane": "Comms",
+      "pass": 3,
+      "depends_on": [
+        "T-088"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/data/schema/comms.ts",
+        "src/comms/provider.ts",
+        "docs/reference/surfaces.md"
+      ],
+      "acceptance": "Every channel below writes the same rows; evidence import (Pass 2) reads them; recording consent recorded per California law (docs/legal).",
+      "notes": "D-027.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-090",
+      "code": "C-60",
+      "title": "Video calls: schedule -> join in-app (WebRTC provider seam), recording, transcript, AI summary to the case (C-60 client, L-50 staff)",
+      "lane": "Comms",
+      "pass": 3,
+      "depends_on": [
+        "T-089"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/comms/video/",
+        "docs/pages/C-60.md",
+        "docs/pages/L-50.md"
+      ],
+      "acceptance": "Call row with recording and summary attached to the case; summary is editable and marked AI-generated; consent step.",
+      "notes": "Justin: \"scheduling calls, video calls, recording those, and getting the AI summaries\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-091",
+      "code": "F-21",
+      "title": "Telephone: click-to-call, hotline minutes and billing, voicemail, call notes (replaces VoiceStamps)",
+      "lane": "Comms",
+      "pass": 3,
+      "depends_on": [
+        "T-089"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/comms/phone/",
+        "docs/pages/F-21.md"
+      ],
+      "acceptance": "Telephony provider seam; minutes charge through PaymentProvider; call notes to the case.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-092",
+      "code": "F-22",
+      "title": "Email, SMS and WhatsApp through the comms seam: threads per case, templates, evidence tagging, client-side C-62 messages",
+      "lane": "Comms",
+      "pass": 3,
+      "depends_on": [
+        "T-089"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/comms/messaging/",
+        "docs/pages/F-22.md",
+        "docs/pages/C-62.md"
+      ],
+      "acceptance": "One inbox model for three channels; provider adapters typed; webhooks documented in surfaces.md.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-093",
+      "code": "F-20",
+      "title": "Unified comms inbox for staff: every channel, assignment, SLAs, link to case and person",
+      "lane": "Comms",
+      "pass": 3,
+      "depends_on": [
+        "T-090",
+        "T-091",
+        "T-092"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/comms/InboxPage.tsx",
+        "docs/pages/F-20.md"
+      ],
+      "acceptance": "Filters by channel / case / owner; keyboard triage; presence-ready.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-094",
+      "code": "C-61",
+      "title": "Contract signing: engagement letters and settlement agreements, signer flow (C-61), staff send and track (S-20), audit trail",
+      "lane": "Documents",
+      "pass": 3,
+      "depends_on": [
+        "T-089"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/esign/",
+        "docs/pages/C-61.md",
+        "docs/pages/S-20.md"
+      ],
+      "acceptance": "Signature provider seam; signed PDF to the binder; audit rows.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-095",
+      "code": "S-21",
+      "title": "Drafting assistant: agent proposes a draft from template + case facts + legal memory, attorney reviews with tracked changes",
+      "lane": "Documents",
+      "pass": 3,
+      "depends_on": [
+        "T-089"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/modules/drafting/",
+        "docs/pages/S-21.md"
+      ],
+      "acceptance": "Drafts cite statute rows; nothing files without attorney approval; assistant runs through the actions bus.",
+      "notes": "Agent as first-class user (P-15).",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-096",
+      "code": "L-60",
+      "title": "Legal research seam: search statutes / cases / local rules through a provider, save findings to legal memory with verified_on workflow",
+      "lane": "Legal memory",
+      "pass": 3,
+      "depends_on": [
+        "T-089"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/research/",
+        "src/research/provider.ts",
+        "docs/pages/L-60.md"
+      ],
+      "acceptance": "A finding becomes a proposed law-change entry an attorney verifies; provider mock today.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-097",
+      "code": "S-12",
+      "title": "Multi-editor pleading paper: realtime co-editing of documents (CRDT / operations provider), presence, comments, revision history",
+      "lane": "Documents",
+      "pass": 3,
+      "depends_on": [
+        "T-088"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "XL",
+      "deliverables": [
+        "src/components/organism/PleadingEditor/",
+        "src/data/realtime/",
+        "docs/pages/S-12.md"
+      ],
+      "acceptance": "Two demo users edit the same pleading in two tabs without conflict; revisions restorable; export unchanged.",
+      "notes": "Justin: \"multi-editor, like Google Docs\". Fable designs, Opus builds UI.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-098",
+      "code": "CORE",
+      "title": "Pass 3 integration, screenshots / QA / Spanish (Sonnet 5 sub-passes), release 0.3.0",
+      "lane": "QA & Docs",
+      "pass": 3,
+      "depends_on": [
+        "T-093",
+        "T-094",
+        "T-095",
+        "T-096",
+        "T-097"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "docs/changelog/00nn-release-0.3.0.md",
+        "docs/qa/"
+      ],
+      "acceptance": "Deployed; matrix green; es coverage held.",
+      "notes": "Screenshots, QA and Spanish fill are delegated to Sonnet 5 inside this task.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-099",
+      "code": "CORE",
+      "title": "Supabase provider and auth: SupabaseProvider behind DataProvider, generated schema with RLS (tenant_id, roles), Supabase Auth with view-as kept for super admins",
+      "lane": "Platform",
+      "pass": 4,
+      "depends_on": [
+        "T-098"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "XL",
+      "deliverables": [
+        "src/data/SupabaseProvider.ts",
+        "supabase/schema.sql",
+        "src/auth/"
+      ],
+      "acceptance": "Same pages, real rows; RLS tests; hub still opens every role for super admins.",
+      "notes": "D-017. Needs Justin's Supabase project.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-100",
+      "code": "CORE",
+      "title": "Stripe payments and payroll: StripePaymentProvider (checkout, invoices, hotline minutes), payroll / contractor payouts for the attorney network (O-30)",
+      "lane": "Platform",
+      "pass": 4,
+      "depends_on": [
+        "T-099"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/payments/StripePaymentProvider.ts",
+        "src/modules/owner/PayrollPage.tsx",
+        "docs/pages/O-30.md"
+      ],
+      "acceptance": "Test-mode end to end; payouts modelled per office; keys never committed.",
+      "notes": "D-017.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-101",
+      "code": "CORE",
+      "title": "Realtime, presence and offline queue: subscribe over Supabase channels, presence table, version conflict UI, queued writes",
+      "lane": "Platform",
+      "pass": 4,
+      "depends_on": [
+        "T-099"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/data/realtime/",
+        "src/components/molecule/PresenceBar/"
+      ],
+      "acceptance": "Two users see each other on a case; stale write surfaces a conflict; offline edits sync.",
+      "notes": "P-14.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-102",
+      "code": "CORE",
+      "title": "WebMCP tools generated from the actions registry (one tool per action, permission via can()), MCP server for the CLI, surfaces.md",
+      "lane": "Platform",
+      "pass": 4,
+      "depends_on": [
+        "T-098"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/mcp/",
+        "scripts/mcp-server.mjs",
+        "docs/reference/surfaces.md"
+      ],
+      "acceptance": "An MCP client lists and runs actions; every tool matches its ActionDef.",
+      "notes": "P-05 / P-10.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-103",
+      "code": "CORE",
+      "title": "Voice controller: speech to intent to action over the actions bus, on-screen highlighting, multiplayer with the person",
+      "lane": "Platform",
+      "pass": 4,
+      "depends_on": [
+        "T-102"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "src/voice/"
+      ],
+      "acceptance": "Say an intent phrase, the action runs and the UI shows it; works with the video player and the board.",
+      "notes": "P-06.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-104",
+      "code": "CORE",
+      "title": "D-pad spatial navigation: useSpatialNav focus manager (arrow keys, Gamepad API), opt-in per shell, TV mode",
+      "lane": "Platform",
+      "pass": 4,
+      "depends_on": [
+        "T-098"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/a11y/useSpatialNav.ts"
+      ],
+      "acceptance": "Hub, client app and video player fully operable with four arrows and OK; no focus traps.",
+      "notes": "P-04.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-105",
+      "code": "CORE",
+      "title": "Annotations triage automation: agent reads new annotations, records fix / ask decision by author, opens tasks in the plan",
+      "lane": "Platform",
+      "pass": 4,
+      "depends_on": [
+        "T-098"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "scripts/triage.mjs",
+        "docs/reference/annotations-triage.md"
+      ],
+      "acceptance": "Each new row gets triage + decision_ref before any change; ask items appear in kanban Awaiting Justin.",
+      "notes": "P-08.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-106",
+      "code": "CORE",
+      "title": "Release 0.4.0",
+      "lane": "QA & Docs",
+      "pass": 4,
+      "depends_on": [
+        "T-100",
+        "T-101",
+        "T-103",
+        "T-104",
+        "T-105"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "docs/changelog/00nn-release-0.4.0.md"
+      ],
+      "acceptance": "Deployed with real backend behind flags; release note.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-107",
+      "code": "CORE",
+      "title": "Linux appliance image: boots into CTL OS (kiosk browser), local services (files, media, telephony bridge), updates, offline mode",
+      "lane": "Appliance",
+      "pass": 5,
+      "depends_on": [
+        "T-106"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "XL",
+      "deliverables": [
+        "appliance/",
+        "docs/reference/appliance.md"
+      ],
+      "acceptance": "An image boots on a reference machine straight into the hub; works offline with queued sync.",
+      "notes": "Justin: \"installed on a Linux distro and boot up directly into the software\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-108",
+      "code": "QA",
+      "title": "4K / 10-foot pass: every key page at 2560 and 3840, --scale bands tuned, wall-dashboard mode for O-10 / F-01",
+      "lane": "QA & Docs",
+      "pass": 5,
+      "depends_on": [
+        "T-106"
+      ],
+      "model": "sonnet-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "docs/qa/tv-report.md",
+        "src/design/tokens.ts"
+      ],
+      "acceptance": "checkedAt includes 2560 / 3840 for every key page; legibility check passes.",
+      "notes": "P-01.",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-109",
+      "code": "M",
+      "title": "Ops manual complete in English: parts I-IX with live blocks and screenshots",
+      "lane": "QA & Docs",
+      "pass": 5,
+      "depends_on": [
+        "T-106"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "docs/ops-manual/en/*.md"
+      ],
+      "acceptance": "Every part has chapters per role; no system-owned number typed by hand.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-110",
+      "code": "M",
+      "title": "Ops manual Spanish mirror",
+      "lane": "QA & Docs",
+      "pass": 5,
+      "depends_on": [
+        "T-109"
+      ],
+      "model": "sonnet-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "docs/ops-manual/es/*.md"
+      ],
+      "acceptance": "Same file names as en; front matter complete.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-111",
+      "code": "QA",
+      "title": "Full QA matrices: responsive x theme x language x input mode (keyboard, touch, d-pad), a11y, bundle, placeholder count zero",
+      "lane": "QA & Docs",
+      "pass": 5,
+      "depends_on": [
+        "T-108"
+      ],
+      "model": "sonnet-5",
+      "status": "todo",
+      "size": "L",
+      "deliverables": [
+        "docs/qa/"
+      ],
+      "acceptance": "Every cell green or annotated; data-placeholder count is zero on shipped surfaces.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-112",
+      "code": "P-02",
+      "title": "Proposal polish: the full-stack view with real screenshots, verified prices and vendors, the replacement map final",
+      "lane": "Proposal & Site",
+      "pass": 5,
+      "depends_on": [
+        "T-111"
+      ],
+      "model": "opus-5",
+      "status": "todo",
+      "size": "M",
+      "deliverables": [
+        "src/modules/proposal/",
+        "docs/pages/P-02.md"
+      ],
+      "acceptance": "No unverified flag remains on the proposal; printable and shareable.",
+      "notes": "",
+      "updated_at": "2026-09-18T18:30:00Z"
+    },
+    {
+      "id": "T-113",
+      "code": "CORE",
+      "title": "Release 1.0.0",
+      "lane": "QA & Docs",
+      "pass": 5,
+      "depends_on": [
+        "T-107",
+        "T-110",
+        "T-111",
+        "T-112"
+      ],
+      "model": "fable",
+      "status": "todo",
+      "size": "S",
+      "deliverables": [
+        "docs/changelog/00nn-release-1.0.0.md"
+      ],
+      "acceptance": "Deployed; appliance image published; proposal final.",
+      "notes": "More passes follow: \"we will need more passes in the future to make things better and better\".",
+      "updated_at": "2026-09-18T18:30:00Z"
+    }
+  ]
+}
