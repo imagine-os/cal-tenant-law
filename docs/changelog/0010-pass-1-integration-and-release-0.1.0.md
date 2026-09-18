@@ -69,9 +69,13 @@ Kept from design: the ink hero band with `BrandArt`, the display headline / prom
 
 `_pending/{foundation,design,plan,site,board,homes,showcase,knowledge}.md` folded into changelogs 0002-0009 (the drafts are deleted; `_pending/README.md` stays). `docs/reference/surfaces.md` rewritten from the manifest: route table, the machine-drivable URL parameters (D-034), tables, scripts incl. `plan:check` / `plan:sync`, the whole actions catalogue by namespace, components. `docs/plan/tasks.json`: T-008..T-053 done with notes (folder names, provisional schema, Spanish scope); `docs/kanban.md` regenerated with three new "Awaiting Justin" items (18 reconstructed board paths, Spanish square labels, opposing-counsel disclosure). `docs/build-plan.md`: statuses and deliverable paths updated to the shipped folders (`board`, `counsel`, `assist`, `showcase`, one `site` module, `manual`, `legal`). `docs/decisions.md`: D-032 design system, D-033 worktree-per-module workflow, D-034 frame-session URL params, D-035 provisional ops schema, D-036 `order_index`, D-037 one site module. Prompt log: 0001 gets its Pass 1 response; 0002 records "this is ugly. make it gorgeous". `docs/README.md` lists `design/`; `README.md` carries the 0.1.0 line and the real routes.
 
+## Release matrix (after the fixes)
+
+Full `npm run qa:responsive` re-run on the release build: **686 cells, 0 failing, 950 a11y findings, all warnings** - 908 `target-size`, 900 of them on D-21 (the canvas frames' Focus / Open buttons measured after the zoom transform: 44 px in world units, a few px on screen at 25 %; the Focus overlay and the list view give full-size targets) and 8 elsewhere; 42 `heading-skip` (C-02 stage heads h1 -> h3, the LiveBlock `h4.live-title` under an h2 on D-02 / M-02). The S-01 / L-01 inline-link findings from the first run are gone. First QA item for Pass 2: exempt transformed canvas frames in `src/dev/a11yScan.ts` (or measure in world units) and fix the two heading levels, then promote `target-size` to an error (T-051's stretch goal).
+
 ## Deploy
 
-{{DEPLOY_SUMMARY}}
+Pushed to `main`; `.github/workflows/pages.yml` deploys the release build to https://imagine-os.github.io/cal-tenant-law/ (hub at `/#/`). The workflow conclusion for the release SHA is recorded in the Pass 1 hand-back and, if it needs a note, in the next changelog entry.
 
 ## Open items for Justin
 
