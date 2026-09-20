@@ -9,6 +9,7 @@ const BOARD_ACTIONS: ActionDef[] = [
   { id: 'board.selectNode', label: 'Open a square', intent: 'open the square {id} on the game board', params: { id: 'string' } },
   { id: 'board.zoom', label: 'Zoom the board', intent: 'zoom the board in, out, to fit or back to the start', params: { direction: 'enum:in,out,fit,reset' } },
   { id: 'board.fitPhase', label: 'Go to a phase', intent: 'show the {phase} phase of the board', params: { phase: 'string' } },
+  { id: 'board.pan', label: 'Pan the board', intent: 'pan the board {direction}', params: { direction: 'enum:up,down,left,right' } },
 ];
 
 export const boardSpec = defineSpec({
@@ -17,11 +18,12 @@ export const boardSpec = defineSpec({
   layout: ['BoardHeader (title, tagline, counts, credit)', 'Toolbar (search, phase chips, overlay switch)', 'GameBoard (SVG board: phase regions, squares, paths, minimap)', 'BoardKey (KEY: five paths as filters, shapes)', 'NodeDetail drawer (phase, square kind, who moves, what this means, documents, next moves, how you get here)'],
   data: ['board_node_meta'], roles: EVERYONE,
   logic: [
-    'Squares, paths, phases and the KEY come from docs/game-board/nodes.json; positions are computed by a deterministic serpentine layout (phase regions in a grid, nodes in topological order inside a region), so no coordinate is hand-placed (RULE-BOARD-01).',
+    'Squares, paths, phases and the KEY come from docs/game-board/nodes.json, verified square by square against the poster on 2026-09-20 (docs/game-board/verification-2026-09-20.md); positions are computed by a deterministic serpentine layout (phase regions in a grid, nodes in topological order inside a region), so no coordinate is hand-placed (RULE-BOARD-01).',
     'Square shape follows the poster: document = rounded rectangle, hearing / decision = circle, outcome or event = pill, START is its own square. Outcome and event tones are derived from the path types that reach them, never from an opinion.',
     'Path colour follows the poster\'s KEY (normal amber, positive green, negative red, neutral slate, jump violet dashed); paths marked reconstructed: true are drawn with a finer dash and the drawer says the firm must confirm them (RULE-BOARD-02).',
     'Phase chips fit the view to one phase region; the search matches labels and notes and opens the square it finds.',
     'Turning a path type off in the KEY hides those paths so the board can be read without them.',
+    'The toolbar d-pad, the arrow keys and board.pan move the same view, so the board pans without a pointer and without a drag (P-03, P-04).',
     'Labels hide instead of shrinking below legibility when the board is zoomed out; the layout band (phase columns per row) follows the container width, so a phone gets one winding column and a 4K TV the whole poster.',
   ],
   integrations: [], components: ['PageHeader', 'GameBoard', 'BoardKey', 'Drawer', 'SearchInput', 'Chip', 'Badge', 'SegmentedControl', 'Button', 'IconButton', 'Kbd', 'Placeholder', 'Section', 'EmptyState', 'Tooltip'],
@@ -50,9 +52,10 @@ export const caseBoardSpec = defineSpec({
     'Case mode dims squares and phase regions the case has not reached, draws the visited path thick and the possible next paths dashed.',
     'Possible next moves are the outgoing paths of the current square in nodes.json; "Move here" appends a board_moves row and updates the position by id through the provider (needs board.play).',
     'The plain-English panel reads the square\'s note from nodes.json and names who moves next; it never states a deadline, because deadlines are not wired yet (RULE-BOARD-03).',
-    '/board/case redirects to the first demo case so the route is never empty.',
+    '/board/case redirects to the first demo case so the route is never empty; a case id with no board_positions row gets its own empty state, not the "no demo cases" one.',
+    'The case selector lists every case that has a board_positions row: a SegmentedControl while they fit, a Select once there are more than five, so the page header never overflows.',
   ],
-  integrations: [], components: ['PageHeader', 'GameBoard', 'BoardKey', 'Drawer', 'SegmentedControl', 'Card', 'Badge', 'StatusBadge', 'Button', 'EmptyState', 'Section', 'Placeholder'],
+  integrations: [], components: ['PageHeader', 'GameBoard', 'BoardKey', 'Drawer', 'SegmentedControl', 'Select', 'Card', 'Badge', 'StatusBadge', 'Button', 'EmptyState', 'Section', 'Placeholder'],
   actions: [
     ...BOARD_ACTIONS,
     { id: 'board.selectCase', label: 'Choose a case', intent: 'show where case {caseId} is on the board', params: { caseId: 'id' } },
@@ -70,9 +73,9 @@ export const overlaySpec = defineSpec({
   layout: ['OverlayHeader (overlay switch, explanation)', 'GameBoard (with per-square cost or deadline badge)', 'IfThenPanel (branches of the selected square as positive / negative / neutral scenarios with a cost column)', 'OverlayLegend (why the badges are empty, what fills them)', 'BoardKey', 'NodeDetail drawer'],
   data: ['board_node_meta'], roles: EVERYONE,
   logic: [
-    'The overlay switch paints one badge per square from board_node_meta; every typical_cost_band and deadline_rule is null today, so each badge is a marked placeholder (data-placeholder) with a tooltip naming the task that fills it (RULE-BOARD-03, P-09).',
+    'The overlay switch paints one badge per square from board_node_meta. A cost band the services catalog already filled from the store SKUs (RULE-CATALOG-05) is printed as it stands; every square without one, and every deadline, is a marked placeholder (data-placeholder) with a tooltip naming the task that fills it (RULE-BOARD-03, P-09).',
     'The if-then tree is built from the real outgoing paths of the selected square, grouped by path type into positive / negative / neutral scenarios, and one level further so a reader sees where each branch leads.',
-    'No number is ever rendered: a guessed cost would be a wrong price and a guessed deadline unverified law (D-019, D-025).',
+    'No number is ever invented: a band shows only when board_node_meta carries it with its source, because a guessed cost would be a wrong price and a guessed deadline unverified law (D-019, D-025). Deadlines stay placeholders everywhere until T-059.',
   ],
   integrations: [], components: ['PageHeader', 'GameBoard', 'BoardKey', 'Drawer', 'SegmentedControl', 'Card', 'Badge', 'Chip', 'Placeholder', 'Section', 'EmptyState'],
   actions: [

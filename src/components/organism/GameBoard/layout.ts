@@ -89,13 +89,19 @@ export interface LayoutOptions {
 }
 
 /** One responsive layout per width band: a phone gets a single winding column, a 4K TV gets the whole poster. */
-export function layoutOptionsFor(containerWidth: number): LayoutOptions {
-  if (containerWidth < 600) return { phaseCols: 1, nodeCols: 1, labelFont: 15 };
-  if (containerWidth < 780) return { phaseCols: 1, nodeCols: 2, labelFont: 15 };
-  if (containerWidth < 1200) return { phaseCols: 2, nodeCols: 3, labelFont: 15 };
-  if (containerWidth < 1920) return { phaseCols: 3, nodeCols: 4, labelFont: 15 };
-  if (containerWidth < 2560) return { phaseCols: 3, nodeCols: 4, labelFont: 16 };
-  return { phaseCols: 4, nodeCols: 4, labelFont: 16 };
+/**
+ * Columns follow the width of the board's own container; the type band follows the **viewport**, because the board
+ * sits inside a shell (a 1920 screen gives the surface ~1536 px) and P-01 measures the screen, not the panel. The
+ * label font is the band's ceiling: circles take one step down from it, and GameBoard floors every other painted
+ * string at `labelFont - 1`, so nothing the board draws is under 12 px anywhere or under 16 px from 1920 up.
+ */
+export function layoutOptionsFor(containerWidth: number, viewportWidth: number = containerWidth): LayoutOptions {
+  const labelFont = viewportWidth >= 2560 ? 18 : viewportWidth >= 1920 ? 17 : 15;
+  if (containerWidth < 600) return { phaseCols: 1, nodeCols: 1, labelFont };
+  if (containerWidth < 780) return { phaseCols: 1, nodeCols: 2, labelFont };
+  if (containerWidth < 1200) return { phaseCols: 2, nodeCols: 3, labelFont };
+  if (containerWidth < 2560) return { phaseCols: 3, nodeCols: 4, labelFont };
+  return { phaseCols: 4, nodeCols: 4, labelFont };
 }
 
 /** Greedy word wrap into at most `maxLines` lines; the last line gets an ellipsis when the label does not fit. */

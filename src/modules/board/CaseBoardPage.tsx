@@ -11,6 +11,7 @@ import { Card } from '../../components/molecule/Card/Card';
 import { EmptyState } from '../../components/molecule/EmptyState/EmptyState';
 import { useToast } from '../../components/molecule/Toast/Toast';
 import { Badge } from '../../components/atom/Badge/Badge';
+import { Select } from '../../components/atom/Select/Select';
 import { Button } from '../../components/atom/Button/Button';
 import { Drawer } from '../../components/organism/Drawer/Drawer';
 import { GameBoard, type BoardCommand } from '../../components/organism/GameBoard/GameBoard';
@@ -108,6 +109,12 @@ export function CaseBoardPage() {
       setCommand((c) => ({ kind, nonce: (c?.nonce ?? 0) + 1 }));
       return { ok: true, message: `Zoom ${kind}` };
     },
+    'board.pan': ({ direction }) => {
+      const d = String(direction) as BoardCommand['kind'];
+      if (!['up', 'down', 'left', 'right'].includes(d)) return { ok: false, message: 'direction must be up, down, left or right' };
+      setCommand((c) => ({ kind: d, nonce: (c?.nonce ?? 0) + 1 }));
+      return { ok: true, message: `Pan ${d}` };
+    },
     'board.fitPhase': ({ phase }) => {
       const key = String(phase).toLowerCase();
       const hit = PHASES.find((p) => p.id === key || p.label.toLowerCase().includes(key));
@@ -135,7 +142,8 @@ export function CaseBoardPage() {
     return (
       <div className="page stack">
         <PageHeader code="GB-02" title={t('board.case.title')} subtitle={t('board.case.subtitle')} backTo="/board" />
-        <EmptyState icon="question" title={t('board.case.none')} action={<Button onClick={() => navigate(`/board/case/${positions[0].case_id}`)}>{positions[0].case_label}</Button>} />
+        <EmptyState icon="question" title={t('board.case.missing')} body={t('board.case.missingBody')}
+          action={<Button onClick={() => navigate(`/board/case/${positions[0].case_id}`)}>{positions[0].case_label}</Button>} />
       </div>
     );
   }
@@ -150,8 +158,11 @@ export function CaseBoardPage() {
         eyebrow={position.case_ref ?? undefined}
         title={t('board.case.title')}
         subtitle={t('board.case.subtitle')}
-        actions={<SegmentedControl ariaLabel={t('board.case.selector')} size="sm" value={position.case_id} onChange={(id) => navigate(`/board/case/${id}`)}
-          options={positions.map((p) => ({ value: p.case_id, label: short(p.case_label) }))} />}
+        actions={positions.length > 5
+          ? <Select aria-label={t('board.case.selector')} size="sm" value={position.case_id} onChange={(e) => navigate(`/board/case/${e.target.value}`)}
+              options={positions.map((p) => ({ value: p.case_id, label: short(p.case_label) }))} />
+          : <SegmentedControl ariaLabel={t('board.case.selector')} size="sm" value={position.case_id} onChange={(id) => navigate(`/board/case/${id}`)}
+              options={positions.map((p) => ({ value: p.case_id, label: short(p.case_label) }))} />}
       />
 
       <div className="board-here">

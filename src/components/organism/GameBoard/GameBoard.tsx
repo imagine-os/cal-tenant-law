@@ -29,8 +29,11 @@ export const GAME_BOARD_LABELS: GameBoardLabels = {
   visited: 'visited', next: 'possible next move', current: 'current square', step: 'square {n} of {total}',
 };
 
-/** A zoom / fit request from outside the board (an action, a voice command); bump `nonce` to re-apply the same kind. */
-export interface BoardCommand { kind: 'in' | 'out' | 'fit' | 'reset'; nonce: number }
+/** A view request from outside the board (an action, a voice command); bump `nonce` to re-apply the same kind. */
+export interface BoardCommand { kind: BoardCommandKind; nonce: number }
+/** Zoom and fit, plus the four pan directions the d-pad and `board.pan` share (P-04: a remote drives the same ids). */
+export type BoardCommandKind = 'in' | 'out' | 'fit' | 'reset' | 'up' | 'down' | 'left' | 'right';
+export const BOARD_COMMAND_KINDS: BoardCommandKind[] = ['in', 'out', 'fit', 'reset', 'up', 'down', 'left', 'right'];
 
 export interface GameBoardProps {
   nodes: BoardNode[];
@@ -93,7 +96,9 @@ export function GameBoard({
     return () => ro.disconnect();
   }, []);
 
-  const opts = layoutOptionsFor(size.w);
+  const opts = layoutOptionsFor(size.w, typeof window === 'undefined' ? size.w : window.innerWidth);
+  /** Every string the SVG paints sits at or above this, so the board clears 12 px anywhere and 16 px from 1920 up (P-01). */
+  const floorFont = opts.labelFont - 1;
   const layout = useMemo(() => layoutBoard(nodes, edges, phases, opts), [nodes, edges, phases, opts.phaseCols, opts.nodeCols, opts.labelFont]); // eslint-disable-line react-hooks/exhaustive-deps
   const minK = useMemo(() => Math.max(0.02, Math.min((size.w - PAD * 2) / layout.width, (size.h - PAD * 2) / layout.height) * 0.95), [size.w, size.h, layout.width, layout.height]);
 
@@ -152,9 +157,14 @@ export function GameBoard({
   const commandKind = command?.kind;
   useEffect(() => {
     if (!commandNonce || !commandKind) return;
+    const panStep = Math.round(Math.max(80, size.w * 0.12));
     if (commandKind === 'in') zoomAt(1.25);
     else if (commandKind === 'out') zoomAt(1 / 1.25);
     else if (commandKind === 'fit') setView(fitTo(boardRect(layout), true));
+    else if (commandKind === 'up') panBy(0, panStep);
+    else if (commandKind === 'down') panBy(0, -panStep);
+    else if (commandKind === 'left') panBy(panStep, 0);
+    else if (commandKind === 'right') panBy(-panStep, 0);
     else setView(focusPhase ? fitTo(phaseRect(layout, focusPhase), false) : fitTo(boardRect(layout), true));
   }, [commandNonce]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -220,8 +230,8 @@ export function GameBoard({
   }, [hotId, layout]);
 
   const showLabels = view.k * opts.labelFont >= 9.5;
-  const phaseFont = Math.max(13, Math.round(22 / view.k));
-  const stepFont = Math.max(12, Math.round(13 / view.k));
+  const phaseFont = Math.max(floorFont + 4, Math.round(22 / view.k));
+  const stepFont = Math.max(floorFont, Math.round(13 / view.k));
 
   const ariaFor = (p: PlacedNode): string => {
     const phase = layout.phaseById[p.node.phase]?.phase.label ?? p.node.phase;
@@ -261,7 +271,7 @@ export function GameBoard({
               {(hot || isNext) && r.edge.label && (
                 <>
                   <rect className="gb-edge-label-plate" x={r.mid.x - Math.min(150, r.edge.label.length * 4.2)} y={r.mid.y - 14} width={Math.min(300, r.edge.label.length * 8.4)} height={26} rx={13} />
-                  <text className="gb-edge-label" x={r.mid.x} y={r.mid.y + 4} fontSize={14} textAnchor="middle">{r.edge.label}</text>
+                  <text className="gb-edge-label" x={r.mid.x} y={r.mid.y + 4} fontSize={floorFont} textAnchor="middle">{r.edge.label}</text>
                 </>
               )}
             </g>
@@ -309,14 +319,14 @@ export function GameBoard({
                   <g data-placeholder={filled ? undefined : overlay === 'cost' ? L.costNotWired : L.deadlineNotWired}>
                     <rect className="gb-badge-plate" x={p.cx - bw / 2} y={p.badge.y} width={bw} height={p.badge.h} rx={13} />
                     <text className="gb-badge-text" data-filled={filled ? 'true' : undefined} x={p.cx} y={p.badge.y + p.badge.h * 0.7}
-                      fontSize={13} textAnchor="middle">{text}</text>
+                      fontSize={floorFont} textAnchor="middle">{text}</text>
                   </g>
                 );
               })()}
               {isCurrent && (
                 <>
                   <rect className="gb-here-plate" x={p.cx - 74} y={p.y - 44} width={148} height={30} rx={15} />
-                  <text className="gb-here-text" x={p.cx} y={p.y - 23} fontSize={14} textAnchor="middle">{L.youAreHere}</text>
+                  <text className="gb-here-text" x={p.cx} y={p.y - 23} fontSize={floorFont} textAnchor="middle">{L.youAreHere}</text>
                 </>
               )}
             </g>
@@ -324,7 +334,7 @@ export function GameBoard({
         })}
       </g>
     </>
-  ), [layout, mode, overlay, selectedId, currentId, visitedSet, nextSet, visitedEdges, hiddenSet, hotEdges, hotId, hotNeighbours, focusPhase, phaseFont, stepFont, onSelect, revealNode, L]); // eslint-disable-line react-hooks/exhaustive-deps
+  ), [layout, mode, overlay, selectedId, currentId, visitedSet, nextSet, visitedEdges, hiddenSet, hotEdges, hotId, hotNeighbours, focusPhase, phaseFont, stepFont, floorFont, onSelect, revealNode, L]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const pct = Math.round(view.k * 100);
   const focusLabel = focusPhase ? layout.phaseById[focusPhase]?.phase.label ?? focusPhase : L.wholeBoard;

@@ -146,9 +146,11 @@
 .gb-labels-hidden .gb-node-label, .gb-labels-hidden .gb-edge-label, .gb-labels-hidden .gb-edge-label-plate, .gb-labels-hidden .gb-badge-plate, .gb-labels-hidden .gb-badge-text { display: none; }
 
 /* ---------- minimap ---------- */
+/* bottom-LEFT: the staff shell parks its floating Feedback button in the bottom-right corner, and a minimap under
+   it is both unreadable and unreachable. */
 .gb-minimap {
   position: absolute;
-  right: var(--sp-3);
+  left: var(--sp-3);
   bottom: var(--sp-3);
   width: 172px;
   height: 132px;

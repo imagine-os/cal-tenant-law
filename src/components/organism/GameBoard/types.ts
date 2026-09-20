@@ -33,6 +33,8 @@ export interface BoardEdge {
   label?: string;
   /** The arrow's origin was ambiguous on the poster: the firm must confirm it. */
   reconstructed?: boolean;
+  /** Which reading of the poster settled this path (see docs/game-board/verification-2026-09-20.md). */
+  verified_against?: string;
 }
 
 export interface BoardPhase { id: string; label: string; order: number; description?: string }
@@ -40,7 +42,8 @@ export interface BoardKeyEntry { path: BoardPathType; label: string; meaning: st
 export interface BoardNodeKindEntry { kind: BoardNodeKind; label: string }
 
 export interface BoardData {
-  meta: Record<string, string>;
+  /** Poster front matter: title, source, copyright, the printed taglines and footer, extraction / verification notes. */
+  meta: Record<string, string | string[]>;
   key: BoardKeyEntry[];
   node_kinds: BoardNodeKindEntry[];
   phases: BoardPhase[];

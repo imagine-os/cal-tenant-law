@@ -58,7 +58,8 @@ export function BoardPage() {
   }, [wanted]);
 
   const results = useMemo(() => searchNodes(q), [q]);
-  const selected = selectedId ? nodeById[selectedId] : null;
+  const metaById = useMemo(() => Object.fromEntries(nodesWithMeta.map((n) => [n.id, n])), [nodesWithMeta]);
+  const selected = selectedId ? metaById[selectedId] ?? nodeById[selectedId] : null;
 
   const open = (id: string) => {
     const n = nodeById[id];
@@ -81,6 +82,12 @@ export function BoardPage() {
       if (!['in', 'out', 'fit', 'reset'].includes(kind)) return { ok: false, message: 'direction must be in, out, fit or reset' };
       setCommand((c) => ({ kind, nonce: (c?.nonce ?? 0) + 1 }));
       return { ok: true, message: `Zoom ${kind}` };
+    },
+    'board.pan': ({ direction }) => {
+      const d = String(direction) as BoardCommand['kind'];
+      if (!['up', 'down', 'left', 'right'].includes(d)) return { ok: false, message: 'direction must be up, down, left or right' };
+      setCommand((c) => ({ kind: d, nonce: (c?.nonce ?? 0) + 1 }));
+      return { ok: true, message: `Pan ${d}` };
     },
     'board.fitPhase': ({ phase }) => {
       const key = String(phase).toLowerCase();

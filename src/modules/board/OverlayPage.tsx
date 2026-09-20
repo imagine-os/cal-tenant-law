@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useActions } from '../../actions/useActions';
 import { useTable } from '../../data/DataContext';
 import type { BoardNodeMetaRow } from '../../data/schema/board';
@@ -43,8 +43,9 @@ export function OverlayPage() {
   const nodesWithMeta = useNodesWithMeta(nodeMeta);
   const filled = { cost: nodeMeta.filter((r) => !!r.typical_cost_band).length, deadline: nodeMeta.filter((r) => !!r.deadline_rule).length, total: nodeMeta.length || NODES.length };
 
-  const selected = nodeById[selectedId];
-  const drawerNode = drawerId ? nodeById[drawerId] : null;
+  const metaById = useMemo(() => Object.fromEntries(nodesWithMeta.map((n) => [n.id, n])), [nodesWithMeta]);
+  const selected = metaById[selectedId] ?? nodeById[selectedId];
+  const drawerNode = drawerId ? metaById[drawerId] ?? nodeById[drawerId] : null;
 
   const pick = (id: string) => {
     const n = nodeById[id];
@@ -66,6 +67,12 @@ export function OverlayPage() {
       if (!['in', 'out', 'fit', 'reset'].includes(kind)) return { ok: false, message: 'direction must be in, out, fit or reset' };
       setCommand((c) => ({ kind, nonce: (c?.nonce ?? 0) + 1 }));
       return { ok: true, message: `Zoom ${kind}` };
+    },
+    'board.pan': ({ direction }) => {
+      const d = String(direction) as BoardCommand['kind'];
+      if (!['up', 'down', 'left', 'right'].includes(d)) return { ok: false, message: 'direction must be up, down, left or right' };
+      setCommand((c) => ({ kind: d, nonce: (c?.nonce ?? 0) + 1 }));
+      return { ok: true, message: `Pan ${d}` };
     },
     'board.fitPhase': ({ phase }) => {
       const key = String(phase).toLowerCase();

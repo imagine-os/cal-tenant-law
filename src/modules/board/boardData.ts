@@ -1,7 +1,8 @@
 /**
  * The board as data. `docs/game-board/nodes.json` is imported at build time (the docs tree is the single source of
  * truth: nobody copies the board into src/), typed through the organism's prop types, and indexed once for the three
- * board pages. 10 phases, 88 squares, 114 paths.
+ * board pages. 10 phases, 88 squares, 115 paths (verified square by square against the poster on 2026-09-20; see
+ * docs/game-board/verification-2026-09-20.md).
  */
 import { useMemo } from 'react';
 import raw from '../../../docs/game-board/nodes.json';

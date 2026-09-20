@@ -55,7 +55,9 @@ export function NodeDetail({ node, onSelect, onMove, canMove = false, currentId 
       <section className="stack-sm">
         <h3 className="board-detail-h">{t('board.detail.cost')} · {t('board.detail.deadline')}</h3>
         <div className="row wrap" style={{ gap: 8 }}>
-          <Placeholder what={t('board.overlay.costNotWired')} plannedIn="T-074 cost model"><Chip icon="dollar">{t('board.overlay.costBadge')}</Chip></Placeholder>
+          {node.typical_cost_band
+            ? <Chip icon="dollar">{node.typical_cost_band}</Chip>
+            : <Placeholder what={t('board.overlay.costNotWired')} plannedIn="T-074 cost model"><Chip icon="dollar">{t('board.overlay.costBadge')}</Chip></Placeholder>}
           <Placeholder what={t('board.overlay.deadlineNotWired')} plannedIn="T-059 deadline engine"><Chip icon="clock">{t('board.overlay.deadlineBadge')}</Chip></Placeholder>
         </div>
       </section>

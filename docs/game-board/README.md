@@ -8,7 +8,7 @@ Source: `reference/game-board.pdf`, "Take the 'awful' out of Unlawful Detainer /
 
 - **Node labels are verbatim** from the PDF text layer (including the poster's own spellings such as "Prejudgement" and "witnesses's"). Nothing was added or renamed.
 - **Phases** follow the section titles printed on the board (START, Motion To Quash, Demurrer, Default, Discovery, Summary Judgment, Trial, Appeal, Removal to Federal Court, Petition) plus an `outcomes` phase for terminal squares.
-- **Edges are reconstructed from the poster layout** (the printed paths and arrows), typed with the board's own KEY: Normal, Positive, Negative, Neutral, Jump. Where an arrow's origin is ambiguous on the poster the edge carries `"reconstructed": true`. The firm should confirm the edges in a review pass (kanban "Awaiting Justin").
+- **Edges are reconstructed from the poster layout** (the printed paths and arrows), typed with the board's own KEY: Normal, Positive, Negative, Neutral, Jump. Where an arrow's origin is ambiguous on the poster the edge carries `"reconstructed": true`; an edge settled by reading the rendered poster carries `"verified_against"` instead. On **2026-09-20** every square and arrow was re-checked against the PDF's text layer and the page rendered at 2.2x (prompt 0006): 23 path types and five endpoints were corrected, one edge was added (114 -> 115), and the reconstructed count fell from 18 to **13**. The remaining 13 need the firm (kanban "Awaiting Justin"): see `verification-2026-09-20.md`, which lists each one and what the poster does and does not show.
 - **`kind`** uses the KEY's shapes: `document` (rectangles), `hearing` (Hearing / Decision circles), `outcome` (Outcome or Event, terminal), `event` (Outcome or Event, non-terminal), `start`.
 - **`actor`** (who makes the move) is our reading of the label: `tenant` (you / we), `landlord`, `court` (judge, clerk, sheriff, process server acting for the court process), `both`.
 - **`documents`, `typical_cost_band`, `deadline_rule` are null / empty on purpose.** Pass 2 fills them: `documents` from the template catalog (T-066), `typical_cost_band` from the cost model built on the store SKUs (T-074), `deadline_rule` from the deadline engine with a citation into `docs/legal/statute-index.md` (T-059). Filling them with guesses now would put unverified law and prices into the product (D-019, D-025).
@@ -17,11 +17,11 @@ Source: `reference/game-board.pdf`, "Take the 'awful' out of Unlawful Detainer /
 
 ```
 {
-  "meta": { title, source, copyright, extracted_on, extracted_by, fidelity_note },
+  "meta": { title, tagline, taglines[], footer, source, copyright, extracted_on, extracted_by, fidelity_note, verified_on, verified_by },
   "key": [ { path, label, meaning } x5 ],
   "phases": [ { id, label, order, description } ],
   "nodes": [ { id, phase, kind, label, actor, description?, documents: [], typical_cost_band: null, deadline_rule: null } ],
-  "edges": [ { from, to, path, label?, reconstructed? } ]
+  "edges": [ { from, to, path, label?, reconstructed?, verified_against? } ]
 }
 ```
 

@@ -56,7 +56,7 @@ export default defineMeta({
     { name: 'hiddenPaths', type: 'BoardPathType[]', default: '[]', description: 'Path types the KEY legend switched off' },
     { name: 'focusPhase', type: 'string | null', description: 'Phase region to fit; null fits the whole board' },
     { name: 'fitNonce', type: 'number', default: '0', description: 'Bump to re-fit the same phase' },
-    { name: 'command', type: 'BoardCommand | null', description: "Zoom / fit request from the page's actions bus ({ kind, nonce })" },
+    { name: 'command', type: 'BoardCommand | null', description: "Zoom / fit / pan request from the page's actions bus ({ kind, nonce }); kind is in, out, fit, reset, up, down, left or right" },
     { name: 'minimap', type: 'boolean', default: 'true', description: 'Corner overview of the phase regions' },
     { name: 'labels', type: 'Partial<GameBoardLabels>', description: 'Translated chrome strings (the page passes useT output)' },
   ],
