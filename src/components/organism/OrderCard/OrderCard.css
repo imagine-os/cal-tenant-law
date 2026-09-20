@@ -1,0 +1,32 @@
+.ordercard { display: flex; flex-direction: column; gap: var(--sp-3); padding: var(--sp-4); background: var(--color-surface); border-radius: var(--r-card); box-shadow: var(--hairline), var(--shadow-sm); }
+.ordercard:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.ordercard.is-compact { gap: var(--sp-2); padding: var(--sp-3); }
+.ordercard.is-selected { box-shadow: 0 0 0 2px var(--color-primary), var(--shadow-md); }
+.ordercard.is-late { border-left: 3px solid var(--color-danger); padding-left: calc(var(--sp-4) - 3px); }
+.ordercard.is-compact.is-late { padding-left: calc(var(--sp-3) - 3px); }
+
+.ordercard-top { display: flex; gap: var(--sp-3); align-items: flex-start; }
+.ordercard-head { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ordercard-ref { font-size: var(--fs-2xs); color: var(--color-text-faint); letter-spacing: .02em; }
+.ordercard-title { font-family: var(--font-display); font-size: var(--fs-md); line-height: var(--lh-tight); font-weight: var(--fw-semibold); color: var(--color-heading); text-align: left; background: none; border: 0; padding: 0; cursor: pointer; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ordercard-title:hover { color: var(--color-primary); text-decoration: underline; }
+.ordercard-title:focus-visible { outline: var(--focus-ring); outline-offset: 2px; border-radius: var(--r-xs); }
+.ordercard-title.as-text { cursor: default; }
+.ordercard-client { font-size: var(--fs-xs); color: var(--color-text-secondary); }
+
+.ordercard-pills { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.ordercard-meta { display: flex; flex-direction: column; gap: 2px; margin: 0; font-size: var(--fs-xs); }
+.ordercard-meta-row { display: flex; gap: var(--sp-2); }
+.ordercard-meta-row dt { color: var(--color-text-faint); min-width: 3.2em; }
+.ordercard-meta-row dd { margin: 0; color: var(--color-text-secondary); }
+.ordercard-meta-row.tone-warn dd { color: var(--color-warn); font-weight: var(--fw-semibold); }
+.ordercard-meta-row.tone-danger dd { color: var(--color-danger); font-weight: var(--fw-semibold); }
+
+.ordercard-actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: auto; }
+
+@media (min-width: 2560px) {
+  .ordercard { gap: var(--sp-4); }
+  .ordercard-ref, .ordercard-client, .ordercard-meta { font-size: var(--fs-sm); }
+  .ordercard-title { font-size: var(--fs-lg); }
+}
