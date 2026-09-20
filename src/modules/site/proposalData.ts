@@ -19,9 +19,24 @@ export const PLAN_UPDATED: string = plan.updated_at;
 
 export type ShipStatus = 'done' | 'doing' | 'planned';
 
+/**
+ * Page codes that no task carries in its own `code` field, and the task ids that actually ship them. The plan files a
+ * task under one page code (T-079 under P-10, T-130 under C-40, T-133 under DOC), so a sibling page built by the same
+ * task would otherwise read "planned" on the proposal while it is live. Add a line here when a page ships under
+ * another page's task; a page with its own task needs nothing.
+ */
+const CODE_TASKS: Record<string, string[]> = {
+  'P-05': ['T-133'],          // attorneys page: the portraits-and-people task (T-133, wave A)
+  'P-06': ['T-130', 'T-078'], // public video library: the LMS tasks that own the curriculum
+  'P-11': ['T-079'],          // service detail: shipped by the store redesign
+  'P-12': ['T-079'],          // how it works: shipped by the store redesign
+  'P-13': ['T-079'],          // services outline: shipped by the store redesign
+};
+
 /** Pass and status for a set of page codes: earliest pass, and the furthest-along status of its tasks. */
 export function planFor(codes: string[]): { pass: number; status: ShipStatus; tasks: PlanTask[] } {
-  const tasks = TASKS.filter((t) => codes.includes(t.code));
+  const viaAlias = new Set(codes.flatMap((c) => CODE_TASKS[c] ?? []));
+  const tasks = TASKS.filter((t) => codes.includes(t.code) || viaAlias.has(t.id));
   if (!tasks.length) return { pass: 2, status: 'planned', tasks: [] };
   const pass = Math.min(...tasks.map((t) => t.pass));
   const inPass = tasks.filter((t) => t.pass === pass);
@@ -123,6 +138,8 @@ export const FEATURES: Feature[] = [
   { id: 'funnel', department: 'marketing', roles: ['owner', 'marketing'], codes: ['MK-01'], label: { en: 'Video → consult funnel', es: 'Embudo video → consulta' }, what: { en: 'Visitor to video to intake to consultation to client, measured, so content spend has a number next to it.', es: 'De visitante a video, admisión, consulta y cliente, todo medido.' } },
   { id: 'calendar', department: 'marketing', roles: ['marketing'], codes: ['MK-02'], label: { en: 'Content calendar', es: 'Calendario de contenido' }, what: { en: 'Videos, shorts and articles planned against the stages renters search for.', es: 'Videos, cortos y artículos planeados según lo que buscan los inquilinos.' } },
   { id: 'city-pages', department: 'marketing', roles: ['marketing'], codes: ['MK-02'], label: { en: 'City pages from data', es: 'Páginas de ciudad desde datos' }, what: { en: 'One row per city renders a landing page, instead of dozens of hand-copied WordPress pages splitting the same SEO.', es: 'Una fila por ciudad genera una página, en vez de decenas copiadas a mano.' } },
+  { id: 'team-page', department: 'marketing', roles: ['marketing', 'client'], codes: ['P-05'], label: { en: 'The team page', es: 'La página del equipo' }, what: { en: 'Every attorney in the network with their portrait, title, office and city, filterable by office, each one linking to that office page. Built; names, titles and portraits show exactly as caltenantlaw.com publishes them and stay badged unverified until the firm confirms each one.', es: 'Cada abogado de la red con su retrato, cargo, oficina y ciudad, filtrable por oficina. Construido; los nombres y retratos aparecen tal como los publica caltenantlaw.com y siguen marcados como sin verificar hasta que el despacho los confirme.' } },
+  { id: 'video-library', department: 'marketing', roles: ['marketing', 'client'], codes: ['P-06'], label: { en: 'Public video library', es: 'Biblioteca pública de videos' }, what: { en: 'All 36 of the firm’s videos on one public page in the site’s own three series, searchable, playing in place through youtube-nocookie — the free education that feeds the funnel. Built; tracked progress is the client app’s job.', es: 'Los 36 videos del despacho en una página pública, en las tres series del sitio, con búsqueda y reproducción en la misma página mediante youtube-nocookie. Construido; el seguimiento del progreso corresponde a la app del cliente.' } },
   { id: 'public-site', department: 'marketing', roles: ['marketing', 'client'], codes: ['P-01'], label: { en: 'The public site', es: 'El sitio público' }, what: { en: 'One URL scheme, one content source, the educate-first funnel, English and Spanish from the first screen.', es: 'Un solo esquema de URLs, una fuente de contenido, inglés y español desde la primera pantalla.' } },
   // Operations manual
   { id: 'manual-cover', department: 'manual', roles: ['owner', 'attorney', 'paralegal', 'front_desk', 'marketing'], codes: ['M-01'], label: { en: 'How the firm runs', es: 'Cómo funciona el bufete' }, what: { en: 'A chapter per department and per role: the actual procedure, not a binder nobody opens.', es: 'Un capítulo por departamento y rol: el procedimiento real.' } },

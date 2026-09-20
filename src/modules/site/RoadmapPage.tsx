@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useI18n } from '../../i18n/I18nProvider';
+import { useSession } from '../../auth/SessionProvider';
 import { bi } from '../../i18n/types';
 import { useActions } from '../../actions/useActions';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
@@ -23,6 +24,9 @@ const STATUS_KEY: Record<string, string> = { done: 'site.status.done', doing: 's
 /** P-04 - the plan in the firm's language: six passes in dependency ticks, live progress, feedback and the open asks. */
 export function RoadmapPage() {
   const { t, lang } = useI18n();
+  const { hasRole } = useSession();
+  /** D-048: the live project board is staff-only; a public reader stays on this page, which carries the same numbers. */
+  const canSeePlan = hasRole(['super_admin', 'owner']);
   const [openPass, setOpenPass] = useState<number>(1);
   const [showTasks, setShowTasks] = useState(false);
 
@@ -144,9 +148,11 @@ export function RoadmapPage() {
         </Section>
       </div>
 
-      <div className="container">
-        <Link to="/plan"><Button variant="secondary" icon="kanban">{t('p4.plan.link')}</Button></Link>
-      </div>
+      {canSeePlan && (
+        <div className="container">
+          <Link to="/plan"><Button variant="secondary" icon="kanban">{t('p4.plan.link')}</Button></Link>
+        </div>
+      )}
     </SiteFrame>
   );
 }

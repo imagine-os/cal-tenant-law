@@ -1,8 +1,12 @@
 import { useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useI18n } from '../../i18n/I18nProvider';
+import { useSession } from '../../auth/SessionProvider';
 import { bi } from '../../i18n/types';
 import { ROLE_LABEL, type Role } from '../../auth/roles';
+
+/** The roles the plan routes (PM-xx) allow, D-048. Kept here so the site module never imports another module's specs. */
+const PLAN_ROLES: Role[] = ['super_admin', 'owner'];
 import { useActions } from '../../actions/useActions';
 import { PageHeader } from '../../components/molecule/PageHeader/PageHeader';
 import { Section } from '../../components/molecule/Section/Section';
@@ -27,7 +31,10 @@ const STATUS_TONE: Record<ShipStatus, 'success' | 'info' | 'neutral'> = { done: 
 /** P-02 - the full-stack view of CTL OS for the firm's decision makers. */
 export function ProposalPage() {
   const { t, lang } = useI18n();
+  const { hasRole } = useSession();
   const navigate = useNavigate();
+  /** D-048: /plan/* is staff-only (super admin, owner). A public visitor never sees a link that would bounce them to /no-access. */
+  const canSeePlan = hasRole(PLAN_ROLES);
   const [role, setRole] = useState<RoleFilter>('all');
   const [openId, setOpenId] = useState<string | null>(null);
   const open = FEATURES.find((f) => f.id === openId) ?? null;
@@ -72,7 +79,11 @@ export function ProposalPage() {
       setOpenId(hit.id);
       return { ok: true, message: `Opened ${bi(hit.label, 'en')}` };
     },
-    'site.openPlan': () => { navigate('/plan'); return { ok: true, message: 'Opened the project board' }; },
+    'site.openPlan': () => {
+      if (!canSeePlan) return { ok: false, message: 'The project board is staff-only (D-048); the roadmap at /site/proposal/roadmap shows the same plan data.' };
+      navigate('/plan');
+      return { ok: true, message: 'Opened the project board' };
+    },
     'site.printProposal': () => { window.print(); return { ok: true, message: 'Print dialog opened' }; },
   });
 
@@ -177,9 +188,11 @@ export function ProposalPage() {
       <div className="container">
         <Section title={t('p2.links.title')}>
           <div className="st-grid3">
-            <Card interactive onClick={() => navigate('/plan')}>
-              <div className="stack-sm"><div className="st-cardhead"><span className="st-icon-badge"><Icon name="kanban" size={20} /></span><h3>{t('p2.links.plan')}</h3></div><p className="st-body">{t('p2.links.planBody')}</p></div>
-            </Card>
+            {canSeePlan && (
+              <Card interactive onClick={() => navigate('/plan')}>
+                <div className="stack-sm"><div className="st-cardhead"><span className="st-icon-badge"><Icon name="kanban" size={20} /></span><h3>{t('p2.links.plan')}</h3></div><p className="st-body">{t('p2.links.planBody')}</p></div>
+              </Card>
+            )}
             <Card interactive onClick={() => navigate('/board')}>
               <div className="stack-sm"><div className="st-cardhead"><span className="st-icon-badge"><Icon name="gamepad" size={20} /></span><h3>{t('p2.links.board')}</h3></div><p className="st-body">{t('p2.links.boardBody')}</p></div>
             </Card>

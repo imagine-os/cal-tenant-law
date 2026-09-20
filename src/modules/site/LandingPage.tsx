@@ -5,7 +5,9 @@ import { bi } from '../../i18n/types';
 import { useTable } from '../../data/DataContext';
 import type { TenantRow } from '../../data/schema/core';
 import type { ServiceRow } from '../../data/schema/catalog';
+import type { LessonRow } from '../../data/schema/ops';
 import type { IllustrationRow } from '../../data/schema/illustrations';
+import type { AttorneyRow } from '../../data/schema/people';
 import { illustrationUrl } from '../../data/illustrationAssets';
 import { useActions } from '../../actions/useActions';
 import { Section } from '../../components/molecule/Section/Section';
@@ -16,7 +18,8 @@ import { Badge } from '../../components/atom/Badge/Badge';
 import { Icon } from '../../components/atom/Icon/Icon';
 import { SegmentedControl } from '../../components/molecule/SegmentedControl/SegmentedControl';
 import { Placeholder } from '../../components/atom/Placeholder/Placeholder';
-import { SiteFrame } from './chrome';
+import { PersonCard } from '../../components/molecule/PersonCard/PersonCard';
+import { SiteFrame, AsShownBadge, publicAsset } from './chrome';
 import { landingSpec } from './specs';
 import { HOW_STEPS, LESSONS, STAGES, type StageId } from './siteData';
 import { SITE_STAGE_PHASE, dollars, scrapedDate } from '../catalog/catalogData';
@@ -30,7 +33,6 @@ const STEP_TILES = ['icon_advice', 'icon_paid-services', 'icon_consultation'];
 const servicesHref = (stage: StageId): string => `/site/services?stage=${SITE_STAGE_PHASE[stage] ?? ''}`;
 
 const PLANNED_INTAKE = 'intake F-10 and scheduling F-11, pass 2';
-const PLANNED_LMS = 'learning C-40, pass 2';
 
 /** P-01 - the educate-first funnel: free videos, the game board, a stage picker into the store, then the paid consultation. */
 export function LandingPage() {
@@ -40,6 +42,19 @@ export function LandingPage() {
   const { rows: offices } = useTable<TenantRow>('tenants', { where: { kind: 'office' }, orderBy: { column: 'sort_order' } });
   const { rows: services } = useTable<ServiceRow>('services');
   const { rows: illustrations } = useTable<IllustrationRow>('illustrations');
+  const { rows: attorneys } = useTable<AttorneyRow>('attorneys', { orderBy: { column: 'order_index' } });
+  const { rows: lessonRows } = useTable<LessonRow>('lessons', { where: { kind: 'video' } });
+  /** The attorney the firm names on that office's page (P-05 shows them all). */
+  const attorneyAt = (tenantId: string): AttorneyRow | null => attorneys.find((a) => a.office_tenant_id === tenantId) ?? null;
+  /** "Sacramento · Roseville", never "San Diego · San Diego" (P-05 uses the same rule). */
+  const officeLine = (a: AttorneyRow): string => {
+    const name = offices.find((o) => o.id === a.office_tenant_id)?.short_name ?? '';
+    const city = a.city ?? '';
+    if (!name) return city;
+    if (!city || name.includes(city)) return name;
+    if (city.includes(name)) return city;
+    return `${name} · ${city}`;
+  };
   const art = (key: string): string | null => illustrationUrl(illustrations.find((i) => i.key === key)?.file);
   /** The live price for a SKU from the catalog table (P-10's source), never the hand-typed figure. */
   const priceOf = (sku: string): string | null => {
@@ -65,7 +80,9 @@ export function LandingPage() {
     },
     'site.startIntake': () => ({ ok: false, message: 'The intake form ships in pass 2 (F-10).' }),
     'site.bookConsult': () => ({ ok: false, message: 'Booking ships in pass 2 (F-11).' }),
-    'site.watchVideo': ({ lessonId }) => ({ ok: false, message: `The player ships in pass 2 (C-40); lesson ${String(lessonId)} is in the curriculum.` }),
+    'site.watchVideo': ({ lessonId }) => { navigate(`/site/videos?v=${encodeURIComponent(String(lessonId ?? ''))}`); return { ok: true, message: `Opened the free video library for ${String(lessonId)}` }; },
+    'site.openAttorneys': () => { navigate('/site/attorneys'); return { ok: true, message: 'Opened the attorneys page' }; },
+    'site.openVideos': () => { navigate('/site/videos'); return { ok: true, message: 'Opened the free video library' }; },
     'site.openBoard': () => { navigate('/board'); return { ok: true, message: 'Opened the game board' }; },
     'site.setLang': ({ lang: l }) => {
       if (l !== 'en' && l !== 'es') return { ok: false, message: 'lang must be en or es' };
@@ -205,9 +222,9 @@ export function LandingPage() {
               <Card key={l.id}>
                 <div className="st-video">
                   <div className="st-video-top">
-                    <Placeholder what={`${t('p1.videos.play')}: ${bi(l.title, lang)}`} plannedIn={PLANNED_LMS}>
-                      <Button size="sm" variant="secondary" icon="play" aria-label={`${t('p1.videos.play')} ${bi(l.title, lang)}`} />
-                    </Placeholder>
+                    <Link to="/site/videos" aria-label={`${t('p1.videos.play')} ${bi(l.title, lang)}`}>
+                      <Button size="sm" variant="secondary" icon="play" tabIndex={-1} aria-hidden />
+                    </Link>
                     <span className="st-video-series">{bi(l.series, lang)}</span>
                   </div>
                   <h3>{bi(l.title, lang)}</h3>
@@ -215,22 +232,56 @@ export function LandingPage() {
               </Card>
             ))}
           </div>
-          <p className="xs muted">{t('p1.videos.note')}</p>
+          <div className="st-strip">
+            <div className="stack-sm">
+              <h3>{t('p1.videos.libraryCta')}</h3>
+              <p className="st-body">{t('p1.videos.libraryBody', { n: lessonRows.length })}</p>
+            </div>
+            <Link to="/site/videos"><Button size="lg" icon="play" className="btn-cta">{t('p1.videos.libraryCta')}</Button></Link>
+          </div>
+          <p className="xs muted">{t('p1.videos.note', { n: lessonRows.length })}</p>
+        </Section>
+      </div>
+
+      <div className="container" id="attorneys">
+        <Section
+          title={t('p1.people.title')} description={t('p1.people.desc')}
+          actions={<Link to="/site/attorneys"><Button variant="secondary" size="sm" iconRight="arrow-right">{t('p1.people.cta')}</Button></Link>}
+        >
+          <div className="st-grid4">
+            {attorneys.slice(0, 4).map((a) => (
+              <PersonCard
+                key={a.id} name={a.name} title={a.title}
+                where={officeLine(a)}
+                photoUrl={publicAsset(a.portrait_path)}
+                badge={<AsShownBadge date={(a.scraped_at ?? '').slice(0, 10) || undefined} />}
+              />
+            ))}
+          </div>
         </Section>
       </div>
 
       <div className="container">
         <Section title={t('p1.offices.title')} description={t('p1.offices.desc')}>
           <div className="st-grid4">
-            {offices.map((o) => (
-              <Card key={o.id}>
-                <div className="st-office">
-                  <strong>{o.short_name}</strong>
-                  <span className="small muted">{o.city ?? ''}</span>
-                  <span className="xs faint">{o.region ?? ''}</span>
-                </div>
-              </Card>
-            ))}
+            {offices.map((o) => {
+              const atty = attorneyAt(o.id);
+              return (
+                <Card key={o.id}>
+                  <div className="st-office">
+                    <strong>{o.short_name}</strong>
+                    <span className="small muted">{o.city ?? ''}</span>
+                    <span className="xs faint">{o.region ?? ''}</span>
+                    {atty && (
+                      <span className="st-office-atty">
+                        <span className="xs faint">{t('p1.offices.attorney')}</span>
+                        <Link to={`/site/attorneys?office=${o.slug}`}>{atty.name}</Link>
+                      </span>
+                    )}
+                  </div>
+                </Card>
+              );
+            })}
           </div>
           <p className="xs muted">{t('p1.offices.demoNote', { date: scraped })}</p>
         </Section>

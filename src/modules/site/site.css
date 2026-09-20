@@ -116,3 +116,47 @@
 .st-boardcard-poster img { display: block; width: 100%; height: auto; }
 .st-boardcard-poster:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 2px; }
 .st-step-tile { width: calc(56px * var(--scale)); height: calc(56px * var(--scale)); object-fit: contain; border-radius: var(--r-md); background: var(--color-surface-2); flex: 0 0 auto; }
+
+/* ---------------------------------------------------------------- P-05 attorneys, P-01 people strip */
+.st-asshown { display: inline-flex; border-radius: var(--r-sm); }
+.st-people { align-items: stretch; }
+.st-people .personcard { height: 100%; }
+.st-office-atty { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-2); margin-top: var(--sp-2); }
+.st-office-atty a { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--color-primary-text); display: inline-flex; align-items: center; min-height: 32px; }
+
+/* ---------------------------------------------------------------- P-06 video library */
+.st-strip {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-4);
+  background: var(--color-surface-tint); border-radius: var(--r-card); padding: var(--sp-5) var(--sp-6);
+}
+.st-strip h3 { font-family: var(--font-display); font-size: var(--fs-lg-2); color: var(--color-heading); }
+.st-vidsearch { min-width: min(100%, 320px); }
+.st-vidgrid { align-items: stretch; }
+.st-vidcard { height: 100%; }
+.st-vid { display: flex; flex-direction: column; gap: var(--sp-3); height: 100%; }
+.st-vid-thumb {
+  position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; padding: 0; border: 0; cursor: pointer;
+  border-radius: var(--r-md); overflow: hidden; background: var(--color-surface-2); min-height: 44px;
+}
+.st-vid-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.st-vid-thumb:disabled { cursor: not-allowed; opacity: .6; }
+.st-vid-noimg { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; color: var(--color-text-faint); }
+.st-vid-play {
+  position: absolute; inset: 0; margin: auto; width: calc(56px * var(--scale)); height: calc(56px * var(--scale));
+  display: flex; align-items: center; justify-content: center; border-radius: 50%;
+  background: rgba(0, 0, 0, .58); color: #fff; box-shadow: 0 6px 18px -8px rgba(0, 0, 0, .8);
+}
+.st-vid-thumb:hover .st-vid-play, .st-vid-thumb:focus-visible .st-vid-play { background: var(--color-cta); }
+.st-vid-len {
+  position: absolute; right: var(--sp-2); bottom: var(--sp-2); padding: 2px 6px; border-radius: var(--r-sm);
+  background: rgba(0, 0, 0, .74); color: #fff; font-size: var(--fs-2xs); font-variant-numeric: tabular-nums;
+}
+.st-vid-player { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--r-md); overflow: hidden; background: #000; }
+.st-vid-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.st-vid-title { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--color-heading); line-height: 1.35; }
+.st-vid-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); margin-top: auto; }
+.st-vid-note { display: flex; align-items: flex-start; gap: var(--sp-4); }
+@media (max-width: 600px) { .st-strip { padding: var(--sp-4); } }
+
+/* P-03: the site's chip filters (stage picker P-01, office filter P-05) keep a 44 px target at every width band. */
+.sitepage .st-stagechips .chip { min-height: calc(44px * var(--scale)); }

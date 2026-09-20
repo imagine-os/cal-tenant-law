@@ -1,0 +1,41 @@
+/* PersonCard: the raised surface of Card with a portrait block. Tokens only, so it reads in light, dark and on a TV. */
+.personcard {
+  position: relative; display: flex; min-width: 0;
+  background: var(--color-surface-raised); border-radius: var(--r-card); box-shadow: var(--shadow-raised);
+  padding: var(--sp-5); gap: var(--sp-4);
+  transition: box-shadow var(--dur-base) var(--ease-out);
+}
+.personcard-stack { flex-direction: column; }
+.personcard-row { flex-direction: row; align-items: flex-start; }
+.personcard:focus-within { box-shadow: var(--shadow-raised-hover); }
+
+.personcard-portrait { flex: 0 0 auto; display: flex; }
+.personcard-stack .personcard-portrait { align-self: flex-start; }
+.personcard-photo {
+  display: block; width: calc(96px * var(--scale)); height: calc(96px * var(--scale));
+  object-fit: cover; object-position: center top; border-radius: var(--r-md);
+  background: var(--color-surface-2); box-shadow: inset 0 0 0 1px rgba(var(--shadow-color), .08);
+}
+.personcard-row .personcard-photo { width: calc(64px * var(--scale)); height: calc(64px * var(--scale)); }
+
+.personcard-body { display: flex; flex-direction: column; gap: var(--sp-2); min-width: 0; }
+.personcard-name { font-family: var(--font-display); font-size: var(--fs-lg-2); line-height: var(--lh-tight); color: var(--color-heading); }
+.personcard-title { font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--color-primary-text); }
+.personcard-where { font-size: var(--fs-xs); color: var(--color-text-muted); }
+.personcard-badge { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.personcard-bio {
+  font-size: var(--fs-sm); line-height: 1.6; color: var(--color-text); max-width: 60ch;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden;
+}
+.personcard-footer { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+.personcard-link {
+  margin-top: auto; align-self: flex-start; display: inline-flex; align-items: center; gap: var(--sp-2);
+  min-height: 44px; padding: var(--sp-2) 0; font-size: var(--fs-sm); font-weight: var(--fw-semibold);
+  color: var(--color-primary-text); text-decoration: none; border-radius: var(--r-sm);
+}
+.personcard-link:hover span { text-decoration: underline; }
+.personcard-link:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 3px; }
+
+@media (min-width: 2560px) { .personcard { padding: var(--sp-6); } }
+@media (max-width: 480px) { .personcard-row { flex-direction: column; } }
