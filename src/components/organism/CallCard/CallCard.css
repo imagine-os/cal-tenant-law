@@ -1,0 +1,69 @@
+/* Call card: the desk's one way of drawing a phone call. Tokens only; every target >= 44 px; the ring pulse is
+   decoration on top of text, and stops for prefers-reduced-motion (P-03). Sizes scale with --scale so a ringing
+   call is readable from across the room on the 3840 wall screen (P-01). */
+
+.callcard {
+  display: flex; flex-direction: column; gap: var(--sp-3);
+  padding: var(--sp-3); border: 1px solid var(--color-border-card); border-radius: var(--r-card);
+  background: var(--color-surface); box-shadow: var(--shadow-sm);
+}
+.callcard-lg { gap: var(--sp-4); padding: var(--sp-4); border-radius: var(--r-lg); }
+.callcard.is-selected { border-color: var(--color-primary); box-shadow: inset 0 0 0 1px var(--color-primary); }
+.callcard.is-unknown { border-style: dashed; }
+
+/* State edge: a 4 px rail down the left, plus the status word in the head (never colour alone). */
+.callcard.is-ringing { border-left: 4px solid var(--color-warn); background: var(--color-warn-bg); }
+.callcard.is-active { border-left: 4px solid var(--color-success); }
+.callcard.is-on_hold { border-left: 4px solid var(--color-info); }
+.callcard.is-missed { border-left: 4px solid var(--color-danger); }
+.callcard.is-voicemail { border-left: 4px solid var(--color-accent); }
+
+/* Head: avatar + name + phone + status. A button when the card selects, so the whole card is one tab stop. */
+.callcard-head {
+  display: flex; align-items: center; gap: var(--sp-3); min-width: 0; width: 100%;
+  min-height: var(--target-min); text-align: left;
+}
+.callcard-head-button { appearance: none; background: none; border: 0; padding: 0; margin: 0; color: inherit; font: inherit; cursor: pointer; border-radius: var(--r-md); }
+.callcard-head-button:focus-visible { outline: var(--focus-ring); outline-offset: 3px; }
+.callcard-head-button:hover .callcard-name { text-decoration: underline; }
+
+.callcard-avatar { position: relative; flex: 0 0 auto; display: inline-flex; }
+.callcard-unknown {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: calc(40px * var(--scale)); height: calc(40px * var(--scale));
+  border-radius: var(--r-full); border: 1px dashed var(--color-border-strong); color: var(--color-text-muted); background: var(--color-surface-2);
+}
+.callcard-lg .callcard-unknown { width: calc(52px * var(--scale)); height: calc(52px * var(--scale)); }
+.callcard-dir {
+  position: absolute; right: -2px; bottom: -2px; display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: var(--r-full); background: var(--color-surface); box-shadow: var(--hairline);
+}
+.callcard-dir-inbound { color: var(--color-success-strong); }
+.callcard-dir-outbound { color: var(--color-primary); }
+
+.callcard-id { display: grid; gap: 2px; min-width: 0; flex: 1 1 auto; }
+.callcard-name { font-family: var(--font-display); font-size: var(--fs-md); font-weight: var(--fw-semibold); color: var(--color-heading); overflow-wrap: anywhere; }
+.callcard-lg .callcard-name { font-size: var(--fs-xl); line-height: var(--lh-title); }
+.callcard-phone { font-size: var(--fs-sm); color: var(--color-text-secondary); font-variant-numeric: tabular-nums; }
+.callcard-lg .callcard-phone { font-size: var(--fs-md); }
+.callcard-badges { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: 2px; }
+
+/* Facts: label over value, two up on a phone, more as the card widens. */
+.callcard-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: var(--sp-2) var(--sp-3); margin: 0; }
+.callcard-fact { min-width: 0; }
+.callcard-fact dt { display: flex; align-items: center; gap: 4px; font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-label); }
+.callcard-fact dd { margin: 0; font-size: var(--fs-sm); color: var(--color-text); overflow-wrap: anywhere; }
+
+.callcard-controls { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.callcard-primary { flex: 1 1 12rem; min-width: 0; display: flex; }
+.callcard-primary > * { flex: 1 1 auto; }
+.callcard-actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+
+/* A ringing call announces itself. Decoration only: the word "Ringing" and the timer are already text. */
+@media (prefers-reduced-motion: no-preference) {
+  .callcard.is-ringing { animation: callcard-ring 1.6s var(--ease-in-out) infinite; }
+  @keyframes callcard-ring {
+    0%, 100% { box-shadow: var(--shadow-sm); }
+    50% { box-shadow: var(--shadow-sm), 0 0 0 6px var(--color-warn-bg); }
+  }
+}

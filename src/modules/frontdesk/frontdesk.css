@@ -1,0 +1,108 @@
+/* Front desk pages (F-01, F-12, F-13, F-15). Tokens only, no fixed design width: the console stacks on a phone,
+   splits at a laptop and opens to three standing columns on a wall screen, gaining columns rather than whitespace
+   (P-01). Every row keeps a 44 px target and nothing is revealed on hover (P-03). */
+
+/* ---- F-12 call console: queue | active call | recent ---------------------------------------------------------- */
+.fd-console {
+  display: grid; gap: var(--sp-4); align-items: start;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: 'queue' 'active' 'recent';
+}
+.fd-queue { grid-area: queue; }
+.fd-active { grid-area: active; }
+.fd-recent { grid-area: recent; min-width: 0; }
+
+@media (min-width: 1200px) {
+  .fd-console {
+    grid-template-columns: minmax(17rem, 22rem) minmax(0, 1fr);
+    grid-template-areas: 'queue active' 'recent recent';
+  }
+}
+@media (min-width: 1700px) {
+  .fd-console {
+    grid-template-columns: minmax(18rem, 22rem) minmax(0, 1.6fr) minmax(20rem, 1fr);
+    grid-template-areas: 'queue active recent';
+  }
+}
+@media (min-width: 2560px) {
+  .fd-console { grid-template-columns: minmax(20rem, 24rem) minmax(0, 1fr) minmax(42rem, 1.05fr); gap: var(--sp-6); }
+}
+
+.fd-region { display: flex; flex-direction: column; gap: var(--sp-3); min-width: 0; }
+.fd-region-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap; }
+.fd-region-head h2 { margin: 0; font-size: var(--fs-lg); line-height: var(--lh-title); color: var(--color-heading); }
+.fd-region-count { font-variant-numeric: tabular-nums; color: var(--color-text-muted); font-size: var(--fs-sm); }
+
+.fd-stack { display: flex; flex-direction: column; gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
+.fd-row { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; min-height: var(--target-min); }
+.fd-row-end { margin-left: auto; display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.fd-grow { flex: 1 1 12rem; min-width: 0; }
+.fd-num { font-variant-numeric: tabular-nums; }
+.fd-muted { color: var(--color-text-muted); font-size: var(--fs-sm); }
+.fd-late { color: var(--color-danger); font-weight: var(--fw-semibold); }
+
+/* ---- Caller's orders: compact rows with the script underneath -------------------------------------------------- */
+.fd-orders { display: flex; flex-direction: column; gap: var(--sp-2); margin: 0; padding: 0; list-style: none; }
+.fd-order {
+  display: grid; gap: var(--sp-2); padding: var(--sp-3);
+  border: 1px solid var(--color-border-card); border-radius: var(--r-card); background: var(--color-surface);
+}
+.fd-order.is-late { border-color: var(--color-danger); background: var(--color-danger-bg); }
+.fd-order-head { display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap; }
+.fd-order-ref { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--color-text-muted); }
+.fd-order-title { font-weight: var(--fw-semibold); color: var(--color-heading); overflow-wrap: anywhere; }
+.fd-order-meta { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; font-size: var(--fs-sm); color: var(--color-text-secondary); }
+
+/* The three lines the desk reads aloud: quiet quote block, generous line height, big type on a wall screen. */
+.fd-script {
+  margin: 0; padding: var(--sp-3); border-left: 4px solid var(--color-primary);
+  background: var(--color-surface-tint); border-radius: 0 var(--r-md) var(--r-md) 0;
+  display: grid; gap: var(--sp-2);
+}
+.fd-script li { list-style: none; font-size: var(--fs-md); line-height: var(--lh-base); color: var(--color-text); }
+.fd-script-head { font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-label); }
+
+/* ---- Call checklist -------------------------------------------------------------------------------------------- */
+.fd-checklist { display: flex; flex-direction: column; gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
+.fd-check {
+  display: grid; gap: var(--sp-2); padding: var(--sp-3);
+  border: 1px solid var(--color-border-card); border-radius: var(--r-card); background: var(--color-surface);
+}
+.fd-check.is-done { border-color: var(--color-success); background: var(--color-success-bg); }
+.fd-check.is-blocked { border-color: var(--color-warn); background: var(--color-warn-bg); }
+.fd-check-head { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+.fd-check-title { font-weight: var(--fw-semibold); color: var(--color-heading); flex: 1 1 12rem; min-width: 0; }
+.fd-check-body { display: grid; gap: var(--sp-2); font-size: var(--fs-sm); color: var(--color-text-secondary); }
+.fd-check-body ul { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--sp-2); }
+
+/* ---- Call wrap-up form ----------------------------------------------------------------------------------------- */
+.fd-form { display: grid; gap: var(--sp-3); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 720px) { .fd-form-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.fd-controls { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: flex-end; }
+.fd-minutes { display: flex; align-items: flex-end; gap: var(--sp-2); flex-wrap: wrap; }
+.fd-minutes .input-field, .fd-minutes input { max-width: 8rem; }
+
+/* ---- F-15 follow-up board -------------------------------------------------------------------------------------- */
+.fd-board { display: grid; gap: var(--sp-4); grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 900px) { .fd-board { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1500px) { .fd-board { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.fd-col { display: flex; flex-direction: column; gap: var(--sp-3); min-width: 0; }
+.fd-col-head { display: flex; align-items: center; gap: var(--sp-2); justify-content: space-between; }
+.fd-col-head h3 { margin: 0; font-size: var(--fs-md); color: var(--color-heading); }
+
+.fd-fu {
+  display: grid; gap: var(--sp-2); padding: var(--sp-3);
+  border: 1px solid var(--color-border-card); border-radius: var(--r-card); background: var(--color-surface);
+}
+.fd-fu.is-overdue { border-color: var(--color-danger); }
+.fd-fu-head { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+.fd-fu-note { font-size: var(--fs-sm); color: var(--color-text-secondary); overflow-wrap: anywhere; }
+.fd-fu-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
+
+/* ---- Wall-screen legibility (10-foot UI): the console's own type steps up with the band ------------------------ */
+@media (min-width: 2560px) {
+  .fd-region-head h2 { font-size: var(--fs-xl); }
+  .fd-script li { font-size: var(--fs-lg); }
+  .fd-order-title, .fd-check-title { font-size: var(--fs-md); }
+  .fd-muted, .fd-order-meta, .fd-fu-note { font-size: var(--fs-md); }
+}
