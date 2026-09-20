@@ -6,8 +6,11 @@ import { useTheme } from '../../design/ThemeProvider';
 import { ROLE_HOME, roleLabel, type Role } from '../../auth/roles';
 import { demoUserByRole } from '../../auth/demoUsers';
 import { getRoutes, isStubElement } from '../../app/registry';
+import { navGroup } from '../../app/navGroups';
+import type { Surface } from '../../specs/types';
 import { tables } from '../../data/schema';
 import { rules } from '../../rules';
+import { useTable } from '../../data/DataContext';
 import { componentLibrary } from '../../design/library';
 import { listActions } from '../../actions/listActions';
 import { useActions } from '../../actions/useActions';
@@ -32,45 +35,66 @@ import { tasks as planTasks } from '../../../docs/plan/tasks.json';
 import { hubSpec } from './specs';
 import './hub.css';
 
-/** One card per surface family. `to` overrides ROLE_HOME when the family has its own home; `preview` picks the live-preview frame. */
-export interface SurfaceCard { key: string; codes: string; role: Role; icon: IconName; to?: string; span?: 6 | 4; preview?: 'phone' | 'desktop' | 'none' }
+/**
+ * One card per surface family. `to` overrides ROLE_HOME when the family has its own home; `preview` picks the live
+ * preview frame; `surface` is the family's own shell (the card's entry list leads with its own pages); `entries`
+ * turns on the per-role list of pages derived from the route manifest.
+ */
+export interface SurfaceCard { key: string; codes: string; role: Role; icon: IconName; to?: string; span?: 6 | 4; preview?: 'phone' | 'desktop' | 'none'; surface?: Surface; entries?: boolean }
 export const SURFACES: SurfaceCard[] = [
-  { key: 'site', codes: 'P-xx', role: 'public', icon: 'globe', to: '/site', span: 6, preview: 'desktop' },
-  { key: 'app', codes: 'C-xx', role: 'client', icon: 'smartphone', span: 6, preview: 'phone' },
-  { key: 'board', codes: 'GB-xx', role: 'client', icon: 'gamepad', to: '/board', span: 6, preview: 'desktop' },
-  { key: 'desk', codes: 'F-xx', role: 'front_desk', icon: 'phone', span: 6, preview: 'desktop' },
-  { key: 'counsel', codes: 'L-xx', role: 'attorney', icon: 'gavel', preview: 'desktop' },
-  { key: 'assist', codes: 'S-xx', role: 'paralegal', icon: 'file-text', preview: 'desktop' },
-  { key: 'owner', codes: 'O-xx', role: 'owner', icon: 'chart', preview: 'desktop' },
-  { key: 'admin', codes: 'A-xx', role: 'super_admin', icon: 'settings', to: '/admin', preview: 'desktop' },
-  { key: 'opposition', codes: 'X-xx', role: 'opposing_counsel', icon: 'scale', preview: 'desktop' },
-  { key: 'marketing', codes: 'MK-xx', role: 'marketing', icon: 'megaphone', preview: 'desktop' },
-  { key: 'plan', codes: 'PM-xx', role: 'owner', icon: 'kanban', to: '/plan', preview: 'desktop' },
-  { key: 'manual', codes: 'M-xx', role: 'owner', icon: 'book', to: '/manual', preview: 'desktop' },
-  { key: 'docs', codes: 'K-xx', role: 'super_admin', icon: 'layers', to: '/docs', preview: 'desktop' },
-  { key: 'dev', codes: 'D-xx', role: 'super_admin', icon: 'code', to: '/dev/tokens', preview: 'desktop' },
+  // run the firm
+  { key: 'counsel', codes: 'L-xx', role: 'attorney', icon: 'gavel', preview: 'desktop', surface: 'counsel', entries: true },
+  { key: 'assist', codes: 'S-xx', role: 'paralegal', icon: 'file-text', preview: 'desktop', surface: 'assist', entries: true },
+  { key: 'desk', codes: 'F-xx', role: 'front_desk', icon: 'phone', preview: 'desktop', surface: 'frontdesk', entries: true },
+  { key: 'owner', codes: 'O-xx', role: 'owner', icon: 'chart', preview: 'desktop', surface: 'owner', entries: true },
+  { key: 'admin', codes: 'A-xx', role: 'super_admin', icon: 'settings', to: '/admin', preview: 'desktop', surface: 'admin', entries: true },
+  // clients
+  { key: 'app', codes: 'C-xx', role: 'client', icon: 'smartphone', span: 6, preview: 'phone', surface: 'customer', entries: true },
+  { key: 'site', codes: 'P-xx', role: 'public', icon: 'globe', to: '/site', span: 6, preview: 'desktop', surface: 'public' },
+  { key: 'board', codes: 'GB-xx', role: 'client', icon: 'gamepad', to: '/board', span: 6, preview: 'desktop', surface: 'board' },
+  { key: 'learn', codes: 'C-03', role: 'client', icon: 'play', to: '/app/learn', preview: 'phone', surface: 'customer' },
+  // outside parties & marketing
+  { key: 'opposition', codes: 'X-xx', role: 'opposing_counsel', icon: 'scale', preview: 'desktop', surface: 'opposition', entries: true },
+  { key: 'marketing', codes: 'MK-xx', role: 'marketing', icon: 'megaphone', preview: 'desktop', surface: 'marketing', entries: true },
+  // reachable through hub.enterAs and the Build & review row, not as their own cards
+  { key: 'plan', codes: 'PM-xx', role: 'owner', icon: 'kanban', to: '/plan', preview: 'none', surface: 'plan' },
+  { key: 'manual', codes: 'M-xx', role: 'owner', icon: 'book', to: '/manual', preview: 'none', surface: 'manual' },
+  { key: 'docs', codes: 'K-xx', role: 'super_admin', icon: 'layers', to: '/docs', preview: 'none', surface: 'docs' },
+  { key: 'dev', codes: 'D-xx', role: 'super_admin', icon: 'code', to: '/dev/tokens', preview: 'none', surface: 'dev' },
 ];
 
-/** Audience groups for the hub (design pass): who the surface serves decides where its card sits and which hue its medallion takes. */
-export type HubGroupKey = 'clients' | 'staff' | 'build';
+/**
+ * Hub order (prompt 0006, Justin: "the order of items is what the owner cares about"): the seats that run the firm
+ * first, then what a client touches, then the tools for building and reviewing the system, and only last the people
+ * outside the firm.
+ */
+export type HubGroupKey = 'run' | 'clients' | 'outside';
 export const HUB_GROUPS: { key: HubGroupKey; surfaces: string[] }[] = [
-  { key: 'clients', surfaces: ['app', 'site', 'board', 'opposition'] },
-  { key: 'staff', surfaces: ['desk', 'counsel', 'assist', 'owner', 'admin', 'marketing'] },
-  { key: 'build', surfaces: ['plan', 'manual', 'docs', 'dev'] },
+  { key: 'run', surfaces: ['counsel', 'assist', 'desk', 'owner', 'admin'] },
+  { key: 'clients', surfaces: ['app', 'site', 'board', 'learn'] },
+  { key: 'outside', surfaces: ['opposition', 'marketing'] },
 ];
 
-/** The testing hub row: the tools that show the whole system rather than one surface. */
+/** The three doors the owner is asked to walk through first; the paths are the pipeline pages of this pass. */
+export interface StartCard { key: string; to: string; role: Role; icon: IconName; plannedIn: string }
+export const START_HERE: StartCard[] = [
+  { key: 'pipeline', to: '/counsel/pipeline', role: 'attorney', icon: 'file-text', plannedIn: 'pipeline module (L-13)' },
+  { key: 'calls', to: '/desk/calls', role: 'front_desk', icon: 'phone', plannedIn: 'front desk module (F-12)' },
+  { key: 'orders', to: '/app/orders', role: 'client', icon: 'smartphone', plannedIn: 'client module (C-11)' },
+];
+
+/** Build & review: the tools that show the whole system rather than one seat. */
 export interface ToolCard { key: string; to: string; icon: IconName; plannedIn?: string }
 export const TOOLS: ToolCard[] = [
+  { key: 'plan', to: '/plan', icon: 'kanban' },
+  { key: 'proposal', to: '/site/proposal', icon: 'star', plannedIn: 'site module (P-02)' },
   { key: 'canvas', to: '/dev/canvas', icon: 'grid' },
   { key: 'simulator', to: '/dev/simulator', icon: 'tv' },
-  { key: 'plan', to: '/plan', icon: 'kanban' },
-  { key: 'board', to: '/board', icon: 'gamepad' },
-  { key: 'proposal', to: '/site/proposal', icon: 'star', plannedIn: 'site module (P-02)' },
   { key: 'docs', to: '/docs', icon: 'layers' },
   { key: 'manual', to: '/manual', icon: 'book' },
   { key: 'legal', to: '/legal', icon: 'scale', plannedIn: 'legal memory module (K-10)' },
   { key: 'dev', to: '/dev', icon: 'code' },
+  { key: 'roles', to: '/dev/roles', icon: 'users', plannedIn: 'dev tools module (D-24)' },
 ];
 
 type RouteStatus = 'built' | 'stub' | 'planned';
@@ -80,6 +104,8 @@ function routeStatus(path: string): RouteStatus {
 }
 
 const PREVIEW_CAP = 6;
+/** How many pages a card lists before it says "+N more". */
+const MAX_ENTRIES = 6;
 
 /** Which previews may be live: in view, capped, so the hub stays fast (and never nests frames inside a frame). */
 function useLivePreviews(cap = PREVIEW_CAP) {
@@ -127,6 +153,71 @@ function useUiScale(): number {
     return () => window.removeEventListener('resize', on);
   }, []);
   return scale;
+}
+
+/* ---------- what a role can actually open ---------- */
+
+interface CardEntry { path: string; label: string; group: string }
+interface EntryGroup { key: string; label: string; items: CardEntry[] }
+export interface CardEntries { groups: EntryGroup[]; rest: number }
+
+/**
+ * A card never advertises a page its role cannot open: the list is the route manifest filtered by
+ * `roles.includes(role)` and a `nav` entry, the family's own pages first, then the other menu groups in menu order.
+ * Parameterised routes (`/plan/task/:id`) are menu entries of a page you reach from a list, so they stay out.
+ */
+export function cardEntries(card: SurfaceCard, label: (r: { nav: { label: string }; }) => string, groupLabel: (key: string) => string, max = MAX_ENTRIES): CardEntries {
+  const all = getRoutes()
+    .filter((r) => r.nav && r.roles.includes(card.role) && !r.path.includes(':') && !r.path.includes('*'))
+    .sort((a, b) => {
+      const own = (s: Surface) => (card.surface && s === card.surface ? 0 : 1);
+      return own(a.surface) - own(b.surface)
+        || navGroup(a.nav!.group).order - navGroup(b.nav!.group).order
+        || a.nav!.order - b.nav!.order;
+    });
+  const seen = new Set<string>();
+  const unique = all.filter((r) => { const to = r.nav!.to ?? r.path; if (seen.has(to)) return false; seen.add(to); return true; });
+  const picked = unique.slice(0, max);
+  const groups: EntryGroup[] = [];
+  const byKey = new Map<string, EntryGroup>();
+  for (const r of picked) {
+    const key = r.nav!.group;
+    const entry: CardEntry = { path: r.nav!.to ?? r.path, label: label(r as { nav: { label: string } }), group: key };
+    // the same menu category can turn up twice (the family's own pages, then the shared ones): one row per category
+    let g = byKey.get(key);
+    if (!g) { g = { key, label: groupLabel(key), items: [] }; byKey.set(key, g); groups.push(g); }
+    g.items.push(entry);
+  }
+  return { groups, rest: unique.length - picked.length };
+}
+
+/* ---------- the numbers a seat opens its day with ---------- */
+
+interface CardStat { n: number; key: string }
+type HubStats = Partial<Record<string, CardStat[]>>;
+
+/**
+ * Small, cheap counts straight from the pipeline tables, so a card says what is waiting before you enter it
+ * (Justin: "make sure the roles actually see what's relevant to them"). Every count is live through `useTable`.
+ */
+function useHubStats(): HubStats {
+  const { rows: orders } = useTable('orders');
+  const { rows: calls } = useTable('calls');
+  const { rows: followUps } = useTable('follow_ups');
+  const { rows: requests } = useTable('client_requests');
+  const clientId = demoUserByRole('client').id;
+  return useMemo(() => {
+    const f = <T,>(rows: T[], pick: (r: Record<string, unknown>) => boolean) => rows.filter((r) => pick(r as Record<string, unknown>)).length;
+    return {
+      counsel: [{ n: f(orders, (o) => o.waiting_on === 'client'), key: 'hub.stat.waitingOnClient' }],
+      assist: [{ n: f(orders, (o) => o.waiting_on === 'paralegal'), key: 'hub.stat.waitingOnParalegal' }],
+      desk: [
+        { n: f(calls, (c) => c.status === 'missed' || c.status === 'voicemail'), key: 'hub.stat.callsToReturn' },
+        { n: f(followUps, (u) => u.status === 'open'), key: 'hub.stat.followUpsOpen' },
+      ],
+      app: [{ n: f(requests, (r) => r.status === 'open' && r.client_user_id === clientId), key: 'hub.stat.requestsWaiting' }],
+    };
+  }, [orders, calls, followUps, requests, clientId]);
 }
 
 /* ---------- sections ---------- */
@@ -182,6 +273,31 @@ function SessionBar() {
   );
 }
 
+/** Start here: the three walkthroughs the owner should see first, each as its own role. A page still being built stays a Placeholder instead of a dead link. */
+function StartHere({ openAs }: { openAs: (role: Role, path: string) => void }) {
+  const { t, lang } = useI18n();
+  return (
+    <section className="container container-wide hub-start" aria-labelledby="hub-start-title">
+      <p className="eyebrow eyebrow-rule" id="hub-start-title">{t('hub.startHere')}</p>
+      <div className="hub-start-row">
+        {START_HERE.map((s) => {
+          const status = routeStatus(s.to);
+          const button = (
+            <Button size="lg" variant="primary" icon={s.icon} iconRight={status === 'built' ? 'arrow-right' : undefined}
+              onClick={status === 'built' ? () => openAs(s.role, s.to) : undefined}>{t(`hub.start.${s.key}`)}</Button>
+          );
+          return (
+            <span key={s.key} className="hub-start-item">
+              {status === 'built' ? button : <Placeholder what={t(`hub.start.${s.key}`)} plannedIn={s.plannedIn}>{button}</Placeholder>}
+              <span className="xs faint">{roleLabel(s.role, lang)} · <code>{s.to}</code>{status !== 'built' && <> · {t('hub.inProgress')}</>}</span>
+            </span>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 interface PreviewProps { card: SurfaceCard; path: string; live: boolean; register: (key: string, el: Element | null) => void }
 
 /** The desktop preview renders its page at this CSS viewport (a real desktop layout), then DeviceFrame scales it to fill the 16:10 box edge to edge. */
@@ -217,14 +333,20 @@ function StatusChip({ status }: { status: RouteStatus }) {
   return <Badge tone="warn" size="sm" dot>{t('hub.planned')}</Badge>;
 }
 
-interface CardViewProps { s: SurfaceCard; enter: (s: SurfaceCard) => void; status: RouteStatus; feature: boolean; live: boolean; register: PreviewProps['register'] }
+interface CardViewProps {
+  s: SurfaceCard; enter: (s: SurfaceCard) => void; openAs: (role: Role, path: string) => void;
+  status: RouteStatus; feature: boolean; live: boolean; register: PreviewProps['register']; stats: CardStat[] | undefined;
+}
 
-function SurfaceCardView({ s, enter, status, feature, live, register }: CardViewProps) {
+function SurfaceCardView({ s, enter, openAs, status, feature, live, register, stats }: CardViewProps) {
   const { t, lang } = useI18n();
   const { user, devMode } = useSession();
   const demo = demoUserByRole(s.role);
   const here = user.role === s.role && s.role !== 'public';
   const path = s.to ?? ROLE_HOME[s.role];
+  const label = useCallback((r: { nav: { label: string } }) => (r.nav.label.includes('.') ? t(r.nav.label) : r.nav.label), [t]);
+  const groupLabel = useCallback((key: string) => t(`hub.navgroup.${key}`), [t]);
+  const entries = useMemo(() => (s.entries ? cardEntries(s, label, groupLabel) : null), [s, label, groupLabel]);
   return (
     <Card className={`hub-card hub-hue-${s.key} ${feature ? 'hub-card-feature' : ''}`} padding="lg">
       <div className="hub-card-body">
@@ -236,8 +358,29 @@ function SurfaceCardView({ s, enter, status, feature, live, register }: CardView
           </span>
         </div>
         <h3 className="hub-card-title">{t(`hub.surface.${s.key}`)}</h3>
-        <p className="hub-card-text">{t(`hub.surface.${s.key}.body`)}</p>
+        <p className="hub-card-does">{t(`hub.does.${s.key}`)}</p>
+        {feature && <p className="hub-card-text">{t(`hub.surface.${s.key}.body`)}</p>}
+        {stats && stats.length > 0 && (
+          <p className="hub-card-stats">
+            {stats.map((st) => <span key={st.key} className={`hub-card-stat ${st.n === 0 ? 'is-zero' : ''}`}><strong>{st.n}</strong> {t(st.key)}</span>)}
+          </p>
+        )}
         {!feature && s.preview !== 'none' && <SurfacePreview card={s} path={path} live={live} register={register} />}
+        {entries && entries.groups.length > 0 && (
+          <div className="hub-card-entries">
+            {entries.groups.map((g) => (
+              <div key={g.key} className="hub-entry-group">
+                <span className="hub-entry-label">{g.label}</span>
+                <span className="hub-entry-links">
+                  {g.items.map((i) => (
+                    <button key={i.path} type="button" className="hub-entry-link" onClick={() => openAs(s.role, i.path)}>{i.label}</button>
+                  ))}
+                </span>
+              </div>
+            ))}
+            {entries.rest > 0 && <button type="button" className="hub-entry-more" onClick={() => enter(s)}>{t('hub.moreSurfaces', { n: entries.rest })}</button>}
+          </div>
+        )}
         <div className="hub-card-foot">
           <Button variant={feature ? 'primary' : 'outline'} iconRight="arrow-right" onClick={() => enter(s)}>{s.role === 'public' ? t('hub.open') : t('hub.enterAs', { name: demo.name })}</Button>
           <span className="hub-card-meta xs faint">{roleLabel(s.role, lang)} · <code>{path}</code>{devMode && <> · <code className="hub-card-codes">{s.codes}</code></>}</span>
@@ -248,22 +391,27 @@ function SurfaceCardView({ s, enter, status, feature, live, register }: CardView
   );
 }
 
-function SurfaceGrid({ enter }: { enter: (s: SurfaceCard) => void }) {
+interface GridProps {
+  only: HubGroupKey[]; enter: (s: SurfaceCard) => void; openAs: (role: Role, path: string) => void;
+  live: ReadonlySet<string>; register: PreviewProps['register']; stats: HubStats;
+}
+
+function SurfaceGrid({ only, enter, openAs, live, register, stats }: GridProps) {
   const { t } = useI18n();
-  const { register, live } = useLivePreviews();
   return (
-    <div className="hub-groups" aria-label={t('hub.surfaces')}>
-      {HUB_GROUPS.map((g) => (
+    <div className="hub-groups">
+      {HUB_GROUPS.filter((g) => only.includes(g.key)).map((g) => (
         <section key={g.key} className={`hub-group hub-group-${g.key}`} aria-labelledby={`hub-group-${g.key}`}>
           <div className="container container-wide hub-group-inner">
             <header className="hub-group-head">
               <p className="eyebrow eyebrow-rule">{t(`hub.group.${g.key}`)}</p>
-              <h2 className="hub-group-title">{t(`hub.group.${g.key}.title`)}</h2>
-              <p className="hub-group-body" id={`hub-group-${g.key}`}>{t(`hub.group.${g.key}.body`)}</p>
+              <h2 className="hub-group-title" id={`hub-group-${g.key}`}>{t(`hub.group.${g.key}.title`)}</h2>
+              <p className="hub-group-body">{t(`hub.group.${g.key}.body`)}</p>
             </header>
             <div className="hub-grid">
               {g.surfaces.map((key) => SURFACES.find((s) => s.key === key)).filter((s): s is SurfaceCard => !!s).map((s) => (
-                <SurfaceCardView key={s.key} s={s} enter={enter} status={routeStatus(s.to ?? ROLE_HOME[s.role])} feature={s.key === 'app'} live={live.has(s.key)} register={register} />
+                <SurfaceCardView key={s.key} s={s} enter={enter} openAs={openAs} status={routeStatus(s.to ?? ROLE_HOME[s.role])}
+                  feature={s.key === 'app'} live={live.has(s.key)} register={register} stats={stats[s.key]} />
               ))}
             </div>
           </div>
@@ -273,16 +421,16 @@ function SurfaceGrid({ enter }: { enter: (s: SurfaceCard) => void }) {
   );
 }
 
-/** The testing-hub row: one compact card per tool; a tool whose route does not exist yet is a Placeholder, never a dead link. */
+/** Build & review: one compact card per tool; a tool whose route does not exist yet is a Placeholder, never a dead link. */
 function TestingHub({ open }: { open: (tool: ToolCard) => boolean }) {
   const { t } = useI18n();
   return (
-    <section className="hub-group hub-group-tools" aria-labelledby="hub-group-tools">
+    <section className="hub-group hub-group-build" aria-labelledby="hub-group-build">
       <div className="container container-wide hub-group-inner">
         <header className="hub-group-head">
-          <p className="eyebrow eyebrow-rule">{t('hub.testing')}</p>
-          <h2 className="hub-group-title">{t('hub.testing.title')}</h2>
-          <p className="hub-group-body" id="hub-group-tools">{t('hub.testingBody')}</p>
+          <p className="eyebrow eyebrow-rule">{t('hub.group.build')}</p>
+          <h2 className="hub-group-title" id="hub-group-build">{t('hub.group.build.title')}</h2>
+          <p className="hub-group-body">{t('hub.group.build.body')}</p>
         </header>
         <div className="hub-tools-grid">
           {TOOLS.map((tool) => {
@@ -330,7 +478,10 @@ export function HubPage() {
   const { setLang } = useI18n();
   const { isSuperAdmin, devMode, setDevMode, switchUser } = useSession();
   const { toggleTheme, cycleBrand, setBrand, brands } = useTheme();
-  const enter = useCallback((s: SurfaceCard) => { switchUser(s.role); nav(s.to ?? ROLE_HOME[s.role]); }, [switchUser, nav]);
+  const stats = useHubStats();
+  const { register, live } = useLivePreviews();
+  const openAs = useCallback((role: Role, path: string) => { switchUser(role); nav(path); }, [switchUser, nav]);
+  const enter = useCallback((s: SurfaceCard) => openAs(s.role, s.to ?? ROLE_HOME[s.role]), [openAs]);
   const openTool = useCallback((tool: ToolCard) => {
     if (!getRoutes().some((r) => r.path === tool.to)) return false;
     nav(tool.to);
@@ -342,6 +493,22 @@ export function HubPage() {
       if (!s) return { ok: false, message: `unknown surface / role ${String(surface ?? role)}` };
       enter(s);
       return { ok: true, message: `entered ${s.key} as ${s.role}` };
+    },
+    'hub.openRoleSurface': ({ role, path }) => {
+      const p = String(path ?? '');
+      const r = getRoutes().find((x) => x.path === p);
+      if (!r) return { ok: false, message: `no page at ${p}` };
+      const asRole = (String(role ?? '') as Role) || r.roles[0];
+      if (!r.roles.includes(asRole)) return { ok: false, message: `${asRole} cannot open ${p}` };
+      openAs(asRole, p);
+      return { ok: true, message: `opened ${p} as ${asRole}` };
+    },
+    'hub.startHere': ({ flow }) => {
+      const s = START_HERE.find((x) => x.key === flow);
+      if (!s) return { ok: false, message: `flow must be one of ${START_HERE.map((x) => x.key).join(', ')}` };
+      if (routeStatus(s.to) === 'planned') return { ok: false, message: `${s.to} is not built yet (${s.plannedIn})` };
+      openAs(s.role, s.to);
+      return { ok: true, message: `started at ${s.to} as ${s.role}` };
     },
     'hub.openCanvas': () => { nav('/dev/canvas'); return { ok: true, message: 'opened the canvas' }; },
     'hub.openSimulator': () => { nav('/dev/simulator'); return { ok: true, message: 'opened the demo simulator' }; },
@@ -363,9 +530,11 @@ export function HubPage() {
         <Hero />
       </div>
       <SessionBar />
+      <StartHere openAs={openAs} />
       <main className="hub-main" id="main">
-        <SurfaceGrid enter={enter} />
+        <SurfaceGrid only={['run', 'clients']} enter={enter} openAs={openAs} live={live} register={register} stats={stats} />
         <TestingHub open={openTool} />
+        <SurfaceGrid only={['outside']} enter={enter} openAs={openAs} live={live} register={register} stats={stats} />
         <Footer />
       </main>
     </div>

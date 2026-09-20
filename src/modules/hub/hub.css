@@ -33,32 +33,36 @@
 @media (max-width: 900px) { .hub-hero { grid-template-columns: 1fr; padding-top: var(--sp-8); gap: var(--sp-6); } .hub-hero-art { inset: auto -10% -6% 40%; height: 70%; opacity: .55; mask-image: linear-gradient(90deg, transparent, #000 40%); -webkit-mask-image: linear-gradient(90deg, transparent, #000 40%); } .hub-hero-copy { max-width: none; } }
 @media (max-width: 600px) { .hub-head { padding-top: var(--sp-4); padding-bottom: var(--sp-3); } .hub-hero { padding-bottom: calc(var(--sp-10) + var(--sp-6)); } .hub-session { padding: var(--sp-4); } .hub-hero-line { font-size: var(--fs-md); } }
 
+/* ---- start here: the three doors under the hero ---- */
+.hub-start { display: flex; flex-direction: column; gap: var(--sp-4); padding-top: var(--sp-8); }
+.hub-start-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); align-items: stretch; }
+.hub-start-item { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.hub-start-item .btn { width: 100%; justify-content: flex-start; text-align: left; min-height: calc(var(--target-min) + 12px); }
+.hub-start-item .btn-label { white-space: normal; }
+.hub-start-item .ph, .hub-start-item .ph-wrap { display: block; width: 100%; }
+.hub-start-item code { font-family: var(--font-mono); }
+@media (max-width: 900px) { .hub-start-row { grid-template-columns: 1fr; } }
+
 /* ---- groups ---- */
-.hub-main { padding-top: var(--sp-4); }
+.hub-main { padding-top: var(--sp-2); }
 .hub-groups { display: flex; flex-direction: column; }
 .hub-group { padding: var(--sp-10) 0; }
 .hub-group-inner { display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 9fr); gap: var(--sp-8); align-items: start; }
 .hub-group-head { display: flex; flex-direction: column; gap: var(--sp-3); }
 .hub-group-title { font-size: var(--fs-2xl); letter-spacing: var(--ls-display); line-height: 1.1; }
 .hub-group-body { color: var(--color-text-secondary); font-size: var(--fs-md); line-height: var(--lh-md); max-width: 34ch; }
-.hub-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-5); }
+.hub-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-5); align-items: stretch; }
 .hub-card-feature { grid-column: 1 / -1; }
 /* wide screens: the card count per group (3 + feature / 6 / 4) keeps every card in a group the same size: three columns for the audience groups, four for the build band; `--scale` (1.375 at 2560, 1.75 at 3840) grows type, spacing and the cards with the screen */
 @media (max-width: 1280px) { .hub-group-inner { grid-template-columns: 1fr; gap: var(--sp-6); } .hub-group-head { position: static; } .hub-group-body { max-width: 60ch; } }
 @media (max-width: 1100px) { .hub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 700px) { .hub-grid { grid-template-columns: 1fr; } .hub-group { padding: var(--sp-8) 0; } }
 
-/* the build band: distinct tinted surface */
+/* the build & review band: distinct tinted surface, tool cards rather than surface cards */
 .hub-group-build { background: var(--color-surface-2); box-shadow: inset 0 1px 0 var(--color-hairline), inset 0 -1px 0 var(--color-hairline); }
-.hub-group-build .hub-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.hub-group-build .hub-card .card-p-lg, .hub-group-build .hub-card { padding: var(--sp-5); }
-.hub-group-build .hub-medallion { width: 44px; height: 44px; border-radius: 12px; }
-.hub-group-build .hub-medallion .icon { width: 22px; height: 22px; }
-@media (max-width: 1100px) { .hub-group-build .hub-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 700px) { .hub-group-build .hub-grid { grid-template-columns: 1fr; } }
 
 /* ---- cards ---- */
-.hub-card { --hue: 214; position: relative; overflow: hidden; }
+.hub-card { --hue: 214; position: relative; overflow: hidden; height: 100%; display: flex; flex-direction: column; }
 .hub-card { transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out); }
 .hub-card:hover { box-shadow: var(--shadow-raised-hover); }
 @media (hover: hover) and (pointer: fine) { .hub-card:hover { transform: translateY(-2px); } }
@@ -68,8 +72,24 @@
 .hub-medallion { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 18px; background: hsl(var(--hue) 62% 93%); color: hsl(var(--hue) 55% 34%); box-shadow: inset 0 0 0 1px hsl(var(--hue) 50% 80% / .8), 0 8px 20px -12px hsl(var(--hue) 60% 40% / .5); }
 :root[data-theme="dark"] .hub-medallion { background: hsl(var(--hue) 45% 20%); color: hsl(var(--hue) 70% 78%); box-shadow: inset 0 0 0 1px hsl(var(--hue) 45% 34% / .8); }
 .hub-card-title { font-size: var(--fs-lg); letter-spacing: var(--ls-title); margin-top: var(--sp-1); }
+/* one line that says what this seat does; the longer body stays on the feature card only */
+.hub-card-does { color: var(--color-text-secondary); font-size: var(--fs-sm); line-height: var(--lh-md); text-wrap: pretty; }
 .hub-card-text { color: var(--color-text-secondary); font-size: var(--fs-sm); line-height: var(--lh-md); text-wrap: pretty; }
-.hub-card-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap; margin-top: auto; padding-top: var(--sp-2); }
+/* live counts from the pipeline tables: what is waiting before you enter */
+.hub-card-stats { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-4); align-items: baseline; margin: 0; }
+.hub-card-stat { display: inline-flex; align-items: baseline; gap: 6px; font-size: var(--fs-xs); color: var(--color-text-secondary); }
+.hub-card-stat strong { font-family: var(--font-display); font-size: var(--fs-lg); font-weight: var(--fw-bold); line-height: 1; color: hsl(var(--hue) 55% 34%); font-variant-numeric: tabular-nums; }
+:root[data-theme="dark"] .hub-card-stat strong { color: hsl(var(--hue) 70% 78%); }
+.hub-card-stat.is-zero strong { color: var(--color-text-faint); }
+/* the pages this role can actually open, from the route manifest, grouped by menu category */
+.hub-card-entries { display: flex; flex-direction: column; gap: var(--sp-2); }
+.hub-entry-group { display: flex; flex-wrap: wrap; align-items: center; gap: 6px var(--sp-3); min-width: 0; }
+.hub-entry-label { flex: 0 0 auto; font-size: var(--fs-2xs); letter-spacing: var(--ls-eyebrow, .08em); text-transform: uppercase; color: var(--color-text-faint); font-weight: var(--fw-semibold); }
+.hub-entry-links { display: flex; flex-wrap: wrap; gap: 6px; }
+.hub-entry-link, .hub-entry-more { display: inline-flex; align-items: center; min-height: var(--target-min); padding: 8px var(--sp-3); border: 0; border-radius: var(--r-md); background: var(--color-surface-2); color: var(--color-text); font: inherit; font-size: var(--fs-xs); cursor: pointer; box-shadow: var(--hairline); text-align: left; }
+.hub-entry-link:hover, .hub-entry-more:hover { background: var(--color-surface-tint); color: var(--color-primary-text); }
+.hub-entry-more { align-self: flex-start; background: transparent; box-shadow: none; color: var(--color-primary-text); text-decoration: underline; text-underline-offset: 3px; padding-left: 0; }
+.hub-card-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); flex-wrap: wrap; margin-top: auto; padding-top: var(--sp-4); border-top: 1px solid var(--color-hairline); }
 .hub-card-codes { font-family: var(--font-mono); }
 /* feature (client app) card: copy left, phone art right */
 .hub-card-feature { flex-direction: row; align-items: stretch; gap: var(--sp-6); background: linear-gradient(120deg, var(--color-surface-raised), color-mix(in srgb, var(--color-surface-raised) 70%, hsl(var(--hue) 70% 92%))); }
@@ -80,7 +100,7 @@
 /* per-surface hues (family colour memory, one vocabulary for medallions) */
 .hub-hue-site { --hue: 206; } .hub-hue-app { --hue: 214; } .hub-hue-board { --hue: 262; }
 .hub-hue-desk { --hue: 168; } .hub-hue-counsel { --hue: 222; } .hub-hue-assist { --hue: 190; } .hub-hue-owner { --hue: 32; } .hub-hue-admin { --hue: 240; } .hub-hue-opposition { --hue: 350; } .hub-hue-marketing { --hue: 14; }
-.hub-hue-plan { --hue: 150; } .hub-hue-manual { --hue: 40; } .hub-hue-docs { --hue: 200; } .hub-hue-dev { --hue: 280; }
+.hub-hue-plan { --hue: 150; } .hub-hue-manual { --hue: 40; } .hub-hue-docs { --hue: 200; } .hub-hue-dev { --hue: 280; } .hub-hue-learn { --hue: 176; } .hub-hue-roles { --hue: 254; }
 
 /* ---- stat strip ---- */
 .hub-foot { padding-top: var(--sp-12); padding-bottom: calc(var(--sp-16) + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: var(--sp-6); }
@@ -114,16 +134,18 @@
 .hub-preview-idle-mark { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 16px; background: var(--color-surface-raised); color: hsl(var(--hue) 55% 34%); box-shadow: var(--shadow-raised); }
 :root[data-theme="dark"] .hub-preview-idle-mark { color: hsl(var(--hue) 70% 78%); }
 /* the feature card previews the phone live in place of the drawn phone */
-.hub-preview-phone { flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: center; margin: calc(-1 * var(--sp-6)) calc(-1 * var(--sp-2)) calc(-1 * var(--sp-6)) 0; padding-top: var(--sp-4); }
-.hub-preview-phone .hub-card-art { margin: 0; width: clamp(150px, 22vw, 230px); }
-.hub-preview-phone .phoneframe-wrap { transform: translateY(14%); filter: drop-shadow(0 20px 30px rgba(var(--shadow-color),.25)); }
+.hub-card-feature .hub-preview-phone { flex: 0 0 auto; display: flex; align-items: flex-end; justify-content: center; margin: calc(-1 * var(--sp-6)) calc(-1 * var(--sp-2)) calc(-1 * var(--sp-6)) 0; padding-top: var(--sp-4); }
+.hub-card-feature .hub-preview-phone .hub-card-art { margin: 0; width: clamp(150px, 22vw, 230px); }
+.hub-card-feature .hub-preview-phone .phoneframe-wrap { transform: translateY(14%); filter: drop-shadow(0 20px 30px rgba(var(--shadow-color),.25)); }
+/* an ordinary card shows the phone in a box of its own, cropped at the bottom only (same box height as a desktop preview) */
+.hub-card:not(.hub-card-feature) .hub-preview-phone { position: relative; display: flex; justify-content: center; width: 100%; height: calc(215px * var(--scale)); overflow: hidden; border-radius: var(--r-md); background: var(--color-surface-2); box-shadow: inset 0 0 0 1px var(--color-hairline-strong); padding-top: var(--sp-3); }
+.hub-card:not(.hub-card-feature) .hub-preview-phone .hub-card-art { display: flex; width: clamp(120px, 55%, 180px); margin: 0; }
 .hub-card-meta { display: inline-flex; flex-wrap: wrap; gap: 4px; align-items: center; min-width: 0; }
 .hub-card-meta code { font-family: var(--font-mono); }
 @media (max-width: 600px) { .hub-preview-phone { display: none; } }
 @media (min-width: 2560px) { .hub-preview-idle-mark { width: 72px; height: 72px; border-radius: 22px; } .hub-preview-idle-mark .icon { width: 32px; height: 32px; } }
 
-/* ---- testing hub row ---- */
-.hub-group-tools { padding-top: 0; }
+/* ---- build & review row ---- */
 .hub-tools-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); }
 .hub-tools-grid .hub-tool { --hue: 214; display: flex; flex-direction: row; align-items: center; gap: var(--sp-4); min-height: var(--target-min); text-align: left; }
 .hub-tools-grid .hub-tool.card-p-md { padding: var(--sp-4) var(--sp-5); }
