@@ -1,0 +1,31 @@
+import type { StringTable } from '../../i18n/types';
+
+/** Dev module strings. Most dev pages are English-only builder tooling; D-24 (role matrix) is bilingual because owners read it. */
+export const strings: StringTable = {
+  'dev.roles.title': { en: 'Role matrix', es: 'Matriz de roles' },
+  'dev.roles.subtitle': { en: 'Who sees what: every route against every role, read from each route’s own roles list (the same test the guards and menus run, D-048). Pick a role to see its routes and the menu it gets.', es: 'Quién ve qué: cada ruta frente a cada rol, leído de la lista de roles de la propia ruta (la misma prueba que usan las guardas y los menús, D-048). Elija un rol para ver sus rutas y su menú.' },
+  'dev.roles.export': { en: 'Export CSV', es: 'Exportar CSV' },
+  'dev.roles.ofRoutes': { en: 'of {total} routes', es: 'de {total} rutas' },
+  'dev.roles.filterRole': { en: 'Role', es: 'Rol' },
+  'dev.roles.filterSurface': { en: 'Surface', es: 'Superficie' },
+  'dev.roles.everyRole': { en: 'Every role', es: 'Todos los roles' },
+  'dev.roles.everySurface': { en: 'Every surface', es: 'Todas las superficies' },
+  'dev.roles.legendListed': { en: 'listed on the route', es: 'listado en la ruta' },
+  'dev.roles.legendImplied': { en: 'super admin (sees everything unless viewing as a role)', es: 'superadministrador (ve todo salvo que vea como otro rol)' },
+  'dev.roles.empty': { en: 'No route matches these filters.', es: 'Ninguna ruta coincide con estos filtros.' },
+  'dev.roles.code': { en: 'Code', es: 'Código' },
+  'dev.roles.page': { en: 'Page', es: 'Página' },
+  'dev.roles.route': { en: 'Route', es: 'Ruta' },
+  'dev.roles.surface': { en: 'Surface', es: 'Superficie' },
+  'dev.roles.yes': { en: 'has access', es: 'tiene acceso' },
+  'dev.roles.no': { en: 'no access', es: 'sin acceso' },
+  'dev.roles.menuTitle': { en: 'Menu preview', es: 'Vista previa del menú' },
+  'dev.roles.menuFor': { en: 'The sidebar groups and entries {role} sees in its shell, in menu order.', es: 'Los grupos y entradas del menú lateral que ve {role} en su shell, en orden de menú.' },
+  'dev.roles.menuPick': { en: 'Pick a role (tile or filter) to preview its menu.', es: 'Elija un rol (tarjeta o filtro) para ver su menú.' },
+  'dev.roles.menuNone': { en: 'This role has no sidebar (public site or phone app with a bottom bar).', es: 'Este rol no tiene menú lateral (sitio público o app móvil con barra inferior).' },
+  'dev.roles.howTitle': { en: 'How scoping works', es: 'Cómo funciona el alcance' },
+  'dev.roles.howBody': { en: 'One source of truth, three readers.', es: 'Una sola fuente de verdad, tres lectores.' },
+  'dev.roles.how1': { en: 'Each RouteDef carries `roles`; RequireRole guards the route, DesktopShell builds the menu and the hub shows cards from the same list.', es: 'Cada RouteDef lleva `roles`; RequireRole protege la ruta, DesktopShell construye el menú y el hub muestra tarjetas a partir de la misma lista.' },
+  'dev.roles.how2': { en: 'A super admin viewing as another role is scoped exactly like that role (hasRole ignores the bypass while viewAs is set).', es: 'Un superadministrador que ve como otro rol queda limitado exactamente como ese rol (hasRole ignora la excepción mientras viewAs está activo).' },
+  'dev.roles.how3': { en: 'Developer, docs and plan pages are leadership surfaces (super admin, owner); legal memory adds attorney and paralegal; front desk and marketing never see them (D-048).', es: 'Las páginas de desarrollador, docs y plan son superficies de dirección (superadministrador, propietario); la memoria legal añade abogado y asistente legal; recepción y marketing nunca las ven (D-048).' },
+};

@@ -74,6 +74,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const setDevMode = useCallback((on: boolean) => setState((s) => ({ ...s, devMode: on })), []);
   const setViewAs = useCallback((viewAs: Role | null) => setState((s) => ({ ...s, viewAs })), []);
   const can = useCallback((p: Permission) => roleCan(role, p), [role]);
+  /**
+   * Route guard and menu filter (D-048). `public` routes are open to all; otherwise the *effective* role must be listed.
+   * A super admin bypasses the list only while not viewing as someone else: with `viewAs` set, `role` is the viewed
+   * role and `isSuperAdmin && !state.viewAs` is false, so the super admin is scoped exactly like that role (menus, hub
+   * cards and guards all read this one function).
+   */
   const hasRole = useCallback((roles: Role[]) => roles.includes('public') || roles.includes(role) || (isSuperAdmin && !state.viewAs), [role, isSuperAdmin, state.viewAs]);
 
   const value = useMemo<SessionCtx>(() => ({ user, role, tenantId: user.tenantId, isSuperAdmin, devMode, viewAs: isSuperAdmin ? state.viewAs : null, switchUser, signOut, setDevMode, setViewAs, can, hasRole }),

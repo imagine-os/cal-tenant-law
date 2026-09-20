@@ -46,3 +46,14 @@
 .ill-dl { display: grid; grid-template-columns: minmax(110px, auto) 1fr; gap: var(--sp-2) var(--sp-4); margin: 0; }
 .ill-dl dt { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-text-muted); }
 .ill-dl dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+
+/* D-24 role matrix */
+.rm-filters { align-items: flex-end; gap: var(--sp-3); }
+.rm-legend { display: inline-flex; align-items: center; gap: var(--sp-1); padding-bottom: var(--sp-2); }
+.rm-role-head { text-decoration: none; writing-mode: vertical-rl; transform: rotate(180deg); font-size: var(--fs-xs); line-height: 1; padding: var(--sp-1) 0; display: inline-block; }
+.rm-check { color: var(--color-success, #1f7a4d); }
+.rm-check-implied { opacity: 0.45; }
+.rm-stub { margin-left: var(--sp-1); }
+.rm-menu-items { margin: var(--sp-2) 0 0; padding-left: var(--sp-4); display: grid; gap: var(--sp-1); }
+.rm-how { padding-left: var(--sp-4); display: grid; gap: var(--sp-2); }
+@media (max-width: 900px) { .rm-role-head { writing-mode: horizontal-tb; transform: none; } }

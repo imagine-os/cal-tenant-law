@@ -17,7 +17,7 @@ _Generated from `src/data/schema/*.ts` by `npm run sql`. The TypeScript files ar
 | `demoUsers` + `SessionProvider` | Supabase Auth + `user_roles` |
 | `tenant_id` on every row | JWT claim `tenant_id` + RLS |
 
-## Tables (27)
+## Tables (33)
 
 ### Core & tenants
 
@@ -183,6 +183,33 @@ _Source: T-046 · board node meet-and-confer-attempt · superseded by T-073_
 
 ### Documents & filings
 
+#### `client_requests`
+Something we need from the client on an order: a question, a document or photo, a review of a draft, an approval, a signature or a payment. Open requests are why an order is waiting on the client; C-11 / C-21 answer them, F-15 chases the overdue ones.  
+_Source: prompt 0006 (front desk "following up on ... things needed from the client") · D-048_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `order_id` | uuid | -> `orders`  |
+| `client_user_id` | uuid | -> `users`  |
+| `kind` | enum (question \| item \| review \| approval \| signature \| payment) |  |
+| `prompt` | text | What we ask, in the client's language, e.g. "Upload the rent ledger for the last 12 months" |
+| `detail` | text, null | Why we need it and what counts (shown to the client) |
+| `status` | enum (open \| answered \| received \| declined \| cancelled) | open -> answered (question / review / approval) or received (item / signature / payment); declined / cancelled close it without input |
+| `answer` | text, null | The client's reply for question / review / approval kinds |
+| `due_at` | timestamptz, null | When we need it by; the follow-up engine keys off this |
+| `sent_via` | enum (app \| email \| sms \| call) | Channel the request went out on (comms seam, Pass 3) |
+| `sent_at` | timestamptz |  |
+| `answered_at` | timestamptz, null |  |
+| `created_by_user_id` | uuid | -> `users`  |
+| `evidence_item_id` | text, null | Binder item the client uploaded in response (binder module's evidence table); text until that schema is stable |
+
+**RLS intent:** client: read own rows; write answer / status on own rows; staff: read and write own tenant; owner / super_admin: read every tenant
+
 #### `documents`
 Every paper on a case: a template to prepare, something filed with the court, evidence, or a client upload. stage_node_id ties it to the board square it belongs to (the template catalog is T-066).  
 _Source: T-043 / T-046 · superseded by T-066 / T-070_
@@ -203,6 +230,64 @@ _Source: T-043 / T-046 · superseded by T-066 / T-070_
 | `served_to` | enum (opposing \| court \| client), null | Who it was served on, when it was |
 
 **RLS intent:** client: read own case documents where kind <> template internals; staff: read and write own tenant; opposing_counsel: read only documents served to them (served_to = opposing)
+
+#### `order_stage_events`
+Append-only history of every stage move on an order: from, to, when, who, an optional note and whom the order waited on afterwards. waitingSince() / daysWaiting() read it; the client timeline on C-11 shows only moves into client-visible stages.  
+_Source: prompt 0006 ("knowing when things are being waited on by the clients") · D-047_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `order_id` | uuid | -> `orders`  |
+| `from_stage` | enum (new_order \| payment_confirmed \| assigned \| gathering_client_details \| details_complete \| first_draft \| attorney_review \| client_review \| client_requested_changes \| approved_by_client \| supervisor_review \| supervisor_changes \| final_signed \| filed_or_scheduled \| served \| proof_of_service \| hearing_scheduled \| done \| on_hold \| cancelled), null | null for the creating event |
+| `to_stage` | enum (new_order \| payment_confirmed \| assigned \| gathering_client_details \| details_complete \| first_draft \| attorney_review \| client_review \| client_requested_changes \| approved_by_client \| supervisor_review \| supervisor_changes \| final_signed \| filed_or_scheduled \| served \| proof_of_service \| hearing_scheduled \| done \| on_hold \| cancelled) |  |
+| `at` | timestamptz |  |
+| `by_user_id` | uuid, null | -> `users` null when the system moved it (payment webhook, court date import) |
+| `note` | text, null | Internal |
+| `waiting_on_after` | enum (client \| attorney \| paralegal \| supervisor \| court \| none) | Whom the order waited on once in to_stage |
+
+**RLS intent:** client: read events of own orders where to_stage is client-visible, never the note; staff: read own tenant; insert through pipeline.advance only; nobody updates or deletes
+
+#### `orders`
+One document the firm owes a client: the SKU bought, what it is, who is on it, which pipeline stage it is in (src/domain/pipeline.ts), whom it is waiting on and since when. The attorney board (L-13), the paralegal queue (S-13), the client's "my orders" (C-11) and the desk lookup (F-14) all read this row; only staff with orders.advance move it (RULE-PIPE-06).  
+_Source: prompt 0006 (pipeline for each document) · D-047 · RULE-PIPE-01..06_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `order_ref` | text | Human id shown everywhere, e.g. ORD-2026-0142 (domain orderRef()) |
+| `client_user_id` | uuid | -> `users` The tenant we are doing the work for |
+| `case_id` | uuid, null | -> `cases` The matter it belongs to; null for stand-alone work (a demand letter before any case) |
+| `service_sku` | text, null | Store SKU as sold (services.sku, e.g. 400); null when ordered off-menu |
+| `title` | text | The document, e.g. "Answer to Unlawful Detainer Complaint" |
+| `document_kind` | enum (pleading \| motion \| discovery \| letter \| form \| agreement \| other) | Drives the DocPreview kind and whether filing / service stages apply |
+| `stage` | enum (new_order \| payment_confirmed \| assigned \| gathering_client_details \| details_complete \| first_draft \| attorney_review \| client_review \| client_requested_changes \| approved_by_client \| supervisor_review \| supervisor_changes \| final_signed \| filed_or_scheduled \| served \| proof_of_service \| hearing_scheduled \| done \| on_hold \| cancelled) | Current pipeline stage id (PIPELINE_STAGES) |
+| `waiting_on` | enum (client \| attorney \| paralegal \| supervisor \| court \| none) | Denormalised from the stage (RULE-PIPE-02): who must act next |
+| `stage_entered_at` | timestamptz | When the current stage began; "waiting N days" counts from here |
+| `revision` | int | How many times the draft went back after client or supervisor feedback (0 = first draft still) |
+| `assigned_attorney_id` | uuid, null | -> `users` Attorney of record on the document |
+| `assigned_paralegal_id` | uuid, null | -> `users` Paralegal gathering, assembling, filing and serving |
+| `supervisor_id` | uuid, null | -> `users` Supervising attorney who must review before filing (RULE-PIPE-04) |
+| `due_at` | timestamptz, null | When the deliverable must be in the client's hands |
+| `filing_due_at` | timestamptz, null | Court deadline it must be filed by, from the deadline engine when it lands (T-059) |
+| `court` | text, null | Court and department as staff write it |
+| `case_number` | text, null |  |
+| `priority` | enum (normal \| rush \| emergency) | rush = short statutory window; emergency = ex parte / same day |
+| `board_node_id` | text, null | Game-board square the document belongs to (docs/game-board/nodes.json) |
+| `template_id` | text, null | Drafting template id (drafting module's templates table); text, not a FK, until that schema is stable |
+| `notes` | text, null | Internal notes; never shown to the client (RULE-PIPE-03) |
+| `client_summary` | text, null | Plain-language status line the client and the desk read aloud, in English; pages translate through the stage clientLabel |
+| `last_client_touch_at` | timestamptz, null | Last time the client answered, uploaded, approved or called about this order |
+
+**RLS intent:** client: read rows where client_user_id = auth.uid(), never notes; attorney / paralegal: read and write rows of own tenant; front_desk: read own tenant; write only client_summary / last_client_touch_at; owner / super_admin: read every tenant
 
 #### `service_events`
 A document served on someone, with the method and the acknowledgement. The opposing-counsel portal (X-01) acknowledges here; proof of service objects arrive with T-054.  
@@ -267,6 +352,30 @@ _Source: T-042 / T-043 · rules RULE-UD-* · superseded by T-059_
 | `assigned_user_id` | uuid, null | -> `users`  |
 
 **RLS intent:** client: read deadlines of own cases; attorney / paralegal: read and write own tenant; owner: read every tenant
+
+#### `follow_ups`
+The desk's to-do list with dates: call someone back, chase a client item or a draft review, a filing date, a hearing, a payment, a check-in. Subject is an order, a client, a call or a case. F-15 is the list, F-01 shows today's, F-14 shows an order's.  
+_Source: prompt 0006 (front desk "following up on due dates or things needed from the client") · D-049_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `kind` | enum (call_back \| client_item_due \| client_review_due \| filing_due \| hearing \| payment_due \| check_in) |  |
+| `subject_type` | enum (order \| client \| call \| case) |  |
+| `subject_id` | text | Id in the subject table |
+| `client_user_id` | uuid, null | -> `users` null for an unknown caller |
+| `order_id` | uuid, null | -> `orders`  |
+| `due_at` | timestamptz |  |
+| `owner_user_id` | uuid | -> `users` Who owes the follow-up |
+| `status` | enum (open \| done \| snoozed \| cancelled) |  |
+| `note` | text, null |  |
+| `done_at` | timestamptz, null |  |
+
+**RLS intent:** staff: read and write own tenant; client: never; owner / super_admin: read every tenant
 
 ### Game board
 
@@ -441,6 +550,36 @@ _Source: docs/data/services-catalog.json (live scrape 2026-09-18: /all-services 
 **Access:** public / client: read (P-10, P-11, P-13); front_desk / attorney: read when quoting the next move; owner / super_admin: edit and verify (A-10)
 
 ### Messages, hotline & feedback
+
+#### `calls`
+Every phone call at the desk: direction, numbers, the caller matched to a user by phone and the orders that caller has, live status (ringing / active / on hold / ended / missed / voicemail), who handled it, why they called, what was said and what was decided, plus hotline minutes billed. F-12 is the console; F-01 lists the calls to return.  
+_Source: prompt 0006 (front desk "nice interface for incoming calls") · D-049 · T-065_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `direction` | enum (inbound \| outbound) |  |
+| `from_number` | text | E.164, e.g. +19515550142 |
+| `to_number` | text |  |
+| `caller_name` | text, null | Display name: the matched user's name, the caller-id string, or "Unknown" |
+| `matched_user_id` | uuid, null | -> `users` Matched by phone number at ring time; null for an unknown caller |
+| `matched_order_ids` | json, null | orders.id[] the matched caller has open, so the desk sees status before saying hello |
+| `status` | enum (ringing \| active \| on_hold \| ended \| missed \| voicemail) |  |
+| `started_at` | timestamptz |  |
+| `ended_at` | timestamptz, null |  |
+| `duration_seconds` | int, null |  |
+| `handled_by_user_id` | uuid, null | -> `users`  |
+| `purpose` | enum (status \| new_consult \| payment \| documents \| scheduling \| other), null | Set by the desk during or after the call; null while ringing |
+| `notes` | text, null |  |
+| `outcome` | text, null | One line: what was decided or told |
+| `follow_up_id` | text, null | follow_ups.id created from this call (text, the two tables reference each other) |
+| `hotline_minutes_billed` | int, null | Minutes charged to the client's hotline block; null when not billable |
+
+**RLS intent:** front_desk / attorney / paralegal: read and write own tenant; client: never (their own calls appear as last_client_touch_at on the order); owner / super_admin: read every tenant
 
 #### `feedback`
 Comments, requests and bug reports pinned to a page or an element by testers (FeedbackButton). Agents triage from here and record the decision before changing anything (docs/reference/annotations-triage.md).  
@@ -640,6 +779,26 @@ _Source: P-14_
 **RLS intent:** signed in: upsert own row; staff: read rows of own tenant
 
 ### Design & layout
+
+#### `canvas_layouts`
+A saved D-21 canvas arrangement: viewport (x, y, zoom), the open page windows with their position, size, device, role and language, whether the role-flow lines are shown and which role they are filtered to. One row per named layout per owner; the showcase module reads and writes it (canvas.write).  
+_Source: prompt 0006 ("flow chart lines to show the flow of what each type of user can do") · D-051_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `name` | text |  |
+| `owner_user_id` | uuid | -> `users`  |
+| `viewport` | json | { x, y, zoom } |
+| `windows` | json | [{ code, path, x, y, w, h, device, role, lang }] |
+| `flows_visible` | bool | Draw the role-flow edges (src/flows/roleFlows.ts) over the frames |
+| `role_filter` | text, null | Show only this role's flow; null = all |
+
+**RLS intent:** owner of the row: read and write; super_admin: read and write all; everyone signed in: read rows shared by name
 
 #### `illustrations`
 Every image the firm publishes on caltenantlaw.com and in its store, with where it is used, its alt text, subject tags, style family and the board node / SKU / article / office it illustrates. The assets database behind the store icons on P-10 / P-13, the video thumbnails on C-03 and the D-23 gallery. Copied for the proposal to the firm only; rights stay with the firm.  

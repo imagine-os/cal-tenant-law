@@ -115,4 +115,4 @@ export class MockProvider implements DataProvider {
 }
 
 /** Bump when the seed shape changes so stale browsers reseed. */
-export const SEED_VERSION = 2; // 0.1.1: real offices (8), lessons from videos.json, catalog + illustrations from the live scrape
+export const SEED_VERSION = 3; // 0.2.0-dev: board positions and move history for every ops case (case_01..case_24, one demo case set; T-054 scoped, prompt 0006). 2 = 0.1.1: real offices (8), lessons from videos.json, catalog + illustrations from the live scrape

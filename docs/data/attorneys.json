@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "generated_at": "2026-09-20T21:15:00Z",
+  "source_note": "Attorneys and portraits from the 8 regional office pages (/offices/*) and the 'Our Associates' list on /contact, read from reference/site-scrape/raw/offices/*.html and reference/site-scrape/raw/contact.html, cross-checked live (caltenantlaw.com returned 200 on the network check). Each office page shows one attorney photo + name + title + a short bio paragraph (2-4 sentences); we took the first 2 sentences as bio_excerpt. Portraits were already present in reference/site-scrape/assets/ as attorney-*.png from pass one; re-fetching each one's original URL directly (https://caltenantlaw.com/images/associates/<file>.png, bypassing the /_next/image resizer) returned byte-identical files for all 7, confirming those are already the largest size the site serves (184-603 px square PNGs; the site does not host larger originals despite /_next/image srcset entries listing w=3840, which the optimizer does not actually upscale to). Jeremy Cook (Downtown Los Angeles), the 8th associate named on /contact and pictured only by alt text on /offices/downtown-los-angeles, 404s at that same portrait URL both in pass one and again just now live -- no photo exists for him anywhere on the site. Copied into public/brand/people/ as <slug>.png; originals also already sit in reference/site-scrape/assets/ as attorney-*.png (unchanged, not re-copied).",
+  "evidence": "scraped-live",
+  "attorneys": [
+    {
+      "id": "atty_ken-carlson",
+      "name": "Kenneth H. Carlson",
+      "title": "Founder & Principal Attorney",
+      "office": "California Tenant Law — Riverside (Main Office)",
+      "city": "Riverside / Idyllwild",
+      "bio_excerpt": "Ken Carlson has been an attorney helping tenants since 1980, over 45 years ago. He created the caltenantlaw.com website in 1999.",
+      "portrait": "brand/people/ken-carlson.png",
+      "portrait_source_url": "https://caltenantlaw.com/images/associates/ken-carlson-office-california-tenantlaw.png",
+      "page_url": "https://caltenantlaw.com/offices/riverside",
+      "verified": false,
+      "scraped_at": "2026-09-20T21:10:00Z"
+    },
+    {
+      "id": "atty_kavin-williams",
+      "name": "Kavin Williams",
+      "title": "Associate Attorney",
+      "office": "California Tenant Law — Bay Area",
+      "city": "San Francisco",
+      "bio_excerpt": "Kavin Williams is the founder and owner of KAW LAW, a law practice established in September 2022 that specializes in tenant advocacy and consumer rights law. Prior to founding KAW LAW, Kavin served as a staff attorney for the Eviction Defense Collaborative, one of San Francisco’s leading tenant rights organizations.",
+      "portrait": "brand/people/kavin-williams.png",
+      "portrait_source_url": "https://caltenantlaw.com/images/associates/kavin-williams-california-tenant-law.png",
+      "page_url": "https://caltenantlaw.com/offices/bay-area",
+      "verified": false,
+      "scraped_at": "2026-09-20T21:10:00Z"
+    },
+    {
+      "id": "atty_jeremy-cook",
+      "name": "Jeremy Cook",
+      "title": "Associate Attorney",
+      "office": "California Tenant Law — Downtown Los Angeles",
+      "city": "Los Angeles",
+      "bio_excerpt": "Jeremy Cook serves as our Downtown Los Angeles tenant rights attorney, providing dedicated legal representation to renters throughout the Los Angeles basin. Located in the heart of Downtown LA, our office offers convenient access for tenants dealing with the unique challenges of LA’s competitive rental market.",
+      "portrait": null,
+      "portrait_source_url": "https://caltenantlaw.com/images/associates/jeremy-cook-california-tenant-law.png",
+      "page_url": "https://caltenantlaw.com/offices/downtown-los-angeles",
+      "verified": false,
+      "scraped_at": "2026-09-20T21:10:00Z",
+      "note": "Portrait URL 404s live (checked 2026-09-20) and in the pass-one scrape (2026-09-18); no photo of Jeremy Cook exists anywhere on the site. portrait is null pending an image."
+    },
+    {
+      "id": "atty_brian-barajas",
+      "name": "Brian Barajas",
+      "title": "Associate Attorney",
+      "office": "California Tenant Law — Long Beach",
+      "city": "Long Beach",
+      "bio_excerpt": "Brian Barajas is licensed to practice in both California and Washington D.C. He has been practicing eviction law for over two years and holds a Master of Social Work (MSW) from the University of Southern California—a background that brings valuable insight into the personal and social challenges tenants face during housing disputes.",
+      "portrait": "brand/people/brian-barajas.png",
+      "portrait_source_url": "https://caltenantlaw.com/images/associates/brian-profile-photo.png",
+      "page_url": "https://caltenantlaw.com/offices/long-beach-orange-county",
+      "verified": false,
+      "scraped_at": "2026-09-20T21:10:00Z"
+    },
+    {
+      "id": "atty_brittany-torbert",
+      "name": "Brittany Torbert",
+      "title": "Associate Attorney",
+      "office": "California Tenant Law — Sacramento",
+      "city": "Roseville",
+      "bio_excerpt": "Brittany Torbert brings perseverance, determination, and raw grit to every case—qualities that enable her to overcome obstacles and achieve results for her clients. Brittany’s values and client-centered outlook ensure tenants have a positive environment and an attorney they can trust.",
+      "portrait": "brand/people/brittany-torbert.png",
+      "portrait_source_url": "https://caltenantlaw.com/images/associates/brittany-torbert-california-tenant-law.png",
+      "page_url": "https://caltenantlaw.com/offices/sacramento",
+      "verified": false,
+      "scraped_at": "2026-09-20T21:10:00Z"
+    },
+    {
+      "id": "atty_chelsea-cooper",
+      "name": "Chelsea Cooper",
+      "title": "Associate Attorney",
+      "office": "California Tenant Law — San Diego",
+      "city": "San Diego",
+      "bio_excerpt": "Chelsea Cooper is a dedicated attorney with deep expertise in landlord-tenant law, having successfully resolved issues for over 200 tenants—whether in the courtroom or through strategic negotiation. Chelsea finds the complexities of landlord-tenant law intriguing, as each case offers unique challenges that often intersect with other legal domains.",
+      "portrait": "brand/people/chelsea-cooper.png",
+      "portrait_source_url": "https://caltenantlaw.com/images/associates/chelsea-cooper-california-tenant-law.png",
+      "page_url": "https://caltenantlaw.com/offices/san-diego",
+      "verified": false,
+      "scraped_at": "2026-09-20T21:10:00Z"
+    },
+    {
+      "id": "atty_perrin-disner",
+      "name": "Perrin F. Disner",
+      "title": "Associate Attorney",
+      "office": "California Tenant Law — San Fernando Valley",
+      "city": "Sherman Oaks",
+      "bio_excerpt": "Perrin F. Disner brings over 17 years of litigation experience to CalTenantLaw’s San Fernando Valley practice. Disner earned his Bachelor of Arts degree and Juris Doctorate from the University of Michigan, and has been a member in good standing of the State Bar of California since 2008.",
+      "portrait": "brand/people/perrin-disner.png",
+      "portrait_source_url": "https://caltenantlaw.com/images/associates/perrin-profile-photo.png",
+      "page_url": "https://caltenantlaw.com/offices/san-fernando",
+      "verified": false,
+      "scraped_at": "2026-09-20T21:10:00Z"
+    },
+    {
+      "id": "atty_samara-weiner",
+      "name": "Samara Weiner",
+      "title": "Associate Attorney",
+      "office": "California Tenant Law — San Luis Obispo County",
+      "city": "Pismo Beach",
+      "bio_excerpt": "Samara Weiner brings extensive litigation experience to CalTenantLaw and the Central Coast community. Ms. Weiner honed her skills as former In-House Counsel for major California brands including POM Wonderful, Wonderful Pistachios and Almonds, FIJI Water, JUSTIN Vineyards & Winery, Landmark Winery, and Paramount Citrus.",
+      "portrait": "brand/people/samara-weiner.png",
+      "portrait_source_url": "https://caltenantlaw.com/images/associates/samara-weiner-california-tenant-law.png",
+      "page_url": "https://caltenantlaw.com/offices/san-luis-obispo-county",
+      "verified": false,
+      "scraped_at": "2026-09-20T21:10:00Z"
+    }
+  ]
+}

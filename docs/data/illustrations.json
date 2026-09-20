@@ -2,7 +2,8 @@
  "version": "0.1.1",
  "generated_at": "2026-09-18T21:30:00Z",
  "source_note": "Every image referenced by the 98 crawled pages (img src, Next.js /_next/image sources, hero poster), every Ecwid product and category image (storefront API, original size) and every video thumbnail, downloaded 2026-09-18 at ~1 req/s. Skipped: files under 2 KB (three free-advice icons at ~2,009 B and two 1,438 B Ecwid placeholders), one 404 (Jeremy Cook portrait) and the two hero videos. Style notes and subject tags are ours after viewing every file; suggested_use keys: game-board:<node id>, service:<sku>, store-category:<slug>, video:<slug>, article:<slug>, office:<slug>, nav-tile:<name>, brand.",
- "count": 202,
+ "count": 207,
+ "count_note": "202 from pass one (2026-09-18) + 5 from pass two (2026-09-20): the site logo and 4 second-gallery-photo product images that pass one's per-product single-image pull missed. See docs/reference/site-scrape/pages.md, 'Pass two image sweep' for the full sweep and what else was checked and found not-new.",
  "style_families": {
   "flat-circle-icons": "Navy or orange circle with long shadow (store categories, most products, free-advice icons): ~110 files, 150-175 px squares from Ecwid, 150 px article icons.",
   "outline-cartoon-tiles": "Black-outline cartoon tiles (home tool tiles and store category tiles): 21 files, 363-376 px.",
@@ -4749,6 +4750,144 @@
     "video:trial"
    ],
    "rights": "© Kenneth H. Carlson / Carlson Law Office (site copyright notice); product images © the firm via Ecwid; attorney portraits are personal likenesses; Audible logo is third-party. Copied for the proposal to the firm only."
+  },
+  {
+   "id": "brand-logo-2023",
+   "file": "reference/site-scrape/assets/caltenantlaw-logo-2023.png",
+   "source_url": "https://caltenantlaw.com/images/caltenantlaw-logo-2023.png",
+   "pages_used": [
+    "/",
+    "/about",
+    "/offices",
+    "/contact"
+   ],
+   "alt": "California Tenant Law",
+   "caption_or_nearby_heading": "Site header / footer",
+   "subject_tags": [
+    "logo",
+    "brand"
+   ],
+   "style_note": "The site's own wordmark PNG served in every page header via Next.js /_next/image (only ever requested through that resizer in pass one, so it was missed as a direct asset). Original file, not a resized variant.",
+   "width": 489,
+   "height": 137,
+   "bytes": 37343,
+   "content_type": "image/png",
+   "suggested_use": [
+    "brand"
+   ],
+   "rights": "© Kenneth H. Carlson / Carlson Law Office (site copyright notice). Copied for the proposal to the firm only.",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-20T21:11:00Z",
+   "verified": false
+  },
+  {
+   "id": "pleading-game-board-poster-back",
+   "file": "reference/site-scrape/assets/pleading-game-board-poster-back.png",
+   "source_url": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/1908074484.jpg",
+   "pages_used": [
+    "/store/game-board#!/002-Eviction-Game-Board/p/11871312",
+    "/store/game-board#!/021-Unlawful-Detainer-Game-Board-Poster/p/135891747",
+    "/store/game-board#!/022-Unlawful-Detainer-Game-Board-11X17/p/135891748"
+   ],
+   "alt": "Game Board poster, second product photo",
+   "caption_or_nearby_heading": "Game Board Services",
+   "subject_tags": [
+    "game board",
+    "poster",
+    "product gallery"
+   ],
+   "style_note": "photos-and-art: the Game Board poster's second gallery photo (byte-identical file reused across all 3 Game Board product listings; pass one only pulled each product's main/first mediaItem, so this second image was missed).",
+   "width": 399,
+   "height": 578,
+   "bytes": 57092,
+   "content_type": "image/png",
+   "suggested_use": [
+    "service:11871312",
+    "service:135891747",
+    "service:135891748"
+   ],
+   "rights": "© the firm via Ecwid. Copied for the proposal to the firm only.",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-20T21:11:00Z",
+   "verified": false
+  },
+  {
+   "id": "pleading-delta-motion-to-quash",
+   "file": "reference/site-scrape/assets/pleading-delta-motion-to-quash.jpg",
+   "source_url": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/3326992868.jpg",
+   "pages_used": [
+    "/store#!/151-Delta-Motion-to-Quash/p/510301822"
+   ],
+   "alt": "151 - Delta Motion to Quash, second product photo",
+   "caption_or_nearby_heading": "product 151 - Delta Motion to Quash",
+   "subject_tags": [
+    "pleading scan",
+    "product gallery"
+   ],
+   "style_note": "pleading-thumbnails: a scan of the actual court paperwork, this product's second gallery photo (pass one only pulled the main/first mediaItem per product).",
+   "width": 240,
+   "height": 310,
+   "bytes": 32709,
+   "content_type": "image/jpeg",
+   "suggested_use": [
+    "service:510301822"
+   ],
+   "rights": "© the firm via Ecwid. Copied for the proposal to the firm only.",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-20T21:11:00Z",
+   "verified": false
+  },
+  {
+   "id": "pleading-motion-to-strike-opposition",
+   "file": "reference/site-scrape/assets/pleading-motion-to-strike-opposition.jpg",
+   "source_url": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/3385301991.jpg",
+   "pages_used": [
+    "/store#!/385-Motion-to-Strike-Opposition/p/518969515"
+   ],
+   "alt": "385 - Motion to Strike Opposition, second product photo",
+   "caption_or_nearby_heading": "product 385 - Motion to Strike Opposition",
+   "subject_tags": [
+    "pleading scan",
+    "product gallery"
+   ],
+   "style_note": "pleading-thumbnails: a scan of the actual court paperwork, this product's second gallery photo (pass one only pulled the main/first mediaItem per product).",
+   "width": 238,
+   "height": 308,
+   "bytes": 37972,
+   "content_type": "image/jpeg",
+   "suggested_use": [
+    "service:518969515"
+   ],
+   "rights": "© the firm via Ecwid. Copied for the proposal to the firm only.",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-20T21:11:00Z",
+   "verified": false
+  },
+  {
+   "id": "pleading-opposition-to-slapp-motion",
+   "file": "reference/site-scrape/assets/pleading-opposition-to-slapp-motion.jpg",
+   "source_url": "https://d2j6dbq0eux0bg.cloudfront.net/images/1197002/3386143392.jpg",
+   "pages_used": [
+    "/store#!/390-Opposition-to-SLAPP-Motion/p/518588427"
+   ],
+   "alt": "390 - Opposition to SLAPP Motion, second product photo",
+   "caption_or_nearby_heading": "product 390 - Opposition to SLAPP Motion",
+   "subject_tags": [
+    "pleading scan",
+    "product gallery"
+   ],
+   "style_note": "pleading-thumbnails: a scan of the actual court paperwork, this product's second gallery photo (pass one only pulled the main/first mediaItem per product).",
+   "width": 238,
+   "height": 308,
+   "bytes": 38414,
+   "content_type": "image/jpeg",
+   "suggested_use": [
+    "service:518588427"
+   ],
+   "rights": "© the firm via Ecwid. Copied for the proposal to the firm only.",
+   "evidence": "scraped-live",
+   "scraped_at": "2026-09-20T21:11:00Z",
+   "verified": false
   }
  ]
 }

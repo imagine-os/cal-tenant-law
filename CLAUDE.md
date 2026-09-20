@@ -85,11 +85,11 @@ Shells / surfaces (`RouteDef.surface`): `customer` -> PhoneShell (BottomNav from
 
 ## Commits
 
-Conventional Commits (`feat(game-board): GB-01 board squares`), page codes in the body, and exactly these trailer lines:
+Conventional Commits (`feat(game-board): GB-01 board squares`), page codes in the body, and exactly these trailer lines. The session URL changes per pass; use the one in the current session's instructions.
 
 ```
 Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>
-Claude-Session: https://claude.ai/code/session_013e6EjtK7U5ekk1s9L5jDRp
+Claude-Session: https://claude.ai/code/session_01MLVTMKd4aZM96WgMUakR9Z
 ```
 
 Push to `main` (retry on transient errors; `git pull --rebase origin main` when rejected). `npm run build` must be green before every push. Stage explicit paths, never `git add -A`.

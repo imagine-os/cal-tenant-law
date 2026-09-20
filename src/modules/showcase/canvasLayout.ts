@@ -48,8 +48,14 @@ export function frameRoleFor(route: { surface: Surface; roles: Role[] }): Role {
 }
 
 /** Sample values for parameterised routes, so `/dev/tables/:table` is a usable frame (mirrors scripts/qa-lib.mjs). */
-export const SAMPLE_PARAMS: Record<string, string> = { ':table': 'feedback', ':code': 'D-03', ':id': 'fbk_seed_01', ':caseId': 'case_1', ':slug': 'eviction', '*': '' };
-export const fillPath = (path: string): string => path.replace(/:\w+|\*/g, (p) => SAMPLE_PARAMS[p] ?? 'x').replace(/\/$/, '') || '/';
+/** Sample values for parameterised routes; the same ids the QA scripts use (scripts/qa-lib.mjs PARAMS): `case_01` is the ops seed's demo case, `01-front-desk-day` a real manual chapter. */
+export const SAMPLE_PARAMS: Record<string, string> = { ':table': 'feedback', ':code': 'D-03', ':id': 'fbk_seed_01', ':caseId': 'case_01', ':lang': 'en', ':slug': '01-front-desk-day', ':sku': '101', '*': '' };
+/** Per-path overrides where one param name means different things (`:slug` is a manual chapter or a legal topic; `:id` a feedback row or a plan task). Mirrors qa-lib PARAMS_BY_PATH. */
+export const SAMPLE_PARAMS_BY_PATH: [RegExp, Record<string, string>][] = [[/^\/legal\/topics/, { ':slug': 'unlawful-detainer-procedure' }], [/^\/plan\/task/, { ':id': 'T-050' }]];
+export const fillPath = (path: string): string => {
+  const over = SAMPLE_PARAMS_BY_PATH.find(([re]) => re.test(path))?.[1] ?? {};
+  return path.replace(/:\w+|\*/g, (p) => over[p] ?? SAMPLE_PARAMS[p] ?? 'x').replace(/\/$/, '') || '/';
+};
 
 export interface FrameNode {
   code: string; name: string; path: string; url: string; surface: Surface; status: 'built' | 'stub';

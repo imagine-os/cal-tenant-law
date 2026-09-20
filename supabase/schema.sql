@@ -204,6 +204,85 @@ alter table public.board_positions enable row level security;
 create policy "board_positions: tenant read" on public.board_positions for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "board_positions: staff write" on public.board_positions for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
+-- comms · Calls: Every phone call at the desk: direction, numbers, the caller matched to a user by phone and the orders that caller has, live status (ringing / active / on hold / ended / missed / voicemail), who handled it, why they called, what was said and what was decided, plus hotline minutes billed. F-12 is the console; F-01 lists the calls to return.
+-- access / rls intent:
+--   · front_desk / attorney / paralegal: read and write own tenant
+--   · client: never (their own calls appear as last_client_touch_at on the order)
+--   · owner / super_admin: read every tenant
+create table if not exists public.calls (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  direction text not null check (direction in ('inbound', 'outbound')),
+  -- E.164, e.g. +19515550142
+  from_number text not null,
+  to_number text not null,
+  -- Display name: the matched user's name, the caller-id string, or "Unknown"
+  caller_name text,
+  -- Matched by phone number at ring time; null for an unknown caller
+  matched_user_id uuid,
+  -- orders.id[] the matched caller has open, so the desk sees status before saying hello
+  matched_order_ids jsonb,
+  status text not null check (status in ('ringing', 'active', 'on_hold', 'ended', 'missed', 'voicemail')),
+  started_at timestamptz not null,
+  ended_at timestamptz,
+  duration_seconds integer,
+  handled_by_user_id uuid,
+  -- Set by the desk during or after the call; null while ringing
+  purpose text check (purpose in ('status', 'new_consult', 'payment', 'documents', 'scheduling', 'other')),
+  notes text,
+  -- One line: what was decided or told
+  outcome text,
+  -- follow_ups.id created from this call (text, the two tables reference each other)
+  follow_up_id text,
+  -- Minutes charged to the client's hotline block; null when not billable
+  hotline_minutes_billed integer
+);
+create index if not exists calls_tenant_idx on public.calls(tenant_id);
+create index if not exists calls_matched_user_id_idx on public.calls(matched_user_id);
+create index if not exists calls_handled_by_user_id_idx on public.calls(handled_by_user_id);
+create trigger calls_touch before update on public.calls for each row execute function public.touch_updated_at();
+alter table public.calls enable row level security;
+create policy "calls: tenant read" on public.calls for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "calls: staff write" on public.calls for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- design · Canvas layouts: A saved D-21 canvas arrangement: viewport (x, y, zoom), the open page windows with their position, size, device, role and language, whether the role-flow lines are shown and which role they are filtered to. One row per named layout per owner; the showcase module reads and writes it (canvas.write).
+-- access / rls intent:
+--   · owner of the row: read and write
+--   · super_admin: read and write all
+--   · everyone signed in: read rows shared by name
+create table if not exists public.canvas_layouts (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  name text not null,
+  owner_user_id uuid not null,
+  -- { x, y, zoom }
+  viewport jsonb not null,
+  -- [{ code, path, x, y, w, h, device, role, lang }]
+  windows jsonb not null,
+  -- Draw the role-flow edges (src/flows/roleFlows.ts) over the frames
+  flows_visible boolean not null default false,
+  -- Show only this role's flow; null = all
+  role_filter text
+);
+create index if not exists canvas_layouts_tenant_idx on public.canvas_layouts(tenant_id);
+create index if not exists canvas_layouts_owner_user_id_idx on public.canvas_layouts(owner_user_id);
+create trigger canvas_layouts_touch before update on public.canvas_layouts for each row execute function public.touch_updated_at();
+alter table public.canvas_layouts enable row level security;
+create policy "canvas_layouts: tenant read" on public.canvas_layouts for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "canvas_layouts: staff write" on public.canvas_layouts for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
 -- cases · Cases: One unlawful-detainer matter: the client, the attorney and paralegal on it, the court and county, and where it stands on the eviction game board. Provisional Pass 1 shape; T-054 adds parties, people and the lifecycle function.
 -- access / rls intent:
 --   · client: read rows where client_user_id = auth.uid()
@@ -249,6 +328,50 @@ create trigger cases_touch before update on public.cases for each row execute fu
 alter table public.cases enable row level security;
 create policy "cases: tenant read" on public.cases for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "cases: staff write" on public.cases for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- documents · Client requests: Something we need from the client on an order: a question, a document or photo, a review of a draft, an approval, a signature or a payment. Open requests are why an order is waiting on the client; C-11 / C-21 answer them, F-15 chases the overdue ones.
+-- access / rls intent:
+--   · client: read own rows; write answer / status on own rows
+--   · staff: read and write own tenant
+--   · owner / super_admin: read every tenant
+create table if not exists public.client_requests (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  order_id uuid not null,
+  client_user_id uuid not null,
+  kind text not null check (kind in ('question', 'item', 'review', 'approval', 'signature', 'payment')),
+  -- What we ask, in the client's language, e.g. "Upload the rent ledger for the last 12 months"
+  prompt text not null,
+  -- Why we need it and what counts (shown to the client)
+  detail text,
+  -- open -> answered (question / review / approval) or received (item / signature / payment); declined / cancelled close it without input
+  status text not null check (status in ('open', 'answered', 'received', 'declined', 'cancelled')),
+  -- The client's reply for question / review / approval kinds
+  answer text,
+  -- When we need it by; the follow-up engine keys off this
+  due_at timestamptz,
+  -- Channel the request went out on (comms seam, Pass 3)
+  sent_via text not null check (sent_via in ('app', 'email', 'sms', 'call')),
+  sent_at timestamptz not null,
+  answered_at timestamptz,
+  created_by_user_id uuid not null,
+  -- Binder item the client uploaded in response (binder module's evidence table); text until that schema is stable
+  evidence_item_id text
+);
+create index if not exists client_requests_tenant_idx on public.client_requests(tenant_id);
+create index if not exists client_requests_order_id_idx on public.client_requests(order_id);
+create index if not exists client_requests_client_user_id_idx on public.client_requests(client_user_id);
+create index if not exists client_requests_created_by_user_id_idx on public.client_requests(created_by_user_id);
+create trigger client_requests_touch before update on public.client_requests for each row execute function public.touch_updated_at();
+alter table public.client_requests enable row level security;
+create policy "client_requests: tenant read" on public.client_requests for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "client_requests: staff write" on public.client_requests for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
 -- calendar · Consultations: The prepaid 30-minute attorney consultation (initial or follow-up) and hotline blocks, by phone, Teams or video. Prices are as listed on the firm site, never a quote (RULE-INTAKE-01).
 -- access / rls intent:
@@ -389,6 +512,43 @@ create trigger feedback_touch before update on public.feedback for each row exec
 alter table public.feedback enable row level security;
 create policy "feedback: tenant read" on public.feedback for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "feedback: staff write" on public.feedback for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- calendar · Follow-ups: The desk's to-do list with dates: call someone back, chase a client item or a draft review, a filing date, a hearing, a payment, a check-in. Subject is an order, a client, a call or a case. F-15 is the list, F-01 shows today's, F-14 shows an order's.
+-- access / rls intent:
+--   · staff: read and write own tenant
+--   · client: never
+--   · owner / super_admin: read every tenant
+create table if not exists public.follow_ups (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  kind text not null check (kind in ('call_back', 'client_item_due', 'client_review_due', 'filing_due', 'hearing', 'payment_due', 'check_in')),
+  subject_type text not null check (subject_type in ('order', 'client', 'call', 'case')),
+  -- Id in the subject table
+  subject_id text not null,
+  -- null for an unknown caller
+  client_user_id uuid,
+  order_id uuid,
+  due_at timestamptz not null,
+  -- Who owes the follow-up
+  owner_user_id uuid not null,
+  status text not null check (status in ('open', 'done', 'snoozed', 'cancelled')),
+  note text,
+  done_at timestamptz
+);
+create index if not exists follow_ups_tenant_idx on public.follow_ups(tenant_id);
+create index if not exists follow_ups_client_user_id_idx on public.follow_ups(client_user_id);
+create index if not exists follow_ups_order_id_idx on public.follow_ups(order_id);
+create index if not exists follow_ups_owner_user_id_idx on public.follow_ups(owner_user_id);
+create trigger follow_ups_touch before update on public.follow_ups for each row execute function public.touch_updated_at();
+alter table public.follow_ups enable row level security;
+create policy "follow_ups: tenant read" on public.follow_ups for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "follow_ups: staff write" on public.follow_ups for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
 -- design · Illustrations (firm assets): Every image the firm publishes on caltenantlaw.com and in its store, with where it is used, its alt text, subject tags, style family and the board node / SKU / article / office it illustrates. The assets database behind the store icons on P-10 / P-13, the video thumbnails on C-03 and the D-23 gallery. Copied for the proposal to the firm only; rights stay with the firm.
 -- access / rls intent:
@@ -638,6 +798,112 @@ create trigger meet_confer_touch before update on public.meet_confer for each ro
 alter table public.meet_confer enable row level security;
 create policy "meet_confer: tenant read" on public.meet_confer for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "meet_confer: staff write" on public.meet_confer for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- documents · Order stage events: Append-only history of every stage move on an order: from, to, when, who, an optional note and whom the order waited on afterwards. waitingSince() / daysWaiting() read it; the client timeline on C-11 shows only moves into client-visible stages.
+-- access / rls intent:
+--   · client: read events of own orders where to_stage is client-visible, never the note
+--   · staff: read own tenant; insert through pipeline.advance only
+--   · nobody updates or deletes
+create table if not exists public.order_stage_events (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  order_id uuid not null,
+  -- null for the creating event
+  from_stage text check (from_stage in ('new_order', 'payment_confirmed', 'assigned', 'gathering_client_details', 'details_complete', 'first_draft', 'attorney_review', 'client_review', 'client_requested_changes', 'approved_by_client', 'supervisor_review', 'supervisor_changes', 'final_signed', 'filed_or_scheduled', 'served', 'proof_of_service', 'hearing_scheduled', 'done', 'on_hold', 'cancelled')),
+  to_stage text not null check (to_stage in ('new_order', 'payment_confirmed', 'assigned', 'gathering_client_details', 'details_complete', 'first_draft', 'attorney_review', 'client_review', 'client_requested_changes', 'approved_by_client', 'supervisor_review', 'supervisor_changes', 'final_signed', 'filed_or_scheduled', 'served', 'proof_of_service', 'hearing_scheduled', 'done', 'on_hold', 'cancelled')),
+  at timestamptz not null,
+  -- null when the system moved it (payment webhook, court date import)
+  by_user_id uuid,
+  -- Internal
+  note text,
+  -- Whom the order waited on once in to_stage
+  waiting_on_after text not null check (waiting_on_after in ('client', 'attorney', 'paralegal', 'supervisor', 'court', 'none'))
+);
+create index if not exists order_stage_events_tenant_idx on public.order_stage_events(tenant_id);
+create index if not exists order_stage_events_order_id_idx on public.order_stage_events(order_id);
+create index if not exists order_stage_events_by_user_id_idx on public.order_stage_events(by_user_id);
+create trigger order_stage_events_touch before update on public.order_stage_events for each row execute function public.touch_updated_at();
+alter table public.order_stage_events enable row level security;
+create policy "order_stage_events: tenant read" on public.order_stage_events for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "order_stage_events: staff write" on public.order_stage_events for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- documents · Document orders: One document the firm owes a client: the SKU bought, what it is, who is on it, which pipeline stage it is in (src/domain/pipeline.ts), whom it is waiting on and since when. The attorney board (L-13), the paralegal queue (S-13), the client's "my orders" (C-11) and the desk lookup (F-14) all read this row; only staff with orders.advance move it (RULE-PIPE-06).
+-- access / rls intent:
+--   · client: read rows where client_user_id = auth.uid(), never notes
+--   · attorney / paralegal: read and write rows of own tenant
+--   · front_desk: read own tenant; write only client_summary / last_client_touch_at
+--   · owner / super_admin: read every tenant
+create table if not exists public.orders (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- Human id shown everywhere, e.g. ORD-2026-0142 (domain orderRef())
+  order_ref text not null,
+  -- The tenant we are doing the work for
+  client_user_id uuid not null,
+  -- The matter it belongs to; null for stand-alone work (a demand letter before any case)
+  case_id uuid references public.cases(id) on delete set null,
+  -- Store SKU as sold (services.sku, e.g. 400); null when ordered off-menu
+  service_sku text,
+  -- The document, e.g. "Answer to Unlawful Detainer Complaint"
+  title text not null,
+  -- Drives the DocPreview kind and whether filing / service stages apply
+  document_kind text not null check (document_kind in ('pleading', 'motion', 'discovery', 'letter', 'form', 'agreement', 'other')),
+  -- Current pipeline stage id (PIPELINE_STAGES)
+  stage text not null check (stage in ('new_order', 'payment_confirmed', 'assigned', 'gathering_client_details', 'details_complete', 'first_draft', 'attorney_review', 'client_review', 'client_requested_changes', 'approved_by_client', 'supervisor_review', 'supervisor_changes', 'final_signed', 'filed_or_scheduled', 'served', 'proof_of_service', 'hearing_scheduled', 'done', 'on_hold', 'cancelled')),
+  -- Denormalised from the stage (RULE-PIPE-02): who must act next
+  waiting_on text not null check (waiting_on in ('client', 'attorney', 'paralegal', 'supervisor', 'court', 'none')),
+  -- When the current stage began; "waiting N days" counts from here
+  stage_entered_at timestamptz not null,
+  -- How many times the draft went back after client or supervisor feedback (0 = first draft still)
+  revision integer not null,
+  -- Attorney of record on the document
+  assigned_attorney_id uuid,
+  -- Paralegal gathering, assembling, filing and serving
+  assigned_paralegal_id uuid,
+  -- Supervising attorney who must review before filing (RULE-PIPE-04)
+  supervisor_id uuid,
+  -- When the deliverable must be in the client's hands
+  due_at timestamptz,
+  -- Court deadline it must be filed by, from the deadline engine when it lands (T-059)
+  filing_due_at timestamptz,
+  -- Court and department as staff write it
+  court text,
+  case_number text,
+  -- rush = short statutory window; emergency = ex parte / same day
+  priority text not null check (priority in ('normal', 'rush', 'emergency')),
+  -- Game-board square the document belongs to (docs/game-board/nodes.json)
+  board_node_id text,
+  -- Drafting template id (drafting module's templates table); text, not a FK, until that schema is stable
+  template_id text,
+  -- Internal notes; never shown to the client (RULE-PIPE-03)
+  notes text,
+  -- Plain-language status line the client and the desk read aloud, in English; pages translate through the stage clientLabel
+  client_summary text,
+  -- Last time the client answered, uploaded, approved or called about this order
+  last_client_touch_at timestamptz
+);
+create index if not exists orders_tenant_idx on public.orders(tenant_id);
+create index if not exists orders_client_user_id_idx on public.orders(client_user_id);
+create index if not exists orders_case_id_idx on public.orders(case_id);
+create index if not exists orders_assigned_attorney_id_idx on public.orders(assigned_attorney_id);
+create index if not exists orders_assigned_paralegal_id_idx on public.orders(assigned_paralegal_id);
+create index if not exists orders_supervisor_id_idx on public.orders(supervisor_id);
+create trigger orders_touch before update on public.orders for each row execute function public.touch_updated_at();
+alter table public.orders enable row level security;
+create policy "orders: tenant read" on public.orders for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "orders: staff write" on public.orders for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
 -- design · Page layouts: Per page code: section order and hidden sections (builder tool layout editor, useLayout).
 -- access / rls intent:
@@ -1036,10 +1302,19 @@ alter table public.board_moves add constraint board_moves_tenant_id_fk foreign k
 alter table public.board_moves add constraint board_moves_moved_by_fk foreign key (moved_by) references public.users(id) on delete set null;
 alter table public.board_node_meta add constraint board_node_meta_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.board_positions add constraint board_positions_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.calls add constraint calls_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.calls add constraint calls_matched_user_id_fk foreign key (matched_user_id) references public.users(id) on delete set null;
+alter table public.calls add constraint calls_handled_by_user_id_fk foreign key (handled_by_user_id) references public.users(id) on delete set null;
+alter table public.canvas_layouts add constraint canvas_layouts_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.canvas_layouts add constraint canvas_layouts_owner_user_id_fk foreign key (owner_user_id) references public.users(id) on delete set null;
 alter table public.cases add constraint cases_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.cases add constraint cases_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
 alter table public.cases add constraint cases_attorney_user_id_fk foreign key (attorney_user_id) references public.users(id) on delete set null;
 alter table public.cases add constraint cases_paralegal_user_id_fk foreign key (paralegal_user_id) references public.users(id) on delete set null;
+alter table public.client_requests add constraint client_requests_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.client_requests add constraint client_requests_order_id_fk foreign key (order_id) references public.orders(id) on delete set null;
+alter table public.client_requests add constraint client_requests_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
+alter table public.client_requests add constraint client_requests_created_by_user_id_fk foreign key (created_by_user_id) references public.users(id) on delete set null;
 alter table public.consultations add constraint consultations_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.consultations add constraint consultations_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
 alter table public.consultations add constraint consultations_attorney_user_id_fk foreign key (attorney_user_id) references public.users(id) on delete set null;
@@ -1049,6 +1324,10 @@ alter table public.documents add constraint documents_tenant_id_fk foreign key (
 alter table public.documents add constraint documents_owner_user_id_fk foreign key (owner_user_id) references public.users(id) on delete set null;
 alter table public.feedback add constraint feedback_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.feedback add constraint feedback_user_id_fk foreign key (user_id) references public.users(id) on delete set null;
+alter table public.follow_ups add constraint follow_ups_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.follow_ups add constraint follow_ups_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
+alter table public.follow_ups add constraint follow_ups_order_id_fk foreign key (order_id) references public.orders(id) on delete set null;
+alter table public.follow_ups add constraint follow_ups_owner_user_id_fk foreign key (owner_user_id) references public.users(id) on delete set null;
 alter table public.illustrations add constraint illustrations_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.intakes add constraint intakes_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.invoices add constraint invoices_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
@@ -1061,6 +1340,14 @@ alter table public.manual_progress add constraint manual_progress_user_id_fk for
 alter table public.meet_confer add constraint meet_confer_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.meet_confer add constraint meet_confer_requested_by_user_id_fk foreign key (requested_by_user_id) references public.users(id) on delete set null;
 alter table public.meet_confer add constraint meet_confer_opposing_user_id_fk foreign key (opposing_user_id) references public.users(id) on delete set null;
+alter table public.order_stage_events add constraint order_stage_events_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.order_stage_events add constraint order_stage_events_order_id_fk foreign key (order_id) references public.orders(id) on delete set null;
+alter table public.order_stage_events add constraint order_stage_events_by_user_id_fk foreign key (by_user_id) references public.users(id) on delete set null;
+alter table public.orders add constraint orders_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.orders add constraint orders_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
+alter table public.orders add constraint orders_assigned_attorney_id_fk foreign key (assigned_attorney_id) references public.users(id) on delete set null;
+alter table public.orders add constraint orders_assigned_paralegal_id_fk foreign key (assigned_paralegal_id) references public.users(id) on delete set null;
+alter table public.orders add constraint orders_supervisor_id_fk foreign key (supervisor_id) references public.users(id) on delete set null;
 alter table public.page_layouts add constraint page_layouts_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.plan_lanes add constraint plan_lanes_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.plan_passes add constraint plan_passes_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;

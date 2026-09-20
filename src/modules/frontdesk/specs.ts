@@ -1,11 +1,14 @@
 import { defineSpec } from '../../specs/defineSpec';
-import { STAFF_ROLES } from '../../auth/roles';
+import type { Role } from '../../auth/roles';
 import { CHECKED } from '../_homes/lib';
+
+/** Who runs the desk (D-048): the front desk itself, plus owner and super admin who oversee every office. Attorneys, paralegals and marketing have their own homes. */
+export const DESK_ROLES: Role[] = ['front_desk', 'owner', 'super_admin'];
 
 export const deskHomeSpec = defineSpec({
   code: 'F-01', name: 'Front desk today', purpose: 'One screen to run the day at an office (and on the wall screen for the whole network): the consultations booked today and this week, the intake queue with what to review and schedule, the calls to return, and what is waiting to be paid.',
   layout: ['PageHeader', 'StatTiles (today, new intakes, unpaid, calls)', 'ConsultationsToday (timeline)', 'ConsultationsThisWeek', 'IntakeQueue (review / schedule)', 'CallsToReturn', 'PaymentsPending', 'QuickActions'],
-  data: ['consultations', 'intakes', 'invoices', 'users', 'tenants', 'cases'], roles: STAFF_ROLES,
+  data: ['consultations', 'intakes', 'invoices', 'users', 'tenants', 'cases'], roles: DESK_ROLES,
   logic: ['Rows are scoped to the signed-in office; owner and super admin see every office (P-02).', 'Today = the consultation’s scheduled_at falls on today; "this week" = the next seven days.', 'Reviewing an intake writes status = reviewed through the provider; scheduling waits for the scheduling pass.', 'Marking a consultation held writes status = held.', 'Consultations are prepaid, time-boxed 30-minute blocks (RULE-INTAKE-01); hotline blocks are $60 per 10 minutes as listed.'],
   integrations: ['Microsoft Teams / phone (consultation channel)', 'VoiceStamps hotline (later)', 'Scheduler (later)', 'Stripe / PayPal (seam)'],
   components: ['PageHeader', 'StatTile', 'Section', 'Card', 'DataTable', 'StatusBadge', 'Badge', 'Chip', 'Button', 'EmptyState', 'Placeholder', 'Tooltip', 'Avatar'],

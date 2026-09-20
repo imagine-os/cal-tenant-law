@@ -1,7 +1,9 @@
 import { defineSpec } from '../../specs/defineSpec';
-import { STAFF_ROLES } from '../../auth/roles';
+import type { Role } from '../../auth/roles';
 
 const CHECKED = [360, 390, 768, 1280, 1920, 2560, 3840];
+/** The plan of the build is a leadership surface (D-048): owner and super admin. The proposal pages (P-02..P-04) embed plan data at build time, so the public never needs these routes. */
+export const PLAN_ROLES: Role[] = ['super_admin', 'owner'];
 const DATA = ['plan_tasks', 'plan_passes', 'plan_lanes'];
 const TICKS = 'Ticks are dependency depth, not calendar days (D-013): tick(t) = 0 without dependencies, else 1 + max(tick(dep)).';
 const CRITICAL = 'Critical path = every task whose depth + forward height equals the plan span (the longest dependency chain).';
@@ -10,7 +12,7 @@ export const kanbanSpec = defineSpec({
   code: 'PM-01', name: 'Plan board',
   purpose: 'The build plan of CTL OS itself as a board: four columns (Backlog, Doing, Blocked, Done), swimlanes by lane or pass, filters, and a move that writes through the data provider so it survives a reload and a second viewer.',
   layout: ['PageHeader + PlanViewNav', 'StatTiles (tasks, done, plan length in ticks, critical path)', 'Filter bar (search, pass, model, lane) + grouping switch', 'Kanban columns with per-column counts', 'TaskDetailDrawer'],
-  data: DATA, roles: STAFF_ROLES,
+  data: DATA, roles: PLAN_ROLES,
   logic: [TICKS, CRITICAL, 'A card is blocked-flagged when any dependency is not done; the flag is recomputed on every status write, never read stale.', 'Moving a card calls DataProvider.update(plan_tasks, id, { status }) and re-derives blocked_by_ids for its dependents.', 'Reset to repo plan re-applies docs/plan/tasks.json over the stored rows.', 'Filters and the selected task live in the query string, so a view is addressable (P-06).'],
   integrations: [], components: ['PageHeader', 'StatTile', 'SearchInput', 'Select', 'SegmentedControl', 'Chip', 'Badge', 'StatusBadge', 'Button', 'Tooltip', 'Drawer', 'DependencyChip', 'EmptyState', 'Icon'],
   actions: [
@@ -29,7 +31,7 @@ export const listSpec = defineSpec({
   code: 'PM-02', name: 'Plan list',
   purpose: 'Every task of the build plan in one sortable, groupable, searchable table, with the dependency ids on the row and a click into the detail.',
   layout: ['PageHeader + PlanViewNav', 'Filter bar + grouping switch', 'DataTable (id, code, title, lane, pass, tick, model, status, size, depends on)', 'TaskDetailDrawer'],
-  data: DATA, roles: STAFF_ROLES,
+  data: DATA, roles: PLAN_ROLES,
   logic: [TICKS, 'Grouping buckets rows inside one table by lane, pass, model or status.', 'Export CSV writes the filtered rows (id, code, title, lane, pass, tick, model, status, size, depends_on).'],
   integrations: [], components: ['PageHeader', 'DataTable', 'SearchInput', 'Select', 'SegmentedControl', 'Chip', 'Badge', 'StatusBadge', 'Button', 'Drawer', 'Icon'],
   actions: [
@@ -46,7 +48,7 @@ export const timelineSpec = defineSpec({
   code: 'PM-03', name: 'Plan timeline',
   purpose: 'The plan laid out on dependency ticks (never calendar days): one row per task inside collapsible lanes, bars sized by S/M/L/XL, dependency lines between them, the critical path lit and "now" at the highest tick that holds a task in progress.',
   layout: ['PageHeader + PlanViewNav', 'Filter bar + zoom + dependency-line toggle', 'Tick axis with the parallel count per tick', 'Lane rows with bars and SVG dependency links', 'Hover / focus detail strip'],
-  data: DATA, roles: STAFF_ROLES,
+  data: DATA, roles: PLAN_ROLES,
   logic: [TICKS, CRITICAL, 'Bar length = SIZE_WEIGHT[size] x column width (relative size, never hours), minimum 44 px.', '"Now" = the highest tick that has a task with status doing.', 'The parallel count per tick is how many filtered tasks share that tick.', 'Zoom 50-250 % with buttons and + / - keys; panning with the trackpad or the arrow keys.'],
   integrations: [], components: ['PageHeader', 'Button', 'Toggle', 'Badge', 'SearchInput', 'Select', 'EmptyState', 'Drawer', 'Icon'],
   actions: [
@@ -64,7 +66,7 @@ export const graphSpec = defineSpec({
   code: 'PM-04', name: 'Dependency graph',
   purpose: 'The dependency graph as an object view: each task is a card-like node identifiable by its lane icon, model tone and status ring, in two switchable layouts (lanes = swimlane per lane and column per tick; radial = passes as rings and lanes as sectors).',
   layout: ['PageHeader + PlanViewNav', 'Filter bar + layout switch + zoom', 'Legend and selection summary', 'SVG canvas (lane bands or pass rings, dependency edges, object nodes)', 'TaskDetailDrawer'],
-  data: DATA, roles: STAFF_ROLES,
+  data: DATA, roles: PLAN_ROLES,
   logic: [TICKS, CRITICAL, 'Lanes layout: y band per lane, x column per tick, tasks sharing a cell stack vertically.', 'Radial layout: ring radius per pass, angular sector per lane, tasks spread evenly inside their sector.', 'Selecting a node highlights every upstream and downstream task (transitive) and dims the rest.', 'Layout maths is written here (no d3 and no new dependency); node geometry scales with the --scale band so 2560 / 3840 stay legible.'],
   integrations: [], components: ['PageHeader', 'SegmentedControl', 'Button', 'Badge', 'SearchInput', 'Select', 'EmptyState', 'Drawer', 'Icon'],
   actions: [
@@ -81,7 +83,7 @@ export const passesSpec = defineSpec({
   code: 'PM-05', name: 'Passes and task detail',
   purpose: 'The passes of the build plan with their goal, gate, progress and the work split per model and per status, and one page per task with every field, its dependencies and dependents as links, its deliverables and its status control.',
   layout: ['PageHeader + PlanViewNav', 'StatTiles', 'One Section per pass (goal, gate, progress, counts by status and model, task list)'],
-  data: DATA, roles: STAFF_ROLES,
+  data: DATA, roles: PLAN_ROLES,
   logic: ['Progress per pass = done tasks / tasks in that pass.', TICKS, 'Opening a pass navigates to the board filtered to it (/plan?pass=n).'],
   integrations: [], components: ['PageHeader', 'Section', 'Card', 'StatTile', 'ProgressBar', 'Badge', 'StatusBadge', 'Button', 'Icon', 'EmptyState'],
   actions: [
@@ -96,7 +98,7 @@ export const taskSpec = defineSpec({
   code: 'PM-05', name: 'Task detail',
   purpose: 'One task of the build plan: lane, pass, tick, size, model, status, dependencies and dependents as links, deliverables with links to the page doc and the page itself, acceptance and notes.',
   layout: ['PageHeader (back, code, open page)', 'Badges (status, model, lane, pass, tick, size)', 'Status control', 'Dependencies and dependents', 'Deliverables, acceptance, notes'],
-  data: DATA, roles: STAFF_ROLES,
+  data: DATA, roles: PLAN_ROLES,
   logic: [TICKS, 'A dependency chip is marked waiting while that task is not done.', 'A deliverable that names a page code with a route in the manifest gets an "open page" link (/#/<route>).', 'The status control writes through DataProvider.update.'],
   integrations: [], components: ['PageHeader', 'Card', 'SegmentedControl', 'DependencyChip', 'Badge', 'Chip', 'StatusBadge', 'Button', 'EmptyState', 'Icon'],
   actions: [

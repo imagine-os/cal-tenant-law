@@ -2,7 +2,8 @@ import { defineSpec } from '../../specs/defineSpec';
 import type { Role } from '../../auth/roles';
 
 /** The law the firm relies on: staff read it; the attorney is the only role that will ever set verified_on. */
-export const LEGAL_ROLES: Role[] = ['super_admin', 'owner', 'attorney', 'paralegal', 'front_desk', 'marketing'];
+/** Legal memory is for the people who practise (D-048): attorneys and paralegals, plus owner and super admin. Front desk and marketing never see it. */
+export const LEGAL_ROLES: Role[] = ['super_admin', 'owner', 'attorney', 'paralegal'];
 const CHECKED = [360, 390, 768, 1280, 1920, 2560, 3840];
 const NOTES = ['legal module (T-049)', 'Mark verified is a Placeholder: the firm\'s attorney sets verified_on in the legal verification workflow (Pass 2).'];
 const BANNER = 'The unverified banner cannot be dismissed while any statute row has verified_on empty (D-019).';

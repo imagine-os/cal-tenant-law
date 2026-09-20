@@ -1,17 +1,16 @@
 import { createElement as h } from 'react';
 import type { RouteDef } from '../../specs/types';
-import { STAFF_ROLES } from '../../auth/roles';
 import { KanbanPage } from './KanbanPage';
 import { ListPage } from './ListPage';
 import { TimelinePage } from './TimelinePage';
 import { GraphPage } from './GraphPage';
 import { PassesPage } from './PassesPage';
 import { TaskPage } from './TaskPage';
-import { kanbanSpec, listSpec, timelineSpec, graphSpec, passesSpec, taskSpec } from './specs';
+import { kanbanSpec, listSpec, timelineSpec, graphSpec, passesSpec, taskSpec, PLAN_ROLES } from './specs';
 export { strings } from './strings';
 
 /** PM viewer (PM-01..PM-05): the build plan of CTL OS itself, read from docs/plan/tasks.json through the data provider. */
-const base = { roles: STAFF_ROLES, surface: 'plan' as const, layout: 'desktop' as const };
+const base = { roles: PLAN_ROLES, surface: 'plan' as const, layout: 'desktop' as const };
 const G = 'plan';
 
 export const routes: RouteDef[] = [

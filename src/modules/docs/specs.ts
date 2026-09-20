@@ -2,7 +2,8 @@ import { defineSpec } from '../../specs/defineSpec';
 import type { Role } from '../../auth/roles';
 
 /** Everyone who works for the firm reads the docs tree; super admin also gets the dev pages it links to. */
-export const DOCS_ROLES: Role[] = ['super_admin', 'owner', 'attorney', 'paralegal', 'front_desk', 'marketing'];
+/** Docs are a staff-leadership surface (D-048): owner and super admin. Everyone else gets the ops manual (M-xx) and, for the legal team, legal memory (K-10..). */
+export const DOCS_ROLES: Role[] = ['super_admin', 'owner'];
 const CHECKED = [360, 390, 768, 1280, 1920, 2560, 3840];
 const NOTES = ['docs module (T-047)'];
 
