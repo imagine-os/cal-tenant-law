@@ -47,7 +47,7 @@ export async function fetchManifest(browser, base, attempts = 3) {
   throw new Error(`could not read the route manifest after ${attempts} attempts: ${last?.message}`);
 }
 
-export const PARAMS = { ':table': 'feedback', ':code': 'D-03', ':id': 'fbk_seed_01', ':caseId': 'case_01', ':lang': 'en', ':slug': '01-front-desk-day', ':sku': '101', '*': '' };
+export const PARAMS = { ':table': 'feedback', ':code': 'D-03', ':id': 'fbk_seed_01', ':caseId': 'case_01', ':orderId': 'ord_0131', ':draftId': 'drf_0131', ':lessonId': 'les_rent_eviction', ':lang': 'en', ':slug': '01-front-desk-day', ':sku': '101', '*': '' };
 /** Per-route overrides where the same param name means something else (a legal topic is not a manual chapter). */
 export const PARAMS_BY_PATH = [[/^\/legal\/topics/, { ':slug': 'unlawful-detainer-procedure' }], [/^\/plan\/task/, { ':id': 'T-050' }]];
 export const fillParams = (path) => {

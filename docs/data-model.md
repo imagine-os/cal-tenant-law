@@ -17,7 +17,7 @@ _Generated from `src/data/schema/*.ts` by `npm run sql`. The TypeScript files ar
 | `demoUsers` + `SessionProvider` | Supabase Auth + `user_roles` |
 | `tenant_id` on every row | JWT claim `tenant_id` + RLS |
 
-## Tables (33)
+## Tables (45)
 
 ### Core & tenants
 
@@ -71,6 +71,33 @@ _Source: foundation_
 **RLS intent:** self: read own row; staff: read users of own tenant; owner / super_admin: write
 
 ### People & staff
+
+#### `attorneys`
+The eight attorneys named on the firm's regional office pages, seeded from docs/data/attorneys.json (live scrape 2026-09-20, evidence `scraped-live`). Public: P-05 renders these as PersonCards and P-01 shows four of them. Nothing here is confirmed by the firm yet (verified = false, D-046); bar numbers are deliberately not stored until a person confirms them.  
+_Source: docs/data/attorneys.json · D-046 · T-133 · P-05_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `slug` | text | URL-safe id from the name ("ken-carlson"); matches the portrait file name |
+| `name` | text | Exactly as the site prints it, including middle initials |
+| `title` | text | As the site prints it ("Founder & Principal Attorney", "Associate Attorney"); never an invented seniority |
+| `office_tenant_id` | uuid, null | -> `tenants` The office (tenant) whose page names them; null when the site names no office |
+| `city` | text, null | City as the office page prints it |
+| `bio_excerpt` | text, null | First sentences of the bio paragraph on the office page |
+| `portrait_path` | text, null | Path under public/ ("brand/people/<slug>.png"), resolved base-relative so it works under GitHub Pages; null when the site has no photo (Jeremy Cook) and the UI falls back to an initials avatar |
+| `portrait_source_url` | text, null | Where the portrait was fetched from |
+| `page_url` | text, null | The caltenantlaw.com office page the row was read from |
+| `verified` | bool | False until the firm confirms the name, title and office; the UI badges every unverified row (D-046) |
+| `evidence` | text, null | How the fact was established: scraped-live |
+| `scraped_at` | timestamptz, null |  |
+| `order_index` | int | Display order; the founder first, then associates in the order the site lists them |
+
+**RLS intent:** everyone: read (the team page is public); owner / super_admin: write; attorney: update own row once real auth lands (T-099)
 
 #### `intakes`
 A caller or web form that is not a client yet: fictional name, what stage they describe, and whether the desk has reviewed or scheduled them. T-063 turns this into the real triage queue.  
@@ -231,6 +258,91 @@ _Source: T-043 / T-046 · superseded by T-066 / T-070_
 
 **RLS intent:** client: read own case documents where kind <> template internals; staff: read and write own tenant; opposing_counsel: read only documents served to them (served_to = opposing)
 
+#### `draft_questions`
+Something the drafter still needs from the client on this draft: a question to answer or an item to upload, with the reason we ask. Picked from the template or written in the studio; sending it creates the client_requests row the client actually sees and records which one, so an answer can be read back and inserted into the draft (RULE-DRAFT-03).  
+_Source: prompt 0006 ("things to ask client, with ability to send the client the questions or requests for items") · D-048 · T-129_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `draft_id` | uuid | -> `drafts`  |
+| `order_id` | uuid | -> `orders` Denormalised so the order detail (L-14) can list what the studio is waiting on without joining drafts |
+| `question` | text | What we ask, in the client's words |
+| `kind` | enum (question \| item) | question = an answer in words; item = a document or photo to upload |
+| `why` | text, null | Why we need it; sent to the client as the request detail |
+| `status` | enum (pending \| sent \| answered \| skipped) | pending (in the studio only) -> sent (a client_requests row exists) -> answered, or skipped |
+| `answer` | text, null | The client's reply, copied back from the client_requests row so it can be inserted into a block |
+| `request_id` | text, null | client_requests.id created when it was sent; text, not a FK, so a cancelled request never deletes the question |
+| `sent_at` | timestamptz, null |  |
+| `answered_at` | timestamptz, null |  |
+
+**RLS intent:** attorney / paralegal: read and write own tenant; client: never reads this table (they see the client_requests row it created); owner / super_admin: read every tenant
+
+#### `drafts`
+One document being written for one order, on California pleading paper: the caption, the editable blocks copied from the template, the resolved variable values, the revision it belongs to and where it is in review. The studio (S-22) edits it; Save, Duplicate as revision, Send for client review and Mark final all write here and, where the pipeline says so, move the order through applyTransition().  
+_Source: prompt 0006 (pleading paper drafting system) · D-018 (browser editor with a pleading-line ruler) · T-129_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `order_id` | uuid | -> `orders` The deliverable this draft is: one order, many revisions |
+| `template_id` | text, null | templates.id the draft was started from (text, not a FK: a template may be retired without orphaning filed work) |
+| `title` | text | Document title as it prints in the caption box |
+| `revision` | int | Matches orders.revision at the time the draft was started; Duplicate as revision writes revision + 1 |
+| `blocks` | json | [{ id, type, text }] - the editable body; the same shape as templates.body_blocks with variables resolved on render |
+| `caption` | json | { court, county, plaintiff, defendant, case_number, title, hearing_date, dept, judge, attorney_block[] } - page one of the pleading |
+| `variables` | json | Resolved values by variable key; a missing required key is what the recommendations panel flags |
+| `status` | enum (editing \| sent_for_client_review \| approved \| final) | editing -> sent_for_client_review -> approved -> final; the order stage is the source of truth, this mirrors it for the studio |
+| `word_count` | int | Recomputed on save; shown in the recommendations panel and used for page-count sanity |
+| `updated_by_user_id` | uuid, null | -> `users` Last person who saved (presence and conflict handling in Pass 3, T-097) |
+
+**RLS intent:** attorney / paralegal: read and write own tenant; client: read only through the client_requests review they were sent, never the blocks table directly; opposing_counsel: never; owner / super_admin: read every tenant
+
+#### `evidence_items`
+One thing in the client's binder: a photo of the mould, the lease PDF, a rent receipt, an imported email or a text thread. Carries where it came from (`source`), when the thing happened (`captured_at`) versus when we received it (`received_at`), a hash of the original bytes, the board square and phase it belongs to, the review status and, once accepted, its exhibit label. Client pages write rows with status `new`; only staff move a row into the binder (RULE-EVID-02).  
+_Source: prompt 0006 (client uploads evidence, connects email and texts) · brief (gathering documents from customers) · RULE-EVID-01..05_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `case_id` | uuid, null | -> `cases` The matter the item belongs to; null while the client has no case row yet |
+| `client_user_id` | uuid | -> `users` Whose binder this is; the client sees only their own rows (RULE-EVID-01) |
+| `order_id` | uuid, null | -> `orders` The document order the item feeds, when it was gathered for one |
+| `request_id` | uuid, null | -> `client_requests` The staff request this answers; C-21 flips that request to received on upload |
+| `source` | enum (upload \| camera \| email \| sms \| whatsapp \| import \| staff) | How it arrived: a file upload, the phone camera, a connected mailbox, an SMS or WhatsApp export, another import, or staff added it |
+| `kind` | enum (photo \| pdf \| document \| email \| text_thread \| audio \| video \| receipt \| other) | What it is; drives the DocPreview kind and the icon on the objects map |
+| `title` | text | What the client or staff call it, e.g. "Mould behind the bathroom wall" |
+| `description` | text, null | The client's own words about what it shows and why it matters |
+| `file_name` | text, null | Original file name as uploaded |
+| `mime` | text, null | Original mime type, e.g. image/jpeg, application/pdf |
+| `size_bytes` | int, null | Size of the original file; null for pasted or imported text |
+| `captured_at` | timestamptz, null | When the thing happened (photo taken, notice served, message sent) - not when we got it |
+| `received_at` | timestamptz | When the binder received it |
+| `sha256` | text, null | Hex digest of the original bytes, computed in the browser at upload (RULE-EVID-04) |
+| `tags` | json, null | Free tags the client or staff add, e.g. ["habitability", "notice"] |
+| `board_node_id` | text, null | Game-board square it belongs to (docs/game-board/nodes.json) |
+| `phase` | text, null | Board phase id (start, quash, demurrer, discovery, trial ...); the binder groups by it |
+| `exhibit_label` | text, null | Exhibit letter once staff accept it into the binder (A, B, C ...); null until then |
+| `status` | enum (new \| reviewed \| in_binder \| rejected) | new (waiting for staff) -> reviewed or in_binder (an exhibit) or rejected with a note |
+| `review_note` | text, null | Why staff rejected it or what the client must send instead |
+| `thumbnail_data_url` | text, null | Small preview data URL (<= 60 KB) for the demo; real file storage is a seam (T-072) |
+| `chain_of_custody` | json, null | Append-only [{ at, by, action }] - received, reviewed, accepted, relabelled, rejected (RULE-EVID-04) |
+| `reviewed_by_user_id` | uuid, null | -> `users` Staff member who accepted or rejected it |
+
+**RLS intent:** client: read rows where client_user_id = auth.uid(); insert own rows with status = new; never write status, exhibit_label, review_note or reviewed_by_user_id (RULE-EVID-01, RULE-EVID-02); attorney / paralegal: read and write rows of own tenant; front_desk: read own tenant (evidence.read), never write; opposing_counsel: never (served exhibits reach them through service_events); owner / super_admin: read every tenant
+
 #### `order_stage_events`
 Append-only history of every stage move on an order: from, to, when, who, an optional note and whom the order waited on afterwards. waitingSince() / daysWaiting() read it; the client timeline on C-11 shows only moves into client-visible stages.  
 _Source: prompt 0006 ("knowing when things are being waited on by the clients") · D-047_
@@ -289,6 +401,32 @@ _Source: prompt 0006 (pipeline for each document) · D-047 · RULE-PIPE-01..06_
 
 **RLS intent:** client: read rows where client_user_id = auth.uid(), never notes; attorney / paralegal: read and write rows of own tenant; front_desk: read own tenant; write only client_summary / last_client_touch_at; owner / super_admin: read every tenant
 
+#### `precedents`
+California landlord-tenant cases the firm cites, shown beside the draft and insertable into a block. Every row is unverified on arrival: the citation, year and holding must be checked against the reporter before the document leaves the studio (RULE-DRAFT-04). Summaries are one cautious sentence, never advice.  
+_Source: prompt 0006 ("relevant laws automatically on the side, precedence") · D-019 (legal memory states what is verified) · T-129_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `title` | text | Case name as cited, e.g. "Green v. Superior Court" |
+| `citation` | text | Full citation as it prints, e.g. "Green v. Superior Court (1974) 10 Cal.3d 616" |
+| `court` | text | Deciding court, e.g. "Cal. Supreme Court", "Cal. Ct. App." |
+| `year` | int |  |
+| `summary` | text | One cautious sentence about what the case is generally cited for; never presented as advice |
+| `holding` | text, null | The point the firm cites it for, in the drafter's words |
+| `tags` | json | Topic tags matching docs/legal/topics/<topic>.md slugs where one exists |
+| `board_node_ids` | json | Game-board squares the case is used at; the side panel matches these against the template |
+| `statute_refs` | json | Statute rows the case construes (docs/legal/statute-index.md citations) |
+| `url` | text, null | Public source if one is recorded; null when none |
+| `verified` | bool | An attorney confirmed the citation, year and holding against the reporter. False everywhere until then (RULE-DRAFT-04) |
+| `note` | text, null | Standing caution, e.g. "verify citation before use" |
+
+**RLS intent:** every signed-in staff member: read (the library is network-wide, tenant_id = ten_network); attorney / owner: write; client / opposing_counsel: never
+
 #### `service_events`
 A document served on someone, with the method and the acknowledgement. The opposing-counsel portal (X-01) acknowledges here; proof of service objects arrive with T-054.  
 _Source: T-046 · superseded by T-054_
@@ -308,6 +446,34 @@ _Source: T-046 · superseded by T-054_
 | `acknowledged_at` | timestamptz, null |  |
 
 **RLS intent:** staff: read and write own tenant; opposing_counsel: read rows where served_to_user_id = auth.uid(), write acknowledged_at on those rows only
+
+#### `templates`
+A reusable skeleton for one document the firm sells or files: the body blocks with {{variables}}, the variables and where each is filled from (case, client, order or typed by hand), the questions to ask the client before it can be finished, a recommendations checklist and the statute citations it leans on. Managed in the product at S-10 (P-07: no loose template files); a draft copies the skeleton, so editing a template never rewrites a document already drafted.  
+_Source: prompt 0006 (drafting system with relevant laws, recommendations, things to ask the client) · D-018 · T-067 / T-129 · RULE-DRAFT-01..05_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `code` | text | Short stable key used in specs, docs and seeds, e.g. TPL-ANSWER-UD |
+| `title` | text | What staff call it; Spanish may be appended in parentheses as the firm writes it |
+| `document_kind` | enum (pleading \| motion \| discovery \| letter \| form \| agreement \| other) | Matches orders.document_kind, so a template can be suggested for an order |
+| `board_node_ids` | json | Game-board squares this document belongs to (docs/game-board/nodes.json); the studio suggests a template from the order's board_node_id |
+| `court_form_ref` | text, null | Judicial Council form this replaces or attaches, e.g. UD-105; null for a pleading typed on pleading paper |
+| `sku` | text, null | Store SKU sold as this document (services.sku); null for work that is not on the menu |
+| `body_blocks` | json | [{ id, type: heading | paragraph | numbered | signature | caption | pagebreak, text with {{variables}} }] in document order |
+| `variables` | json | [{ key, label, type: text | date | select | party | court, source: case | client | order | manual, required, options?, hint? }] |
+| `questions` | json | [{ id, text, why, kind: question | item, required }] - what we ask the client before this can be finished (RULE-DRAFT-03) |
+| `checklist` | json | [{ id, text, rule_ref }] - the recommendations panel for this document |
+| `statute_refs` | json | Citations exactly as docs/legal/statute-index.md writes them, e.g. "CCP §1167" (RULE-DRAFT-02) |
+| `template_version` | int | Bumped on every save at S-10; drafts record which version they were started from. (Named apart from the base `version` optimistic-concurrency column.) |
+| `status` | enum (draft \| published) | draft = only visible at S-10; published = offered when starting a draft |
+| `notes` | text, null | Drafting notes for staff: when to use it, what to watch for |
+
+**RLS intent:** attorney / paralegal: read own tenant and the network templates (tenant_id = ten_network); attorney / owner: write; paralegal: read only; client / opposing_counsel: never
 
 ### Deadlines, hearings & consultations
 
@@ -581,6 +747,53 @@ _Source: prompt 0006 (front desk "nice interface for incoming calls") · D-049 �
 
 **RLS intent:** front_desk / attorney / paralegal: read and write own tenant; client: never (their own calls appear as last_client_touch_at on the order); owner / super_admin: read every tenant
 
+#### `evidence_connections`
+A channel the client connected so we can gather evidence from it: a mailbox (Gmail, Outlook, other IMAP), a phone text-message export, or a WhatsApp export. Consent in plain language is recorded on the row before anything is read (RULE-EVID-05). Real mailbox and SMS providers are a Pass 3 seam (T-072); the demo moves a row to `connected` and imports nothing on its own.  
+_Source: prompt 0006 ("connect their email and text messages") · RULE-EVID-05_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `client_user_id` | uuid | -> `users`  |
+| `channel` | enum (email \| sms \| whatsapp) | What kind of traffic it brings in |
+| `provider` | enum (gmail \| outlook \| imap \| ios_export \| android_export \| whatsapp_export \| manual_paste) | Who or what provides it, including manual_paste for a conversation pasted by hand |
+| `account_label` | text | What the client sees, e.g. "dana.morales@example.test" or "iPhone export" |
+| `status` | enum (not_connected \| pending_consent \| connected \| error) | not_connected -> pending_consent -> connected; error when a sync fails |
+| `consent_at` | timestamptz, null | When the client agreed to the plain-language consent text; null means nothing may be read (RULE-EVID-05) |
+| `consent_text_version` | text, null | Version of the consent wording they agreed to, e.g. consent-2026-09-20 |
+| `last_sync_at` | timestamptz, null |  |
+| `items_imported` | int | How many evidence_items this connection has produced |
+
+**RLS intent:** client: read and write own rows (client_user_id = auth.uid()); attorney / paralegal: read rows of own tenant; never the message bodies beyond the imported items; owner / super_admin: read every tenant; nobody: store credentials here - tokens live in the provider seam, never in this table
+
+#### `evidence_messages`
+The individual emails or text messages behind an imported thread, kept verbatim (RULE-EVID-03) and grouped by thread_id. One evidence_items row of kind email or text_thread represents the thread in the binder; these rows are what the thread viewer on L-31 and the DocPreview text_thread preview read.  
+_Source: prompt 0006 (import email and text messages as evidence) · RULE-EVID-03_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `connection_id` | uuid, null | -> `evidence_connections` Connection that produced it; null for a conversation pasted by hand |
+| `evidence_item_id` | uuid | -> `evidence_items` The thread item this message belongs to |
+| `thread_id` | text | Stable id of the conversation inside the source (or a generated one for a paste) |
+| `direction` | enum (incoming \| outgoing) | incoming = to the client, outgoing = from the client |
+| `from_label` | text | Sender as the source wrote it, e.g. "Sunset Park Manager" or an address |
+| `to_label` | text, null | Recipient as the source wrote it |
+| `sent_at` | timestamptz |  |
+| `subject` | text, null | Email subject; null for texts |
+| `body` | text | The message text, verbatim (RULE-EVID-03) |
+| `has_attachments` | bool | The original carried attachments; the attachments themselves arrive with real storage (T-072) |
+
+**RLS intent:** client: read rows of own evidence items; attorney / paralegal: read and write rows of own tenant; owner / super_admin: read every tenant; nobody updates a body once imported: an import is the original text (RULE-EVID-03)
+
 #### `feedback`
 Comments, requests and bug reports pinned to a page or an element by testers (FeedbackButton). Agents triage from here and record the decision before changing anything (docs/reference/annotations-triage.md).  
 _Source: P-08, D-199/200_
@@ -614,6 +827,91 @@ _Source: P-08, D-199/200_
 **RLS intent:** any signed-in role: insert own rows; author: read own rows; owner / attorney / super_admin: read all, write triage fields
 
 ### Marketing & content
+
+#### `course_lessons`
+One lesson inside one course, in position `order_index`, with the rule that decides whether it is open yet: always, after the previous lesson is done, or once the case reaches one of `stage_node_ids`. A lesson may sit in several courses.  
+_Source: prompt 0006 · RULE-LEARN-03_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `course_id` | uuid | -> `courses`  |
+| `lesson_id` | uuid | -> `lessons`  |
+| `order_index` | int | Position inside the course (D-036) |
+| `required` | bool | Counts towards the course being finished; optional lessons are extra credit |
+| `unlock_rule` | enum (always \| after_previous \| at_stage) | always | after_previous | at_stage |
+| `stage_node_ids` | json, null | Game-board node ids that unlock the lesson when unlock_rule = at_stage |
+
+**RLS intent:** everyone: read rows of a published course; marketing / owner / super_admin: write (A-11 course builder)
+
+#### `courses`
+One package of lessons: the firm's "Winning Your Eviction" series, "The Game Board Series", a topic course cut out of the Legal Videos group, the reading list of free advice articles, or the consultation prep kit. A course is a way to read `lessons`, never a copy of them.  
+_Source: prompt 0006 (LMS) · docs/data/videos.json (D-043) · docs/data/articles.json · C-40 / C-41 / A-11_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `slug` | text | Stable handle used in URLs and by the public site, e.g. winning-your-eviction |
+| `title` | text |  |
+| `subtitle` | text, null | One line under the title on the card |
+| `description` | text, null | What the course is for, in the firm's own terms |
+| `kind` | enum (series \| topic \| reading \| kit) | series = watch in order; topic = pick what applies; reading = articles; kit = what to do before a moment (a consultation) |
+| `cover_illustration_id` | text, null | illustrations.key of the cover image (video:<slug> or article:<slug>) |
+| `order_index` | int | Position in the course list (D-036: never `order`) |
+| `published` | bool | Visible outside the admin builder (A-11 toggles it) |
+| `audience` | enum (client \| public \| staff) | Who the course is built for; the public site (P-06) shows audience = public |
+| `estimated_minutes` | int, null | Sum of the lessons' lengths, stored so a card does not have to join |
+| `teaches_phases` | json, null | Game-board phases the course covers (docs/game-board/nodes.json phases) |
+
+**RLS intent:** everyone: read published rows (the curriculum is free); client: read rows where audience = client or public; marketing / owner / super_admin: write; attorney / paralegal: read every row of own tenant (they assign them)
+
+#### `lesson_assignments`
+An attorney or paralegal telling one client to watch or read something before a moment ("before our consultation on Thursday", "before you answer"), with the reason in plain words and a due date. L-40 writes these; C-40 shows them at the top of the client's learn screen.  
+_Source: prompt 0006 (assign a lesson) · L-40 · RULE-LEARN-04_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `client_user_id` | uuid | -> `users`  |
+| `lesson_id` | uuid, null | -> `lessons` The one lesson assigned; null when the whole course is assigned |
+| `course_id` | uuid, null | -> `courses` The course assigned, or the course the lesson was picked from |
+| `assigned_by_user_id` | uuid | -> `users`  |
+| `reason` | text | Why, in the client's language ("so you know what the hearing looks like") |
+| `due_at` | timestamptz, null | When it should be watched by; usually a consultation or a filing date |
+| `status` | enum (assigned \| started \| done) | assigned | started | done (derived from lesson_progress, stored so the list does not have to join) |
+| `order_id` | text, null | Document order this was assigned for (pipeline `orders.id`); plain text id, not a foreign key, so npm run sql stays valid whichever schema lands first |
+
+**RLS intent:** client: read rows where client_user_id = auth.uid(), update status only; attorney / paralegal: read and write rows of own tenant for their own clients; owner / super_admin: read every tenant
+
+#### `lesson_notes`
+What a person wrote while watching, pinned to the second of the video they were at, so they can come back to it and bring it to the consultation. The client owns their notes; staff never read them (RULE-LEARN-05).  
+_Source: prompt 0006 (notes with the timestamp) · C-42_
+
+| column | type | notes |
+| --- | --- | --- |
+| `id` | uuid | Primary key |
+| `tenant_id` | uuid | -> `tenants` Owning office in the CTL network (multi-tenant); the network itself is ten_network |
+| `created_at` | timestamptz |  |
+| `updated_at` | timestamptz |  |
+| `version` | int | Optimistic-concurrency counter, bumped on every update |
+| `user_id` | uuid | -> `users`  |
+| `lesson_id` | uuid | -> `lessons`  |
+| `body` | text |  |
+| `timestamp_seconds` | int, null | Position in the video when the note was written; null for an article |
+
+**RLS intent:** user: read and write rows where user_id = auth.uid(); staff: never (a client note is private until the client sends it in a message)
 
 #### `lesson_progress`
 What a client has watched and how far. Attorneys check this before a consultation (T-078 / L-40); the player itself is Pass 2.  

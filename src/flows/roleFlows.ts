@@ -5,10 +5,11 @@
  * canvas draws them with the tokens GameBoard already uses (`--board-normal-*`, `--board-positive-*`,
  * `--board-negative-*`; a hand-off uses the jump colour `--board-jump-*`).
  *
- * Codes that exist today use their real paths. Codes being built this pass (L-13, L-14, S-13, C-11, F-12, F-14, F-15,
- * F-13, S-21, C-20, C-21, C-22, C-40, L-31, O-10, O-20, X-10, X-11, F-10, F-11, MK-02) carry `planned: true` and the
- * path the build plan reserves for them; the module that ships the page owns the final path and may correct it here
- * in the same turn (the canvas resolves a node by code first, path second).
+ * Codes that exist today use their real paths. Wave A shipped L-13, L-14, S-13, C-11, F-12, F-14, F-15, F-13, S-21,
+ * S-22, C-20, C-21, C-22, C-40 and L-31 (integration 2026-09-20; PLANNED_PATHS keeps their shipped paths). Codes still
+ * being built (O-10, O-20, X-10, X-11, F-10, F-11, MK-02) carry `planned: true` and the path the build plan reserves
+ * for them; the module that ships the page owns the final path and may correct it here in the same turn (the canvas
+ * resolves a node by code first, path second).
  */
 import type { Role } from '../auth/roles';
 import type { Bi } from '../i18n/types';
@@ -55,11 +56,11 @@ const decision = (id: string, code: string, path: string, en: string, es: string
 const handoff = (id: string, code: string, path: string, toRole: Role, en: string, es: string): FlowNode => ({ id, code, path, label: bi(en, es), kind: 'handoff', toRole });
 const e = (from: string, to: string, kind: FlowEdgeKind = 'normal', label?: [string, string], toRole?: Role): FlowEdge => ({ from, to, kind, ...(label ? { label: bi(label[0], label[1]) } : {}), ...(toRole ? { toRole } : {}) });
 
-/** Reserved paths for the pages being built this pass (see file header). */
+/** Paths for the pages of this pass: shipped ones as built, the rest as the build plan reserves them (see file header). */
 export const PLANNED_PATHS: Record<string, string> = {
   'L-13': '/counsel/pipeline', 'L-14': '/counsel/orders/:orderId', 'S-13': '/assist/queue', 'C-11': '/app/orders', 'F-14': '/desk/orders',
   'F-12': '/desk/calls', 'F-15': '/desk/follow-ups', 'F-13': '/desk/clients', 'F-10': '/desk/intake', 'F-11': '/desk/schedule',
-  'S-21': '/assist/drafting', 'C-20': '/app/binder/map', 'C-21': '/app/requests', 'C-22': '/app/binder/add', 'C-40': '/app/learn/next', 'L-31': '/counsel/binder/:caseId',
+  'S-21': '/assist/drafting', 'S-22': '/assist/drafting/:draftId', 'C-20': '/app/binder', 'C-20-map': '/app/binder/map', 'C-21': '/app/requests', 'C-22': '/app/binder/add', 'C-40': '/app/learn', 'L-31': '/counsel/binder/:caseId',
   'O-10': '/owner/radar', 'O-20': '/owner/revenue', 'X-10': '/opposition/service', 'X-11': '/opposition/meet-confer', 'MK-02': '/marketing/content',
 };
 const P = PLANNED_PATHS;
@@ -69,17 +70,17 @@ export const ROLE_FLOWS: Record<Role, RoleFlow> = {
     role: 'client', title: bi('Client: from finding help to a filed document', 'Cliente: de buscar ayuda a un documento presentado'), entry: 'P-01',
     steps: [
       page('c_site', 'P-01', '/site', 'Find help', 'Buscar ayuda'),
-      page('c_videos', 'C-40', P['C-40'], 'Watch the videos for my stage', 'Ver los videos de mi etapa', true),
+      page('c_videos', 'C-40', P['C-40'], 'Watch the videos for my stage', 'Ver los videos de mi etapa'),
       page('c_services', 'P-10', '/site/services', 'Pick a service by board stage', 'Elegir un servicio por etapa'),
       action('c_buy', 'P-11', '/site/services/:sku', 'Buy the service', 'Comprar el servicio'),
       handoff('c_intake', 'F-10', P['F-10'], 'front_desk', 'Intake with the front desk', 'Admisión con recepción'),
       page('c_home', 'C-01', '/app', 'My case and what is next', 'Mi caso y lo que sigue'),
-      page('c_orders', 'C-11', P['C-11'], 'My orders and their status', 'Mis pedidos y su estado', true),
-      action('c_answer', 'C-21', P['C-21'], 'Answer questions, upload what is asked', 'Responder y subir lo pedido', true),
-      decision('c_review', 'C-11', P['C-11'], 'Review the draft', 'Revisar el borrador', true),
-      action('c_approve', 'C-11', P['C-11'], 'Approve', 'Aprobar', true),
-      action('c_changes', 'C-11', P['C-11'], 'Request changes', 'Pedir cambios', true),
-      page('c_binder', 'C-02', '/app/binder', 'My binder', 'Mi carpeta'),
+      page('c_orders', 'C-11', P['C-11'], 'My orders and their status', 'Mis pedidos y su estado'),
+      action('c_answer', 'C-21', P['C-21'], 'Answer questions, upload what is asked', 'Responder y subir lo pedido'),
+      decision('c_review', 'C-11', P['C-11'], 'Review the draft', 'Revisar el borrador'),
+      action('c_approve', 'C-11', P['C-11'], 'Approve', 'Aprobar'),
+      action('c_changes', 'C-11', P['C-11'], 'Request changes', 'Pedir cambios'),
+      page('c_binder', 'C-20', P['C-20'], 'My binder', 'Mi carpeta'),
       page('c_pay', 'C-04', '/app/pay', 'Pay', 'Pagar'),
     ],
     edges: [
@@ -93,15 +94,15 @@ export const ROLE_FLOWS: Record<Role, RoleFlow> = {
     role: 'front_desk', title: bi('Front desk: a call comes in', 'Recepción: entra una llamada'), entry: 'F-01',
     steps: [
       page('f_home', 'F-01', '/desk', 'Today at the desk', 'Hoy en recepción'),
-      page('f_call', 'F-12', P['F-12'], 'Incoming call', 'Llamada entrante', true),
-      decision('f_match', 'F-12', P['F-12'], 'Known caller?', '¿Cliente conocido?', true),
-      page('f_status', 'F-14', P['F-14'], 'Order status: whose turn, since when', 'Estado del pedido: de quién es el turno', true),
-      action('f_confirm', 'F-14', P['F-14'], 'Confirm who has it and tell the caller', 'Confirmar quién lo tiene y decirlo', true),
-      action('f_followup', 'F-15', P['F-15'], 'Create a follow-up', 'Crear un seguimiento', true),
-      page('f_followups', 'F-15', P['F-15'], 'Follow-ups due', 'Seguimientos pendientes', true),
+      page('f_call', 'F-12', P['F-12'], 'Incoming call', 'Llamada entrante'),
+      decision('f_match', 'F-12', P['F-12'], 'Known caller?', '¿Cliente conocido?'),
+      page('f_status', 'F-14', P['F-14'], 'Order status: whose turn, since when', 'Estado del pedido: de quién es el turno'),
+      action('f_confirm', 'F-14', P['F-14'], 'Confirm who has it and tell the caller', 'Confirmar quién lo tiene y decirlo'),
+      action('f_followup', 'F-15', P['F-15'], 'Create a follow-up', 'Crear un seguimiento'),
+      page('f_followups', 'F-15', P['F-15'], 'Follow-ups due', 'Seguimientos pendientes'),
       action('f_consult', 'F-11', P['F-11'], 'Schedule a consultation', 'Agendar una consulta', true),
       page('f_intake', 'F-10', P['F-10'], 'Intake form', 'Formulario de admisión', true),
-      page('f_clients', 'F-13', P['F-13'], 'Client directory', 'Directorio de clientes', true),
+      page('f_clients', 'F-13', P['F-13'], 'Client directory', 'Directorio de clientes'),
       handoff('f_to_attorney', 'L-13', P['L-13'], 'attorney', 'New order lands on the attorney board', 'El pedido nuevo llega al tablero del abogado'),
     ],
     edges: [
@@ -114,17 +115,17 @@ export const ROLE_FLOWS: Record<Role, RoleFlow> = {
     role: 'attorney', title: bi('Attorney: one document, start to done', 'Abogado: un documento, de inicio a fin'), entry: 'L-01',
     steps: [
       page('l_home', 'L-01', '/counsel', 'Home: late work first', 'Inicio: lo atrasado primero'),
-      page('l_pipeline', 'L-13', P['L-13'], 'Pipeline board', 'Tablero de pedidos', true),
-      page('l_order', 'L-14', P['L-14'], 'Order detail', 'Detalle del pedido', true),
-      page('l_draft', 'S-21', P['S-21'], 'Drafting studio', 'Estudio de redacción', true),
-      action('l_ask', 'L-14', P['L-14'], 'Send questions to the client', 'Enviar preguntas al cliente', true),
+      page('l_pipeline', 'L-13', P['L-13'], 'Pipeline board', 'Tablero de pedidos'),
+      page('l_order', 'L-14', P['L-14'], 'Order detail', 'Detalle del pedido'),
+      page('l_draft', 'S-21', P['S-21'], 'Drafting studio', 'Estudio de redacción'),
+      action('l_ask', 'L-14', P['L-14'], 'Send questions to the client', 'Enviar preguntas al cliente'),
       handoff('l_client_review', 'C-11', P['C-11'], 'client', 'Client reviews the draft', 'El cliente revisa el borrador'),
-      decision('l_client_verdict', 'L-14', P['L-14'], 'Approved?', '¿Aprobado?', true),
+      decision('l_client_verdict', 'L-14', P['L-14'], 'Approved?', '¿Aprobado?'),
       handoff('l_supervisor', 'L-13', P['L-13'], 'owner', 'Supervisor review', 'Revisión del supervisor'),
-      action('l_sign', 'L-14', P['L-14'], 'Sign the final', 'Firmar la versión final', true),
-      action('l_file', 'L-14', P['L-14'], 'File or schedule filing', 'Presentar o programar', true),
+      action('l_sign', 'L-14', P['L-14'], 'Sign the final', 'Firmar la versión final'),
+      action('l_file', 'L-14', P['L-14'], 'File or schedule filing', 'Presentar o programar'),
       handoff('l_serve', 'S-13', P['S-13'], 'paralegal', 'Paralegal serves and files proof', 'El asistente notifica y presenta la prueba'),
-      action('l_done', 'L-14', P['L-14'], 'Done', 'Terminado', true),
+      action('l_done', 'L-14', P['L-14'], 'Done', 'Terminado'),
       page('l_board', 'GB-02', '/board/case/:caseId', 'Where the case is on the board', 'Dónde está el caso en el tablero'),
     ],
     edges: [
@@ -139,14 +140,14 @@ export const ROLE_FLOWS: Record<Role, RoleFlow> = {
     role: 'paralegal', title: bi('Paralegal: gather, assemble, serve, file the proof', 'Asistente: recopilar, armar, notificar, probar'), entry: 'S-01',
     steps: [
       page('s_home', 'S-01', '/assist', 'Home: documents to prepare by stage', 'Inicio: documentos por etapa'),
-      page('s_queue', 'S-13', P['S-13'], 'My queue', 'Mi cola', true),
-      action('s_gather', 'L-14', P['L-14'], 'Gather client details', 'Recopilar datos del cliente', true),
+      page('s_queue', 'S-13', P['S-13'], 'My queue', 'Mi cola'),
+      action('s_gather', 'L-14', P['L-14'], 'Gather client details', 'Recopilar datos del cliente'),
       handoff('s_client', 'C-21', P['C-21'], 'client', 'Client answers and uploads', 'El cliente responde y sube'),
-      action('s_assemble', 'S-21', P['S-21'], 'Assemble from the template', 'Armar desde la plantilla', true),
+      action('s_assemble', 'S-21', P['S-21'], 'Assemble from the template', 'Armar desde la plantilla'),
       handoff('s_attorney', 'L-14', P['L-14'], 'attorney', 'Attorney review', 'Revisión del abogado'),
-      action('s_serve', 'S-13', P['S-13'], 'Serve', 'Notificar', true),
-      action('s_proof', 'S-13', P['S-13'], 'File the proof of service', 'Presentar la prueba de notificación', true),
-      page('s_binder', 'L-31', P['L-31'], 'Binder', 'Carpeta', true),
+      action('s_serve', 'S-13', P['S-13'], 'Serve', 'Notificar'),
+      action('s_proof', 'S-13', P['S-13'], 'File the proof of service', 'Presentar la prueba de notificación'),
+      page('s_binder', 'L-31', P['L-31'], 'Binder', 'Carpeta'),
     ],
     edges: [
       e('s_home', 's_queue'), e('s_queue', 's_gather'), e('s_gather', 's_client', 'handoff', ['requests sent', 'solicitudes enviadas'], 'client'), e('s_client', 's_assemble', 'positive', ['all received', 'todo recibido']),
@@ -158,8 +159,8 @@ export const ROLE_FLOWS: Record<Role, RoleFlow> = {
     steps: [
       page('o_home', 'O-01', '/owner', 'Home', 'Inicio'),
       page('o_radar', 'O-10', P['O-10'], 'Late-work radar', 'Radar de atrasos', true),
-      page('o_pipeline', 'L-13', P['L-13'], 'Pipeline overview, every office', 'Vista de pedidos de todas las oficinas', true),
-      action('o_supervise', 'L-14', P['L-14'], 'Supervisor review', 'Revisión como supervisor', true),
+      page('o_pipeline', 'L-13', P['L-13'], 'Pipeline overview, every office', 'Vista de pedidos de todas las oficinas'),
+      action('o_supervise', 'L-14', P['L-14'], 'Supervisor review', 'Revisión como supervisor'),
       page('o_revenue', 'O-20', P['O-20'], 'Revenue by SKU and stage', 'Ingresos por servicio y etapa', true),
       page('o_plan', 'PM-01', '/plan', 'The build plan', 'El plan de construcción'),
     ],
@@ -192,7 +193,7 @@ export const ROLE_FLOWS: Record<Role, RoleFlow> = {
     role: 'marketing', title: bi('Marketing: site, videos, leads', 'Marketing: sitio, videos, prospectos'), entry: 'MK-01',
     steps: [
       page('m_site', 'P-01', '/site', 'The public site', 'El sitio público'),
-      page('m_videos', 'C-40', P['C-40'], 'The free video library', 'La videoteca gratuita', true),
+      page('m_videos', 'C-40', P['C-40'], 'The free video library', 'La videoteca gratuita'),
       page('m_leads', 'MK-01', '/marketing', 'Leads and funnel', 'Prospectos y embudo', true),
       page('m_content', 'MK-02', P['MK-02'], 'Content calendar', 'Calendario de contenido', true),
       handoff('m_to_desk', 'F-10', P['F-10'], 'front_desk', 'Lead becomes an intake', 'El prospecto pasa a admisión'),
@@ -204,7 +205,7 @@ export const ROLE_FLOWS: Record<Role, RoleFlow> = {
     steps: [
       page('p_site', 'P-01', '/site', 'Landing', 'Inicio'),
       page('p_board', 'GB-01', '/board', 'The eviction game board', 'El tablero del desalojo'),
-      page('p_videos', 'C-40', P['C-40'], 'Free videos', 'Videos gratuitos', true),
+      page('p_videos', 'C-40', P['C-40'], 'Free videos', 'Videos gratuitos'),
       page('p_store', 'P-10', '/site/services', 'Services by stage', 'Servicios por etapa'),
       page('p_how', 'P-12', '/site/how-it-works', 'How it works', 'Cómo funciona'),
       action('p_consult', 'P-11', '/site/services/:sku', 'Book the consultation', 'Reservar la consulta'),

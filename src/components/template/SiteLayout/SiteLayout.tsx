@@ -3,6 +3,7 @@ import { Link, NavLink, useLocation as useRouterLocation } from 'react-router-do
 import { useTheme } from '../../../design/ThemeProvider';
 import { useI18n } from '../../../i18n/I18nProvider';
 import { useTable } from '../../../data/DataContext';
+import { useSession } from '../../../auth/SessionProvider';
 import type { TenantRow } from '../../../data/schema/core';
 import { Button } from '../../atom/Button/Button';
 import { IconButton } from '../../atom/IconButton/IconButton';
@@ -25,6 +26,9 @@ export const SITE_NAV: SiteNavItem[] = [
 export function SiteLayout({ children, nav = SITE_NAV, ctaTo = '/site/consultation', ctaLabel, footerNote }: SiteLayoutProps) {
   const { theme, toggleTheme } = useTheme();
   const { t } = useI18n();
+  const { role } = useSession();
+  /** The client app is for tenants (and the super admin viewing as one); every other visitor gets the free videos instead of a door they cannot open (D-048). */
+  const canOpenApp = role === 'client' || role === 'super_admin';
   const { pathname } = useRouterLocation();
   const [open, setOpen] = useState(false);
   const { rows: offices } = useTable<TenantRow>('tenants', { where: { kind: 'office' }, orderBy: { column: 'sort_order' } });
@@ -57,7 +61,7 @@ export function SiteLayout({ children, nav = SITE_NAV, ctaTo = '/site/consultati
         <div className="container site2-foot-grid">
           <div className="site2-foot-brand"><BrandMark variant="lockup" tone="paper" size={36} name={t('site.brand')} /><p className="site2-foot-line">{t('site.footerLine')}</p><p className="small muted">{t('site.footerLead')}</p><p className="xs faint">{t('site.footerDisclaimer')}</p></div>
           <div className="site2-foot-col"><div className="eyebrow">{t('site.offices')}</div>{offices.map((o) => <span key={o.id} className="small">{o.short_name}{o.city ? ` · ${o.city}` : ''}</span>)}</div>
-          <div className="site2-foot-col"><div className="eyebrow">{t('site.more')}</div><Link to="/board">{t('site.nav.board')}</Link><Link to="/app">{t('site.clientApp')}</Link><Link to="/"><Icon name="key" size={12} /> {t('shell.hub')}</Link></div>
+          <div className="site2-foot-col"><div className="eyebrow">{t('site.more')}</div><Link to="/board">{t('site.nav.board')}</Link>{canOpenApp ? <Link to="/app">{t('site.clientApp')}</Link> : <Link to="/site/videos">{t('site.nav.videos')}</Link>}<Link to="/"><Icon name="key" size={12} /> {t('shell.hub')}</Link></div>
         </div>
         <div className="container site2-foot-legal xs muted"><span>© {new Date().getFullYear()} {t('site.legalName')}</span>{footerNote ?? <span>{t('site.notAdvice')}</span>}</div>
       </footer>

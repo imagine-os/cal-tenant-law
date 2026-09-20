@@ -95,6 +95,53 @@ alter table public.assignments enable row level security;
 create policy "assignments: tenant read" on public.assignments for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "assignments: staff write" on public.assignments for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
+-- people · Attorneys (as published): The eight attorneys named on the firm's regional office pages, seeded from docs/data/attorneys.json (live scrape 2026-09-20, evidence `scraped-live`). Public: P-05 renders these as PersonCards and P-01 shows four of them. Nothing here is confirmed by the firm yet (verified = false, D-046); bar numbers are deliberately not stored until a person confirms them.
+-- access / rls intent:
+--   · everyone: read (the team page is public)
+--   · owner / super_admin: write
+--   · attorney: update own row once real auth lands (T-099)
+create table if not exists public.attorneys (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- URL-safe id from the name ("ken-carlson"); matches the portrait file name
+  slug text not null,
+  -- Exactly as the site prints it, including middle initials
+  name text not null,
+  -- As the site prints it ("Founder & Principal Attorney", "Associate Attorney"); never an invented seniority
+  title text not null,
+  -- The office (tenant) whose page names them; null when the site names no office
+  office_tenant_id uuid,
+  -- City as the office page prints it
+  city text,
+  -- First sentences of the bio paragraph on the office page
+  bio_excerpt text,
+  -- Path under public/ ("brand/people/<slug>.png"), resolved base-relative so it works under GitHub Pages; null when the site has no photo (Jeremy Cook) and the UI falls back to an initials avatar
+  portrait_path text,
+  -- Where the portrait was fetched from
+  portrait_source_url text,
+  -- The caltenantlaw.com office page the row was read from
+  page_url text,
+  -- False until the firm confirms the name, title and office; the UI badges every unverified row (D-046)
+  verified boolean not null default false,
+  -- How the fact was established: scraped-live
+  evidence text,
+  scraped_at timestamptz,
+  -- Display order; the founder first, then associates in the order the site lists them
+  order_index integer not null
+);
+create index if not exists attorneys_tenant_idx on public.attorneys(tenant_id);
+create index if not exists attorneys_office_tenant_id_idx on public.attorneys(office_tenant_id);
+create trigger attorneys_touch before update on public.attorneys for each row execute function public.touch_updated_at();
+alter table public.attorneys enable row level security;
+create policy "attorneys: tenant read" on public.attorneys for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "attorneys: staff write" on public.attorneys for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
 -- board · Board moves: History of every move a case made on the board: which path was taken (the poster's five KEY types), when, by whom and from where. The visited path GB-02 draws is derived from these rows, so the board never keeps history in memory only (P-14).
 -- access / rls intent:
 --   · same as board_positions for the case
@@ -405,6 +452,81 @@ alter table public.consultations enable row level security;
 create policy "consultations: tenant read" on public.consultations for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "consultations: staff write" on public.consultations for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
+-- marketing · Course lessons: One lesson inside one course, in position `order_index`, with the rule that decides whether it is open yet: always, after the previous lesson is done, or once the case reaches one of `stage_node_ids`. A lesson may sit in several courses.
+-- access / rls intent:
+--   · everyone: read rows of a published course
+--   · marketing / owner / super_admin: write (A-11 course builder)
+create table if not exists public.course_lessons (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  course_id uuid not null,
+  lesson_id uuid not null,
+  -- Position inside the course (D-036)
+  order_index integer not null,
+  -- Counts towards the course being finished; optional lessons are extra credit
+  required boolean not null default false,
+  -- always | after_previous | at_stage
+  unlock_rule text not null check (unlock_rule in ('always', 'after_previous', 'at_stage')),
+  -- Game-board node ids that unlock the lesson when unlock_rule = at_stage
+  stage_node_ids jsonb
+);
+create index if not exists course_lessons_tenant_idx on public.course_lessons(tenant_id);
+create index if not exists course_lessons_course_id_idx on public.course_lessons(course_id);
+create index if not exists course_lessons_lesson_id_idx on public.course_lessons(lesson_id);
+create trigger course_lessons_touch before update on public.course_lessons for each row execute function public.touch_updated_at();
+alter table public.course_lessons enable row level security;
+create policy "course_lessons: tenant read" on public.course_lessons for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "course_lessons: staff write" on public.course_lessons for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- marketing · Courses: One package of lessons: the firm's "Winning Your Eviction" series, "The Game Board Series", a topic course cut out of the Legal Videos group, the reading list of free advice articles, or the consultation prep kit. A course is a way to read `lessons`, never a copy of them.
+-- access / rls intent:
+--   · everyone: read published rows (the curriculum is free)
+--   · client: read rows where audience = client or public
+--   · marketing / owner / super_admin: write
+--   · attorney / paralegal: read every row of own tenant (they assign them)
+create table if not exists public.courses (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- Stable handle used in URLs and by the public site, e.g. winning-your-eviction
+  slug text not null,
+  title text not null,
+  -- One line under the title on the card
+  subtitle text,
+  -- What the course is for, in the firm's own terms
+  description text,
+  -- series = watch in order; topic = pick what applies; reading = articles; kit = what to do before a moment (a consultation)
+  kind text not null check (kind in ('series', 'topic', 'reading', 'kit')),
+  -- illustrations.key of the cover image (video:<slug> or article:<slug>)
+  cover_illustration_id text,
+  -- Position in the course list (D-036: never `order`)
+  order_index integer not null,
+  -- Visible outside the admin builder (A-11 toggles it)
+  published boolean not null default false,
+  -- Who the course is built for; the public site (P-06) shows audience = public
+  audience text not null check (audience in ('client', 'public', 'staff')),
+  -- Sum of the lessons' lengths, stored so a card does not have to join
+  estimated_minutes integer,
+  -- Game-board phases the course covers (docs/game-board/nodes.json phases)
+  teaches_phases jsonb
+);
+create index if not exists courses_tenant_idx on public.courses(tenant_id);
+create trigger courses_touch before update on public.courses for each row execute function public.touch_updated_at();
+alter table public.courses enable row level security;
+create policy "courses: tenant read" on public.courses for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "courses: staff write" on public.courses for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
 -- calendar · Deadlines: Dated obligations on a case (response windows, oppositions, discovery cut-offs, hearings). rule_id points at the legal rule the date came from; the real court-day engine is T-059.
 -- access / rls intent:
 --   · client: read deadlines of own cases
@@ -467,6 +589,246 @@ create trigger documents_touch before update on public.documents for each row ex
 alter table public.documents enable row level security;
 create policy "documents: tenant read" on public.documents for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "documents: staff write" on public.documents for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- documents · Draft questions: Something the drafter still needs from the client on this draft: a question to answer or an item to upload, with the reason we ask. Picked from the template or written in the studio; sending it creates the client_requests row the client actually sees and records which one, so an answer can be read back and inserted into the draft (RULE-DRAFT-03).
+-- access / rls intent:
+--   · attorney / paralegal: read and write own tenant
+--   · client: never reads this table (they see the client_requests row it created)
+--   · owner / super_admin: read every tenant
+create table if not exists public.draft_questions (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  draft_id uuid not null,
+  -- Denormalised so the order detail (L-14) can list what the studio is waiting on without joining drafts
+  order_id uuid not null,
+  -- What we ask, in the client's words
+  question text not null,
+  -- question = an answer in words; item = a document or photo to upload
+  kind text not null check (kind in ('question', 'item')),
+  -- Why we need it; sent to the client as the request detail
+  why text,
+  -- pending (in the studio only) -> sent (a client_requests row exists) -> answered, or skipped
+  status text not null check (status in ('pending', 'sent', 'answered', 'skipped')),
+  -- The client's reply, copied back from the client_requests row so it can be inserted into a block
+  answer text,
+  -- client_requests.id created when it was sent; text, not a FK, so a cancelled request never deletes the question
+  request_id text,
+  sent_at timestamptz,
+  answered_at timestamptz
+);
+create index if not exists draft_questions_tenant_idx on public.draft_questions(tenant_id);
+create index if not exists draft_questions_draft_id_idx on public.draft_questions(draft_id);
+create index if not exists draft_questions_order_id_idx on public.draft_questions(order_id);
+create trigger draft_questions_touch before update on public.draft_questions for each row execute function public.touch_updated_at();
+alter table public.draft_questions enable row level security;
+create policy "draft_questions: tenant read" on public.draft_questions for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "draft_questions: staff write" on public.draft_questions for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- documents · Drafts: One document being written for one order, on California pleading paper: the caption, the editable blocks copied from the template, the resolved variable values, the revision it belongs to and where it is in review. The studio (S-22) edits it; Save, Duplicate as revision, Send for client review and Mark final all write here and, where the pipeline says so, move the order through applyTransition().
+-- access / rls intent:
+--   · attorney / paralegal: read and write own tenant
+--   · client: read only through the client_requests review they were sent, never the blocks table directly
+--   · opposing_counsel: never
+--   · owner / super_admin: read every tenant
+create table if not exists public.drafts (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- The deliverable this draft is: one order, many revisions
+  order_id uuid not null,
+  -- templates.id the draft was started from (text, not a FK: a template may be retired without orphaning filed work)
+  template_id text,
+  -- Document title as it prints in the caption box
+  title text not null,
+  -- Matches orders.revision at the time the draft was started; Duplicate as revision writes revision + 1
+  revision integer not null,
+  -- [{ id, type, text }] - the editable body; the same shape as templates.body_blocks with variables resolved on render
+  blocks jsonb not null,
+  -- { court, county, plaintiff, defendant, case_number, title, hearing_date, dept, judge, attorney_block[] } - page one of the pleading
+  caption jsonb not null,
+  -- Resolved values by variable key; a missing required key is what the recommendations panel flags
+  variables jsonb not null,
+  -- editing -> sent_for_client_review -> approved -> final; the order stage is the source of truth, this mirrors it for the studio
+  status text not null check (status in ('editing', 'sent_for_client_review', 'approved', 'final')),
+  -- Recomputed on save; shown in the recommendations panel and used for page-count sanity
+  word_count integer not null,
+  -- Last person who saved (presence and conflict handling in Pass 3, T-097)
+  updated_by_user_id uuid
+);
+create index if not exists drafts_tenant_idx on public.drafts(tenant_id);
+create index if not exists drafts_order_id_idx on public.drafts(order_id);
+create index if not exists drafts_updated_by_user_id_idx on public.drafts(updated_by_user_id);
+create trigger drafts_touch before update on public.drafts for each row execute function public.touch_updated_at();
+alter table public.drafts enable row level security;
+create policy "drafts: tenant read" on public.drafts for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "drafts: staff write" on public.drafts for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- comms · Evidence connections: A channel the client connected so we can gather evidence from it: a mailbox (Gmail, Outlook, other IMAP), a phone text-message export, or a WhatsApp export. Consent in plain language is recorded on the row before anything is read (RULE-EVID-05). Real mailbox and SMS providers are a Pass 3 seam (T-072); the demo moves a row to `connected` and imports nothing on its own.
+-- access / rls intent:
+--   · client: read and write own rows (client_user_id = auth.uid())
+--   · attorney / paralegal: read rows of own tenant; never the message bodies beyond the imported items
+--   · owner / super_admin: read every tenant
+--   · nobody: store credentials here - tokens live in the provider seam, never in this table
+create table if not exists public.evidence_connections (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  client_user_id uuid not null,
+  -- What kind of traffic it brings in
+  channel text not null check (channel in ('email', 'sms', 'whatsapp')),
+  -- Who or what provides it, including manual_paste for a conversation pasted by hand
+  provider text not null check (provider in ('gmail', 'outlook', 'imap', 'ios_export', 'android_export', 'whatsapp_export', 'manual_paste')),
+  -- What the client sees, e.g. "dana.morales@example.test" or "iPhone export"
+  account_label text not null,
+  -- not_connected -> pending_consent -> connected; error when a sync fails
+  status text not null check (status in ('not_connected', 'pending_consent', 'connected', 'error')),
+  -- When the client agreed to the plain-language consent text; null means nothing may be read (RULE-EVID-05)
+  consent_at timestamptz,
+  -- Version of the consent wording they agreed to, e.g. consent-2026-09-20
+  consent_text_version text,
+  last_sync_at timestamptz,
+  -- How many evidence_items this connection has produced
+  items_imported integer not null
+);
+create index if not exists evidence_connections_tenant_idx on public.evidence_connections(tenant_id);
+create index if not exists evidence_connections_client_user_id_idx on public.evidence_connections(client_user_id);
+create trigger evidence_connections_touch before update on public.evidence_connections for each row execute function public.touch_updated_at();
+alter table public.evidence_connections enable row level security;
+create policy "evidence_connections: tenant read" on public.evidence_connections for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "evidence_connections: staff write" on public.evidence_connections for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- documents · Evidence items: One thing in the client's binder: a photo of the mould, the lease PDF, a rent receipt, an imported email or a text thread. Carries where it came from (`source`), when the thing happened (`captured_at`) versus when we received it (`received_at`), a hash of the original bytes, the board square and phase it belongs to, the review status and, once accepted, its exhibit label. Client pages write rows with status `new`; only staff move a row into the binder (RULE-EVID-02).
+-- access / rls intent:
+--   · client: read rows where client_user_id = auth.uid(); insert own rows with status = new; never write status, exhibit_label, review_note or reviewed_by_user_id (RULE-EVID-01, RULE-EVID-02)
+--   · attorney / paralegal: read and write rows of own tenant
+--   · front_desk: read own tenant (evidence.read), never write
+--   · opposing_counsel: never (served exhibits reach them through service_events)
+--   · owner / super_admin: read every tenant
+create table if not exists public.evidence_items (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- The matter the item belongs to; null while the client has no case row yet
+  case_id uuid references public.cases(id) on delete set null,
+  -- Whose binder this is; the client sees only their own rows (RULE-EVID-01)
+  client_user_id uuid not null,
+  -- The document order the item feeds, when it was gathered for one
+  order_id uuid,
+  -- The staff request this answers; C-21 flips that request to received on upload
+  request_id uuid references public.client_requests(id) on delete set null,
+  -- How it arrived: a file upload, the phone camera, a connected mailbox, an SMS or WhatsApp export, another import, or staff added it
+  source text not null check (source in ('upload', 'camera', 'email', 'sms', 'whatsapp', 'import', 'staff')),
+  -- What it is; drives the DocPreview kind and the icon on the objects map
+  kind text not null check (kind in ('photo', 'pdf', 'document', 'email', 'text_thread', 'audio', 'video', 'receipt', 'other')),
+  -- What the client or staff call it, e.g. "Mould behind the bathroom wall"
+  title text not null,
+  -- The client's own words about what it shows and why it matters
+  description text,
+  -- Original file name as uploaded
+  file_name text,
+  -- Original mime type, e.g. image/jpeg, application/pdf
+  mime text,
+  -- Size of the original file; null for pasted or imported text
+  size_bytes integer,
+  -- When the thing happened (photo taken, notice served, message sent) - not when we got it
+  captured_at timestamptz,
+  -- When the binder received it
+  received_at timestamptz not null,
+  -- Hex digest of the original bytes, computed in the browser at upload (RULE-EVID-04)
+  sha256 text,
+  -- Free tags the client or staff add, e.g. ["habitability", "notice"]
+  tags jsonb,
+  -- Game-board square it belongs to (docs/game-board/nodes.json)
+  board_node_id text,
+  -- Board phase id (start, quash, demurrer, discovery, trial ...); the binder groups by it
+  phase text,
+  -- Exhibit letter once staff accept it into the binder (A, B, C ...); null until then
+  exhibit_label text,
+  -- new (waiting for staff) -> reviewed or in_binder (an exhibit) or rejected with a note
+  status text not null check (status in ('new', 'reviewed', 'in_binder', 'rejected')),
+  -- Why staff rejected it or what the client must send instead
+  review_note text,
+  -- Small preview data URL (<= 60 KB) for the demo; real file storage is a seam (T-072)
+  thumbnail_data_url text,
+  -- Append-only [{ at, by, action }] - received, reviewed, accepted, relabelled, rejected (RULE-EVID-04)
+  chain_of_custody jsonb,
+  -- Staff member who accepted or rejected it
+  reviewed_by_user_id uuid
+);
+create index if not exists evidence_items_tenant_idx on public.evidence_items(tenant_id);
+create index if not exists evidence_items_case_id_idx on public.evidence_items(case_id);
+create index if not exists evidence_items_client_user_id_idx on public.evidence_items(client_user_id);
+create index if not exists evidence_items_order_id_idx on public.evidence_items(order_id);
+create index if not exists evidence_items_request_id_idx on public.evidence_items(request_id);
+create index if not exists evidence_items_reviewed_by_user_id_idx on public.evidence_items(reviewed_by_user_id);
+create trigger evidence_items_touch before update on public.evidence_items for each row execute function public.touch_updated_at();
+alter table public.evidence_items enable row level security;
+create policy "evidence_items: tenant read" on public.evidence_items for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "evidence_items: staff write" on public.evidence_items for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- comms · Evidence messages: The individual emails or text messages behind an imported thread, kept verbatim (RULE-EVID-03) and grouped by thread_id. One evidence_items row of kind email or text_thread represents the thread in the binder; these rows are what the thread viewer on L-31 and the DocPreview text_thread preview read.
+-- access / rls intent:
+--   · client: read rows of own evidence items
+--   · attorney / paralegal: read and write rows of own tenant
+--   · owner / super_admin: read every tenant
+--   · nobody updates a body once imported: an import is the original text (RULE-EVID-03)
+create table if not exists public.evidence_messages (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- Connection that produced it; null for a conversation pasted by hand
+  connection_id uuid references public.evidence_connections(id) on delete set null,
+  -- The thread item this message belongs to
+  evidence_item_id uuid not null references public.evidence_items(id) on delete set null,
+  -- Stable id of the conversation inside the source (or a generated one for a paste)
+  thread_id text not null,
+  -- incoming = to the client, outgoing = from the client
+  direction text not null check (direction in ('incoming', 'outgoing')),
+  -- Sender as the source wrote it, e.g. "Sunset Park Manager" or an address
+  from_label text not null,
+  -- Recipient as the source wrote it
+  to_label text,
+  sent_at timestamptz not null,
+  -- Email subject; null for texts
+  subject text,
+  -- The message text, verbatim (RULE-EVID-03)
+  body text not null,
+  -- The original carried attachments; the attachments themselves arrive with real storage (T-072)
+  has_attachments boolean not null default false
+);
+create index if not exists evidence_messages_tenant_idx on public.evidence_messages(tenant_id);
+create index if not exists evidence_messages_connection_id_idx on public.evidence_messages(connection_id);
+create index if not exists evidence_messages_evidence_item_id_idx on public.evidence_messages(evidence_item_id);
+create trigger evidence_messages_touch before update on public.evidence_messages for each row execute function public.touch_updated_at();
+alter table public.evidence_messages enable row level security;
+create policy "evidence_messages: tenant read" on public.evidence_messages for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "evidence_messages: staff write" on public.evidence_messages for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
 -- comms · Feedback & annotations: Comments, requests and bug reports pinned to a page or an element by testers (FeedbackButton). Agents triage from here and record the decision before changing anything (docs/reference/annotations-triage.md).
 -- access / rls intent:
@@ -658,6 +1020,72 @@ create trigger invoices_touch before update on public.invoices for each row exec
 alter table public.invoices enable row level security;
 create policy "invoices: tenant read" on public.invoices for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "invoices: staff write" on public.invoices for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- marketing · Lesson assignments: An attorney or paralegal telling one client to watch or read something before a moment ("before our consultation on Thursday", "before you answer"), with the reason in plain words and a due date. L-40 writes these; C-40 shows them at the top of the client's learn screen.
+-- access / rls intent:
+--   · client: read rows where client_user_id = auth.uid(), update status only
+--   · attorney / paralegal: read and write rows of own tenant for their own clients
+--   · owner / super_admin: read every tenant
+create table if not exists public.lesson_assignments (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  client_user_id uuid not null,
+  -- The one lesson assigned; null when the whole course is assigned
+  lesson_id uuid,
+  -- The course assigned, or the course the lesson was picked from
+  course_id uuid references public.courses(id) on delete set null,
+  assigned_by_user_id uuid not null,
+  -- Why, in the client's language ("so you know what the hearing looks like")
+  reason text not null,
+  -- When it should be watched by; usually a consultation or a filing date
+  due_at timestamptz,
+  -- assigned | started | done (derived from lesson_progress, stored so the list does not have to join)
+  status text not null check (status in ('assigned', 'started', 'done')),
+  -- Document order this was assigned for (pipeline `orders.id`); plain text id, not a foreign key, so npm run sql stays valid whichever schema lands first
+  order_id text
+);
+create index if not exists lesson_assignments_tenant_idx on public.lesson_assignments(tenant_id);
+create index if not exists lesson_assignments_client_user_id_idx on public.lesson_assignments(client_user_id);
+create index if not exists lesson_assignments_lesson_id_idx on public.lesson_assignments(lesson_id);
+create index if not exists lesson_assignments_course_id_idx on public.lesson_assignments(course_id);
+create index if not exists lesson_assignments_assigned_by_user_id_idx on public.lesson_assignments(assigned_by_user_id);
+create trigger lesson_assignments_touch before update on public.lesson_assignments for each row execute function public.touch_updated_at();
+alter table public.lesson_assignments enable row level security;
+create policy "lesson_assignments: tenant read" on public.lesson_assignments for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "lesson_assignments: staff write" on public.lesson_assignments for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
+-- marketing · Lesson notes: What a person wrote while watching, pinned to the second of the video they were at, so they can come back to it and bring it to the consultation. The client owns their notes; staff never read them (RULE-LEARN-05).
+-- access / rls intent:
+--   · user: read and write rows where user_id = auth.uid()
+--   · staff: never (a client note is private until the client sends it in a message)
+create table if not exists public.lesson_notes (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  user_id uuid not null,
+  lesson_id uuid not null,
+  body text not null,
+  -- Position in the video when the note was written; null for an article
+  timestamp_seconds integer
+);
+create index if not exists lesson_notes_tenant_idx on public.lesson_notes(tenant_id);
+create index if not exists lesson_notes_user_id_idx on public.lesson_notes(user_id);
+create index if not exists lesson_notes_lesson_id_idx on public.lesson_notes(lesson_id);
+create trigger lesson_notes_touch before update on public.lesson_notes for each row execute function public.touch_updated_at();
+alter table public.lesson_notes enable row level security;
+create policy "lesson_notes: tenant read" on public.lesson_notes for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "lesson_notes: staff write" on public.lesson_notes for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
 -- marketing · Lesson progress: What a client has watched and how far. Attorneys check this before a consultation (T-078 / L-40); the player itself is Pass 2.
 -- access / rls intent:
@@ -1030,6 +1458,50 @@ alter table public.plan_tasks enable row level security;
 create policy "plan_tasks: tenant read" on public.plan_tasks for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "plan_tasks: staff write" on public.plan_tasks for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
+-- documents · Precedents: California landlord-tenant cases the firm cites, shown beside the draft and insertable into a block. Every row is unverified on arrival: the citation, year and holding must be checked against the reporter before the document leaves the studio (RULE-DRAFT-04). Summaries are one cautious sentence, never advice.
+-- access / rls intent:
+--   · every signed-in staff member: read (the library is network-wide, tenant_id = ten_network)
+--   · attorney / owner: write
+--   · client / opposing_counsel: never
+create table if not exists public.precedents (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- Case name as cited, e.g. "Green v. Superior Court"
+  title text not null,
+  -- Full citation as it prints, e.g. "Green v. Superior Court (1974) 10 Cal.3d 616"
+  citation text not null,
+  -- Deciding court, e.g. "Cal. Supreme Court", "Cal. Ct. App."
+  court text not null,
+  year integer not null,
+  -- One cautious sentence about what the case is generally cited for; never presented as advice
+  summary text not null,
+  -- The point the firm cites it for, in the drafter's words
+  holding text,
+  -- Topic tags matching docs/legal/topics/<topic>.md slugs where one exists
+  tags jsonb not null,
+  -- Game-board squares the case is used at; the side panel matches these against the template
+  board_node_ids jsonb not null,
+  -- Statute rows the case construes (docs/legal/statute-index.md citations)
+  statute_refs jsonb not null,
+  -- Public source if one is recorded; null when none
+  url text,
+  -- An attorney confirmed the citation, year and holding against the reporter. False everywhere until then (RULE-DRAFT-04)
+  verified boolean not null default false,
+  -- Standing caution, e.g. "verify citation before use"
+  note text
+);
+create index if not exists precedents_tenant_idx on public.precedents(tenant_id);
+create trigger precedents_touch before update on public.precedents for each row execute function public.touch_updated_at();
+alter table public.precedents enable row level security;
+create policy "precedents: tenant read" on public.precedents for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "precedents: staff write" on public.precedents for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
 -- system · Presence: Who is on which route right now (multiplayer seam, P-14). One row per user; updated_at is the heartbeat.
 -- access / rls intent:
 --   · signed in: upsert own row
@@ -1229,6 +1701,55 @@ alter table public.services enable row level security;
 create policy "services: tenant read" on public.services for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
 create policy "services: staff write" on public.services for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
 
+-- documents · Document templates: A reusable skeleton for one document the firm sells or files: the body blocks with {{variables}}, the variables and where each is filled from (case, client, order or typed by hand), the questions to ask the client before it can be finished, a recommendations checklist and the statute citations it leans on. Managed in the product at S-10 (P-07: no loose template files); a draft copies the skeleton, so editing a template never rewrites a document already drafted.
+-- access / rls intent:
+--   · attorney / paralegal: read own tenant and the network templates (tenant_id = ten_network)
+--   · attorney / owner: write; paralegal: read only
+--   · client / opposing_counsel: never
+create table if not exists public.templates (
+  -- Primary key
+  id uuid primary key default gen_random_uuid(),
+  -- Owning office in the CTL network (multi-tenant); the network itself is ten_network
+  tenant_id uuid not null,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  -- Optimistic-concurrency counter, bumped on every update
+  version integer not null default 1,
+  -- Short stable key used in specs, docs and seeds, e.g. TPL-ANSWER-UD
+  code text not null,
+  -- What staff call it; Spanish may be appended in parentheses as the firm writes it
+  title text not null,
+  -- Matches orders.document_kind, so a template can be suggested for an order
+  document_kind text not null check (document_kind in ('pleading', 'motion', 'discovery', 'letter', 'form', 'agreement', 'other')),
+  -- Game-board squares this document belongs to (docs/game-board/nodes.json); the studio suggests a template from the order's board_node_id
+  board_node_ids jsonb not null,
+  -- Judicial Council form this replaces or attaches, e.g. UD-105; null for a pleading typed on pleading paper
+  court_form_ref text,
+  -- Store SKU sold as this document (services.sku); null for work that is not on the menu
+  sku text,
+  -- [{ id, type: heading | paragraph | numbered | signature | caption | pagebreak, text with {{variables}} }] in document order
+  body_blocks jsonb not null,
+  -- [{ key, label, type: text | date | select | party | court, source: case | client | order | manual, required, options?, hint? }]
+  variables jsonb not null,
+  -- [{ id, text, why, kind: question | item, required }] - what we ask the client before this can be finished (RULE-DRAFT-03)
+  questions jsonb not null,
+  -- [{ id, text, rule_ref }] - the recommendations panel for this document
+  checklist jsonb not null,
+  -- Citations exactly as docs/legal/statute-index.md writes them, e.g. "CCP §1167" (RULE-DRAFT-02)
+  statute_refs jsonb not null,
+  -- Bumped on every save at S-10; drafts record which version they were started from. (Named apart from the base `version` optimistic-concurrency column.)
+  template_version integer not null,
+  -- draft = only visible at S-10; published = offered when starting a draft
+  status text not null check (status in ('draft', 'published')),
+  -- Drafting notes for staff: when to use it, what to watch for
+  notes text
+);
+create index if not exists templates_tenant_idx on public.templates(tenant_id);
+create trigger templates_touch before update on public.templates for each row execute function public.touch_updated_at();
+alter table public.templates enable row level security;
+create policy "templates: tenant read" on public.templates for select using (tenant_id = public.current_tenant_id() or public.has_role('super_admin') or public.has_role('owner'));
+create policy "templates: staff write" on public.templates for all using (tenant_id = public.current_tenant_id() and (public.has_role('super_admin') or public.has_role('owner') or public.has_role('attorney') or public.has_role('paralegal') or public.has_role('front_desk') or public.has_role('marketing')));
+
 -- core · Tenants (offices): The CTL network and each regional attorney office under the banner. tenant_id on every row points here; the network row is its own tenant.
 -- access / rls intent:
 --   · everyone signed in: read own tenant and the network row
@@ -1298,6 +1819,8 @@ alter table public.actions_log add constraint actions_log_user_id_fk foreign key
 alter table public.assignments add constraint assignments_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.assignments add constraint assignments_case_id_fk foreign key (case_id) references public.cases(id) on delete set null;
 alter table public.assignments add constraint assignments_user_id_fk foreign key (user_id) references public.users(id) on delete set null;
+alter table public.attorneys add constraint attorneys_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.attorneys add constraint attorneys_office_tenant_id_fk foreign key (office_tenant_id) references public.tenants(id) on delete set null;
 alter table public.board_moves add constraint board_moves_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.board_moves add constraint board_moves_moved_by_fk foreign key (moved_by) references public.users(id) on delete set null;
 alter table public.board_node_meta add constraint board_node_meta_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
@@ -1318,10 +1841,27 @@ alter table public.client_requests add constraint client_requests_created_by_use
 alter table public.consultations add constraint consultations_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.consultations add constraint consultations_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
 alter table public.consultations add constraint consultations_attorney_user_id_fk foreign key (attorney_user_id) references public.users(id) on delete set null;
+alter table public.course_lessons add constraint course_lessons_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.course_lessons add constraint course_lessons_course_id_fk foreign key (course_id) references public.courses(id) on delete set null;
+alter table public.course_lessons add constraint course_lessons_lesson_id_fk foreign key (lesson_id) references public.lessons(id) on delete set null;
+alter table public.courses add constraint courses_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.deadlines add constraint deadlines_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.deadlines add constraint deadlines_assigned_user_id_fk foreign key (assigned_user_id) references public.users(id) on delete set null;
 alter table public.documents add constraint documents_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.documents add constraint documents_owner_user_id_fk foreign key (owner_user_id) references public.users(id) on delete set null;
+alter table public.draft_questions add constraint draft_questions_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.draft_questions add constraint draft_questions_draft_id_fk foreign key (draft_id) references public.drafts(id) on delete set null;
+alter table public.draft_questions add constraint draft_questions_order_id_fk foreign key (order_id) references public.orders(id) on delete set null;
+alter table public.drafts add constraint drafts_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.drafts add constraint drafts_order_id_fk foreign key (order_id) references public.orders(id) on delete set null;
+alter table public.drafts add constraint drafts_updated_by_user_id_fk foreign key (updated_by_user_id) references public.users(id) on delete set null;
+alter table public.evidence_connections add constraint evidence_connections_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.evidence_connections add constraint evidence_connections_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
+alter table public.evidence_items add constraint evidence_items_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.evidence_items add constraint evidence_items_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
+alter table public.evidence_items add constraint evidence_items_order_id_fk foreign key (order_id) references public.orders(id) on delete set null;
+alter table public.evidence_items add constraint evidence_items_reviewed_by_user_id_fk foreign key (reviewed_by_user_id) references public.users(id) on delete set null;
+alter table public.evidence_messages add constraint evidence_messages_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.feedback add constraint feedback_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.feedback add constraint feedback_user_id_fk foreign key (user_id) references public.users(id) on delete set null;
 alter table public.follow_ups add constraint follow_ups_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
@@ -1331,6 +1871,13 @@ alter table public.follow_ups add constraint follow_ups_owner_user_id_fk foreign
 alter table public.illustrations add constraint illustrations_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.intakes add constraint intakes_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.invoices add constraint invoices_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.lesson_assignments add constraint lesson_assignments_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.lesson_assignments add constraint lesson_assignments_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
+alter table public.lesson_assignments add constraint lesson_assignments_lesson_id_fk foreign key (lesson_id) references public.lessons(id) on delete set null;
+alter table public.lesson_assignments add constraint lesson_assignments_assigned_by_user_id_fk foreign key (assigned_by_user_id) references public.users(id) on delete set null;
+alter table public.lesson_notes add constraint lesson_notes_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.lesson_notes add constraint lesson_notes_user_id_fk foreign key (user_id) references public.users(id) on delete set null;
+alter table public.lesson_notes add constraint lesson_notes_lesson_id_fk foreign key (lesson_id) references public.lessons(id) on delete set null;
 alter table public.lesson_progress add constraint lesson_progress_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.lesson_progress add constraint lesson_progress_client_user_id_fk foreign key (client_user_id) references public.users(id) on delete set null;
 alter table public.lesson_progress add constraint lesson_progress_lesson_id_fk foreign key (lesson_id) references public.lessons(id) on delete set null;
@@ -1352,12 +1899,14 @@ alter table public.page_layouts add constraint page_layouts_tenant_id_fk foreign
 alter table public.plan_lanes add constraint plan_lanes_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.plan_passes add constraint plan_passes_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.plan_tasks add constraint plan_tasks_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.precedents add constraint precedents_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.presence add constraint presence_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.presence add constraint presence_user_id_fk foreign key (user_id) references public.users(id) on delete set null;
 alter table public.service_categories add constraint service_categories_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.service_events add constraint service_events_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 alter table public.service_events add constraint service_events_served_to_user_id_fk foreign key (served_to_user_id) references public.users(id) on delete set null;
 alter table public.services add constraint services_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
+alter table public.templates add constraint templates_tenant_id_fk foreign key (tenant_id) references public.tenants(id) on delete set null;
 
 -- ---------------------------------------------------------------------------------------------
 -- RLS notes per role (refine per table when the Supabase backend lands; the intent lines above each table are the spec):
