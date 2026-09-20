@@ -1,0 +1,63 @@
+/* LMS pages (C-40, C-41, C-42 in the PhoneShell column; L-40 and A-11 in the staff shell). */
+.lrn-phone { display: flex; flex-direction: column; gap: var(--sp-4); padding: var(--sp-4) var(--sp-4) var(--sp-8); }
+.lrn-phone h1 { font-size: var(--fs-xl); line-height: var(--lh-title); margin: 0; }
+.lrn-overall { flex-direction: row; align-items: center; gap: var(--sp-4); }
+.lrn-list { display: grid; gap: var(--sp-3); }
+.lrn-courses { display: grid; gap: var(--sp-3); grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); }
+.lrn-course-main { display: flex; align-items: center; gap: var(--sp-3); width: 100%; min-height: var(--target-min); background: none; border: 0; padding: 0; text-align: left; color: inherit; cursor: pointer; }
+.lrn-course-main:hover .lrn-course-title, .lrn-course-main:focus-visible .lrn-course-title { text-decoration: underline; }
+.lrn-course-text { display: grid; gap: calc(2px * var(--scale)); min-width: 0; }
+.lrn-course-title { font-weight: var(--fw-semibold); color: var(--color-heading); }
+.lrn-course-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+.lrn-chips { gap: var(--sp-2); }
+.lrn-filters { position: relative; }
+
+/* C-41 journey: a vertical path with a rail */
+.lrn-path { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--sp-4); }
+.lrn-phase { position: relative; padding-left: calc(28px * var(--scale)); }
+.lrn-phase::before { content: ''; position: absolute; left: calc(9px * var(--scale)); top: calc(22px * var(--scale)); bottom: calc(-1 * var(--sp-4));
+  width: calc(2px * var(--scale)); background: var(--color-border); }
+.lrn-phase:last-child::before { display: none; }
+.lrn-dot { position: absolute; left: 0; top: calc(4px * var(--scale)); width: calc(20px * var(--scale)); height: calc(20px * var(--scale));
+  border-radius: 50%; border: calc(2px * var(--scale)) solid var(--color-border-strong); background: var(--color-surface); display: grid; place-items: center; }
+.lrn-phase.is-done .lrn-dot { border-color: var(--color-success); background: var(--color-success); color: #fff; }
+.lrn-phase.is-now .lrn-dot { border-color: var(--color-primary); box-shadow: 0 0 0 calc(4px * var(--scale)) var(--color-primary-bg, transparent); }
+.lrn-phase.is-now { scroll-margin-top: var(--sp-8); }
+.lrn-phase-head { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; margin-bottom: var(--sp-2); }
+.lrn-phase-head h2 { margin: 0; font-size: var(--fs-md); color: var(--color-heading); }
+
+/* C-42 player */
+.lrn-player { display: grid; gap: var(--sp-4); }
+.lrn-note { display: grid; gap: calc(2px * var(--scale)); padding: var(--sp-3); border-radius: var(--r-sm); background: var(--color-surface-2); }
+.lrn-note-time { font-size: var(--fs-xs); font-weight: var(--fw-semibold); color: var(--color-primary-text, var(--color-primary)); font-variant-numeric: tabular-nums; }
+.lrn-note-body { margin: 0; font-size: var(--fs-sm); }
+.lrn-notes { display: grid; gap: var(--sp-2); }
+/* 10-foot (P-01 / P-04): from 1920 up the whole player page steps out of the 430 px phone column and centres on the
+   viewport, so a television shows the video at full width with one row of large controls. The shell's BottomNav stays
+   a centred bar - nothing in src/components or src/app is touched to do this. */
+@media (min-width: 1920px) {
+  .lrn-player {
+    --lrn-wide: min(calc(100vw - 2 * var(--sp-8)), calc(1700px * var(--scale)));
+    width: var(--lrn-wide);
+    margin-left: calc((var(--w-phone-max) - var(--lrn-wide)) / 2);
+    background: var(--color-bg-phone);
+    position: relative;
+    z-index: 1;
+  }
+  .lrn-player .vplayer-controls .btn { min-height: calc(64px * var(--scale)); }
+  /* keep the control row clear of the shell's sticky BottomNav at the first screen */
+  .lrn-player { padding-bottom: calc(var(--h-bottomnav) + var(--sp-8)); padding-top: calc(60px * var(--scale)); }
+  .lrn-player .vplayer-frame { max-height: min(72vh, calc(100vh - 25rem)); }
+  .lrn-player .vplayer { max-width: calc(128vh); margin-inline: auto; width: 100%; }
+}
+
+/* staff pages */
+.lrn-staff { display: grid; gap: var(--sp-5); }
+.lrn-tiles { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.lrn-toolbar { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; }
+.lrn-toolbar .searchinput { flex: 1 1 16rem; }
+.lrn-drawer-section { display: grid; gap: var(--sp-3); margin-bottom: var(--sp-5); }
+.lrn-builder-row { display: grid; gap: var(--sp-2); padding: var(--sp-3); border: 1px solid var(--color-border-card); border-radius: var(--r-sm); background: var(--color-surface); }
+.lrn-builder-head { display: flex; gap: var(--sp-2); align-items: flex-start; justify-content: space-between; }
+.lrn-builder-controls { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.lrn-cell-client { display: flex; align-items: center; gap: var(--sp-2); }

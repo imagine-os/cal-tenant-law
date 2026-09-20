@@ -1,0 +1,31 @@
+.lessoncard { display: grid; gap: var(--sp-2); padding: var(--sp-3); border: 1px solid var(--color-border-card); border-radius: var(--r-md);
+  background: var(--color-surface); box-shadow: var(--shadow-card, var(--shadow-raised)); }
+.lessoncard.is-locked { background: var(--color-surface-2); }
+.lessoncard.is-locked .lessoncard-media, .lessoncard.is-locked .lessoncard-title { opacity: .62; }
+.lessoncard-main { display: flex; gap: var(--sp-3); align-items: flex-start; text-align: left; background: none; border: 0; padding: 0; width: 100%;
+  color: inherit; text-decoration: none; min-height: var(--target-min); border-radius: var(--r-sm); cursor: pointer; }
+.lessoncard-main:disabled { cursor: default; }
+.lessoncard-main:hover .lessoncard-title, .lessoncard-main:focus-visible .lessoncard-title { text-decoration: underline; }
+.lessoncard-media { position: relative; flex: 0 0 auto; width: calc(112px * var(--scale)); aspect-ratio: 16 / 9; border-radius: var(--r-sm);
+  overflow: hidden; background: var(--color-surface-2); display: block; }
+.lessoncard-sm .lessoncard-media { width: calc(84px * var(--scale)); }
+.lessoncard-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.lessoncard-fallback { display: block; width: 100%; height: 100%; }
+.lessoncard-fallback .docp { width: 100%; height: 100%; }
+.lessoncard-bar { position: absolute; left: 0; right: 0; bottom: 0; height: calc(4px * var(--scale)); background: rgba(0,0,0,.35); display: block; }
+.lessoncard-bar > span { display: block; height: 100%; background: var(--color-primary); }
+.lessoncard-badge { position: absolute; top: calc(4px * var(--scale)); left: calc(4px * var(--scale)); }
+.lessoncard-glyph { position: absolute; right: calc(4px * var(--scale)); bottom: calc(6px * var(--scale)); display: grid; place-items: center;
+  width: calc(26px * var(--scale)); height: calc(26px * var(--scale)); border-radius: 50%; background: rgba(0,0,0,.58); color: #fff; }
+.lessoncard-text { min-width: 0; display: grid; gap: calc(2px * var(--scale)); }
+.lessoncard-title { font-weight: var(--fw-semibold); color: var(--color-heading); font-size: var(--fs-sm); line-height: var(--lh-title); }
+.lessoncard-md .lessoncard-title { font-size: var(--fs-md); }
+.lessoncard-sub { font-size: var(--fs-xs); color: var(--color-text-secondary); }
+.lessoncard-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); font-size: var(--fs-xs); color: var(--color-text-muted); }
+.lessoncard-side { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+.lessoncard-note { margin: 0; font-size: var(--fs-xs); color: var(--color-text-secondary); flex: 1 1 12rem; }
+.lessoncard-actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-left: auto; }
+/* tile: picture on top, for the course and "all videos" grids */
+.lessoncard-tile .lessoncard-main { display: grid; gap: var(--sp-2); }
+.lessoncard-tile .lessoncard-media { width: 100%; }
+@media (min-width: 2560px) { .lessoncard { padding: var(--sp-4); } }
