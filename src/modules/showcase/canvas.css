@@ -1,0 +1,151 @@
+/* Canvas (D-21, D-049): a free-form world of browser windows. The world keeps --scale: 1 so it is a fixed design
+   surface the viewer zooms; the page chrome around it scales with the screen band (P-01). Tokens only.
+   (The older .cv-* rules in showcase.css belong to the shelf-packed viewer this page replaces and are now dead;
+   the integrator may drop them when the simulator's half of that file is next touched.) */
+
+.cvx-bar { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-4); align-items: center; }
+.cvx-group { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.cvx-zoom { min-width: 5ch; text-align: center; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--color-text); }
+.cvx-name { min-width: 160px; }
+.cvx-hint { display: flex; flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); align-items: baseline; margin: var(--sp-3) 0; }
+.cvx-hint-btn { background: none; border: 0; padding: 0; color: var(--color-text-muted); font: inherit; text-align: left; cursor: help; text-decoration: underline dotted; }
+.cvx-undo { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; justify-content: space-between; margin-bottom: var(--sp-3); }
+
+/* ---------- the surface ---------- */
+.cvx-stage { position: relative; }
+.cvx-viewport {
+  position: relative;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  height: clamp(360px, calc(100dvh - 30rem), 2200px);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--r-lg);
+  background: var(--color-surface-2);
+  background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
+  background-size: 24px 24px;
+  cursor: grab;
+  touch-action: none;
+}
+.cvx-viewport:focus-visible { outline: var(--focus-ring); outline-offset: 2px; }
+.cvx-viewport.is-busy { cursor: grabbing; }
+.cvx-world { position: absolute; top: 0; left: 0; transform-origin: 0 0; --scale: 1; }
+/* zoomed out (or mid-gesture) the per-window buttons and the address field are too small to hit: they are hidden
+   (and out of the tab order) and their work is done by the toolbar, the keyboard and the inspector drawer instead */
+.cvx-world.is-far .bw-btns, .cvx-world.is-far .bw-url { visibility: hidden; }
+
+/* the window chrome is furniture, not prose: a drag never leaves a text selection behind (the framed pages are separate documents and keep their own selection) */
+.cvx-world .bw-bar, .cvx-world .bw-foot, .cvx-world .cvx-groupbox-label, .cvx-world .fl-node { user-select: none; }
+
+.cvx-groupbox { position: absolute; border: 2px dashed var(--color-border-strong); border-radius: 24px; background: var(--color-surface-tint); }
+.cvx-groupbox-label { position: absolute; top: 24px; left: 32px; display: flex; gap: 16px; align-items: center; font-family: var(--font-display); font-size: 56px; line-height: 1.1; color: var(--color-heading); }
+.cvx-groupbox-count { font-size: 32px; color: var(--color-text-muted); font-family: var(--font-mono); }
+.cvx-empty { position: absolute; top: 0; left: 0; padding: var(--sp-8); }
+
+/* wireframe tile: the window is on the canvas but not live (over the cap, or zoomed out) */
+.cvx-wire {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font: inherit;
+}
+.cvx-wire:hover, .cvx-wire:focus-visible { background: var(--color-surface-tint); color: var(--color-primary-text); }
+.cvx-wire-art { width: 45%; max-height: 50%; opacity: .5; }
+.cvx-wire-title { font-size: 26px; font-family: var(--font-display); color: var(--color-heading); }
+.cvx-wire-cta { font-size: 22px; font-weight: 600; color: var(--color-primary-text); }
+
+/* ---------- legend, minimap, caption (screen space: always legible) ---------- */
+.cvx-legend { position: absolute; right: var(--sp-4); top: var(--sp-4); max-width: min(420px, 45vw); }
+.cvx-mini {
+  position: absolute;
+  left: var(--sp-4);
+  bottom: var(--sp-4);
+  width: clamp(140px, 14vw, 320px);
+  padding: 6px;
+  background: var(--color-surface-overlay);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-lg);
+  cursor: crosshair;
+}
+.cvx-mini-inner { position: relative; width: 100%; background: var(--color-surface-2); border-radius: var(--r-sm); overflow: hidden; }
+.cvx-mini-win { position: absolute; background: var(--color-primary-soft); border: 1px solid var(--color-primary); border-radius: 2px; }
+.cvx-mini-win.is-sel { background: var(--color-cta-soft); border-color: var(--color-cta); }
+.cvx-mini-view { position: absolute; border: 2px solid var(--color-primary-text); background: rgb(0 0 0 / 6%); border-radius: 2px; }
+
+.cvx-caption {
+  position: absolute;
+  left: 50%;
+  bottom: var(--sp-4);
+  transform: translateX(-50%);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-3);
+  align-items: center;
+  max-width: min(1100px, 92%);
+  padding: var(--sp-2) var(--sp-4);
+  background: var(--color-surface-overlay);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--r-pill);
+  box-shadow: var(--shadow-xl);
+  font-size: var(--fs-sm);
+}
+.cvx-caption code { font-family: var(--font-mono); color: var(--color-primary-text); }
+.cvx-caption-btns { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-left: auto; }
+.cvx-foot { margin-top: var(--sp-2); }
+
+/* ---------- drawers ---------- */
+.cvx-drawer { display: flex; flex-direction: column; gap: var(--sp-3); }
+.cvx-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); }
+
+/* ---------- lists (Add / Find, and the page inside a frame) ---------- */
+.cvx-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 4px; }
+.cvx-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+  width: 100%;
+  min-height: var(--target-min);
+  padding: var(--sp-2) var(--sp-3);
+  border: 0;
+  border-radius: var(--r-md);
+  background: var(--color-surface-2);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  font-size: var(--fs-sm);
+}
+.cvx-list-item:hover, .cvx-list-item:focus-visible { background: var(--color-surface-tint); }
+.cvx-list-item code { font-family: var(--font-mono); color: var(--color-primary-text); min-width: 7ch; }
+.cvx-list-name { font-weight: var(--fw-semibold); color: var(--color-heading); }
+
+/* ---------- touch and pen: every control in the chrome is a 44 px target (P-03) ---------- */
+@media (pointer: coarse) {
+  .cvx-bar .btn, .cvx-bar .iconbtn, .cvx-bar .select, .cvx-bar select, .cvx-drawer .btn, .cvx-drawer .iconbtn, .cvx-drawer select, .cvx-caption .btn {
+    min-height: var(--target-min);
+  }
+}
+
+/* ---------- phones: the tools live in a drawer, the surface gets the room ---------- */
+@media (max-width: 700px) {
+  .cvx-viewport { height: clamp(320px, calc(100dvh - 24rem), 900px); }
+  .cvx-legend { position: static; margin-top: var(--sp-3); max-width: none; }
+  .cvx-mini { width: 120px; }
+  .cvx-caption { left: var(--sp-2); right: var(--sp-2); bottom: var(--sp-2); transform: none; max-width: none; border-radius: var(--r-lg); }
+  .cvx-caption-btns { margin-left: 0; }
+  .cvx-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ---------- 2560 / 3840: the chrome scales with the band, the world does not ---------- */
+@media (min-width: 2560px) {
+  .cvx-viewport { height: clamp(900px, calc(100dvh - 34rem), 2400px); }
+  .cvx-mini { width: clamp(280px, 12vw, 520px); }
+}
