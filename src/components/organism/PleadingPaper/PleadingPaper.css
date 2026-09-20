@@ -1,0 +1,146 @@
+/* California pleading paper. The whole component hangs off one number: --pp-line, the height of one of the 28 lines.
+   Every block's height is forced to a whole number of lines (--pp-block-lines), so the numbers printed down the left
+   rail always sit beside the text they number, at any zoom, at any width and on paper. */
+.pp {
+  --pp-zoom: 1;
+  --pp-line: calc(1.5rem * var(--pp-zoom) * var(--scale));
+  --pp-page-pad: calc(var(--pp-line) * 1.2);
+  --pp-rail-w: calc(2.6rem * var(--pp-zoom) * var(--scale));
+  --pp-fs: calc(0.95rem * var(--pp-zoom) * var(--scale));
+  --pp-paper: var(--paper-0);
+  --pp-ink: var(--ink);
+  --pp-rule: var(--n-500);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-6);
+  width: 100%;
+}
+:root[data-theme="dark"] .pp { --pp-paper: var(--n-50); --pp-ink: var(--n-950); --pp-rule: var(--n-600); }
+
+.pp-page {
+  position: relative;
+  display: grid;
+  grid-template-columns: var(--pp-rail-w) 1fr;
+  width: 100%;
+  max-width: calc(8.5in * var(--pp-zoom) * var(--scale));
+  min-height: calc(var(--pp-line) * 28 + var(--pp-page-pad) * 3);
+  padding: var(--pp-page-pad) var(--pp-page-pad) calc(var(--pp-page-pad) * 2);
+  background: var(--pp-paper);
+  color: var(--pp-ink);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--r-xs);
+  box-shadow: var(--shadow-raised);
+  font-family: var(--font-mono);
+  font-size: var(--pp-fs);
+  line-height: var(--pp-line);
+}
+
+/* the 28 numbers and the double left rule / single right rule */
+.pp-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: calc(var(--pp-line) * 0.45);
+  border-right: 1px solid var(--pp-rule);
+  box-shadow: 2px 0 0 -1px var(--pp-rule);
+  color: var(--n-600);
+  font-variant-numeric: tabular-nums;
+  user-select: none;
+}
+.pp-rail-n { height: var(--pp-line); line-height: var(--pp-line); font-size: calc(var(--pp-fs) * 0.8); }
+.pp-body {
+  position: relative;
+  padding-left: calc(var(--pp-line) * 0.8);
+  padding-right: calc(var(--pp-line) * 0.6);
+  border-right: 1px solid var(--pp-rule);
+  min-width: 0;
+}
+
+/* ---- caption (page one) ---------------------------------------------------------------------------------------- */
+.pp-caption { margin-bottom: var(--pp-line); }
+.pp-attorney-line { min-height: var(--pp-line); line-height: var(--pp-line); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pp-court { min-height: calc(var(--pp-line) * 2); line-height: var(--pp-line); padding: calc(var(--pp-line) * 0.5) 0; text-align: center; text-transform: uppercase; font-weight: var(--fw-bold); letter-spacing: var(--ls-eyebrow); font-size: calc(var(--pp-fs) * 0.92); }
+.pp-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--sp-4); border-top: 1px solid var(--pp-rule); border-bottom: 1px solid var(--pp-rule); padding: calc(var(--pp-line) * 0.25) 0; }
+.pp-parties-left { border-right: 1px solid var(--pp-rule); padding-right: var(--sp-3); }
+.pp-parties-right { padding-left: var(--sp-3); }
+.pp-party { line-height: var(--pp-line); text-transform: uppercase; overflow-wrap: anywhere; }
+.pp-party-role, .pp-vs { line-height: var(--pp-line); padding-left: var(--sp-6); }
+.pp-case { line-height: var(--pp-line); font-weight: var(--fw-semibold); overflow-wrap: anywhere; }
+.pp-doctitle { line-height: var(--pp-line); text-transform: uppercase; font-weight: var(--fw-bold); overflow-wrap: anywhere; }
+.pp-hearing { margin: 0; }
+.pp-hearing > div { display: flex; gap: var(--sp-2); line-height: var(--pp-line); }
+.pp-hearing dt { color: var(--n-600); min-width: 4.5em; }
+.pp-hearing dd { margin: 0; }
+
+/* ---- blocks ------------------------------------------------------------------------------------------------------ */
+.pp-block {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 var(--sp-2);
+  min-height: calc(var(--pp-line) * var(--pp-block-lines, 1));
+}
+.pp-num { line-height: var(--pp-line); font-variant-numeric: tabular-nums; }
+.pp-text { grid-column: 2; line-height: var(--pp-line); white-space: pre-wrap; overflow-wrap: anywhere; outline: none; border-radius: var(--r-xs); }
+.pp-block:not(.pp-numbered) .pp-text { grid-column: 1 / -1; }
+.pp-text[contenteditable='true']:hover { background: var(--color-surface-tint); }
+.pp-text[contenteditable='true']:focus-visible, .pp-text[contenteditable='true']:focus { box-shadow: var(--focus-ring); background: var(--color-surface-tint); }
+.pp-block.is-active > .pp-text { background: var(--color-surface-tint); }
+.pp-heading .pp-text { text-transform: uppercase; font-weight: var(--fw-bold); text-align: center; }
+.pp-signature .pp-text { padding-left: 50%; }
+.pp-caption-block .pp-text { text-align: center; }
+.pp-pagebreak { display: none; }
+.pp.is-locked .pp-text { color: var(--n-600); }
+
+/* the per-block toolbar; visible when the block is active (focus), never hover-only (P-03) */
+.pp-toolbar {
+  position: absolute;
+  inset-inline-end: 0;
+  top: calc(var(--pp-line) * -1.4);
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border-card);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-overlay);
+  z-index: 2;
+}
+
+/* ---- footer -------------------------------------------------------------------------------------------------------- */
+.pp-footer {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: space-between;
+  gap: var(--sp-4);
+  margin-top: var(--pp-line);
+  padding-top: calc(var(--pp-line) * 0.3);
+  border-top: 1px solid var(--pp-rule);
+  font-size: calc(var(--pp-fs) * 0.78);
+  color: var(--n-600);
+}
+.pp-footer-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pp-footer-page { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---- phones: the sheet still shows its rail, the page just narrows ------------------------------------------------ */
+@media (max-width: 767px) {
+  .pp { --pp-rail-w: 2rem; --pp-fs: calc(0.8rem * var(--pp-zoom)); --pp-line: calc(1.35rem * var(--pp-zoom)); }
+  .pp-page { padding: var(--sp-3) var(--sp-2) var(--sp-5); box-shadow: none; }
+  .pp-parties { grid-template-columns: 1fr; }
+  .pp-parties-left { border-right: 0; border-bottom: 1px solid var(--pp-rule); padding-bottom: calc(var(--pp-line) * 0.25); }
+  .pp-parties-right { padding-left: 0; padding-top: calc(var(--pp-line) * 0.25); }
+  .pp-signature .pp-text { padding-left: 0; }
+}
+
+/* ---- print: real Letter pages, one per .pp-page, no chrome --------------------------------------------------------- */
+@media print {
+  @page { size: Letter portrait; margin: 0.5in 0.5in 0.5in 0.75in; }
+  :root .pp, :root[data-theme="dark"] .pp { --pp-zoom: 1; --pp-line: 24px; --pp-fs: 12pt; --pp-paper: #fff; --pp-ink: #000; --pp-rule: #000; }
+  .pp { gap: 0; }
+  .pp-rail, .pp-footer, .pp-hearing dt { color: #000; }
+  .pp-page { break-after: page; page-break-after: always; box-shadow: none; border: 0; border-radius: 0; max-width: none; width: 100%; min-height: calc(24px * 28); padding: 0; }
+  .pp-page:last-child { break-after: auto; page-break-after: auto; }
+  .pp-toolbar { display: none !important; }
+  .pp-text { background: none !important; box-shadow: none !important; }
+}

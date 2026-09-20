@@ -1,0 +1,103 @@
+/* Drafting studio (S-21 index, S-22 the studio, S-10 templates). Layout only: every colour is a token. */
+
+/* ---- S-21 ---------------------------------------------------------------------------------------------------- */
+.drf-start { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: var(--sp-5); align-items: start; }
+.drf-tplpick { display: flex; flex-direction: column; gap: var(--sp-2); max-height: 22rem; overflow: auto; padding-right: var(--sp-1); }
+.drf-tplopt { flex: 0 0 auto; display: flex; gap: var(--sp-3); align-items: center; width: 100%; min-height: var(--target-min); padding: var(--sp-3); text-align: left; background: var(--color-surface); border: 1px solid var(--color-border-card); border-radius: var(--r-card); cursor: pointer; }
+.drf-tplopt:hover { background: var(--color-surface-tint); }
+.drf-tplopt:focus-visible { box-shadow: var(--focus-ring); outline: none; }
+.drf-tplopt.is-selected { border-color: var(--color-border-primary); background: var(--color-primary-soft); }
+.drf-tplopt-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.drf-tplopt-title { font-weight: var(--fw-semibold); }
+.drf-groupLabel { margin: var(--sp-2) 0 0; font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-text-muted); }
+.drf-cell { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; }
+.drf-cell-title { display: flex; flex-direction: column; min-width: 0; }
+
+/* ---- S-22: three panes, tabs on a phone ---------------------------------------------------------------------- */
+.drf-studio { display: grid; gap: var(--sp-4); grid-template-columns: minmax(15rem, 19rem) minmax(0, 1fr) minmax(18rem, 23rem); align-items: start; }
+/* 10-foot / 4K-monitor band: the sheet and both panes grow with --scale instead of leaving the width as whitespace */
+@media (min-width: 2560px) { .drf-studio { grid-template-columns: minmax(20rem, 26rem) minmax(0, 1fr) minmax(24rem, 32rem); gap: var(--sp-6); } }
+@media (min-width: 3840px) { .drf-studio { grid-template-columns: minmax(26rem, 34rem) minmax(0, 1fr) minmax(30rem, 40rem); } }
+.drf-pane { min-width: 0; }
+.drf-pane-left, .drf-pane-right { position: sticky; top: var(--sp-4); max-height: calc(100vh - var(--sp-12)); overflow: auto; display: flex; flex-direction: column; gap: var(--sp-4); }
+.drf-pane-centre { min-width: 0; }
+.drf-toolbar { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+.drf-toolbar .drf-spacer { flex: 1 1 auto; }
+.drf-outline { display: flex; flex-direction: column; gap: 2px; }
+.drf-outline-item { display: flex; gap: var(--sp-2); align-items: baseline; width: 100%; min-height: 36px; padding: var(--sp-2); text-align: left; background: none; border: 0; border-radius: var(--r-sm); color: inherit; cursor: pointer; font: inherit; }
+.drf-outline-item:hover { background: var(--color-surface-tint); }
+.drf-outline-item:focus-visible { box-shadow: var(--focus-ring); outline: none; }
+.drf-outline-item.is-active { background: var(--color-primary-soft); }
+.drf-outline-kind { flex: 0 0 auto; font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-text-muted); min-width: 4.5em; }
+.drf-outline-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.drf-vars { display: flex; flex-direction: column; gap: var(--sp-3); }
+.drf-var.is-missing .field-label { color: var(--color-danger); font-weight: var(--fw-semibold); }
+.drf-var.is-missing .input, .drf-var.is-missing .select { border-color: var(--color-danger); }
+
+/* the right panel */
+.drf-panel { display: flex; flex-direction: column; gap: var(--sp-3); }
+.drf-panel-body { display: flex; flex-direction: column; gap: var(--sp-3); }
+.drf-law { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-3); border: 1px solid var(--color-border-card); border-radius: var(--r-card); background: var(--color-surface); }
+.drf-law-head { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; justify-content: space-between; }
+.drf-cite { font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: var(--fw-semibold); }
+.drf-law-rule { font-size: var(--fs-xs); color: var(--color-text-secondary); }
+.drf-law-actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.drf-rec { display: flex; gap: var(--sp-2); align-items: flex-start; padding: var(--sp-2) var(--sp-3); border-left: 3px solid var(--color-border); border-radius: 0 var(--r-sm) var(--r-sm) 0; background: var(--color-surface-tint); font-size: var(--fs-xs); }
+.drf-rec.tone-danger { border-left-color: var(--color-danger); background: var(--color-danger-bg); }
+.drf-rec.tone-warn { border-left-color: var(--color-warn); background: var(--color-warn-bg); }
+.drf-rec.tone-success { border-left-color: var(--color-success); background: var(--color-success-bg); }
+.drf-rec.tone-info { border-left-color: var(--color-info); background: var(--color-info-bg); }
+.drf-q { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-3); border: 1px solid var(--color-border-card); border-radius: var(--r-card); background: var(--color-surface); }
+.drf-q-why { font-size: var(--fs-2xs); color: var(--color-text-muted); }
+.drf-q-answer { padding: var(--sp-2); border-radius: var(--r-sm); background: var(--color-success-bg); font-size: var(--fs-xs); }
+.drf-kv { display: grid; grid-template-columns: minmax(6rem, auto) 1fr; gap: var(--sp-1) var(--sp-3); margin: 0; font-size: var(--fs-xs); }
+.drf-kv dt { color: var(--color-text-muted); }
+.drf-kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+.drf-tabsWrap { position: sticky; top: 0; z-index: 1; background: var(--color-bg); padding-bottom: var(--sp-2); }
+
+/* Below 1600 the three panes do not all fit beside a Letter sheet, so they become tabs (P-03: every pane is one
+   keyboard-reachable control away, never hidden behind a pointer gesture).
+   1024-1599: the sheet keeps the width with the research panel beside it; the outline and the blanks are one tab away.
+   Under 1024: one pane at a time. */
+.drf-mobileTabs { display: none; }
+@media (max-width: 1599px) {
+  .drf-studio { grid-template-columns: minmax(0, 1fr) minmax(17rem, 21rem); }
+  .drf-pane-left { position: static; max-height: none; }
+  .drf-mobileTabs { display: block; }
+  .drf-studio.mode-document .drf-pane-left { display: none; }
+  .drf-studio.mode-outline .drf-pane-centre, .drf-studio.mode-outline .drf-pane-right { display: none; }
+  .drf-studio.mode-outline .drf-pane-left { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; align-items: start; }
+  .drf-studio.mode-outline .drf-pane-left > * { flex: 1 1 20rem; min-width: 0; }
+  .drf-studio.mode-panel .drf-pane-left, .drf-studio.mode-panel .drf-pane-centre { display: none; }
+  .drf-studio.mode-panel .drf-pane-right { grid-column: 1 / -1; }
+}
+@media (max-width: 1023px) {
+  .drf-studio { grid-template-columns: minmax(0, 1fr); }
+  .drf-pane-right { position: static; max-height: none; }
+  .drf-studio.mode-document .drf-pane-right { display: none; }
+}
+@media (max-width: 767px) {
+  .drf-start { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---- S-10 ------------------------------------------------------------------------------------------------------ */
+.drf-tpl-editor { display: flex; flex-direction: column; gap: var(--sp-4); }
+.drf-tpl-row { display: flex; gap: var(--sp-2); align-items: flex-start; padding: var(--sp-3); border: 1px solid var(--color-border-card); border-radius: var(--r-card); background: var(--color-surface); }
+.drf-tpl-row .grow { min-width: 0; }
+.drf-tpl-rowActions { display: flex; flex-direction: column; gap: 2px; }
+.drf-tpl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr)); gap: var(--sp-3); }
+.drf-tpl-list { display: flex; flex-direction: column; gap: var(--sp-2); }
+.drf-preview { max-height: 70vh; overflow: auto; padding: var(--sp-3); background: var(--color-surface-tint); border-radius: var(--r-card); }
+
+/* ---- print: only the sheet -------------------------------------------------------------------------------------
+   Everything else in the app is hidden rather than display:none'd, so the sheet keeps its own layout. Scoped with
+   :has() so the rule fires only while a pleading sheet is on the page (every module's print rule is scoped the same
+   way since the 2026-09-20 integration; nothing here needs !important any more). */
+@media print {
+  body:has(.pp) * { visibility: hidden; }
+  body:has(.pp) .pp, body:has(.pp) .pp * { visibility: visible; }
+  body:has(.pp) .pp { position: absolute; left: 0; right: 0; top: 0; }
+  .drf-pane-left, .drf-pane-right, .drf-toolbar, .drf-mobileTabs { display: none !important; }
+  .drf-studio { display: block; }
+  .page { padding: 0 !important; }
+}
