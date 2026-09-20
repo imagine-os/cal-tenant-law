@@ -24,21 +24,6 @@ export const clientHomeSpec = defineSpec({
   checkedAt: CHECKED, tone: 'home', notes: [...NOTES, 'Upload and messages are Placeholders (Pass 2 discovery gathering / comms); paying is a Placeholder while payments are a seam.'],
 });
 
-export const clientBinderSpec = defineSpec({
-  code: 'C-02', name: 'Client binder', purpose: 'Every paper on the tenant’s case in one place, grouped by the board square it belongs to, so nothing is hunted for in an inbox: what we filed, what was served, the evidence and what the tenant uploaded.',
-  layout: ['PageHeader', 'StageFilter (chips)', 'DocumentGroups (by board square)', 'UploadCard'],
-  data: ['cases', 'documents'], roles: ROLES,
-  logic: ['Documents of my case grouped by stage_node_id, ordered by the board phase.', 'Status badges use the shared vocabulary (draft, review, filed, served).', 'The stage chips filter in place; the selected square stays in component state (URL state arrives with the board pass).'],
-  integrations: ['File storage (later)'], components: ['PageHeader', 'Card', 'Chip', 'StatusBadge', 'Badge', 'EmptyState', 'Placeholder', 'Icon'],
-  actions: [
-    { id: 'client.filterBinderStage', label: 'Filter by square', intent: 'show only the documents of one board square', params: { stageNodeId: 'string' } },
-    { id: 'client.openDocument', label: 'Open document', intent: 'open one of my documents', permission: 'documents.read_own', params: { id: 'id' } },
-    { id: 'client.uploadDocument', label: 'Add a document', intent: 'add a document or photo to my binder' },
-  ],
-  rules: ['RULE-UD-01'], states: ['all squares', 'filtered', 'empty binder', 'Spanish'], checkedAt: CHECKED, tone: 'list',
-  notes: [...NOTES, 'Opening a document and uploading are Placeholders until the binder pass (T-070) and discovery gathering land.'],
-});
-
 export const clientLearnSpec = defineSpec({
   code: 'C-03', name: 'Client learning', purpose: 'The firm’s free curriculum as a path: the videos in order, what the tenant has already watched, and which one matters at their square of the board right now.',
   layout: ['PageHeader', 'Progress (watched / total, hours of video)', 'NextUp (thumbnail, group, length, play / YouTube / mark watched)', 'GroupSections (Legal Videos, Winning Your Eviction Series, The Game Board Series, embedded only) with a row per lesson (thumbnail, length, square, progress)'],

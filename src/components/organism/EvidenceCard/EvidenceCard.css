@@ -1,0 +1,31 @@
+/* EvidenceCard: one object in the binder. Tokens only; the whole card is the target when it opens something. */
+.evc {
+  display: flex; flex-direction: column; gap: var(--sp-2);
+  padding: var(--sp-3); border: 1px solid var(--color-border-card); border-radius: var(--r-card);
+  background: var(--color-surface); min-width: 0;
+}
+.evc.is-selected { border-color: var(--color-primary); box-shadow: var(--shadow-sm); }
+.evc.is-attention { border-color: var(--color-danger); }
+
+.evc-hit {
+  display: flex; gap: var(--sp-3); align-items: flex-start; text-align: left; min-width: 0;
+  min-height: var(--target-min); width: 100%;
+  padding: 0; margin: 0; border: 0; background: none; color: inherit; font: inherit; border-radius: var(--r-md);
+}
+button.evc-hit { cursor: pointer; }
+button.evc-hit:hover .evc-title { text-decoration: underline; }
+button.evc-hit:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+.evc-art { flex: none; display: inline-flex; }
+/* the card prints the title itself, so the preview's own caption would say it twice */
+.evc-art .docp-caption { display: none; }
+.evc-main { display: flex; flex-direction: column; gap: var(--sp-1); min-width: 0; flex: 1; }
+.evc-title { font-weight: var(--fw-semibold); color: var(--color-heading); line-height: var(--lh-sm); overflow-wrap: anywhere; }
+.evc-sub { font-size: var(--fs-xs); color: var(--color-text-muted); }
+.evc-badges { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; margin-top: var(--sp-1); }
+.evc-tags { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.evc-foot { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.evc-foot > * { min-height: var(--target-min); }
+
+/* On a wall screen the tile gets more room for the drawing, not more whitespace. */
+@media (min-width: 2560px) { .evc { padding: var(--sp-4); } }
