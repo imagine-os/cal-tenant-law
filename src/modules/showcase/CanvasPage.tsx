@@ -725,7 +725,7 @@ export function CanvasPage() {
   /* ---------- inside a frame: the list, never a canvas in a canvas ---------- */
   if (framed) {
     return (
-      <div className="page cvx">
+      <div className="page cvx page-bleed">
         <PageHeader title={t('canvas.title')} code={canvasSpec.code} subtitle={t('canvas.subtitle')} />
         <Card padding="lg">
           <p className="muted small">{t('showcase.framed')}</p>
@@ -747,7 +747,7 @@ export function CanvasPage() {
   }
 
   const zoomGroup = (
-    <div className="cvx-group" role="group" aria-label={t('canvas.zoomGroup')}>
+    <div className="cvx-group" role="group" aria-label={t('canvas.zoomGroup')} data-label={t('canvas.zoomGroup')}>
       <IconButton icon="minus" label={t('canvas.zoomOut')} variant="outline" onClick={() => setZoom(view.zoom / 1.25)} disabled={view.zoom <= MIN_ZOOM} />
       <output className="cvx-zoom">{Math.round(view.zoom * 100)} %</output>
       <IconButton icon="plus" label={t('canvas.zoomIn')} variant="outline" onClick={() => setZoom(view.zoom * 1.25)} disabled={view.zoom >= MAX_ZOOM} />
@@ -759,7 +759,7 @@ export function CanvasPage() {
   );
 
   const editGroup = (
-    <div className="cvx-group">
+    <div className="cvx-group" role="group" aria-label={t('canvas.preset')} data-label={t('canvas.preset')}>
       <Select size="sm" aria-label={t('canvas.preset')} value={preset === 'custom' ? '' : preset}
         options={[{ value: '', label: t('canvas.presetCustom'), disabled: true }, { value: 'surface', label: t('canvas.presetSurface') }, { value: 'role', label: t('canvas.presetRole') }, { value: 'pipeline', label: t('canvas.presetPipeline') }]}
         onChange={(e) => { const v = e.target.value as PresetName; if (v && !applyPreset(v)) toast({ tone: 'warn', title: t('canvas.msgNoPipeline') }); }} />
@@ -770,7 +770,7 @@ export function CanvasPage() {
   );
 
   const flowGroup = (
-    <div className="cvx-group">
+    <div className="cvx-group" role="group" aria-label={t('canvas.showFlows')} data-label={t('canvas.showFlows')}>
       <Toggle size="sm" checked={flows} onChange={(v) => { setFlows(v); if (!v) setWalk(null); }} label={t('canvas.showFlows')} />
       <Select size="sm" aria-label={t('canvas.flowRole')} value={flowRole} options={roleOptions}
         onChange={(e) => { setFlowRole(e.target.value as Role); setWalk(null); }} />
@@ -780,7 +780,7 @@ export function CanvasPage() {
   );
 
   const frameGroup = (
-    <div className="cvx-group">
+    <div className="cvx-group" role="group" aria-label={t('canvas.liveFrames')} data-label={t('canvas.liveFrames')}>
       <Select size="sm" aria-label={t('canvas.liveFrames')} value={String(cap)} options={CAPS.map((c) => ({ value: String(c), label: t('canvas.capOption', { n: String(c) }) }))}
         onChange={(e) => setCap(Number(e.target.value))} />
       <Select size="sm" aria-label={t('showcase.lang')} value={frameLang}
@@ -791,7 +791,7 @@ export function CanvasPage() {
   );
 
   const layoutGroup = (
-    <div className="cvx-group">
+    <div className="cvx-group" role="group" aria-label={t('canvas.layouts')} data-label={t('canvas.layouts')}>
       <Select size="sm" aria-label={t('canvas.layouts')} value={layoutId ?? ''}
         options={[{ value: '', label: t('canvas.noLayout') }, ...myLayouts.map((r) => ({ value: r.id, label: r.name }))]}
         onChange={(e) => { if (e.target.value) loadLayout(e.target.value); else { setLayoutId(null); setLayoutName(''); } }} />
@@ -807,7 +807,7 @@ export function CanvasPage() {
   );
 
   return (
-    <div className="page cvx">
+    <div className="page cvx page-bleed">
       <PageHeader title={t('canvas.title')} code={canvasSpec.code} subtitle={t('canvas.subtitle')}
         actions={<Badge tone="primary">{t('canvas.live', { n: String(liveIds.size), total: String(shown.length) })}</Badge>}>
         <div className="cvx-bar">{narrow ? zoomGroup : <>{zoomGroup}{editGroup}{flowGroup}</>}</div>

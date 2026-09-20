@@ -18,8 +18,8 @@ export interface DemoUser {
 export const demoUsers: DemoUser[] = [
   { id: 'usr_super', role: 'super_admin', name: 'Sam Okafor', initials: 'SO', email: 'sam@demo.ctl.test', blurb: 'Sees everything, including the builder tool and dev pages.', tenantId: null },
   { id: 'usr_owner', role: 'owner', name: 'Harriet Vale', initials: 'HV', email: 'harriet@demo.ctl.test', blurb: 'Principal attorney and owner: the whole network, KPIs, settings, rules.', tenantId: 'ten_inland' },
-  { id: 'usr_attorney', role: 'attorney', name: 'Mateo Ruiz', initials: 'MR', email: 'mateo@demo.ctl.test', blurb: 'Regional attorney (Downtown LA office): cases, hearings, filings, opposing counsel.', tenantId: 'ten_dtla' },
-  { id: 'usr_paralegal', role: 'paralegal', name: 'Nia Bennett', initials: 'NB', email: 'nia@demo.ctl.test', blurb: 'Paralegal: drafts, deadlines, discovery, document assembly.', tenantId: 'ten_dtla' },
+  { id: 'usr_attorney', role: 'attorney', name: 'Mateo Ruiz', initials: 'MR', email: 'mateo@demo.ctl.test', blurb: 'Regional attorney (Riverside office): cases, hearings, filings, opposing counsel.', tenantId: 'ten_inland' },
+  { id: 'usr_paralegal', role: 'paralegal', name: 'Nia Bennett', initials: 'NB', email: 'nia@demo.ctl.test', blurb: 'Paralegal (Riverside office): drafts, deadlines, discovery, document assembly.', tenantId: 'ten_inland' },
   { id: 'usr_desk', role: 'front_desk', name: 'Tomás Herrera', initials: 'TH', email: 'tomas@demo.ctl.test', blurb: 'Front desk: intake, consultations, hotline, store orders.', tenantId: 'ten_inland' },
   { id: 'usr_marketing', role: 'marketing', name: 'Lena Whitcombe', initials: 'LW', email: 'lena@demo.ctl.test', blurb: 'Marketing: site pages, videos, campaigns, city landing pages.', tenantId: null },
   { id: 'usr_client', role: 'client', name: 'Dana Morales', initials: 'DM', email: 'dana@demo.ctl.test', blurb: 'Tenant facing a 3-day notice in Riverside: the client app and the game board.', tenantId: 'ten_inland' },

@@ -130,7 +130,7 @@ export function DeskOrdersPage() {
         ? <EmptyState icon="search" title={t('pipeline.f14.empty')} body={t('pipeline.f14.emptyBody')} />
         : orders.length === 0
           ? <EmptyState icon="search" title={t('pipeline.f14.noMatch')} body={t('pipeline.f14.noMatchBody')} />
-          : <DataTable framed title={t('pipeline.f14.title')} rows={orders} columns={columns} rowKey={(o) => o.id} selectedKey={selectedId}
+          : <DataTable framed rows={orders} columns={columns} rowKey={(o) => o.id} selectedKey={selectedId}
               onRowClick={(o) => set({ order: o.id })} stickyHeader emptyText={t('pipeline.f14.noMatch')} />}
 
       <Drawer open={selected != null} onClose={() => set({ order: null })} title={`${t('pipeline.f14.drawerTitle')} · ${selected?.order_ref ?? ''}`} width={520}>

@@ -324,7 +324,7 @@ export function CallConsolePage() {
   const canWrite = can('calls.write');
 
   return (
-    <div className="page stack">
+    <div className="page stack page-bleed">
       <PageHeader code="F-12" title={t('calls.pageTitle')} subtitle={t('calls.sub')}
         eyebrow={<Chip size="sm" icon="building">{networkWide ? t('desk.network') : office(tenantId ?? '')}</Chip>}
         actions={

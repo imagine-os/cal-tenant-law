@@ -115,4 +115,4 @@ export class MockProvider implements DataProvider {
 }
 
 /** Bump when the seed shape changes so stale browsers reseed. */
-export const SEED_VERSION = 3; // 0.2.0-dev: board positions and move history for every ops case (case_01..case_24, one demo case set; T-054 scoped, prompt 0006). 2 = 0.1.1: real offices (8), lessons from videos.json, catalog + illustrations from the live scrape
+export const SEED_VERSION = 4; // 0.2.0-dev format pass: the demo attorney (Mateo) and paralegal (Nia) moved to Riverside (ten_inland) with the demo client, case_01, ord_0131 and the evidence; the fictional pair (Priya, Cheyenne) took Downtown LA as usr_atty_dtla / usr_para_dtla. 3: board positions and move history for every ops case (case_01..case_24, one demo case set; T-054 scoped, prompt 0006). 2 = 0.1.1: real offices (8), lessons from videos.json, catalog + illustrations from the live scrape

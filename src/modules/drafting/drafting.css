@@ -19,7 +19,7 @@
 @media (min-width: 2560px) { .drf-studio { grid-template-columns: minmax(20rem, 26rem) minmax(0, 1fr) minmax(24rem, 32rem); gap: var(--sp-6); } }
 @media (min-width: 3840px) { .drf-studio { grid-template-columns: minmax(26rem, 34rem) minmax(0, 1fr) minmax(30rem, 40rem); } }
 .drf-pane { min-width: 0; }
-.drf-pane-left, .drf-pane-right { position: sticky; top: var(--sp-4); max-height: calc(100vh - var(--sp-12)); overflow: auto; display: flex; flex-direction: column; gap: var(--sp-4); }
+.drf-pane-left, .drf-pane-right { position: sticky; top: var(--sp-4); max-height: calc(100vh - var(--sp-12) - calc(100px * var(--scale))); overflow: auto; display: flex; flex-direction: column; gap: var(--sp-4); }
 .drf-pane-centre { min-width: 0; }
 .drf-toolbar { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
 .drf-toolbar .drf-spacer { flex: 1 1 auto; }
@@ -79,6 +79,13 @@
 @media (max-width: 767px) {
   .drf-start { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* the FeedbackButton (fixed, bottom right) would sit on the sticky research pane: on the studio it moves to the sheet's corner instead */
+@media (min-width: 1024px) { .shell:has(.drf-studio.mode-document) .feedbackbtn { right: calc(21rem + var(--sp-8) + var(--sp-8)); } }
+@media (min-width: 1600px) { .shell:has(.drf-studio) .feedbackbtn { right: calc(23rem + var(--sp-8) + var(--sp-8)); } }
+@media (min-width: 1920px) { .shell:has(.drf-studio) .feedbackbtn { right: calc(23rem + var(--sp-12) + var(--sp-8)); } }
+@media (min-width: 2560px) { .shell:has(.drf-studio) .feedbackbtn { right: calc(32rem + var(--sp-12) + var(--sp-8)); } }
+@media (min-width: 3840px) { .shell:has(.drf-studio) .feedbackbtn { right: calc(40rem + var(--sp-12) + var(--sp-8)); } }
 
 /* ---- S-10 ------------------------------------------------------------------------------------------------------ */
 .drf-tpl-editor { display: flex; flex-direction: column; gap: var(--sp-4); }

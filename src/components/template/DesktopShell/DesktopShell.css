@@ -6,6 +6,12 @@
 .shell-side { position: sticky; top: 0; height: 100vh; flex: 0 0 auto; z-index: 60; }
 .shell-main { flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; }
 .shell-content { flex: 1; width: 100%; max-width: var(--w-content-wide); margin: 0 auto; padding: var(--sp-5) var(--sp-4) calc(var(--sp-16) + 56px); min-width: 0; }
+/* Pass 2 wave A rhythm: the shell owns the page padding, so a page root (`.page`, `.stack`, a module root) adds none of its
+   own; every page root is a column with one section gap (--sp-6), and the PageHeader sits flush at the top. Boards, consoles
+   and canvases opt out of the centred max width with `.page-bleed` and use the whole screen on purpose. */
+.shell-content > .page, .shell-content > .stack, .shell-content > [class$="-desk"], .shell-content > [class$="-staff"] { display: flex; flex-direction: column; gap: var(--sp-6); padding-top: 0; padding-bottom: 0; }
+.shell-content > * > .pagehead { margin-bottom: 0; }
+.shell-content:has(> .page-bleed) { max-width: none; }
 @media (min-width: 900px) { .shell-content { padding: var(--sp-8) var(--sp-8) var(--sp-16); } }
 @media (min-width: 1920px) { .shell-content { padding: var(--sp-10) var(--sp-12) var(--sp-20); } }
 .shell-brand { display: inline-flex; align-items: center; color: inherit; text-decoration: none; min-width: 0; border-radius: var(--r-md); }
@@ -19,7 +25,7 @@
 @keyframes shell-slide { from { transform: translateX(-16px); opacity: 0; } }
 .shell-overlay-close { position: absolute; top: 12px; right: -56px; background: var(--color-surface); }
 @media (max-width: 400px) { .shell-overlay-close { right: 8px; top: 8px; } }
-.shell-presence { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding: 0 var(--sp-6); min-height: 36px; color: var(--color-text-muted); font-size: var(--fs-xs); box-shadow: 0 1px 0 var(--color-hairline); }
+.shell-presence { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding: 0 var(--sp-8); min-height: 36px; color: var(--color-text-muted); font-size: var(--fs-xs); box-shadow: 0 1px 0 var(--color-hairline); }
 .shell-presence-btn { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: 32px; padding: 2px var(--sp-2) 2px 2px; border: 0; border-radius: var(--r-pill); background: transparent; color: inherit; }
 .shell-code { color: var(--color-text-faint); font-family: var(--font-mono); }
 @media (max-width: 900px) { .shell-presence { padding: 0 var(--sp-3); } }

@@ -108,7 +108,7 @@ export function AdminHomePage() {
       </Section>
 
       <Section title={t('admin.users')} description={`${users.length}`}>
-        <DataTable framed title={t('admin.users')} rows={users} columns={columns} rowKey={(r) => r.id} searchable dense stickyHeader pageSize={20}
+        <DataTable framed rows={users} columns={columns} rowKey={(r) => r.id} searchable dense stickyHeader pageSize={20}
           filters={[{ key: 'group', label: t('admin.role'), options: [{ value: 'staff', label: t('admin.staff') }, { value: 'client', label: t('admin.clients') }, { value: 'opposing_counsel', label: t('admin.outside') }], test: (r, v) => (v === 'staff' ? STAFF_ROLES.includes(r.role as Role) : r.role === v) }]}
           rowActions={(r) => (
             <span className="homes-item-side">

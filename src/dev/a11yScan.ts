@@ -72,6 +72,8 @@ export function layoutScan(doc: Document, minFont = 12): LayoutScan {
   while ((n = walker.nextNode())) {
     const t = (n.textContent ?? '').trim(); if (!t) continue;
     const el = n.parentElement; if (!el) continue;
+    // text inside an inline SVG drawing or an aria-hidden subtree is a picture (DocPreview thumbnails, BrandArt), not reading text: the drawing carries its own caption or label
+    if (el.closest('svg, [aria-hidden="true"]')) continue;
     const cs = getComputedStyle(el); if (cs.visibility === 'hidden' || cs.display === 'none') continue;
     const r = el.getBoundingClientRect(); if (r.width === 0 || r.height === 0) continue;
     if (parseFloat(cs.fontSize) < minFont) { smallText++; if (smallTextSamples.length < 6) smallTextSamples.push(`${cssPath(el)} ${cs.fontSize} "${t.slice(0, 24)}"`); }

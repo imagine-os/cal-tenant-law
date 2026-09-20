@@ -27,8 +27,8 @@ export const order = 88;
 const CLIENT = 'usr_client';
 const CASE = 'case_01';
 const TENANT = 'ten_inland';
-const PARA = 'usr_para_inland';
-const ATTY = 'usr_atty_inland';
+const PARA = 'usr_paralegal';
+const ATTY = 'usr_attorney';
 const CONSENT_VERSION = 'consent-2026-09-20';
 
 /** Board node -> phase, for the squares this binder uses (docs/game-board/nodes.json). */

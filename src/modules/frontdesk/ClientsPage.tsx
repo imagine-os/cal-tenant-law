@@ -182,7 +182,7 @@ export function ClientsPage() {
         actions={<SearchInput label={t('cl.search')} placeholder={t('cl.search')} value={query} onChange={setQuery} />}>
         {filtered.length === 0
           ? <EmptyState icon="users" title={t('cl.none')} />
-          : <DataTable framed title={t('cl.title')} rows={filtered} columns={columns} rowKey={(r) => r.user.id}
+          : <DataTable framed rows={filtered} columns={columns} rowKey={(r) => r.user.id}
             onRowClick={(r) => setOpen(r.user.id)} selectedKey={openClient?.user.id ?? null} emptyText={t('cl.none')}
             rowActions={(r) => (
               <span className="homes-item-side">

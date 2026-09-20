@@ -80,7 +80,7 @@ export function KanbanPage() {
   };
 
   return (
-    <div className="page stack plan-page">
+    <div className="page stack plan-page page-bleed">
       <PageHeader code="PM-01" title={t('plan.title.kanban')} subtitle={t('plan.sub.kanban')}
         actions={<Button size="sm" variant="secondary" icon="refresh" title={t('plan.resetHelp')} onClick={async () => { const r = await plan.resetFromRepo(); toast({ tone: 'success', title: r.message }); }}>{t('plan.reset')}</Button>}>
         <PlanViewNav current="kanban" />

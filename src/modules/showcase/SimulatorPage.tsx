@@ -273,7 +273,7 @@ export function SimulatorPage() {
 
   const controls = (
     <div className="sim-bar">
-      <div className="sim-bar-group">
+      <div className="sim-bar-group" role="group" aria-label={t('sim.device')} data-label={t('sim.device')}>
         {/* seven presets do not fit a phone: the same choice becomes a Select under 700 px */}
         {narrow
           ? <Select size="sm" aria-label={t('sim.device')} value={deviceKey} options={DEVICES.map((d) => ({ value: d.key, label: d.label }))} onChange={(e) => pickDevice(e.target.value)} />
@@ -284,11 +284,11 @@ export function SimulatorPage() {
             active={landscape} disabled={!device.rotatable} onClick={() => patch({ rot: landscape ? null : '1' })} />
         </Tooltip>
       </div>
-      <div className="sim-bar-group">
+      <div className="sim-bar-group" role="group" aria-label={t('sim.page')} data-label={t('sim.page')}>
         <Select size="sm" aria-label={t('sim.page')} value={path} options={routeOptions} onChange={(e) => setRoute(e.target.value)} className="sim-route" />
         <Select size="sm" aria-label={t('showcase.role')} value={role} options={ROLES.map((r) => ({ value: r, label: roleLabel(r, uiLang) }))} onChange={(e) => patch({ role: e.target.value })} />
       </div>
-      <div className="sim-bar-group">
+      <div className="sim-bar-group" role="group" aria-label={t('theme.appearance')} data-label={t('theme.appearance')}>
         <SegmentedControl size="sm" ariaLabel={t('showcase.lang')} value={lang} onChange={(l) => patch({ lang: l })} options={[{ value: 'en', label: 'EN' }, { value: 'es', label: 'ES' }]} />
         <SegmentedControl size="sm" ariaLabel={t('showcase.theme')} value={theme} onChange={(th) => patch({ theme: th })}
           options={[{ value: 'light', label: t('theme.light'), icon: 'sun' }, { value: 'dark', label: t('theme.dark'), icon: 'moon' }]} />

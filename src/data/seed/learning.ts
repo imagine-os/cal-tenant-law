@@ -133,11 +133,11 @@ export function seed(ctx: SeedCtx): void {
 
   // --- what the attorney told Dana to watch, and one for the Downtown LA attorney's own client --------
   const assignments: [id: string, tenant: string, client: string, lesson: string, course: string, by: string, reason: string, dueDays: number, status: string, orderId: string | null][] = [
-    ['las_001', 'ten_inland', 'usr_client', lessonId('answer'), 'crs_game_board', 'usr_atty_inland',
+    ['las_001', 'ten_inland', 'usr_client', lessonId('answer'), 'crs_game_board', 'usr_attorney',
       'Your answer is the next thing we file. Watch this before Thursday so the questions you send me are the right ones.', 3, 'started', 'ord_0131'],
-    ['las_002', 'ten_inland', 'usr_client', lessonId('discovery'), 'crs_game_board', 'usr_atty_inland',
+    ['las_002', 'ten_inland', 'usr_client', lessonId('discovery'), 'crs_game_board', 'usr_attorney',
       'Once the answer is in, discovery is where this case is won. Fifteen minutes now saves us an hour on the phone.', 10, 'assigned', null],
-    ['las_003', 'ten_dtla', 'cli_boahene', lessonId('demurrer'), 'crs_game_board', 'usr_attorney',
+    ['las_003', 'ten_dtla', 'cli_boahene', lessonId('demurrer'), 'crs_game_board', 'usr_atty_dtla',
       'We are attacking the complaint itself. This explains what a demurrer is and what happens if it is overruled.', 5, 'assigned', null],
   ];
   for (const [id, tenant, client, lesson, course, by, reason, dueDays, status, orderId] of assignments) {
@@ -149,7 +149,7 @@ export function seed(ctx: SeedCtx): void {
 
   // --- notes Dana wrote while watching ----------------------------------------------------------------
   const notes: [id: string, lesson: string, seconds: number | null, body: string][] = [
-    ['lnt_001', lessonId('the-game-board'), 212, 'Ask Priya: which square are we on right now? I think it is the answer one.'],
+    ['lnt_001', lessonId('the-game-board'), 212, 'Ask Mateo: which square are we on right now? I think it is the answer one.'],
     ['lnt_002', lessonId('answer'), 96, 'General denial vs. specific denials — he says the bare-bones answer is usually enough. Check which one we filed.'],
     ['lnt_003', lessonId('motion-to-quash'), 1340, 'The server never knocked. Neighbour saw him leave it on the mat — tell the office, this might matter.'],
   ];

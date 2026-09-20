@@ -152,7 +152,7 @@ export function PipelineBoardPage() {
   });
 
   return (
-    <div className="stack">
+    <div className="stack page-bleed">
       <PageHeader title={t('pipeline.l13.title')} subtitle={t('pipeline.l13.subtitle')} code={pipelineBoardSpec.code} />
 
       <div className="pipe-stats">

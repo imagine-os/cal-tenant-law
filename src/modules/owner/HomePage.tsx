@@ -184,17 +184,17 @@ export function OwnerHomePage() {
       <div className="homes-cols">
         <Section title={t('owner.byPerson')} description={`${personRows.length}`}>
           {personRows.length === 0 ? <EmptyState compact icon="check" title={t('owner.nothingLate')} />
-            : <DataTable framed title={t('owner.byPerson')} rows={personRows} columns={personColumns} rowKey={(r) => r.id} dense />}
+            : <DataTable framed rows={personRows} columns={personColumns} rowKey={(r) => r.id} dense />}
         </Section>
         <Section title={t('owner.caseload')} description={`${attorneyRows.length} ${t('owner.attorney').toLowerCase()}`}>
           {attorneyRows.length === 0 ? <EmptyState compact icon="users" title={t('owner.nothingLate')} />
-            : <DataTable framed title={t('owner.caseload')} rows={attorneyRows} columns={attorneyColumns} rowKey={(r) => r.id} dense />}
+            : <DataTable framed rows={attorneyRows} columns={attorneyColumns} rowKey={(r) => r.id} dense />}
         </Section>
       </div>
 
       <Section title={t('owner.revenueBySku')} description={`${t('owner.asListed')} · ${t('owner.chartSoon')}`}
         actions={<Placeholder what="show the revenue chart" plannedIn="dataviz pass"><Button size="sm" variant="ghost" icon="chart">{t('owner.showChart')}</Button></Placeholder>}>
-        <DataTable framed title={t('owner.revenueBySku')} rows={skuRows} columns={skuColumns} rowKey={(r) => r.sku} searchable dense pageSize={12} />
+        <DataTable framed rows={skuRows} columns={skuColumns} rowKey={(r) => r.sku} searchable dense pageSize={12} />
       </Section>
 
       <Section title={t('owner.revenueByOffice')}>
@@ -210,7 +210,7 @@ export function OwnerHomePage() {
       </Section>
 
       <Section title={t('owner.offices')} description={`${offices.length}`}>
-        <DataTable framed title={t('owner.offices')} rows={officeRows} columns={officeColumns} rowKey={(r) => r.tenant_id} dense
+        <DataTable framed rows={officeRows} columns={officeColumns} rowKey={(r) => r.tenant_id} dense
           onRowClick={(r) => setOffice(r.tenant_id)} selectedKey={office === ALL ? null : office} />
       </Section>
 

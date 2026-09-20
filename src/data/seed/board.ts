@@ -93,7 +93,7 @@ export function seed(ctx: SeedCtx): void {
         from_node_id: i === 0 ? null : walk[i - 1],
         to_node_id: nodeId,
         path: i === 0 ? null : pathBetween(walk[i - 1], nodeId),
-        moved_at: day(back), moved_by: 'usr_paralegal', source: 'seed',
+        moved_at: day(back), moved_by: 'usr_para_dtla', source: 'seed',
         note: i === steps - 1 ? 'Current position in this demo.' : null,
       });
     });

@@ -33,8 +33,8 @@ const PHONES: Record<string, string> = {
 };
 
 const TEAM: Record<string, { attorney: string; paralegal: string; supervisor: string; desk: string; court: string }> = {
-  ten_inland: { attorney: 'usr_atty_inland', paralegal: 'usr_para_inland', supervisor: 'usr_owner', desk: 'usr_desk', court: 'Riverside Superior Court · Dept. 4 (limited civil UD)' },
-  ten_dtla: { attorney: 'usr_attorney', paralegal: 'usr_paralegal', supervisor: 'usr_atty_dtla2', desk: 'usr_desk_dtla', court: 'LA Superior Court · Stanley Mosk Dept. 94' },
+  ten_inland: { attorney: 'usr_attorney', paralegal: 'usr_paralegal', supervisor: 'usr_owner', desk: 'usr_desk', court: 'Riverside Superior Court · Dept. 4 (limited civil UD)' },
+  ten_dtla: { attorney: 'usr_atty_dtla', paralegal: 'usr_para_dtla', supervisor: 'usr_atty_dtla2', desk: 'usr_desk_dtla', court: 'LA Superior Court · Stanley Mosk Dept. 94' },
 };
 
 interface OrderSpec {
@@ -171,14 +171,14 @@ export function seed(ctx: SeedCtx): void {
     ['fol_002', 'client_item_due', 'order', ord(136), 'cli_prieto', 136, -4, 17, 'usr_desk', 'open', 'Envelope photo (crq_004) is four days overdue; the quash window closes in three.', null],
     ['fol_003', 'client_review_due', 'order', ord(131), 'usr_client', 131, -3, 17, 'usr_desk', 'open', 'Dana has had draft 2 for six days; response is due in two.', null],
     ['fol_004', 'client_item_due', 'order', ord(134), 'usr_client', 134, 3, 17, 'usr_desk', 'open', 'Rent ledger and the leak date (crq_002, crq_003).', null],
-    ['fol_005', 'filing_due', 'order', ord(128), 'cli_ellery', 128, 4, 16, 'usr_atty_inland', 'open', 'Motion to compel must be filed and served; rush.', null],
-    ['fol_006', 'hearing', 'order', ord(125), 'cli_sorensen', 125, 10, 8, 'usr_attorney', 'open', 'Summary judgment hearing, Dept. 94, 8:30. Confirm Hana attends by video.', null],
+    ['fol_005', 'filing_due', 'order', ord(128), 'cli_ellery', 128, 4, 16, 'usr_attorney', 'open', 'Motion to compel must be filed and served; rush.', null],
+    ['fol_006', 'hearing', 'order', ord(125), 'cli_sorensen', 125, 10, 8, 'usr_atty_dtla', 'open', 'Summary judgment hearing, Dept. 94, 8:30. Confirm Hana attends by video.', null],
     ['fol_007', 'payment_due', 'order', ord(138), 'cli_fairweather', 138, 2, 12, 'usr_desk', 'open', 'Balance for the habitability complaint (crq_009).', null],
     ['fol_008', 'check_in', 'order', ord(130), 'cli_sandoval', 130, 3, 11, 'usr_desk_dtla', 'open', 'Ask whether the landlord came back with move-out numbers; resume the agreement if so.', null],
     ['fol_009', 'call_back', 'call', 'cal_003', null, null, 0, 16, 'usr_desk', 'open', 'Unknown caller booked an initial consult for Thursday; send the intake form link and confirm.', null],
     ['fol_010', 'client_review_due', 'order', ord(127), 'cli_mcallister', 127, 1, 17, 'usr_desk_dtla', 'open', 'Notice of Appeal approval (crq_006); filing due in five days.', null],
     ['fol_011', 'check_in', 'order', ord(122), 'cli_ellery', 122, -1, 14, 'usr_desk', 'done', 'Told Marcus the RFPs were served and responses are due in 30 days.', 1],
-    ['fol_012', 'filing_due', 'order', ord(119), 'cli_boahene', 119, 6, 16, 'usr_attorney', 'open', 'Demurrer filing; supervisor review in progress.', null],
+    ['fol_012', 'filing_due', 'order', ord(119), 'cli_boahene', 119, 6, 16, 'usr_atty_dtla', 'open', 'Demurrer filing; supervisor review in progress.', null],
     ['fol_013', 'call_back', 'client', 'usr_client', 'usr_client', null, 1, 10, 'usr_desk', 'snoozed', 'Dana asked for a Spanish walkthrough of the binder; snoozed to tomorrow at her request.', null],
   ];
   for (const [id, kind, subjectType, subjectId, client, seq, dueIn, hour, owner, status, note, doneDaysAgo] of FOLLOW_UPS) {
@@ -189,13 +189,13 @@ export function seed(ctx: SeedCtx): void {
   // --- calls: one ringing right now, the rest today and the last three days -------------------------------------------
   const CALLS: [id: string, direction: string, client: string | null, callerName: string | null, status: string, daysAgo: number, hh: number, mm: number, duration: number | null, handledBy: string | null, purpose: string | null, notes: string | null, outcome: string | null, followUp: string | null, minutes: number | null][] = [
     ['cal_001', 'inbound', 'usr_client', null, 'ringing', 0, -1, 0, null, null, null, null, null, null, null],
-    ['cal_002', 'inbound', 'cli_ellery', null, 'ended', 0, 9, 12, 340, 'usr_desk', 'status', 'Asked where the motion to compel stands and whether trial moves.', 'Told him it is in first draft with Priya, marked rush; filing due in four days.', 'fol_011', null],
+    ['cal_002', 'inbound', 'cli_ellery', null, 'ended', 0, 9, 12, 340, 'usr_desk', 'status', 'Asked where the motion to compel stands and whether trial moves.', 'Told him it is in first draft with Mateo, marked rush; filing due in four days.', 'fol_011', null],
     ['cal_003', 'inbound', null, 'Unknown (818)', 'ended', 0, 10, 5, 415, 'usr_desk', 'new_consult', 'Received a 3-day notice yesterday in Van Nuys; has not been served with a complaint.', 'Booked an initial consultation for Thursday 10:00 (Teams).', 'fol_009', null],
     ['cal_004', 'outbound', 'cli_prieto', null, 'ended', 0, 11, 30, 48, 'usr_desk', 'documents', 'Chasing the envelope photo for the motion to quash.', 'Left a voicemail; call back after 3.', 'fol_001', null],
     ['cal_005', 'inbound', 'cli_mcallister', null, 'voicemail', 1, 18, 42, 61, null, 'status', 'Voicemail: "Did you get my approval? I tapped something in the app."', null, null, null],
     ['cal_006', 'inbound', 'cli_sandoval', null, 'missed', 1, 12, 58, null, null, null, null, null, null, null],
     ['cal_007', 'inbound', 'cli_boahene', null, 'ended', 2, 14, 20, 275, 'usr_desk_dtla', 'payment', 'Wanted a receipt for the demurrer and asked about the motion to strike price.', 'Emailed the receipt; quoted the listed price, unverified, and noted it.', null, null],
-    ['cal_008', 'outbound', 'cli_sorensen', null, 'ended', 2, 15, 45, 190, 'usr_paralegal', 'scheduling', 'Confirmed the summary judgment hearing date and video attendance.', 'She will attend by video; calendar invite sent.', 'fol_006', null],
+    ['cal_008', 'outbound', 'cli_sorensen', null, 'ended', 2, 15, 45, 190, 'usr_para_dtla', 'scheduling', 'Confirmed the summary judgment hearing date and video attendance.', 'She will attend by video; calendar invite sent.', 'fol_006', null],
     ['cal_009', 'inbound', 'usr_client', null, 'ended', 3, 16, 10, 1230, 'usr_desk', 'documents', 'Hotline block: walked through which bank statements to upload and how the binder works.', 'Uploads pending (crq_002); asked for a Spanish walkthrough.', 'fol_013', 20],
     ['cal_010', 'inbound', 'cli_fairweather', null, 'ended', 0, 8, 40, 620, 'usr_desk', 'new_consult', 'Mold and no heat since January; landlord ignoring repair requests. Wants to sue, not wait to be evicted.', 'Ordered the Habitability Complaint (ORD-2026-0138); balance due in two days.', 'fol_007', null],
   ];

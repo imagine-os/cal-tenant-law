@@ -25,14 +25,14 @@ const OFFICE: Record<string, { county: string; court: string }> = {
 
 /** Fictional staff beyond the one demo user per role, so caseload and late-work views have people in them. */
 const STAFF: [id: string, tenant: string, role: string, name: string][] = [
-  ['usr_atty_inland', 'ten_inland', 'attorney', 'Priya Raghunathan'],
+  ['usr_atty_dtla', 'ten_dtla', 'attorney', 'Priya Raghunathan'],
   ['usr_atty_dtla2', 'ten_dtla', 'attorney', 'Solveig Marchetti'],
   ['usr_atty_sfv', 'ten_sfv', 'attorney', 'Delphine Okonjo'],
   ['usr_atty_lboc', 'ten_lboc', 'attorney', 'Ravi Castellanos'],
   ['usr_atty_sd', 'ten_sd', 'attorney', 'Imani Whitfield'],
   ['usr_atty_sac', 'ten_sac', 'attorney', 'Bjorn Talavera'],
   ['usr_atty_bay', 'ten_bay', 'attorney', 'Yuki Abernathy'],
-  ['usr_para_inland', 'ten_inland', 'paralegal', 'Cheyenne Vossberg'],
+  ['usr_para_dtla', 'ten_dtla', 'paralegal', 'Cheyenne Vossberg'],
   ['usr_para_dtla2', 'ten_dtla', 'paralegal', 'Emeka Lindqvist'],
   ['usr_para_sfv', 'ten_sfv', 'paralegal', 'Rosalind Achebe'],
   ['usr_para_lboc', 'ten_lboc', 'paralegal', 'Tobias Ferreira'],
@@ -48,12 +48,12 @@ const STAFF: [id: string, tenant: string, role: string, name: string][] = [
 
 /** [case id, client user id, client name, tenant, attorney, paralegal, board node, status, late, court number] */
 const CASES: [string, string, string, string, string, string, string, string, boolean, string | null][] = [
-  ['case_01', 'usr_client', 'Dana Morales', 'ten_inland', 'usr_atty_inland', 'usr_para_inland', 'answer-to-complaint', 'active', false, 'UD-2026-004182'],
-  ['case_02', 'cli_ellery', 'Marcus Ellery', 'ten_inland', 'usr_atty_inland', 'usr_para_inland', 'discovery-requests', 'active', true, 'UD-2026-003911'],
-  ['case_03', 'cli_prieto', 'Yolanda Prieto-Nakamura', 'ten_inland', 'usr_atty_inland', 'usr_para_inland', 'service-bad-file-motion-to-quash', 'active', false, 'UD-2026-004201'],
-  ['case_04', 'cli_boahene', 'Tevin Boahene', 'ten_dtla', 'usr_attorney', 'usr_paralegal', 'demurrer', 'active', false, '26STUD01233'],
-  ['case_05', 'cli_sorensen', 'Hana Sorensen', 'ten_dtla', 'usr_attorney', 'usr_paralegal', 'motion-to-compel-and-postpone-trial', 'active', true, '26STUD00981'],
-  ['case_06', 'cli_ilagan', 'Reggie Ilagan', 'ten_dtla', 'usr_attorney', 'usr_para_dtla2', 'jury-trial-requested', 'active', false, '26STUD01102'],
+  ['case_01', 'usr_client', 'Dana Morales', 'ten_inland', 'usr_attorney', 'usr_paralegal', 'answer-to-complaint', 'active', false, 'UD-2026-004182'],
+  ['case_02', 'cli_ellery', 'Marcus Ellery', 'ten_inland', 'usr_attorney', 'usr_paralegal', 'discovery-requests', 'active', true, 'UD-2026-003911'],
+  ['case_03', 'cli_prieto', 'Yolanda Prieto-Nakamura', 'ten_inland', 'usr_attorney', 'usr_paralegal', 'service-bad-file-motion-to-quash', 'active', false, 'UD-2026-004201'],
+  ['case_04', 'cli_boahene', 'Tevin Boahene', 'ten_dtla', 'usr_atty_dtla', 'usr_para_dtla', 'demurrer', 'active', false, '26STUD01233'],
+  ['case_05', 'cli_sorensen', 'Hana Sorensen', 'ten_dtla', 'usr_atty_dtla', 'usr_para_dtla', 'motion-to-compel-and-postpone-trial', 'active', true, '26STUD00981'],
+  ['case_06', 'cli_ilagan', 'Reggie Ilagan', 'ten_dtla', 'usr_atty_dtla', 'usr_para_dtla2', 'jury-trial-requested', 'active', false, '26STUD01102'],
   ['case_07', 'cli_cuevas', 'Beatriz Cuevas', 'ten_dtla', 'usr_atty_dtla2', 'usr_para_dtla2', 'default-entered-by-clerk', 'active', true, '26STUD01188'],
   ['case_08', 'cli_nwachukwu', 'Oskar Nwachukwu', 'ten_sfv', 'usr_atty_sfv', 'usr_para_sfv', 'evaluate-service', 'active', false, null],
   ['case_09', 'cli_delacroix', 'Tamsin Delacroix', 'ten_sfv', 'usr_atty_sfv', 'usr_para_sfv', 'summary-judgment-motion-filed-by-landlord', 'active', false, '26VEUD00412'],
@@ -70,8 +70,8 @@ const CASES: [string, string, string, string, string, string, string, string, bo
   ['case_20', 'cli_sjoberg', 'Kwame Sjöberg', 'ten_bay', 'usr_atty_bay', 'usr_para_bay', 'evaluate-complaint-for-demurrer', 'active', false, 'RG26-004411'],
   ['case_21', 'cli_tranwhitaker', 'Noelia Tran-Whitaker', 'ten_bay', 'usr_atty_bay', 'usr_para_bay', 'prepare-jury-trial-papers', 'active', false, 'RG26-004102'],
   ['case_22', 'cli_ampofo', 'Giorgio Ampofo', 'ten_bay', 'usr_atty_bay', 'usr_para_bay', 'notice-of-appeal', 'active', true, 'RG26-003800'],
-  ['case_23', 'cli_rimando', 'Estela Rimando', 'ten_dtla', 'usr_attorney', 'usr_paralegal', 'process-server-tries-to-serve-you', 'intake', false, null],
-  ['case_24', 'cli_nakatani', 'Brady Nakatani', 'ten_inland', 'usr_atty_inland', 'usr_para_inland', 'judgment-entered-writ-issued', 'lost', true, 'UD-2026-003655'],
+  ['case_23', 'cli_rimando', 'Estela Rimando', 'ten_dtla', 'usr_atty_dtla', 'usr_para_dtla', 'process-server-tries-to-serve-you', 'intake', false, null],
+  ['case_24', 'cli_nakatani', 'Brady Nakatani', 'ten_inland', 'usr_attorney', 'usr_paralegal', 'judgment-entered-writ-issued', 'lost', true, 'UD-2026-003655'],
 ];
 
 const DEADLINE_POOL: [title: string, rule: string | null][] = [
@@ -291,19 +291,19 @@ export function seed(ctx: SeedCtx): void {
 
   // --- consultations (~20 today / this week) ------------------------------
   const CONSULTS: [tenant: string, client: string, atty: string | null, dayOffset: number, hour: number, kind: string, channel: string, status: string, paid: boolean][] = [
-    ['ten_inland', 'usr_client', 'usr_atty_inland', 0, 9, 'followup', 'phone', 'held', true],
-    ['ten_inland', 'cli_ellery', 'usr_atty_inland', 0, 10, 'initial', 'teams', 'scheduled', true],
-    ['ten_inland', 'cli_prieto', 'usr_atty_inland', 0, 11, 'hotline', 'phone', 'scheduled', true],
-    ['ten_inland', 'cli_nakatani', 'usr_atty_inland', 0, 13, 'followup', 'phone', 'scheduled', false],
+    ['ten_inland', 'usr_client', 'usr_attorney', 0, 9, 'followup', 'phone', 'held', true],
+    ['ten_inland', 'cli_ellery', 'usr_attorney', 0, 10, 'initial', 'teams', 'scheduled', true],
+    ['ten_inland', 'cli_prieto', 'usr_attorney', 0, 11, 'hotline', 'phone', 'scheduled', true],
+    ['ten_inland', 'cli_nakatani', 'usr_attorney', 0, 13, 'followup', 'phone', 'scheduled', false],
     ['ten_inland', 'cli_osterhout', null, 0, 15, 'initial', 'teams', 'scheduled', true],
-    ['ten_dtla', 'cli_boahene', 'usr_attorney', 0, 9, 'followup', 'teams', 'held', true],
-    ['ten_dtla', 'cli_rimando', 'usr_attorney', 0, 14, 'initial', 'phone', 'scheduled', true],
+    ['ten_dtla', 'cli_boahene', 'usr_atty_dtla', 0, 9, 'followup', 'teams', 'held', true],
+    ['ten_dtla', 'cli_rimando', 'usr_atty_dtla', 0, 14, 'initial', 'phone', 'scheduled', true],
     ['ten_dtla', 'cli_cuevas', 'usr_atty_dtla2', 0, 16, 'hotline', 'phone', 'scheduled', true],
     ['ten_sd', 'cli_iniguez', 'usr_atty_sd', 0, 10, 'initial', 'teams', 'no_show', true],
     ['ten_bay', 'cli_sjoberg', 'usr_atty_bay', 0, 12, 'followup', 'video', 'scheduled', true],
-    ['ten_inland', 'cli_prieto', 'usr_atty_inland', 1, 9, 'followup', 'phone', 'scheduled', true],
-    ['ten_inland', 'cli_ellery', 'usr_atty_inland', 1, 14, 'hotline', 'phone', 'scheduled', true],
-    ['ten_dtla', 'cli_sorensen', 'usr_attorney', 1, 11, 'followup', 'teams', 'scheduled', true],
+    ['ten_inland', 'cli_prieto', 'usr_attorney', 1, 9, 'followup', 'phone', 'scheduled', true],
+    ['ten_inland', 'cli_ellery', 'usr_attorney', 1, 14, 'hotline', 'phone', 'scheduled', true],
+    ['ten_dtla', 'cli_sorensen', 'usr_atty_dtla', 1, 11, 'followup', 'teams', 'scheduled', true],
     ['ten_sfv', 'cli_nwachukwu', 'usr_atty_sfv', 2, 10, 'initial', 'teams', 'scheduled', true],
     ['ten_sfv', 'cli_delacroix', 'usr_atty_sfv', 2, 15, 'followup', 'phone', 'scheduled', false],
     ['ten_lboc', 'cli_mbeki', 'usr_atty_lboc', 2, 9, 'followup', 'phone', 'scheduled', true],
@@ -312,7 +312,7 @@ export function seed(ctx: SeedCtx): void {
     ['ten_sac', 'cli_belhadj', 'usr_atty_sac', 4, 11, 'followup', 'phone', 'scheduled', true],
     ['ten_bay', 'cli_tranwhitaker', 'usr_atty_bay', 4, 16, 'followup', 'video', 'cancelled', false],
     ['ten_sd', 'cli_adeyemi', 'usr_atty_sd', -1, 11, 'followup', 'teams', 'held', true],
-    ['ten_inland', 'cli_nakatani', 'usr_atty_inland', -2, 15, 'hotline', 'phone', 'held', true],
+    ['ten_inland', 'cli_nakatani', 'usr_attorney', -2, 15, 'hotline', 'phone', 'held', true],
   ];
   let c = 0;
   for (const [tenant, client, atty, dayOffset, hour, kind, channel, status, paid] of CONSULTS) {
@@ -352,7 +352,7 @@ export function seed(ctx: SeedCtx): void {
   }
 
   // --- a couple of annotation rows on the new pages, so triage has work ---
-  add('feedback', { id: 'fbk_homes_01', tenant_id: 'ten_dtla', user_id: 'usr_attorney', user_name: 'Mateo Ruiz', role: 'attorney', page_code: 'L-01', route: '/counsel', kind: 'request', category: 'ui', text: 'On the attorney home, put the running-late cases above deadlines this week - that is what I open the page for.', element_path: null, component: 'Section', viewport: '1920x1080', theme: 'light', screenshot_url: null, status: 'triaged', triage: 'fix', triage_note: 'Inside the L-01 spec and P-01 (one primary thing per screen). Late work now renders first on /counsel.', decision_ref: 'docs/changelog/_pending/homes.md', owner_reply: null });
+  add('feedback', { id: 'fbk_homes_01', tenant_id: 'ten_inland', user_id: 'usr_attorney', user_name: 'Mateo Ruiz', role: 'attorney', page_code: 'L-01', route: '/counsel', kind: 'request', category: 'ui', text: 'On the attorney home, put the running-late cases above deadlines this week - that is what I open the page for.', element_path: null, component: 'Section', viewport: '1920x1080', theme: 'light', screenshot_url: null, status: 'triaged', triage: 'fix', triage_note: 'Inside the L-01 spec and P-01 (one primary thing per screen). Late work now renders first on /counsel.', decision_ref: 'docs/changelog/_pending/homes.md', owner_reply: null });
   add('feedback', { id: 'fbk_homes_02', tenant_id: 'ten_inland', user_id: 'usr_client', user_name: 'Dana Morales', role: 'client', page_code: 'C-01', route: '/app', kind: 'comment', category: 'content', text: '¿Puedo ver lo que sigue en mi caso en español, sin palabras de abogado?', element_path: null, component: 'Card', viewport: '390x844', theme: 'light', screenshot_url: null, status: 'triaged', triage: 'fix', triage_note: 'Client signal and already a binding principle (P-11 en/es from the start). C-01 ships the what-happened / what-next card in both languages.', decision_ref: 'docs/pages/C-01.md', owner_reply: null });
   add('feedback', { id: 'fbk_homes_03', tenant_id: 'ten_inland', user_id: 'usr_opposing', user_name: 'Gregory Pratt', role: 'opposing_counsel', page_code: 'X-01', route: '/opposition', kind: 'request', category: 'idea', text: 'Let me download every document served on me as one zip.', element_path: null, component: 'DataTable', viewport: '1280x800', theme: 'light', screenshot_url: null, status: 'waiting', triage: 'ask', triage_note: 'Opposing-counsel signal, outside the X-01 Pass 1 scope and a disclosure question for the firm. Parked for Justin.', decision_ref: 'kanban: Awaiting Justin', owner_reply: null });
 }

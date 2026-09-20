@@ -236,7 +236,7 @@ export function FollowUpsPage() {
   ];
 
   return (
-    <div className="page stack">
+    <div className="page stack page-bleed">
       <PageHeader code="F-15" title={t('fu.title')} subtitle={t('fu.sub')}
         eyebrow={<Chip size="sm" icon="building">{networkWide ? t('desk.network') : office(tenantId ?? '')}</Chip>} />
 

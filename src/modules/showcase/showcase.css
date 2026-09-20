@@ -4,6 +4,10 @@
 /* ---------- shared ---------- */
 .sim-bar { display: flex; flex-wrap: wrap; gap: var(--sp-3) var(--sp-4); align-items: center; }
 .sim-bar-group { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
+/* a labelled group: the eyebrow sits on its own line above the controls (the toolbars read as "device / page / appearance" at a glance) */
+.sim-bar-group[data-label], .cvx-group[data-label] { align-content: flex-start; }
+.sim-bar-group[data-label]::before, .cvx-group[data-label]::before { content: attr(data-label); flex: 0 0 100%; font-size: var(--fs-2xs); font-weight: var(--fw-semibold); letter-spacing: var(--ls-eyebrow); text-transform: uppercase; color: var(--color-text-faint); line-height: 1.2; }
+.sim-bar, .cvx-bar { align-items: flex-end; row-gap: var(--sp-4); }
 
 /* ---------- simulator ----------
    "Sit back" (D-050): the stage is never wider than the device itself and never taller than the window at this

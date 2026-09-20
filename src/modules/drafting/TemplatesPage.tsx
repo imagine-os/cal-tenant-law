@@ -235,7 +235,7 @@ export function TemplatesPage() {
             { key: 'code', label: t('drafting.s10.code'), width: 170, mono: true, render: (x) => <code>{x.code}</code>, value: (x) => x.code },
             { key: 'title', label: t('drafting.template'), render: (x) => <strong>{x.title}</strong>, value: (x) => x.title },
             { key: 'kind', label: t('drafting.s10.kind'), width: 120, render: (x) => <Badge size="sm">{x.document_kind}</Badge>, value: (x) => x.document_kind },
-            { key: 'nodes', label: t('drafting.s10.nodes'), width: 240, hideOnCard: true, render: (x) => <span className="xs muted">{x.board_node_ids.map((n) => BOARD_NODE_LABEL[n] ?? n).join(' · ')}</span>, value: (x) => x.board_node_ids.join(' ') },
+            { key: 'nodes', label: t('drafting.s10.nodes'), width: 240, hideOnCard: true, wrap: true, render: (x) => <span className="xs muted">{x.board_node_ids.map((n) => BOARD_NODE_LABEL[n] ?? n).join(' · ')}</span>, value: (x) => x.board_node_ids.join(' ') },
             { key: 'version', label: t('drafting.s10.versionLabel', { n: '' }).trim(), width: 90, align: 'right', render: (x) => <span className="mono">v{x.template_version}</span>, value: (x) => x.template_version },
             { key: 'status', label: t('drafting.status'), width: 130, render: (x) => <StatusBadge status={x.status} size="sm" />, value: (x) => x.status },
             { key: 'drafts', label: t('drafting.drafts'), width: 90, align: 'right', hideOnCard: true, render: (x) => <span className="mono">{draftsPerTemplate[x.id] ?? 0}</span>, value: (x) => draftsPerTemplate[x.id] ?? 0 },

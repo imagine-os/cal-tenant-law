@@ -29,8 +29,8 @@ import { studioIndexSpec } from './specs';
 import './drafting.css';
 
 const OFFICE_ATTORNEY_BLOCK: Record<string, string[]> = {
-  ten_inland: ['Priya Raghunathan, Esq. (SBN 248117)', 'California Tenant Law', 'PO Box 2417', 'Idyllwild, CA 92549', 'Telephone: (951) 659-1234', 'Email: priya@caltenantlaw.test', 'Attorney for Defendant'],
-  ten_dtla: ['Mateo Ruiz, Esq. (SBN 301244)', 'California Tenant Law', '312 W. Fifth St. #512', 'Los Angeles, CA 90013', 'Telephone: (951) 659-1234', 'Email: mateo@caltenantlaw.test', 'Attorney for Defendant'],
+  ten_inland: ['Mateo Ruiz, Esq. (SBN 301244)', 'California Tenant Law', 'PO Box 2417', 'Idyllwild, CA 92549', 'Telephone: (951) 659-1234', 'Email: mateo@caltenantlaw.test', 'Attorney for Defendant'],
+  ten_dtla: ['Priya Raghunathan, Esq. (SBN 248117)', 'California Tenant Law', '312 W. Fifth St. #512', 'Los Angeles, CA 90013', 'Telephone: (951) 659-1234', 'Email: priya@caltenantlaw.test', 'Attorney for Defendant'],
 };
 const DAY = 86_400_000;
 

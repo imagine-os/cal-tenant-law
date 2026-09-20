@@ -130,7 +130,7 @@ export function GraphPage() {
   const nodeState = (id: string) => (selected === id ? 'is-selected' : related.up.has(id) ? 'is-up' : related.down.has(id) ? 'is-down' : selected ? 'is-dim' : '');
 
   return (
-    <div className="page stack plan-page">
+    <div className="page stack plan-page page-bleed">
       <PageHeader code="PM-04" title={t('plan.title.graph')} subtitle={t('plan.sub.graph')}>
         <PlanViewNav current="graph" />
       </PageHeader>

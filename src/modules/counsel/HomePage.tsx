@@ -134,7 +134,7 @@ export function CounselHomePage() {
         <StatTile icon="file-text" label={t('counsel.docsToReview')} value={toReview.length} hint={`${hearings.length} ${lang === 'es' ? 'audiencias' : 'hearings'}`} />
       </div>
 
-      <Section title={t('counsel.runningLate')} description={lang === 'es' ? 'Lo primero que se abre esta página (fbk_homes_01).' : 'What this page opens for (fbk_homes_01).'}>
+      <Section title={t('counsel.runningLate')} description={lang === 'es' ? 'Lo atrasado va primero, como pidieron los abogados.' : 'Late work comes first, as the attorneys asked.'}>
         {deadlineList(late, t('counsel.nothingLate'))}
       </Section>
 
@@ -176,7 +176,7 @@ export function CounselHomePage() {
 
       <Section title={t('counsel.myCases')} description={`${myCases.length}${networkWide && !mineOnly ? ` · ${t('counsel.networkView')}` : ''}`}>
         {myCases.length === 0 ? <EmptyState icon="briefcase" title={lang === 'es' ? 'No hay casos asignados.' : 'No cases assigned.'} />
-          : <DataTable framed title={t('counsel.myCases')} rows={myCases} columns={columns} rowKey={(r) => r.id} searchable dense stickyHeader
+          : <DataTable framed rows={myCases} columns={columns} rowKey={(r) => r.id} searchable dense stickyHeader
             filters={[{ key: 'late', label: t('counsel.runningLate'), options: [{ value: 'yes', label: lang === 'es' ? 'Sí' : 'Yes' }, { value: 'no', label: lang === 'es' ? 'No' : 'No' }], test: (r, v) => (v === 'yes' ? r.late : !r.late) }]}
             rowActions={(r) => (
               <span className="homes-item-side">

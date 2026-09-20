@@ -12,7 +12,10 @@
 .datatable-scroll { position: relative; overflow: auto; border: 0; border-radius: var(--r-card); background: var(--color-surface-raised); box-shadow: var(--shadow-raised); max-height: 70vh; }
 .datatable table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: var(--fs-sm); }
 .datatable th, .datatable td { padding: 0 var(--sp-4); height: var(--h-row); border-bottom: 1px solid var(--color-border-row); text-align: left; vertical-align: middle; white-space: nowrap; font-size: var(--fs-sm); }
-.datatable.is-dense th, .datatable.is-dense td { height: 36px; font-size: var(--fs-xs); }
+.datatable.is-dense th, .datatable.is-dense td { height: var(--h-control); font-size: var(--fs-xs); padding: 0 var(--sp-3); }
+.datatable td { font-variant-numeric: tabular-nums; }
+/* a column that may wrap (long free text): opt in per column with `wrap`, never the default */
+.datatable td.cell-wrap, .datatable th.cell-wrap { white-space: normal; min-width: 18rem; max-width: 40rem; padding-top: var(--sp-2); padding-bottom: var(--sp-2); line-height: var(--lh-sm); }
 .datatable th { height: var(--h-thead); background: var(--color-table-head); color: var(--color-text-muted); font-weight: var(--fw-semibold); font-size: var(--fs-2xs); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); border-bottom: 1px solid var(--color-hairline-strong); }
 .datatable thead tr:last-child th:first-child { border-top-left-radius: var(--r-card); } .datatable thead tr:last-child th:last-child { border-top-right-radius: var(--r-card); }
 .datatable thead .datatable-groups + tr th:first-child, .datatable thead .datatable-groups + tr th:last-child { border-radius: 0; }
@@ -36,7 +39,7 @@
 .datatable.is-zebra tbody tr:nth-child(even) td { background: var(--color-table-zebra); }
 .datatable tbody tr.is-selected td { background: var(--color-surface-tint); }
 .datatable-json { font-size: var(--fs-xs); max-width: 320px; overflow: hidden; text-overflow: ellipsis; display: inline-block; vertical-align: middle; }
-.datatable-actions { text-align: right; width: 1%; } .datatable-actions > * { display: inline-flex; gap: 4px; }
+.datatable-actions { text-align: right; width: 1%; } .datatable td.datatable-actions > * { display: inline-flex; gap: var(--sp-2); flex-wrap: nowrap; align-items: center; white-space: nowrap; }
 .datatable-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); }
 .datatable-page { border: 0; box-shadow: var(--hairline-strong); background: var(--color-surface); border-radius: var(--r-sm); width: 36px; height: 36px; }
 .datatable-emptyrow td { padding: var(--sp-4); white-space: normal; }

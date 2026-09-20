@@ -8,5 +8,5 @@
 .bottomnav-item.is-active .bottomnav-icon { background: var(--color-primary-soft); }
 .bottomnav-item.is-active .icon { stroke-width: 2.4; }
 .bottomnav-badge { position: absolute; top: 4px; right: 12px; width: 8px; height: 8px; border-radius: 50%; background: var(--color-badge); box-shadow: 0 0 0 2px var(--color-surface); }
-.bottomnav-label { font-size: var(--fs-2xs); line-height: 1.1; font-weight: var(--fw-semibold); letter-spacing: .01em; }
+.bottomnav-label { font-size: var(--fs-2xs); line-height: 1.1; font-weight: var(--fw-semibold); letter-spacing: 0; max-width: 100%; padding: 0 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .bottomnav.has-labels .bottomnav-item { gap: 3px; }

@@ -2,6 +2,8 @@
    viewport so 1920-3840 gains columns instead of whitespace (P-01), and every row keeps a 44 px target (P-03). */
 
 .homes-tiles { display: grid; gap: var(--sp-4); grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+/* phones: two tiles per row (F-01 has eight; one per row was a screen and a half of numbers) */
+@media (max-width: 600px) { .homes-tiles, .pipe-stats, .lrn-tiles, .cat-admin-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-3); } .homes-tiles .stat, .pipe-stats .stat, .lrn-tiles .stat, .cat-admin-stats .stat { padding: var(--sp-4); } }
 .homes-cols { display: grid; gap: var(--sp-4); grid-template-columns: 1fr; align-items: start; }
 @media (min-width: 1100px) { .homes-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 2200px) { .homes-cols { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
@@ -50,7 +52,8 @@
 .homes-stage-head h3 { margin: 0; font-size: var(--fs-md); color: var(--color-heading); }
 
 /* Owner radar: office rows with a bar. */
-.homes-bar-row { display: grid; grid-template-columns: minmax(7rem, 12rem) 1fr auto; gap: var(--sp-3); align-items: center; min-height: var(--target-min); }
+.homes-bar-row { display: grid; grid-template-columns: minmax(calc(7rem * var(--scale)), calc(13rem * var(--scale))) 1fr auto; gap: var(--sp-3); align-items: center; min-height: var(--target-min); }
+.homes-bar-row > :first-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 @media (max-width: 520px) { .homes-bar-row { grid-template-columns: 1fr auto; } .homes-bar-row > .homes-bar { grid-column: 1 / -1; } }
 
 .homes-bar { min-width: 0; }

@@ -36,9 +36,10 @@ export function DesktopShell({ surfaces, routes, title: titleProp, children, fee
   const title = titleByRole ? roleLabel(role, lang) : titleProp;
   const { pathname } = useRouterLocation();
   const narrow = useNarrow();
-  const [rail, setRail] = useState(() => { try { return localStorage.getItem(RAIL_KEY) === '1'; } catch { return false; } });
+  /* 900-1180 px (small laptops, split screens): the menu starts as the icon rail so the page keeps its width; the person's own toggle wins once made and is remembered. */
+  const [rail, setRailState] = useState(() => { try { const stored = localStorage.getItem(RAIL_KEY); if (stored === '1' || stored === '0') return stored === '1'; } catch { /* ignore */ } return typeof window !== 'undefined' && window.matchMedia('(min-width: 901px) and (max-width: 1180px)').matches; });
+  const setRail = (next: boolean | ((r: boolean) => boolean)) => setRailState((r) => { const v = typeof next === 'function' ? next(r) : next; try { localStorage.setItem(RAIL_KEY, v ? '1' : '0'); } catch { /* ignore */ } return v; });
   const [drawer, setDrawer] = useState(false);
-  useEffect(() => { try { localStorage.setItem(RAIL_KEY, rail ? '1' : '0'); } catch { /* ignore */ } }, [rail]);
   useEffect(() => { setDrawer(false); }, [pathname]);
 
   const groups = useMemo<SidebarGroup[]>(() => {

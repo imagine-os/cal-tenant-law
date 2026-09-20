@@ -93,7 +93,7 @@ export function TimelinePage() {
   const detail = hovered ? plan.byId.get(hovered) : null;
 
   return (
-    <div className="page stack plan-page">
+    <div className="page stack plan-page page-bleed">
       <PageHeader code="PM-03" title={t('plan.title.timeline')} subtitle={t('plan.sub.timeline')}>
         <PlanViewNav current="timeline" />
       </PageHeader>

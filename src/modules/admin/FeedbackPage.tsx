@@ -83,7 +83,7 @@ export function AdminFeedbackPage() {
   const columns: DataTableColumn<FeedbackRow>[] = [
     { key: 'page_code', label: t('admin.page'), mono: true, tone: 'muted', sortable: true, render: (r) => <span className="stack-sm"><code>{r.page_code}</code><span className="xs muted">{r.route}</span></span>, value: (r) => r.page_code },
     { key: 'kind', label: t('admin.kind'), sortable: true, render: (r) => <span className="homes-item-side"><Chip size="sm" className="homes-chip" icon={r.kind === 'bug' ? 'warning' : r.kind === 'request' ? 'sparkles' : 'message'}>{r.kind}</Chip><span className="xs muted">{r.category}</span></span>, value: (r) => r.kind },
-    { key: 'text', label: t('admin.text'), tone: 'heading', render: (r) => <span title={r.text}>{r.text.length > 110 ? `${r.text.slice(0, 110)}…` : r.text}</span>, value: (r) => r.text },
+    { key: 'text', label: t('admin.text'), tone: 'heading', wrap: true, render: (r) => <span title={r.text}>{r.text.length > 160 ? `${r.text.slice(0, 160)}…` : r.text}</span>, value: (r) => r.text },
     { key: 'user_name', label: t('admin.author'), sortable: true, render: (r) => <span className="stack-sm"><span>{r.user_name}</span><span className="xs muted">{r.role}</span></span>, value: (r) => r.user_name },
     { key: 'created_at', label: lang === 'es' ? 'Recibido' : 'Received', tone: 'date', sortable: true, render: (r) => fmtDate(r.created_at, lang), value: (r) => r.created_at, hideOnCard: true },
     { key: 'triage', label: t('admin.triage'), sortable: true, render: (r) => (r.triage ? <Badge tone={r.triage === 'fix' ? 'success' : r.triage === 'ask' ? 'warn' : 'danger'} size="sm">{r.triage}</Badge> : <span className="muted">—</span>), value: (r) => r.triage ?? '' },
@@ -106,7 +106,7 @@ export function AdminFeedbackPage() {
           {STATUSES.map((s) => <Chip key={s} size="sm" selected={status === s} onClick={() => setStatus(s)}>{s === 'all' ? t('admin.allStatuses') : s}</Chip>)}
         </div>
         {shown.length === 0 ? <EmptyState icon="feedback" title={t('admin.noFeedback')} />
-          : <DataTable framed title={t('admin.inboxTitle')} rows={shown} columns={columns} rowKey={(r) => r.id} searchable dense stickyHeader
+          : <DataTable framed rows={shown} columns={columns} rowKey={(r) => r.id} searchable dense stickyHeader
             onRowClick={openTriage} selectedKey={openId}
             rowActions={(r) => <Button size="sm" variant="secondary" icon="edit" onClick={() => openTriage(r)}>{t('admin.triage')}</Button>} />}
       </Section>

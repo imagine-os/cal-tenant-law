@@ -5,4 +5,5 @@
 .toast-close { border: 0; background: none; color: var(--color-text-muted); padding: 2px; display: inline-flex; align-items: center; justify-content: center; min-width: 32px; min-height: 32px; border-radius: var(--r-sm); }
 .toast-close:hover { background: var(--color-surface-tint); color: var(--color-heading); }
 .toast-info .toast-icon { color: var(--color-info); } .toast-success .toast-icon { color: var(--color-success); } .toast-warn .toast-icon { color: var(--color-warn); } .toast-danger .toast-icon { color: var(--color-danger); }
-@media (max-width: 600px) { .toasts { bottom: calc(var(--h-bottomnav) + var(--sp-4) + env(safe-area-inset-bottom)); } .toasts .toast:nth-last-child(n+3) { display: none; } }
+/* phones: toasts drop in from the top so they never cover the BottomNav or the FeedbackButton (both live at the bottom) */
+@media (max-width: 600px) { .toasts { top: calc(var(--sp-3) + env(safe-area-inset-top)); bottom: auto; } .toasts .toast:nth-last-child(n+3) { display: none; } @keyframes toast-in { from { opacity: 0; transform: translateY(-10px) scale(.98); } } }

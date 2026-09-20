@@ -265,7 +265,7 @@ export function DeskHomePage() {
 
       <Section title={t('desk.intakeQueue')} description={`${newIntakes.length} ${lang === 'es' ? 'nuevas' : 'new'} · ${intakes.length} ${lang === 'es' ? 'en total' : 'total'}`}>
         {intakes.length === 0 ? <EmptyState icon="users" title={t('desk.noIntakes')} />
-          : <DataTable framed title={t('desk.intakeQueue')} rows={intakes} columns={intakeColumns} rowKey={(r) => r.id} searchable dense
+          : <DataTable framed rows={intakes} columns={intakeColumns} rowKey={(r) => r.id} searchable dense
             emptyText={t('desk.noIntakes')}
             rowActions={(r) => (
               <span className="homes-item-side">
@@ -279,7 +279,7 @@ export function DeskHomePage() {
 
       <Section title={t('desk.paymentsPending')} description={`${money(unpaidTotal)} · ${t('desk.asListed')}`}>
         {unpaid.length === 0 ? <EmptyState icon="check" title={t('desk.noPayments')} />
-          : <DataTable framed title={t('desk.paymentsPending')} rows={unpaid} columns={invoiceColumns} rowKey={(r) => r.id} searchable dense
+          : <DataTable framed rows={unpaid} columns={invoiceColumns} rowKey={(r) => r.id} searchable dense
             rowActions={(r) => (
               <Placeholder what={`record a payment for ${r.title}`} plannedIn="payments seam (Stripe / PayPal)">
                 <Button size="sm" variant="secondary" icon="card">{lang === 'es' ? 'Registrar' : 'Record'}</Button>

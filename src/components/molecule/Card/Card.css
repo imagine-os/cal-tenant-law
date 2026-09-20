@@ -10,5 +10,5 @@
 .card.is-selected { box-shadow: inset 0 0 0 2px var(--color-border-primary), 0 10px 28px -14px rgba(var(--shadow-color),.2); }
 .card.is-tint { background: var(--color-surface-tint); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-primary) 12%, transparent); }
 .card-header { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); padding-bottom: var(--sp-3); margin-bottom: var(--sp-4); border-bottom: 1px solid var(--color-hairline); }
-.card-footer { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-2); padding-top: var(--sp-3); margin-top: var(--sp-4); border-top: 1px solid var(--color-hairline); flex-wrap: wrap; }
+.card-footer { display: flex; align-items: center; justify-content: flex-end; gap: var(--sp-2); padding-top: var(--sp-3); margin-top: auto; padding-top: calc(var(--sp-4) + var(--sp-3)); border-top: 1px solid var(--color-hairline); flex-wrap: wrap; }
 .card-p-none .card-header { padding: var(--sp-4) var(--sp-5); margin: 0; } .card-p-none .card-footer { padding: var(--sp-3) var(--sp-5); margin: 0; }

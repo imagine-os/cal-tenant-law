@@ -3,8 +3,9 @@
 button.stat { cursor: pointer; } button.stat:hover { box-shadow: var(--shadow-raised-hover); }
 @media (hover: hover) and (pointer: fine) { button.stat:hover { transform: translateY(-2px); } }
 .stat-primary { background: var(--grad-hero); color: var(--color-hero-text); box-shadow: var(--shadow-glow); }
-.stat-top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); min-height: 40px; }
-.stat-label { font-size: var(--fs-2xs); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-text-muted); line-height: var(--lh-md); } .stat-primary .stat-label { color: var(--color-hero-muted); }
+.stat-top { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); min-height: 40px; min-width: 0; }
+.stat-top > * { min-width: 0; }
+.stat-label { font-size: var(--fs-2xs); font-weight: var(--fw-semibold); text-transform: uppercase; letter-spacing: var(--ls-eyebrow); color: var(--color-text-muted); line-height: var(--lh-md); overflow-wrap: anywhere; } .stat-primary .stat-label { color: var(--color-hero-muted); }
 .stat-icon { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; flex: 0 0 auto; order: 2; border-radius: var(--r-md); background: var(--color-primary-soft); color: var(--color-primary-text); } .stat-primary .stat-icon { background: rgba(255,255,255,.14); color: #fff; }
 .stat-value { font-family: var(--font-display); font-size: var(--fs-2xl); font-weight: var(--fw-bold); color: var(--color-heading); line-height: 1.05; letter-spacing: var(--ls-display); font-variant-numeric: tabular-nums; } .stat-primary .stat-value { color: #fff; }
 .stat-foot { display: flex; gap: 8px; align-items: baseline; font-size: var(--fs-xs); padding-top: var(--sp-2); border-top: 1px solid var(--color-hairline); color: var(--color-text-muted); }

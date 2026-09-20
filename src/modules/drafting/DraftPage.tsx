@@ -330,7 +330,7 @@ export function DraftPage() {
   const unusedQuestions = unusedTemplateQuestions(template, questions);
 
   return (
-    <div className="page stack">
+    <div className="page stack page-bleed">
       <PageHeader
         code="S-22" title={draft.title} backTo="/assist/drafting"
         eyebrow={<>

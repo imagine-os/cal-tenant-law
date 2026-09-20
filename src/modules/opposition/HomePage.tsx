@@ -109,7 +109,7 @@ export function OppositionHomePage() {
 
       <Section title={t('opposition.served')} description={`${awaiting.length} ${t('opposition.awaiting').toLowerCase()}`}>
         {service.length === 0 ? <EmptyState icon="file-text" title={t('opposition.noServed')} />
-          : <DataTable framed title={t('opposition.served')} rows={service} columns={serviceColumns} rowKey={(r) => r.id} searchable dense
+          : <DataTable framed rows={service} columns={serviceColumns} rowKey={(r) => r.id} searchable dense
             rowActions={(r) => (
               <span className="homes-item-side">
                 {!r.acknowledged_at && <Button size="sm" variant="secondary" icon="check" onClick={() => void acknowledge(r.id)}>{t('opposition.acknowledge')}</Button>}
@@ -154,7 +154,7 @@ export function OppositionHomePage() {
       </div>
 
       <Section title={t('opposition.cases')} description={t('opposition.scope')}>
-        <DataTable framed title={t('opposition.cases')} rows={cases} columns={caseColumns} rowKey={(r) => r.id} dense />
+        <DataTable framed rows={cases} columns={caseColumns} rowKey={(r) => r.id} dense />
       </Section>
     </div>
   );

@@ -22,6 +22,8 @@ export interface DataTableColumn<T> {
   group?: string;
   /** Hide on the phone card layout. */
   hideOnCard?: boolean;
+  /** Long free text: the cell wraps (min 18rem) instead of forcing the table wider than the page. */
+  wrap?: boolean;
 }
 export interface DataTableFilter<T> { key: string; label: string; options: { value: string; label: string }[]; test: (row: T, value: string) => boolean }
 export interface DataTableProps<T> {
@@ -127,7 +129,7 @@ export function DataTable<T extends object>({ columns, rows, rowKey, onRowClick,
     return (
       <tr key={k} className={`${onRowClick ? 'is-clickable' : ''} ${selectedKey === k || selected.has(k) ? 'is-selected' : ''}`} onClick={onRowClick ? () => onRowClick(r) : undefined} tabIndex={onRowClick ? 0 : undefined} onKeyDown={onRowClick ? (e) => { if (e.key === 'Enter') onRowClick(r); } : undefined}>
         {selectable && <td className="datatable-cbcell" onClick={(e) => e.stopPropagation()}><Checkbox aria-label={`Select ${k}`} checked={selected.has(k)} onChange={() => toggleOne(k)} /></td>}
-        {columns.map((c) => <td key={c.key} data-label={typeof c.label === 'string' ? c.label : c.key} className={`${c.mono ? 'mono' : ''} ${c.hideOnCard ? 'hide-card' : ''} ${c.tone ? `cell-${c.tone}` : ''}`} style={{ textAlign: c.align }}>{c.render ? c.render(r) : formatCell(get(r, c.key))}</td>)}
+        {columns.map((c) => <td key={c.key} data-label={typeof c.label === 'string' ? c.label : c.key} className={`${c.mono ? 'mono' : ''} ${c.hideOnCard ? 'hide-card' : ''} ${c.wrap ? 'cell-wrap' : ''} ${c.tone ? `cell-${c.tone}` : ''}`} style={{ textAlign: c.align }}>{c.render ? c.render(r) : formatCell(get(r, c.key))}</td>)}
         {rowActions && <td className="datatable-actions" onClick={(e) => e.stopPropagation()}>{rowActions(r)}</td>}
       </tr>
     );
@@ -150,7 +152,7 @@ export function DataTable<T extends object>({ columns, rows, rowKey, onRowClick,
             <tr>
               {selectable && <th className="datatable-cbcell"><Checkbox aria-label="Select all rows on this page" checked={allChecked} indeterminate={someChecked} onChange={toggleAll} /></th>}
               {columns.map((c) => (
-                <th key={c.key} style={{ width: c.width, textAlign: c.align }} aria-sort={sort?.key === c.key ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}>
+                <th key={c.key} className={c.wrap ? 'cell-wrap' : undefined} style={{ width: c.width, textAlign: c.align }} aria-sort={sort?.key === c.key ? (sort.dir === 'asc' ? 'ascending' : 'descending') : undefined}>
                   {c.sortable === false ? c.label : <button type="button" className="datatable-sort" onClick={() => toggleSort(c.key)}>{c.label}<Icon name={sort?.key === c.key ? (sort.dir === 'asc' ? 'chevron-up' : 'chevron-down') : 'sort'} size={12} className="datatable-sorticon" /></button>}
                 </th>
               ))}

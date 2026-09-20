@@ -588,8 +588,8 @@ interface DraftSpec {
 }
 
 const ATTORNEY_BLOCK: Record<string, string[]> = {
-  ten_inland: ['Priya Raghunathan, Esq. (SBN 248117)', 'California Tenant Law', 'PO Box 2417', 'Idyllwild, CA 92549', 'Telephone: (951) 659-1234', 'Email: priya@caltenantlaw.test', 'Attorney for Defendant'],
-  ten_dtla: ['Mateo Ruiz, Esq. (SBN 301244)', 'California Tenant Law', '312 W. Fifth St. #512', 'Los Angeles, CA 90013', 'Telephone: (951) 659-1234', 'Email: mateo@caltenantlaw.test', 'Attorney for Defendant'],
+  ten_inland: ['Mateo Ruiz, Esq. (SBN 301244)', 'California Tenant Law', 'PO Box 2417', 'Idyllwild, CA 92549', 'Telephone: (951) 659-1234', 'Email: mateo@caltenantlaw.test', 'Attorney for Defendant'],
+  ten_dtla: ['Priya Raghunathan, Esq. (SBN 248117)', 'California Tenant Law', '312 W. Fifth St. #512', 'Los Angeles, CA 90013', 'Telephone: (951) 659-1234', 'Email: priya@caltenantlaw.test', 'Attorney for Defendant'],
 };
 const COURT_OF: Record<string, string> = {
   ten_inland: 'SUPERIOR COURT OF THE STATE OF CALIFORNIA, COUNTY OF RIVERSIDE',
@@ -597,22 +597,22 @@ const COURT_OF: Record<string, string> = {
 };
 const COUNTY_OF: Record<string, string> = { ten_inland: 'Riverside', ten_dtla: 'Los Angeles' };
 const FIRM_VARS: Record<string, Record<string, string>> = {
-  ten_inland: { attorney_name: 'Priya Raghunathan', bar_number: '248117', firm_name: 'California Tenant Law', firm_address: 'PO Box 2417, Idyllwild, CA 92549', firm_phone: '(951) 659-1234', firm_email: 'priya@caltenantlaw.test' },
-  ten_dtla: { attorney_name: 'Mateo Ruiz', bar_number: '301244', firm_name: 'California Tenant Law', firm_address: '312 W. Fifth St. #512, Los Angeles, CA 90013', firm_phone: '(951) 659-1234', firm_email: 'mateo@caltenantlaw.test' },
+  ten_inland: { attorney_name: 'Mateo Ruiz', bar_number: '301244', firm_name: 'California Tenant Law', firm_address: 'PO Box 2417, Idyllwild, CA 92549', firm_phone: '(951) 659-1234', firm_email: 'mateo@caltenantlaw.test' },
+  ten_dtla: { attorney_name: 'Priya Raghunathan', bar_number: '248117', firm_name: 'California Tenant Law', firm_address: '312 W. Fifth St. #512, Los Angeles, CA 90013', firm_phone: '(951) 659-1234', firm_email: 'priya@caltenantlaw.test' },
 };
 
 const DRAFTS: DraftSpec[] = [
-  { id: 'drf_0131', orderSeq: 131, template: 'tpl_answer_ud', tenant: 'ten_inland', title: 'Answer to Unlawful Detainer Complaint', revision: 1, status: 'sent_for_client_review', updatedDaysAgo: 7, by: 'usr_atty_inland',
+  { id: 'drf_0131', orderSeq: 131, template: 'tpl_answer_ud', tenant: 'ten_inland', title: 'Answer to Unlawful Detainer Complaint', revision: 1, status: 'sent_for_client_review', updatedDaysAgo: 7, by: 'usr_attorney',
     vars: { plaintiff: 'Sunset Park Holdings LLC', defendant: 'Dana Morales', notice_service_facts: 'taped to the door on a Sunday with no copy mailed', habitability_facts: 'a bathroom leak since November 2025, black mould behind the tile, and no heat from January to March 2026', repair_notice_date: '2025-11-14' } },
-  { id: 'drf_0128', orderSeq: 128, template: 'tpl_motion_compel', tenant: 'ten_inland', title: 'Motion to Compel Further Responses', revision: 0, status: 'editing', updatedDaysAgo: 0, by: 'usr_atty_inland', dept: 'Dept. 4', judge: 'Hon. A. Whitfield',
+  { id: 'drf_0128', orderSeq: 128, template: 'tpl_motion_compel', tenant: 'ten_inland', title: 'Motion to Compel Further Responses', revision: 0, status: 'editing', updatedDaysAgo: 0, by: 'usr_attorney', dept: 'Dept. 4', judge: 'Hon. A. Whitfield',
     vars: { plaintiff: 'Coronado Ridge Properties LP', defendant: 'Marcus Ellery', discovery_set: 'Requests for Production, Set One', discovery_served_date: '2026-08-24', response_date: '2026-09-11', meet_confer_date: '2026-09-15', meet_confer_result: 'No substantive reply was received.' } },
-  { id: 'drf_0117', orderSeq: 117, template: 'tpl_motion_strike', tenant: 'ten_dtla', title: 'Motion to Strike Portions of the Complaint', revision: 0, status: 'editing', updatedDaysAgo: 0, by: 'usr_attorney', dept: 'Dept. 94',
+  { id: 'drf_0117', orderSeq: 117, template: 'tpl_motion_strike', tenant: 'ten_dtla', title: 'Motion to Strike Portions of the Complaint', revision: 0, status: 'editing', updatedDaysAgo: 0, by: 'usr_atty_dtla', dept: 'Dept. 94',
     vars: { plaintiff: 'Figueroa Yards LLC', defendant: 'Tevin Boahene', para_fees: '12', para_damages: '9', argument: 'The lease contains no attorney-fee clause, and the daily damages figure uses a rent amount the notice itself contradicts.' } },
-  { id: 'drf_0119', orderSeq: 119, template: 'tpl_demurrer_ud', tenant: 'ten_dtla', title: 'Demurrer to the Complaint', revision: 0, status: 'approved', updatedDaysAgo: 2, by: 'usr_attorney', dept: 'Dept. 94',
+  { id: 'drf_0119', orderSeq: 119, template: 'tpl_demurrer_ud', tenant: 'ten_dtla', title: 'Demurrer to the Complaint', revision: 0, status: 'approved', updatedDaysAgo: 2, by: 'usr_atty_dtla', dept: 'Dept. 94',
     vars: { plaintiff: 'Figueroa Yards LLC', defendant: 'Tevin Boahene', ground_one: 'the complaint attaches a notice that demands rent for a period before the tenancy began', notice_defect: 'it demands $4,180 for March through May 2026, while the lease and the ledger show $1,395 per month for two of those months', capacity_defect: 'the plaintiff is not the owner named on the lease and no assignment is pleaded', facts: 'Defendant has rented the unit since March 2024. The notice attached to the complaint demands a sum that does not match any period of the tenancy.', argument: 'An unlawful detainer complaint rests on the notice it attaches. Where the notice on its face demands an amount the complaint\'s own allegations contradict, the complaint does not state a cause of action.' } },
-  { id: 'drf_0136', orderSeq: 136, template: 'tpl_motion_quash', tenant: 'ten_inland', title: 'Motion to Quash Service of Summons', revision: 0, status: 'editing', updatedDaysAgo: 1, by: 'usr_para_inland',
+  { id: 'drf_0136', orderSeq: 136, template: 'tpl_motion_quash', tenant: 'ten_inland', title: 'Motion to Quash Service of Summons', revision: 0, status: 'editing', updatedDaysAgo: 1, by: 'usr_paralegal',
     vars: { plaintiff: 'Hemet Valley Rentals Inc.', defendant: 'Yolanda Prieto-Nakamura', service_address: '4127 Alessandro Blvd., Apt. 12, Hemet, CA 92544', residency_facts: 'I live alone in a second-floor unit reached by a shared stair; the mailboxes are in the lobby.' } },
-  { id: 'drf_0109', orderSeq: 109, template: 'tpl_demand_letter', tenant: 'ten_inland', title: 'Demand Letter to Landlord: Repairs and Habitability', revision: 0, status: 'final', updatedDaysAgo: 22, by: 'usr_atty_inland',
+  { id: 'drf_0109', orderSeq: 109, template: 'tpl_demand_letter', tenant: 'ten_inland', title: 'Demand Letter to Landlord: Repairs and Habitability', revision: 0, status: 'final', updatedDaysAgo: 22, by: 'usr_attorney',
     vars: { defendant: 'Dana Morales', service_address: '9820 Vista Grande Dr., Apt. 4, Moreno Valley, CA 92553', landlord_name: 'Sunset Park Holdings LLC', landlord_address: '1140 E. Sixth St., Corona, CA 92879', conditions: 'Bathroom leak behind the tile, unrepaired since November 2025. Visible mould on the bathroom and bedroom walls. No heat from 4 January to 9 March 2026.', repair_notice_date: '2025-11-14', notice_history: 'Three further texts to the manager in December and January went unanswered.', deadline_days: '14', credit_request: 'a rent credit of 30 per cent for December 2025 through March 2026', response_deadline: '2026-08-29' } },
 ];
 

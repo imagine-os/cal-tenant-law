@@ -6,7 +6,7 @@
 .phoneshell[data-tone="list"] .phoneshell-col { background: var(--color-bg-phone-list); --color-bg-phone: var(--color-bg-phone-list); }
 .phoneshell[data-tone="form"] .phoneshell-col { background: var(--color-bg-phone-form); --color-bg-phone: var(--color-bg-phone-form); }
 @media (min-width: 600px) { .phoneshell:not(.in-frame) .phoneshell-col { box-shadow: -1px 0 0 var(--color-hairline-strong), 1px 0 0 var(--color-hairline-strong), 0 0 80px -20px rgba(var(--shadow-color),.18); } }
-.phoneshell-content { flex: 1; padding-bottom: calc(var(--h-bottomnav) + env(safe-area-inset-bottom) + 8px); }
+.phoneshell-content { flex: 1; padding-top: env(safe-area-inset-top); padding-bottom: calc(var(--h-bottomnav) + env(safe-area-inset-bottom) + 8px); }
 .phoneshell-nav { position: sticky; bottom: 0; z-index: 40; }
 .phoneshell-hub { position: fixed; top: 12px; left: 12px; z-index: 30; display: inline-flex; align-items: center; gap: 6px; min-height: 36px; font-size: var(--fs-xs); font-weight: var(--fw-medium); color: var(--color-text-secondary); background: var(--color-surface-overlay); box-shadow: var(--shadow-raised); border-radius: var(--r-pill); padding: 0 12px 0 10px; }
 .phoneshell-hub:hover { text-decoration: none; color: var(--color-primary-text); }
