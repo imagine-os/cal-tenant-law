@@ -1,0 +1,26 @@
+# 0026 - Scrape pass two - attorneys and missed images (CTL OS)
+
+version: 0.2.0
+date: 2026-09-20
+prompt: 0006
+intent: Justin asked to "bring in the pictures of the attorneys and any other pictures you didn't scrape yet from the cal tenant law site." Catalogue the firm's 8 attorneys (name, title, office, bio excerpt, portrait) into a machine-readable file the product can read, and sweep the site a second time for any image pass one's crawl (2026-09-18, 202 files) missed, without re-downloading content already covered.
+decision: D-046 (attorney data lives in `docs/data/attorneys.json`, one row per attorney, `verified: false` until a human confirms it against the live site or the firm directly; portraits copied to `public/brand/people/` for the product to reference alongside the existing `reference/site-scrape/assets/` copy) — proposed, unverified.
+rejected: Re-downloading all ~450 Ecwid CDN URLs that didn't match an existing catalogued basename by filename (almost all turned out to be per-size resize variants of images pass one already saved at original size, confirmed by byte-comparing several); fabricating a portrait or bio for Jeremy Cook, whose photo 404s live and in pass one — his `attorneys.json` row instead carries `portrait: null` and a note; treating Ecwid's generic "photo coming soon" 1,438 B placeholder (already in pass one's skip list) as new content when it resurfaced under a product's second gallery slot; giving attorneys other than Ken Carlson a title beyond what the site itself states ("Associate Attorney" verbatim, not invented seniority).
+files: docs/data/attorneys.json, docs/data/illustrations.json (5 rows appended: brand-logo-2023, pleading-game-board-poster-back, pleading-delta-motion-to-quash, pleading-motion-to-strike-opposition, pleading-opposition-to-slapp-motion; count field updated 202 -> 207), public/brand/people/ken-carlson.png, public/brand/people/kavin-williams.png, public/brand/people/brian-barajas.png, public/brand/people/brittany-torbert.png, public/brand/people/chelsea-cooper.png, public/brand/people/perrin-disner.png, public/brand/people/samara-weiner.png, reference/site-scrape/assets/caltenantlaw-logo-2023.png, reference/site-scrape/assets/pleading-game-board-poster-back.png, reference/site-scrape/assets/pleading-delta-motion-to-quash.jpg, reference/site-scrape/assets/pleading-motion-to-strike-opposition.jpg, reference/site-scrape/assets/pleading-opposition-to-slapp-motion.jpg, docs/reference/site-scrape/pages.md (appendix)
+codes: none (data/asset pass only; no page under any page-code family was added or changed — this feeds attorney bio cards wherever a future page reads `docs/data/attorneys.json`, tracked separately from D-23 if/when that page is specced)
+
+Merged from `_pending/scrape-2.md` at release 0.2.0 (changelog 0029).
+
+## What was done
+
+Network check passed (`https://caltenantlaw.com/` returned 200), so this pass worked from a mix of live re-fetches and the already-saved raw HTML/JSON in `reference/site-scrape/raw/`, per the sweep's own log in `docs/reference/site-scrape/pages.md` ("Pass two image sweep (2026-09-20)").
+
+- **Attorneys (8 found, 8 catalogued)**: Kenneth H. Carlson, Kavin Williams, Jeremy Cook, Brian Barajas, Brittany Torbert, Chelsea Cooper, Perrin F. Disner, Samara Weiner — one per regional office page plus the founder, cross-checked against the "Our Associates" list on `/contact`. Real per-attorney title and 2-sentence bio excerpt pulled from each office page (not the generic office-description copy). 7 of 8 portraits confirmed already saved at original size in pass one; re-fetched directly from `/images/associates/<file>.png` and got byte-identical files back, then copied into `public/brand/people/`. Jeremy Cook has no photo anywhere on the live site (404, both passes).
+- **Other images (5 new, ~445+ URLs checked and correctly excluded)**: derived every image URL referenced across all 98 saved pages plus the Ecwid storefront JSON, diffed against the 202+8 already catalogued/skipped. Nearly all "new" URLs were Ecwid's per-size CDN variants of already-saved images (verified by byte-comparison) or the already-skipped sub-2KB placeholder recurring under a different product. Checked `products.json` for multi-photo galleries pass one's single-image-per-product pull would have missed: 7 of 96 products have a second gallery photo; 3 share one byte-identical Game Board back-photo and 3 are distinct pleading-paper scans (the 7th is again the sub-2KB placeholder). Also caught the site's own logo, which pass one only ever saw through the `/_next/image` resizer and never saved directly. All 5 downloaded and appended to `docs/data/illustrations.json` with `evidence: "scraped-live"`, `verified: false`.
+
+## Verification
+
+- Both `docs/data/attorneys.json` and `docs/data/illustrations.json` parse as JSON (`json.load` in Python) after editing.
+- `docs/data/illustrations.json`'s `count` field (207) matches `len(illustrations)` (207).
+- Every portrait file in `public/brand/people/` and every new file in `reference/site-scrape/assets/` was confirmed with `file(1)` to be a valid image of the stated dimensions before being catalogued.
+- No existing row in either JSON file was edited; only new rows were appended.

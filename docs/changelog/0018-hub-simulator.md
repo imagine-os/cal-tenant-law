@@ -1,0 +1,40 @@
+# 0018 - hub-simulator
+
+version: 0.2.0
+date: 2026-09-20
+prompt: 0006
+intent: Order the hub by what the firm owner cares about, show each role only the surfaces it can actually open, and make the demo simulator present every page on the device that surface is really used on.
+decision: D-050
+rejected: A hand-written list of pages per hub card (it would drift the moment another module lands a route or changes `roles`; the list is derived from `getRoutes()` instead). Renaming the `tv2560` / `desktop1920` device keys to match their new chrome (the keys are in shared URLs and in the actions manifest, so only the labels changed). Rasterising the framed page for the Screenshot button (a page cannot rasterise a same-origin iframe; it stays a Placeholder pointing at `npm run screenshots`). A fourth surface-card band for the build tools (the compact tool cards already carry that row; adding cards would have pushed the outside parties further down without adding information).
+files: src/modules/hub/HubPage.tsx, src/modules/hub/hub.css, src/modules/hub/specs.ts, src/modules/hub/strings.ts, src/modules/showcase/SimulatorPage.tsx, src/modules/showcase/specs.ts, src/modules/showcase/strings.ts, src/modules/showcase/showcase.css, src/components/organism/DeviceFrame/DeviceFrame.tsx, src/components/organism/DeviceFrame/DeviceFrame.css, src/components/organism/DeviceFrame/DeviceFrame.meta.ts, docs/pages/HUB-01.md, docs/pages/D-22.md, docs/reference/surfaces.md
+codes: HUB-01 D-22
+
+Merged from `_pending/hub-simulator.md` at release 0.2.0 (changelog 0029).
+
+## HUB-01 - the hub reads in the order the owner cares about (T-123)
+
+Justin, prompt 0006: *"On the homepage, make sure the order of items is what the owner cares about. For instance opposing counsel portal is toward the top, but other pages are more important to the person using this hub."*, *"Make sure the roles actually see what's relevant to them."*, *"Deep pass so spacing and formatting looks good, more user friendly."*
+
+- **New order**: Start here -> **Run the firm** (attorneys, assistants / paralegals, front desk, owner, admin & settings) -> **Clients** (client app, public website & store, game board, learning) -> **Build & review** (plan, proposal, canvas, demo simulator, docs, ops manual, legal memory, dev tools, role matrix) -> **Outside parties & marketing** (opposing-counsel portal, marketing engine). The opposing-counsel portal moved from the first band to the last. The hero, the session bar, the three-column card grids, the live previews and the counts footer are unchanged.
+- **Start here**: three primary buttons under the hero, each entering as that role - "Enter as attorney: the document pipeline" (`/counsel/pipeline`), "Front desk: take a call" (`/desk/calls`), "Client: my orders" (`/app/orders`). While the module that owns a page is still landing the button is a `Placeholder` captioned "In progress"; `routeStatus()` turns it into a live button the moment that route registers, so the hub needs no edit as the pipeline, call console and client-orders pages arrive.
+- **Roles see only what is theirs**: each role card lists the pages that role can actually open, derived from `getRoutes()` filtered by `r.nav && r.roles.includes(role)`, its own surface first, then the other menu categories in menu order; six shown, grouped by category, then "+N more" which opens the shell. A card can no longer advertise a page its role would be bounced from, and it tracks D-048 automatically as other modules land. Menu-category labels are bilingual in the hub's own strings (`hub.navgroup.*`), because `src/app/navGroups.ts` is shared and English-only.
+- **What this role does + what is waiting**: every card carries a one-line en/es purpose (`hub.does.*`), and the cards where the pipeline tables make it cheap carry live counts through `useTable`: attorneys "orders waiting on a client" (`orders.waiting_on = client`), paralegals "orders on the paralegal", front desk "calls to return" (`calls.status in missed, voicemail`) and "follow-ups open", the client app "requests waiting on you" (`client_requests.status = open` for `usr_client`). A zero is greyed, never hidden.
+- **New cards**: Learning (`/app/learn` as the client, phone preview) in Clients; Role matrix (`/dev/roles`) in Build & review. The game board moved from the tools row to Clients.
+- **Spacing and format pass**: one band rhythm (`--sp-10` between bands, `--sp-8` in the hero and Start here), equal card heights per row with the footer pinned over a hairline, entry chips on one line per menu category at 44 px, the phone preview of a non-feature card boxed and cropped at the bottom instead of bleeding out of the card, and the session bar still rendered outside the ink band so it can never be clipped.
+- **Actions**: `hub.openRoleSurface` (role + path) and `hub.startHere` (flow) added; `hub.enterAs` gains the `learn` surface; `hub.openTool` is now `plan, proposal, canvas, simulator, docs, manual, legal, dev, roles`.
+
+## D-22 - the demo shows on the device it represents (T-124, D-050)
+
+Justin, prompt 0006: *"Make sure the demo simulator shows the demos in the proper device being represented."*
+
+- **Device chrome per preset** (`DeviceFrame chrome`): phone (rounded bezel, dynamic island, home indicator), tablet (bezel, camera dot), laptop 1280 (screen bezel, hinge, keyboard deck), monitor 1920 / 2560 (thin bezel, neck, base), TV 3840 (very thin bezel, feet, "10-foot view" caption). The chrome is decoration: every part is `aria-hidden`, it never changes the viewport the page sees, and it defaults to `none`, so the hub previews and the canvas keep the edge-to-edge stage they rely on. `DeviceFrame` now measures the screen rather than the outer figure, so scaling is right inside a bezel.
+- **The device follows the route**: `AUTO_DEVICE` maps a surface to a preset (customer -> phone 390, owner -> 2560, public / dev / plan -> laptop 1280, every other staff surface -> 1920). A client-app demo is never rendered in a desktop frame by default. Picking a device by hand pins it (`?pin=1`) and the pill reads "Pinned: ..." with an **Auto** button; a pinned device of a different kind from the route's is badged **Responsive check**, so a responsive test is never passed off as the real thing.
+- **Sit back**: the stage is capped at `min(100%, the device's own width, (100dvh - page chrome) x aspect)`, so a 3840 TV fits the window whole.
+- **Route picker grouped by surface family** with a heading row per family; choosing a page sets the role to that surface's demo role. Two routes that fill to the same address (`/docs` and `/docs/*`) now appear once.
+- **Tour corrected to the right devices**: hub (laptop) -> the client's orders on phone 390 -> the game board -> the attorney pipeline on 1920 -> the owner on 2560 -> the proposal on a laptop. A step whose page is still being built falls back to a named nearest page instead of the hub.
+- **Keyboard**: `D` cycles the device (and pins it) alongside `P`, `→` / `←`, `R` and `Esc`. **Actions**: `showcase.pinDevice` and `showcase.autoDevice` added.
+- The simulator no longer imports the canvas's layout module: the page list, the sample-parameter table and the surface groups are its own, so D-21 and D-22 can change independently.
+
+## Checked
+
+`npm run typecheck` clean for these files. Screenshots at 360, 768, 1280, 1920, 2560 and 3840, light and dark, plus the three visual directions at 1280: no horizontal scroll, no console errors. Simulator checked on phone 390 (auto from `/app`), laptop 1280 (auto from the hub), 4K TV 3840 pinned on the proposal (Responsive-check badge) and present mode.

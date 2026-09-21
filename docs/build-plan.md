@@ -282,7 +282,11 @@ Justin's 2026-09-20 asks (prompt 0006) reorder Pass 2 without renumbering it (D-
 | T-133 | DOC | Attorney portraits and remaining site images: scrape, catalogue in docs/data, people data | QA & Docs | T-114 | sonnet-5 | doing | S | 12 | A |
 | T-134 | CORE | Pass 2 wave A integration, deep spacing and formatting pass across shells, hub and pages | Foundation | T-122, T-123, T-124, T-125, T-126, T-127, T-128, T-129, T-130, T-131, T-132, T-133 | fable | todo | L | 18 | A |
 | T-135 | QA | Pass 2 wave A screenshots, responsive matrix, Spanish fill | QA & Docs | T-134 | sonnet-5 | todo | M | 19 | A |
-| T-136 | CORE | Release 0.2.1: Pass 2 wave B | QA & Docs | T-086, T-087 | fable | todo | S | 18 | A |
+| T-136 | CORE | Release 0.2.1: Pass 2 wave B | QA & Docs | T-086, T-087 | fable | todo | S | 18 | B |
+| T-137 | P-05 | P-05 P-06 Attorneys page and public video library (site) | Proposal & Site | T-133, T-130 | opus-5 | done | M | 18 | A |
+| T-138 | HUB-01 | Visual exploration links from the hub (prompt 0007, D-053) | Hub & Dev tools | T-123 | fable | done | S | 18 | A |
+
+**Wave A shipped as release 0.2.0 on 2026-09-20** (changelog 0029): every task in this table except T-136 is done; the statuses above are the plan as written on 2026-09-20 and `docs/plan/tasks.json` / `docs/kanban.md` carry the live state. T-054 and T-063 went back to `todo` for wave B (their wave A scope, seeds and the call console, shipped; the case lifecycle and intake did not).
 
 Existing Pass 2 rows whose status or dependencies changed on 2026-09-20 (the rows above in the Pass 2 table are kept as written; these are the current values):
 
@@ -302,7 +306,7 @@ Every other Pass 2 task (T-055..T-062, T-064, T-066..T-068, T-073..T-076, T-080.
 
 <details><summary>Definition of done per task (Pass 2 wave A)</summary>
 
-- **T-118** Prompt 0006 and pass-two plan: Prompt verbatim with ## Response; every new task has deliverables and acceptance; plan:check passes; kanban regenerated; decisions appended with sources. _Deliverables_: docs/prompts/0006-pass-two-operations.md, docs/plan/tasks.json, docs/kanban.md, docs/build-plan.md, docs/decisions.md, docs/changelog/_pending/foundation-2-plan.md.
+- **T-118** Prompt 0006 and pass-two plan: Prompt verbatim with ## Response; every new task has deliverables and acceptance; plan:check passes; kanban regenerated; decisions appended with sources. _Deliverables_: docs/prompts/0006-pass-two-operations.md, docs/plan/tasks.json, docs/kanban.md, docs/build-plan.md, docs/decisions.md, docs/changelog/0016-foundation-2.md.
 - **T-119** Role scoping audit: Front desk sees no developer, docs, plan, legal memory or law-change pages; every role sees only its surfaces plus what D-048 grants; D-24 lists roles x routes with a menu preview per role; super admin viewing as a role is scoped like that role. _Deliverables_: src/modules/frontdesk/specs.ts, src/modules/plan/specs.ts, src/modules/docs/specs.ts, src/modules/legal/specs.ts, src/modules/dev/index.ts, src/modules/dev/RoleMatrixPage.tsx, src/auth/SessionProvider.tsx, docs/pages/D-24.md.
 - **T-120** Order pipeline domain: One canonical stage list (D-047) with waits_on client / court / staff per stage; every order row carries stage, waiting_on, revision counter and stage events; seeds cover every stage including on hold and cancelled; every write versioned. _Deliverables_: src/domain/pipeline.ts, src/data/schema/pipeline.ts, src/data/seed/pipeline.ts, src/flows/roleFlows.ts, docs/reference/surfaces.md, docs/data-model.md.
 - **T-121** DocPreview organism: Renders from metadata (kind, title, caption, pages, status) as SVG / CSS with no rasterisation; every kind has a distinct silhouette; meta with usages shows in D-02; legible at 360 and 3840; used by binder, pipeline, drafting and LMS lists. _Deliverables_: src/components/organism/DocPreview/DocPreview.tsx, src/components/organism/DocPreview/DocPreview.meta.ts, src/components/organism/DocPreview/DocPreview.css.

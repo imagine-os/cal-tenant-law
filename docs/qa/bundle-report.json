@@ -1,0 +1,3529 @@
+{
+ "generatedAt": "2026-09-21T00:02:21.554Z",
+ "version": "0.2.0",
+ "assets": [
+  {
+   "file": "1280-AxoVmdzq.jpg",
+   "bytes": 8138715,
+   "gzip": 8138715,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-CRNJ46r-.jpg",
+   "bytes": 3635279,
+   "gzip": 3635279,
+   "kind": "other"
+  },
+  {
+   "file": "3840-Dz3xzPVz.jpg",
+   "bytes": 3467247,
+   "gzip": 3467247,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DjsPJrBp.jpg",
+   "bytes": 3381018,
+   "gzip": 3381018,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-C--BrqWP.jpg",
+   "bytes": 3366430,
+   "gzip": 3366430,
+   "kind": "other"
+  },
+  {
+   "file": "1280-eo1ZBI3I.jpg",
+   "bytes": 1434272,
+   "gzip": 1434272,
+   "kind": "other"
+  },
+  {
+   "file": "1280-Bp0Q9SCt.jpg",
+   "bytes": 1306082,
+   "gzip": 1306082,
+   "kind": "other"
+  },
+  {
+   "file": "1280-BWbdE7qG.jpg",
+   "bytes": 1273363,
+   "gzip": 1273363,
+   "kind": "other"
+  },
+  {
+   "file": "3840-BBSi0zH3.jpg",
+   "bytes": 1183641,
+   "gzip": 1183641,
+   "kind": "other"
+  },
+  {
+   "file": "1280-Cgg5ksuP.jpg",
+   "bytes": 1157832,
+   "gzip": 1157832,
+   "kind": "other"
+  },
+  {
+   "file": "1280-doc-BHjnlcuR.jpg",
+   "bytes": 1079735,
+   "gzip": 1079735,
+   "kind": "other"
+  },
+  {
+   "file": "3840-BcyYsDgf.jpg",
+   "bytes": 968316,
+   "gzip": 968316,
+   "kind": "other"
+  },
+  {
+   "file": "3840-Pgqwv5sV.jpg",
+   "bytes": 965005,
+   "gzip": 965005,
+   "kind": "other"
+  },
+  {
+   "file": "390-doc-DSj2JO0G.jpg",
+   "bytes": 955383,
+   "gzip": 955383,
+   "kind": "other"
+  },
+  {
+   "file": "3840-dark-CX3LfhZv.jpg",
+   "bytes": 947394,
+   "gzip": 947394,
+   "kind": "other"
+  },
+  {
+   "file": "index-DgF29xXs.js",
+   "bytes": 3093181,
+   "gzip": 938265,
+   "kind": "js"
+  },
+  {
+   "file": "3840-dark-BA6ci65R.jpg",
+   "bytes": 937046,
+   "gzip": 937046,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-BVexxpx0.jpg",
+   "bytes": 924243,
+   "gzip": 924243,
+   "kind": "other"
+  },
+  {
+   "file": "legalethicsmusicalimage-DnfpnWx9.png",
+   "bytes": 911819,
+   "gzip": 911819,
+   "kind": "other"
+  },
+  {
+   "file": "3840-BU-L-4XX.jpg",
+   "bytes": 790250,
+   "gzip": 790250,
+   "kind": "other"
+  },
+  {
+   "file": "3840-dark-BVc37t1V.jpg",
+   "bytes": 776417,
+   "gzip": 776417,
+   "kind": "other"
+  },
+  {
+   "file": "3840-dark-kGwqngrv.jpg",
+   "bytes": 707235,
+   "gzip": 707235,
+   "kind": "other"
+  },
+  {
+   "file": "3840-DPz_nz2g.jpg",
+   "bytes": 705741,
+   "gzip": 705741,
+   "kind": "other"
+  },
+  {
+   "file": "3840-w_6wx7us.jpg",
+   "bytes": 696619,
+   "gzip": 696619,
+   "kind": "other"
+  },
+  {
+   "file": "1280-BTbCV8sP.jpg",
+   "bytes": 569874,
+   "gzip": 569874,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CK8dkRdn.jpg",
+   "bytes": 515493,
+   "gzip": 515493,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-BJ5yK8qS.jpg",
+   "bytes": 510558,
+   "gzip": 510558,
+   "kind": "other"
+  },
+  {
+   "file": "1280-BEUQH5TA.jpg",
+   "bytes": 436721,
+   "gzip": 436721,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DriNWIrL.jpg",
+   "bytes": 436682,
+   "gzip": 436682,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DdzN-_om.jpg",
+   "bytes": 432590,
+   "gzip": 432590,
+   "kind": "other"
+  },
+  {
+   "file": "1280-Dmh6dEf2.jpg",
+   "bytes": 430288,
+   "gzip": 430288,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-CK_5NPDq.jpg",
+   "bytes": 425676,
+   "gzip": 425676,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-CHY7Y8eG.jpg",
+   "bytes": 423241,
+   "gzip": 423241,
+   "kind": "other"
+  },
+  {
+   "file": "product-900-Cru4sIgS.jpg",
+   "bytes": 421285,
+   "gzip": 421285,
+   "kind": "other"
+  },
+  {
+   "file": "1280-BMwd6n76.jpg",
+   "bytes": 415032,
+   "gzip": 415032,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DeYYm1LO.jpg",
+   "bytes": 413477,
+   "gzip": 413477,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-BWhgHFAk.jpg",
+   "bytes": 410365,
+   "gzip": 410365,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-rr8QHbta.jpg",
+   "bytes": 402071,
+   "gzip": 402071,
+   "kind": "other"
+  },
+  {
+   "file": "1280-Cr9Px30b.jpg",
+   "bytes": 396185,
+   "gzip": 396185,
+   "kind": "other"
+  },
+  {
+   "file": "1280-5d_cgLSO.jpg",
+   "bytes": 393055,
+   "gzip": 393055,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-qDO2yztP.jpg",
+   "bytes": 392420,
+   "gzip": 392420,
+   "kind": "other"
+  },
+  {
+   "file": "3840-Hs73xEkK.jpg",
+   "bytes": 388226,
+   "gzip": 388226,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-Dasv2vDl.jpg",
+   "bytes": 383227,
+   "gzip": 383227,
+   "kind": "other"
+  },
+  {
+   "file": "3840-Kpmys21Z.jpg",
+   "bytes": 379852,
+   "gzip": 379852,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DgDAuGQh.jpg",
+   "bytes": 377259,
+   "gzip": 377259,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-jhdiajNg.jpg",
+   "bytes": 375044,
+   "gzip": 375044,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DyQ-d201.jpg",
+   "bytes": 372876,
+   "gzip": 372876,
+   "kind": "other"
+  },
+  {
+   "file": "1280-chapter-hA7LW77O.jpg",
+   "bytes": 364638,
+   "gzip": 364638,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-D3AWp7KG.jpg",
+   "bytes": 356844,
+   "gzip": 356844,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DxHiigH7.jpg",
+   "bytes": 353344,
+   "gzip": 353344,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DLV1QCXE.jpg",
+   "bytes": 340498,
+   "gzip": 340498,
+   "kind": "other"
+  },
+  {
+   "file": "3840-dark-MI8qeDsw.jpg",
+   "bytes": 330097,
+   "gzip": 330097,
+   "kind": "other"
+  },
+  {
+   "file": "3840-Bguq-lzl.jpg",
+   "bytes": 329713,
+   "gzip": 329713,
+   "kind": "other"
+  },
+  {
+   "file": "1280-chapter-es-DZbUspug.jpg",
+   "bytes": 329251,
+   "gzip": 329251,
+   "kind": "other"
+  },
+  {
+   "file": "390-chapter-B1zIoklN.jpg",
+   "bytes": 311911,
+   "gzip": 311911,
+   "kind": "other"
+  },
+  {
+   "file": "1280-Dw0MBBSX.jpg",
+   "bytes": 309711,
+   "gzip": 309711,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-CrJ7Og5n.jpg",
+   "bytes": 298646,
+   "gzip": 298646,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DLMkmFCD.jpg",
+   "bytes": 287660,
+   "gzip": 287660,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-C-XZ9ksw.jpg",
+   "bytes": 285824,
+   "gzip": 285824,
+   "kind": "other"
+  },
+  {
+   "file": "390-chapter-es-BcS4Fqne.jpg",
+   "bytes": 283186,
+   "gzip": 283186,
+   "kind": "other"
+  },
+  {
+   "file": "3840-iJFYu_61.jpg",
+   "bytes": 281577,
+   "gzip": 281577,
+   "kind": "other"
+  },
+  {
+   "file": "3840-dark-BfT-RTeI.jpg",
+   "bytes": 280040,
+   "gzip": 280040,
+   "kind": "other"
+  },
+  {
+   "file": "1280-WDKmZ7Q1.jpg",
+   "bytes": 279373,
+   "gzip": 279373,
+   "kind": "other"
+  },
+  {
+   "file": "1280-JjKSZTNA.jpg",
+   "bytes": 278058,
+   "gzip": 278058,
+   "kind": "other"
+  },
+  {
+   "file": "compare-hub-iQC5eE-l.jpg",
+   "bytes": 251639,
+   "gzip": 251639,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CiYl4jnI.jpg",
+   "bytes": 246642,
+   "gzip": 246642,
+   "kind": "other"
+  },
+  {
+   "file": "3840-DxFCPxP-.jpg",
+   "bytes": 230966,
+   "gzip": 230966,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-BDRN1Vw1.jpg",
+   "bytes": 222944,
+   "gzip": 222944,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CMOtqCEu.jpg",
+   "bytes": 220763,
+   "gzip": 220763,
+   "kind": "other"
+  },
+  {
+   "file": "3840-Bi71NSTM.jpg",
+   "bytes": 220640,
+   "gzip": 220640,
+   "kind": "other"
+  },
+  {
+   "file": "3840-DrTY3qKq.jpg",
+   "bytes": 218024,
+   "gzip": 218024,
+   "kind": "other"
+  },
+  {
+   "file": "3840-Bh-3G6C-.jpg",
+   "bytes": 205433,
+   "gzip": 205433,
+   "kind": "other"
+  },
+  {
+   "file": "1280-BhrJIhsv.jpg",
+   "bytes": 188105,
+   "gzip": 188105,
+   "kind": "other"
+  },
+  {
+   "file": "3840-ig9-8hQi.jpg",
+   "bytes": 186843,
+   "gzip": 186843,
+   "kind": "other"
+  },
+  {
+   "file": "hero-poster-1ceLI4-J.png",
+   "bytes": 180991,
+   "gzip": 180991,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-MIXQ7LmC.jpg",
+   "bytes": 176523,
+   "gzip": 176523,
+   "kind": "other"
+  },
+  {
+   "file": "1280-topic-C7neyTcN.jpg",
+   "bytes": 172097,
+   "gzip": 172097,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DqFNhHer.jpg",
+   "bytes": 165458,
+   "gzip": 165458,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CGgi6YY9.jpg",
+   "bytes": 156022,
+   "gzip": 156022,
+   "kind": "other"
+  },
+  {
+   "file": "390-topic-BUgrQB_t.jpg",
+   "bytes": 152084,
+   "gzip": 152084,
+   "kind": "other"
+  },
+  {
+   "file": "compare-plan-Bzqbb4Iv.jpg",
+   "bytes": 149077,
+   "gzip": 149077,
+   "kind": "other"
+  },
+  {
+   "file": "1280-BAwQE4Sw.jpg",
+   "bytes": 145920,
+   "gzip": 145920,
+   "kind": "other"
+  },
+  {
+   "file": "1280-FE_mjGcu.jpg",
+   "bytes": 140803,
+   "gzip": 140803,
+   "kind": "other"
+  },
+  {
+   "file": "1280-C4u1e36-.jpg",
+   "bytes": 140674,
+   "gzip": 140674,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CVo4rqbB.jpg",
+   "bytes": 137246,
+   "gzip": 137246,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-BJfL0_TM.jpg",
+   "bytes": 137051,
+   "gzip": 137051,
+   "kind": "other"
+  },
+  {
+   "file": "compare-board-B_4x9Pha.jpg",
+   "bytes": 135192,
+   "gzip": 135192,
+   "kind": "other"
+  },
+  {
+   "file": "1280-Dun_I3Dc.jpg",
+   "bytes": 132777,
+   "gzip": 132777,
+   "kind": "other"
+  },
+  {
+   "file": "boardgame-site-proposal-DHKoagKo.jpg",
+   "bytes": 127613,
+   "gzip": 127613,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-BCBsLgHH.jpg",
+   "bytes": 127352,
+   "gzip": 127352,
+   "kind": "other"
+  },
+  {
+   "file": "1280-BQdTyPQ9.jpg",
+   "bytes": 126906,
+   "gzip": 126906,
+   "kind": "other"
+  },
+  {
+   "file": "boardgame-counsel-DL9r4yFg.jpg",
+   "bytes": 126867,
+   "gzip": 126867,
+   "kind": "other"
+  },
+  {
+   "file": "1280-BZOBSoZx.jpg",
+   "bytes": 125194,
+   "gzip": 125194,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-DvUJtsCd.jpg",
+   "bytes": 123843,
+   "gzip": 123843,
+   "kind": "other"
+  },
+  {
+   "file": "icon_gameboard-DwDEKIxl.png",
+   "bytes": 123537,
+   "gzip": 123537,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CPCub-Cy.jpg",
+   "bytes": 123222,
+   "gzip": 123222,
+   "kind": "other"
+  },
+  {
+   "file": "boardgame-plan-C171usJX.jpg",
+   "bytes": 119006,
+   "gzip": 119006,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CaaT4UKb.jpg",
+   "bytes": 116790,
+   "gzip": 116790,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CncDAR3M.jpg",
+   "bytes": 114159,
+   "gzip": 114159,
+   "kind": "other"
+  },
+  {
+   "file": "courthouse-counsel-BALuVl6A.jpg",
+   "bytes": 113477,
+   "gzip": 113477,
+   "kind": "other"
+  },
+  {
+   "file": "1280-tLgxwIuM.jpg",
+   "bytes": 113183,
+   "gzip": 113183,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-DcOpI52F.jpg",
+   "bytes": 111969,
+   "gzip": 111969,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-DgHX3oX8.jpg",
+   "bytes": 110583,
+   "gzip": 110583,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-CZWguYYO.jpg",
+   "bytes": 110509,
+   "gzip": 110509,
+   "kind": "other"
+  },
+  {
+   "file": "1280-DVNaBX3S.jpg",
+   "bytes": 108811,
+   "gzip": 108811,
+   "kind": "other"
+  },
+  {
+   "file": "clearsky-site-proposal-DWztDVfd.jpg",
+   "bytes": 108652,
+   "gzip": 108652,
+   "kind": "other"
+  },
+  {
+   "file": "clearsky-counsel-BE6jtXsZ.jpg",
+   "bytes": 108509,
+   "gzip": 108509,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CgjExlZk.jpg",
+   "bytes": 108017,
+   "gzip": 108017,
+   "kind": "other"
+  },
+  {
+   "file": "boardgame-hub-D8QyW92Y.jpg",
+   "bytes": 107843,
+   "gzip": 107843,
+   "kind": "other"
+  },
+  {
+   "file": "1280-Bpevgx_J.jpg",
+   "bytes": 107650,
+   "gzip": 107650,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-CcAmk5EH.jpg",
+   "bytes": 106926,
+   "gzip": 106926,
+   "kind": "other"
+  },
+  {
+   "file": "courthouse-site-proposal-C6u61t6-.jpg",
+   "bytes": 105865,
+   "gzip": 105865,
+   "kind": "other"
+  },
+  {
+   "file": "1280-dark-yT4ZYA02.jpg",
+   "bytes": 105745,
+   "gzip": 105745,
+   "kind": "other"
+  },
+  {
+   "file": "boardgame-board-BDi7hV-o.jpg",
+   "bytes": 105023,
+   "gzip": 105023,
+   "kind": "other"
+  },
+  {
+   "file": "1280-Cw32XMl2.jpg",
+   "bytes": 104285,
+   "gzip": 104285,
+   "kind": "other"
+  },
+  {
+   "file": "clearsky-plan-CIryXIw2.jpg",
+   "bytes": 102584,
+   "gzip": 102584,
+   "kind": "other"
+  },
+  {
+   "file": "courthouse-plan-DNIN2eKt.jpg",
+   "bytes": 102344,
+   "gzip": 102344,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CKJMogQ3.jpg",
+   "bytes": 100172,
+   "gzip": 100172,
+   "kind": "other"
+  },
+  {
+   "file": "boardgame-hub-dark-CgE_GO5B.jpg",
+   "bytes": 99583,
+   "gzip": 99583,
+   "kind": "other"
+  },
+  {
+   "file": "clearsky-board-CLY78WH6.jpg",
+   "bytes": 94392,
+   "gzip": 94392,
+   "kind": "other"
+  },
+  {
+   "file": "courthouse-board-DkrlpkMQ.jpg",
+   "bytes": 94087,
+   "gzip": 94087,
+   "kind": "other"
+  },
+  {
+   "file": "clearsky-hub-BumFy4tu.jpg",
+   "bytes": 93352,
+   "gzip": 93352,
+   "kind": "other"
+  },
+  {
+   "file": "clearsky-hub-dark-BD_03Qhh.jpg",
+   "bytes": 90766,
+   "gzip": 90766,
+   "kind": "other"
+  },
+  {
+   "file": "courthouse-hub-J2daZpXA.jpg",
+   "bytes": 89760,
+   "gzip": 89760,
+   "kind": "other"
+  },
+  {
+   "file": "courthouse-hub-dark-LsEO4iUD.jpg",
+   "bytes": 87387,
+   "gzip": 87387,
+   "kind": "other"
+  },
+  {
+   "file": "1280-BxAL4yGL.jpg",
+   "bytes": 85063,
+   "gzip": 85063,
+   "kind": "other"
+  },
+  {
+   "file": "1280-C6ivvVwt.jpg",
+   "bytes": 84253,
+   "gzip": 84253,
+   "kind": "other"
+  },
+  {
+   "file": "product-377-DtT0I-xm.jpg",
+   "bytes": 81453,
+   "gzip": 81453,
+   "kind": "other"
+  },
+  {
+   "file": "game-board-2021-BMTkgirh.png",
+   "bytes": 79836,
+   "gzip": 79836,
+   "kind": "other"
+  },
+  {
+   "file": "video-the-game-board-D9HDyX_o.jpg",
+   "bytes": 74832,
+   "gzip": 74832,
+   "kind": "other"
+  },
+  {
+   "file": "product-376-C7X-kR_a.jpg",
+   "bytes": 67801,
+   "gzip": 67801,
+   "kind": "other"
+  },
+  {
+   "file": "1280-CdEof1Hh.jpg",
+   "bytes": 64260,
+   "gzip": 64260,
+   "kind": "other"
+  },
+  {
+   "file": "video-no-fault-eviction-DbOR2jnx.jpg",
+   "bytes": 62240,
+   "gzip": 62240,
+   "kind": "other"
+  },
+  {
+   "file": "product-002-D3WcnWXt.jpg",
+   "bytes": 57133,
+   "gzip": 57133,
+   "kind": "other"
+  },
+  {
+   "file": "product-002-2-NxfJUnyw.jpg",
+   "bytes": 57092,
+   "gzip": 57092,
+   "kind": "other"
+  },
+  {
+   "file": "video-moving-out-B-FMfaQm.jpg",
+   "bytes": 56596,
+   "gzip": 56596,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-DKgy2Gas.jpg",
+   "bytes": 56172,
+   "gzip": 56172,
+   "kind": "other"
+  },
+  {
+   "file": "video-three-day-notice-s7qqFcpu.jpg",
+   "bytes": 56166,
+   "gzip": 56166,
+   "kind": "other"
+  },
+  {
+   "file": "index-Bmfv4YEB.css",
+   "bytes": 329828,
+   "gzip": 54541,
+   "kind": "css"
+  },
+  {
+   "file": "390-C_JjewmO.jpg",
+   "bytes": 53473,
+   "gzip": 53473,
+   "kind": "other"
+  },
+  {
+   "file": "390-dgdxN6bJ.jpg",
+   "bytes": 52582,
+   "gzip": 52582,
+   "kind": "other"
+  },
+  {
+   "file": "video-foreclosure-eviction-series-CmreJX3U.jpg",
+   "bytes": 52121,
+   "gzip": 52121,
+   "kind": "other"
+  },
+  {
+   "file": "product-520-V-jVGzE_.jpg",
+   "bytes": 51155,
+   "gzip": 51155,
+   "kind": "other"
+  },
+  {
+   "file": "390-B1QhDt-g.jpg",
+   "bytes": 51141,
+   "gzip": 51141,
+   "kind": "other"
+  },
+  {
+   "file": "390-ypahuxeT.jpg",
+   "bytes": 50583,
+   "gzip": 50583,
+   "kind": "other"
+  },
+  {
+   "file": "390-DD85g6xL.jpg",
+   "bytes": 49549,
+   "gzip": 49549,
+   "kind": "other"
+  },
+  {
+   "file": "icon_allservices-existing-BfD34TaT.png",
+   "bytes": 49473,
+   "gzip": 49473,
+   "kind": "other"
+  },
+  {
+   "file": "product-151-DacLwb7-.jpg",
+   "bytes": 48877,
+   "gzip": 48877,
+   "kind": "other"
+  },
+  {
+   "file": "video-nonpayment-of-rent-BE5F-Sfd.jpg",
+   "bytes": 47791,
+   "gzip": 47791,
+   "kind": "other"
+  },
+  {
+   "file": "390-BHtcWf0y.jpg",
+   "bytes": 47740,
+   "gzip": 47740,
+   "kind": "other"
+  },
+  {
+   "file": "video-owner-foreclosure-5sTiZRWP.jpg",
+   "bytes": 47656,
+   "gzip": 47656,
+   "kind": "other"
+  },
+  {
+   "file": "video-perform-covenant-BhMmYTlg.jpg",
+   "bytes": 47192,
+   "gzip": 47192,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-CB7g00P9.jpg",
+   "bytes": 47189,
+   "gzip": 47189,
+   "kind": "other"
+  },
+  {
+   "file": "article-cockroaches-4_Sfvsjm.png",
+   "bytes": 46778,
+   "gzip": 46778,
+   "kind": "other"
+  },
+  {
+   "file": "video-dont-panic-BYTXvU8C.jpg",
+   "bytes": 46757,
+   "gzip": 46757,
+   "kind": "other"
+  },
+  {
+   "file": "390-B2g7xICw.jpg",
+   "bytes": 46709,
+   "gzip": 46709,
+   "kind": "other"
+  },
+  {
+   "file": "video-summary-judgement-D0TZnTvR.jpg",
+   "bytes": 46336,
+   "gzip": 46336,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-BaVCnerh.jpg",
+   "bytes": 46318,
+   "gzip": 46318,
+   "kind": "other"
+  },
+  {
+   "file": "390-BsGkVQoJ.jpg",
+   "bytes": 46228,
+   "gzip": 46228,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-Cc0uLJgz.jpg",
+   "bytes": 46121,
+   "gzip": 46121,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-OEGXOwdM.jpg",
+   "bytes": 46025,
+   "gzip": 46025,
+   "kind": "other"
+  },
+  {
+   "file": "390-CV_McTxl.jpg",
+   "bytes": 45777,
+   "gzip": 45777,
+   "kind": "other"
+  },
+  {
+   "file": "video-motion-to-quash-CgL7HqBG.jpg",
+   "bytes": 45590,
+   "gzip": 45590,
+   "kind": "other"
+  },
+  {
+   "file": "390-mXtV1BZG.jpg",
+   "bytes": 45479,
+   "gzip": 45479,
+   "kind": "other"
+  },
+  {
+   "file": "390-CBJR_4yf.jpg",
+   "bytes": 45352,
+   "gzip": 45352,
+   "kind": "other"
+  },
+  {
+   "file": "video-evictions-answer-bare-bones-pUgR-x7H.jpg",
+   "bytes": 44967,
+   "gzip": 44967,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-B759DI_j.jpg",
+   "bytes": 43800,
+   "gzip": 43800,
+   "kind": "other"
+  },
+  {
+   "file": "video-take-control-CntkEX47.jpg",
+   "bytes": 43736,
+   "gzip": 43736,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-ext-400-normal-BGPHfnm_.woff",
+   "bytes": 43644,
+   "gzip": 43644,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-CP1SrzB_.jpg",
+   "bytes": 43608,
+   "gzip": 43608,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-ColqVCbT.jpg",
+   "bytes": 43463,
+   "gzip": 43463,
+   "kind": "other"
+  },
+  {
+   "file": "product-450-_05hmYjB.jpg",
+   "bytes": 43449,
+   "gzip": 43449,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-ext-600-normal-Wy7HIzqC.woff",
+   "bytes": 43404,
+   "gzip": 43404,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-ext-700-normal-ChH_v7nA.woff",
+   "bytes": 43304,
+   "gzip": 43304,
+   "kind": "other"
+  },
+  {
+   "file": "video-landlord-mentality-qOU9-HYG.jpg",
+   "bytes": 43024,
+   "gzip": 43024,
+   "kind": "other"
+  },
+  {
+   "file": "390-BTIWYTAu.jpg",
+   "bytes": 42542,
+   "gzip": 42542,
+   "kind": "other"
+  },
+  {
+   "file": "video-foreclosure-eviction-m7NJu2mY.jpg",
+   "bytes": 42143,
+   "gzip": 42143,
+   "kind": "other"
+  },
+  {
+   "file": "390-UfSjuGk7.jpg",
+   "bytes": 41872,
+   "gzip": 41872,
+   "kind": "other"
+  },
+  {
+   "file": "390-DZnvTQvl.jpg",
+   "bytes": 41730,
+   "gzip": 41730,
+   "kind": "other"
+  },
+  {
+   "file": "video-sue-your-landlord-DCAv0GuT.jpg",
+   "bytes": 41428,
+   "gzip": 41428,
+   "kind": "other"
+  },
+  {
+   "file": "video-answer-C1clCFUx.jpg",
+   "bytes": 41374,
+   "gzip": 41374,
+   "kind": "other"
+  },
+  {
+   "file": "bricolage-grotesque-latin-wght-normal-DLoelf7F.woff2",
+   "bytes": 41344,
+   "gzip": 41344,
+   "kind": "other"
+  },
+  {
+   "file": "video-temporary-relocation-BcntTuOh.jpg",
+   "bytes": 41091,
+   "gzip": 41091,
+   "kind": "other"
+  },
+  {
+   "file": "390-Y66zo4Kd.jpg",
+   "bytes": 40975,
+   "gzip": 40975,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-BCFYsDcq.jpg",
+   "bytes": 40495,
+   "gzip": 40495,
+   "kind": "other"
+  },
+  {
+   "file": "video-landlord-intrusion-ByHtSijb.jpg",
+   "bytes": 40489,
+   "gzip": 40489,
+   "kind": "other"
+  },
+  {
+   "file": "390-B1Ekdytn.jpg",
+   "bytes": 40433,
+   "gzip": 40433,
+   "kind": "other"
+  },
+  {
+   "file": "390-C2mwIWMf.jpg",
+   "bytes": 40405,
+   "gzip": 40405,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-CRzvstXd.jpg",
+   "bytes": 40097,
+   "gzip": 40097,
+   "kind": "other"
+  },
+  {
+   "file": "390-Br-Z2Ile.jpg",
+   "bytes": 40074,
+   "gzip": 40074,
+   "kind": "other"
+  },
+  {
+   "file": "390-C5qvy9M3.jpg",
+   "bytes": 39597,
+   "gzip": 39597,
+   "kind": "other"
+  },
+  {
+   "file": "390-DKGUF34W.jpg",
+   "bytes": 39571,
+   "gzip": 39571,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-Ci-AjRrM.jpg",
+   "bytes": 39432,
+   "gzip": 39432,
+   "kind": "other"
+  },
+  {
+   "file": "390-C2ZZtf8a.jpg",
+   "bytes": 39358,
+   "gzip": 39358,
+   "kind": "other"
+  },
+  {
+   "file": "icon_find-lawyer-QrwZUIYP.png",
+   "bytes": 39284,
+   "gzip": 39284,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-DBVtHUsY.jpg",
+   "bytes": 39274,
+   "gzip": 39274,
+   "kind": "other"
+  },
+  {
+   "file": "category-legal-ethics-DiCHqClY.jpg",
+   "bytes": 39232,
+   "gzip": 39232,
+   "kind": "other"
+  },
+  {
+   "file": "390-CV1ndeT7.jpg",
+   "bytes": 39189,
+   "gzip": 39189,
+   "kind": "other"
+  },
+  {
+   "file": "390-BvyHlWFQ.jpg",
+   "bytes": 39021,
+   "gzip": 39021,
+   "kind": "other"
+  },
+  {
+   "file": "390-rEeqfsxB.jpg",
+   "bytes": 38927,
+   "gzip": 38927,
+   "kind": "other"
+  },
+  {
+   "file": "390-UXBfukmu.jpg",
+   "bytes": 38749,
+   "gzip": 38749,
+   "kind": "other"
+  },
+  {
+   "file": "icon_default-Cxzl8pLQ.png",
+   "bytes": 38668,
+   "gzip": 38668,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-Dr7FBHVz.jpg",
+   "bytes": 38650,
+   "gzip": 38650,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-CVRiLzhq.jpg",
+   "bytes": 38429,
+   "gzip": 38429,
+   "kind": "other"
+  },
+  {
+   "file": "1280-VeCjggS3.jpg",
+   "bytes": 38422,
+   "gzip": 38422,
+   "kind": "other"
+  },
+  {
+   "file": "product-425-B_EOtydo.jpg",
+   "bytes": 38414,
+   "gzip": 38414,
+   "kind": "other"
+  },
+  {
+   "file": "product-385-2-CchIcAXE.jpg",
+   "bytes": 37972,
+   "gzip": 37972,
+   "kind": "other"
+  },
+  {
+   "file": "390-BlMZwzAT.jpg",
+   "bytes": 37545,
+   "gzip": 37545,
+   "kind": "other"
+  },
+  {
+   "file": "caltenantlaw-logo-2023-js-tiivq.png",
+   "bytes": 37343,
+   "gzip": 37343,
+   "kind": "other"
+  },
+  {
+   "file": "390-Cu_oQlPt.jpg",
+   "bytes": 37247,
+   "gzip": 37247,
+   "kind": "other"
+  },
+  {
+   "file": "390-BXh4t0Md.jpg",
+   "bytes": 37239,
+   "gzip": 37239,
+   "kind": "other"
+  },
+  {
+   "file": "video-demurrer-CcyKCswS.jpg",
+   "bytes": 37087,
+   "gzip": 37087,
+   "kind": "other"
+  },
+  {
+   "file": "390-BeR1wM_0.jpg",
+   "bytes": 37028,
+   "gzip": 37028,
+   "kind": "other"
+  },
+  {
+   "file": "video-ai-robot-layoffs-EzuJtG-B.jpg",
+   "bytes": 36927,
+   "gzip": 36927,
+   "kind": "other"
+  },
+  {
+   "file": "icon_paid-services-Cy3aetMb.png",
+   "bytes": 36841,
+   "gzip": 36841,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-BOyCiukl.jpg",
+   "bytes": 36775,
+   "gzip": 36775,
+   "kind": "other"
+  },
+  {
+   "file": "icon_Settling-negotiation-DLgwxadw.png",
+   "bytes": 36672,
+   "gzip": 36672,
+   "kind": "other"
+  },
+  {
+   "file": "video-trial-DbG9OC2v.jpg",
+   "bytes": 36539,
+   "gzip": 36539,
+   "kind": "other"
+  },
+  {
+   "file": "video-security-deposit-BvI-34L9.jpg",
+   "bytes": 36000,
+   "gzip": 36000,
+   "kind": "other"
+  },
+  {
+   "file": "video-appeal-BLm0Suhb.jpg",
+   "bytes": 35965,
+   "gzip": 35965,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-T9lMYFxY.jpg",
+   "bytes": 35230,
+   "gzip": 35230,
+   "kind": "other"
+  },
+  {
+   "file": "video-repairs-BHGSfby5.jpg",
+   "bytes": 35229,
+   "gzip": 35229,
+   "kind": "other"
+  },
+  {
+   "file": "video-how-we-do-this-BaeIoyyq.jpg",
+   "bytes": 35150,
+   "gzip": 35150,
+   "kind": "other"
+  },
+  {
+   "file": "icon_discovery-us-Cp_nn3cY.png",
+   "bytes": 34969,
+   "gzip": 34969,
+   "kind": "other"
+  },
+  {
+   "file": "390-BCsPzx7N.jpg",
+   "bytes": 34915,
+   "gzip": 34915,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-E4bjo51p.jpg",
+   "bytes": 34910,
+   "gzip": 34910,
+   "kind": "other"
+  },
+  {
+   "file": "1280-wNk-HEdW.jpg",
+   "bytes": 34732,
+   "gzip": 34732,
+   "kind": "other"
+  },
+  {
+   "file": "icon_suing-the-landlord-CIzihEof.png",
+   "bytes": 34568,
+   "gzip": 34568,
+   "kind": "other"
+  },
+  {
+   "file": "product-706-CYvReuDO.png",
+   "bytes": 34472,
+   "gzip": 34472,
+   "kind": "other"
+  },
+  {
+   "file": "390-cpLnHac_.jpg",
+   "bytes": 34033,
+   "gzip": 34033,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-CA4kXDxW.jpg",
+   "bytes": 33998,
+   "gzip": 33998,
+   "kind": "other"
+  },
+  {
+   "file": "390-6841zJKd.jpg",
+   "bytes": 33810,
+   "gzip": 33810,
+   "kind": "other"
+  },
+  {
+   "file": "video-default-CbWl7xjV.jpg",
+   "bytes": 33672,
+   "gzip": 33672,
+   "kind": "other"
+  },
+  {
+   "file": "390-BhlNVBob.jpg",
+   "bytes": 33521,
+   "gzip": 33521,
+   "kind": "other"
+  },
+  {
+   "file": "icon_follow-consultation-RUafU_cP.png",
+   "bytes": 33414,
+   "gzip": 33414,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-BrNGm3BP.jpg",
+   "bytes": 33222,
+   "gzip": 33222,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-ext-400-normal-UNsKFIBq.woff2",
+   "bytes": 33024,
+   "gzip": 33024,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-C5kxdq5G.jpg",
+   "bytes": 32984,
+   "gzip": 32984,
+   "kind": "other"
+  },
+  {
+   "file": "390-BO5VZIkX.jpg",
+   "bytes": 32980,
+   "gzip": 32980,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-ext-700-normal-6Xi0A2be.woff2",
+   "bytes": 32956,
+   "gzip": 32956,
+   "kind": "other"
+  },
+  {
+   "file": "video-roommate-law-BkxOC_T-.jpg",
+   "bytes": 32866,
+   "gzip": 32866,
+   "kind": "other"
+  },
+  {
+   "file": "product-151-2-Bk2r1x_Q.jpg",
+   "bytes": 32709,
+   "gzip": 32709,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-ext-600-normal-AEyhgUpm.woff2",
+   "bytes": 32704,
+   "gzip": 32704,
+   "kind": "other"
+  },
+  {
+   "file": "390-EQawSkuF.jpg",
+   "bytes": 32451,
+   "gzip": 32451,
+   "kind": "other"
+  },
+  {
+   "file": "video-discovery-CdCfj4ag.jpg",
+   "bytes": 32261,
+   "gzip": 32261,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-BAvz7L7j.jpg",
+   "bytes": 32020,
+   "gzip": 32020,
+   "kind": "other"
+  },
+  {
+   "file": "390-4R-e9IV3.jpg",
+   "bytes": 31654,
+   "gzip": 31654,
+   "kind": "other"
+  },
+  {
+   "file": "icon_misc-supplemental-lcCKw7ha.png",
+   "bytes": 31574,
+   "gzip": 31574,
+   "kind": "other"
+  },
+  {
+   "file": "icon_related-services-YR2TGhN5.png",
+   "bytes": 31489,
+   "gzip": 31489,
+   "kind": "other"
+  },
+  {
+   "file": "video-rent-eviction-CQg2uESA.jpg",
+   "bytes": 31421,
+   "gzip": 31421,
+   "kind": "other"
+  },
+  {
+   "file": "icon_motion-to-quash-DtI_HIdj.png",
+   "bytes": 31417,
+   "gzip": 31417,
+   "kind": "other"
+  },
+  {
+   "file": "390-ycf7rX5c.jpg",
+   "bytes": 31253,
+   "gzip": 31253,
+   "kind": "other"
+  },
+  {
+   "file": "390-DlnMXrtF.jpg",
+   "bytes": 31160,
+   "gzip": 31160,
+   "kind": "other"
+  },
+  {
+   "file": "icon_consultation--jfoOHMn.png",
+   "bytes": 31056,
+   "gzip": 31056,
+   "kind": "other"
+  },
+  {
+   "file": "video-house-for-sale-DJbTDXS8.webp",
+   "bytes": 30938,
+   "gzip": 30938,
+   "kind": "other"
+  },
+  {
+   "file": "390-B0I8CdZP.jpg",
+   "bytes": 30838,
+   "gzip": 30838,
+   "kind": "other"
+  },
+  {
+   "file": "video-finding-your-landlord-CsP20vae.jpg",
+   "bytes": 30817,
+   "gzip": 30817,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-bOcbIloW.jpg",
+   "bytes": 30604,
+   "gzip": 30604,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-Dni9Xl27.jpg",
+   "bytes": 30541,
+   "gzip": 30541,
+   "kind": "other"
+  },
+  {
+   "file": "icon_hotline-BCqoa-Cz.png",
+   "bytes": 30274,
+   "gzip": 30274,
+   "kind": "other"
+  },
+  {
+   "file": "390-BZIIJFHx.jpg",
+   "bytes": 30107,
+   "gzip": 30107,
+   "kind": "other"
+  },
+  {
+   "file": "390-DWxQFDT5.jpg",
+   "bytes": 30098,
+   "gzip": 30098,
+   "kind": "other"
+  },
+  {
+   "file": "390-T68xfh3H.jpg",
+   "bytes": 29456,
+   "gzip": 29456,
+   "kind": "other"
+  },
+  {
+   "file": "icon_legal-kits-DcNMEA77.png",
+   "bytes": 29386,
+   "gzip": 29386,
+   "kind": "other"
+  },
+  {
+   "file": "390-oSNtEAKT.jpg",
+   "bytes": 28667,
+   "gzip": 28667,
+   "kind": "other"
+  },
+  {
+   "file": "390-DpjZIfze.jpg",
+   "bytes": 28337,
+   "gzip": 28337,
+   "kind": "other"
+  },
+  {
+   "file": "390-6KqtPkhT.jpg",
+   "bytes": 28059,
+   "gzip": 28059,
+   "kind": "other"
+  },
+  {
+   "file": "product-104-Ca_FZVb_.jpg",
+   "bytes": 27432,
+   "gzip": 27432,
+   "kind": "other"
+  },
+  {
+   "file": "icon_judgement-Dzek_WUE.png",
+   "bytes": 27033,
+   "gzip": 27033,
+   "kind": "other"
+  },
+  {
+   "file": "390-dark-pqC9BP9k.jpg",
+   "bytes": 27015,
+   "gzip": 27015,
+   "kind": "other"
+  },
+  {
+   "file": "surfaces-CWsQ0C0A.js",
+   "bytes": 78742,
+   "gzip": 26204,
+   "kind": "js"
+  },
+  {
+   "file": "source-serif-4-latin-700-normal-3V4Pv1hj.woff",
+   "bytes": 25716,
+   "gzip": 25716,
+   "kind": "other"
+  },
+  {
+   "file": "390-D32c62zB.jpg",
+   "bytes": 25644,
+   "gzip": 25644,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-600-normal-DMD1h6_f.woff",
+   "bytes": 25624,
+   "gzip": 25624,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-500-normal-DVVamBqs.woff",
+   "bytes": 25528,
+   "gzip": 25528,
+   "kind": "other"
+  },
+  {
+   "file": "390-OvTIUkjJ.jpg",
+   "bytes": 25503,
+   "gzip": 25503,
+   "kind": "other"
+  },
+  {
+   "file": "icon_Answer-D-_WrdB7.png",
+   "bytes": 25347,
+   "gzip": 25347,
+   "kind": "other"
+  },
+  {
+   "file": "390-CdWginq6.jpg",
+   "bytes": 24971,
+   "gzip": 24971,
+   "kind": "other"
+  },
+  {
+   "file": "icon_discovery-them-Im2GmPYt.png",
+   "bytes": 24936,
+   "gzip": 24936,
+   "kind": "other"
+  },
+  {
+   "file": "audible-logo-BJjpvIJU.svg",
+   "bytes": 24682,
+   "gzip": 24682,
+   "kind": "other"
+  },
+  {
+   "file": "390-DCkLHcHn.jpg",
+   "bytes": 24534,
+   "gzip": 24534,
+   "kind": "other"
+  },
+  {
+   "file": "390-f9Ia111o.jpg",
+   "bytes": 24157,
+   "gzip": 24157,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-400-normal-Dn3IlU-Z.woff",
+   "bytes": 24020,
+   "gzip": 24020,
+   "kind": "other"
+  },
+  {
+   "file": "build-plan-CQi5CNeJ.js",
+   "bytes": 75602,
+   "gzip": 23214,
+   "kind": "js"
+  },
+  {
+   "file": "icon_demurrer-CcC7pTHx.png",
+   "bytes": 23124,
+   "gzip": 23124,
+   "kind": "other"
+  },
+  {
+   "file": "icon_Schedule-consultation-d6embTUl.png",
+   "bytes": 22854,
+   "gzip": 22854,
+   "kind": "other"
+  },
+  {
+   "file": "video-breaking-your-lease-DJtRduqS.webp",
+   "bytes": 22694,
+   "gzip": 22694,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-ext-700-normal-BZsvHpal.woff",
+   "bytes": 22532,
+   "gzip": 22532,
+   "kind": "other"
+  },
+  {
+   "file": "icon_Trial-prep-5021vItz.png",
+   "bytes": 22492,
+   "gzip": 22492,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-ext-600-normal-C6NNqpJh.woff",
+   "bytes": 22476,
+   "gzip": 22476,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-ext-500-normal-D-qasQTj.woff",
+   "bytes": 22392,
+   "gzip": 22392,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-ext-400-normal-CEpydyUl.woff",
+   "bytes": 21872,
+   "gzip": 21872,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-700-normal-CGGdTIBe.woff2",
+   "bytes": 21716,
+   "gzip": 21716,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-600-normal-DouSKlru.woff2",
+   "bytes": 21532,
+   "gzip": 21532,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-500-normal-CUHe9xxf.woff2",
+   "bytes": 21528,
+   "gzip": 21528,
+   "kind": "other"
+  },
+  {
+   "file": "data-model-wGomHubZ.js",
+   "bytes": 82364,
+   "gzip": 21525,
+   "kind": "js"
+  },
+  {
+   "file": "1280-nZk-ZMB6.jpg",
+   "bytes": 20111,
+   "gzip": 20111,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-400-normal-DJ5YJwmz.woff2",
+   "bytes": 20088,
+   "gzip": 20088,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-400-normal-AFMiCETP.woff",
+   "bytes": 19900,
+   "gzip": 19900,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-600-normal-BvDVuF-j.woff",
+   "bytes": 19900,
+   "gzip": 19900,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-700-normal-BBbVrHF_.woff",
+   "bytes": 19816,
+   "gzip": 19816,
+   "kind": "other"
+  },
+  {
+   "file": "product-105-DdqqW1fI.jpg",
+   "bytes": 19385,
+   "gzip": 19385,
+   "kind": "other"
+  },
+  {
+   "file": "bricolage-grotesque-latin-ext-wght-normal-CcLUaPy7.woff2",
+   "bytes": 18668,
+   "gzip": 18668,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-ext-700-normal-C8ywwcuQ.woff2",
+   "bytes": 18496,
+   "gzip": 18496,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-ext-600-normal-0sIUyHMO.woff2",
+   "bytes": 18376,
+   "gzip": 18376,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-latin-ext-500-normal-BYjRCDVy.woff2",
+   "bytes": 18356,
+   "gzip": 18356,
+   "kind": "other"
+  },
+  {
+   "file": "services-catalog-VNnM5JhP.js",
+   "bytes": 56097,
+   "gzip": 17875,
+   "kind": "js"
+  },
+  {
+   "file": "source-serif-4-latin-ext-400-normal-Cp7z-ARB.woff2",
+   "bytes": 17828,
+   "gzip": 17828,
+   "kind": "other"
+  },
+  {
+   "file": "icon_paperwork-changes-DcwFOyOW.png",
+   "bytes": 17784,
+   "gzip": 17784,
+   "kind": "other"
+  },
+  {
+   "file": "icon_just-got-this-Bz7TQyry.png",
+   "bytes": 17533,
+   "gzip": 17533,
+   "kind": "other"
+  },
+  {
+   "file": "icon_vote-CjnFPWbH.png",
+   "bytes": 16450,
+   "gzip": 16450,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-600-normal-DFnC3vAY.woff",
+   "bytes": 16400,
+   "gzip": 16400,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-500-normal-Bb4u56_6.woff",
+   "bytes": 16376,
+   "gzip": 16376,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-700-normal-DVvE-KHB.woff",
+   "bytes": 16340,
+   "gzip": 16340,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-400-normal-B8Z6Jvzv.woff",
+   "bytes": 15816,
+   "gzip": 15816,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-400-normal-DQi5PRDE.woff2",
+   "bytes": 15696,
+   "gzip": 15696,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-600-normal-DeckBYAU.woff2",
+   "bytes": 15668,
+   "gzip": 15668,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-latin-700-normal-CkzU-mV9.woff2",
+   "bytes": 15596,
+   "gzip": 15596,
+   "kind": "other"
+  },
+  {
+   "file": "390-_cw_KZTf.jpg",
+   "bytes": 15529,
+   "gzip": 15529,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-700-normal-BmBwwUw2.woff2",
+   "bytes": 14864,
+   "gzip": 14864,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-500-normal-BdVUvljg.woff2",
+   "bytes": 14780,
+   "gzip": 14780,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-600-normal-BDP5YDHD.woff2",
+   "bytes": 14776,
+   "gzip": 14776,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-400-normal-C44pakCn.woff2",
+   "bytes": 14172,
+   "gzip": 14172,
+   "kind": "other"
+  },
+  {
+   "file": "category-miscellaneous-supplemental-CrwJKEok.jpg",
+   "bytes": 12159,
+   "gzip": 12159,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-600-normal-y-RO8wOd.woff",
+   "bytes": 12008,
+   "gzip": 12008,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-400-normal-7kQcAFpS.woff",
+   "bytes": 12004,
+   "gzip": 12004,
+   "kind": "other"
+  },
+  {
+   "file": "product-111-CMVySE_e.jpg",
+   "bytes": 11978,
+   "gzip": 11978,
+   "kind": "other"
+  },
+  {
+   "file": "category-motion-to-quash-BDLTcy-F.jpg",
+   "bytes": 11948,
+   "gzip": 11948,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-700-normal-DYE6gq6k.woff",
+   "bytes": 11912,
+   "gzip": 11912,
+   "kind": "other"
+  },
+  {
+   "file": "product-315-B0C4JDMl.jpg",
+   "bytes": 11289,
+   "gzip": 11289,
+   "kind": "other"
+  },
+  {
+   "file": "product-102-CQaAl-yu.jpg",
+   "bytes": 11230,
+   "gzip": 11230,
+   "kind": "other"
+  },
+  {
+   "file": "product-630-CiwMfQ0q.jpg",
+   "bytes": 11089,
+   "gzip": 11089,
+   "kind": "other"
+  },
+  {
+   "file": "product-101-Hn7TMox4.jpg",
+   "bytes": 10975,
+   "gzip": 10975,
+   "kind": "other"
+  },
+  {
+   "file": "decisions-BwoU34Vm.js",
+   "bytes": 27132,
+   "gzip": 10953,
+   "kind": "js"
+  },
+  {
+   "file": "product-801-BlemIJfv.jpg",
+   "bytes": 10946,
+   "gzip": 10946,
+   "kind": "other"
+  },
+  {
+   "file": "category-default-BXQXmKVS.jpg",
+   "bytes": 10888,
+   "gzip": 10888,
+   "kind": "other"
+  },
+  {
+   "file": "category-demurrer-y0NZqJhH.jpg",
+   "bytes": 10871,
+   "gzip": 10871,
+   "kind": "other"
+  },
+  {
+   "file": "product-370-muiNYGWu.jpg",
+   "bytes": 10809,
+   "gzip": 10809,
+   "kind": "other"
+  },
+  {
+   "file": "icon_advice-9jpeZMUi.png",
+   "bytes": 10710,
+   "gzip": 10710,
+   "kind": "other"
+  },
+  {
+   "file": "product-270-B6X8CWlv.jpg",
+   "bytes": 10677,
+   "gzip": 10677,
+   "kind": "other"
+  },
+  {
+   "file": "product-300-D6X7HB8h.jpg",
+   "bytes": 10472,
+   "gzip": 10472,
+   "kind": "other"
+  },
+  {
+   "file": "product-207-DK1ks6ct.jpg",
+   "bytes": 10393,
+   "gzip": 10393,
+   "kind": "other"
+  },
+  {
+   "file": "category-settling-and-negotiation-CQNyieb0.jpg",
+   "bytes": 10232,
+   "gzip": 10232,
+   "kind": "other"
+  },
+  {
+   "file": "product-316-Bp-0nOr4.jpg",
+   "bytes": 10225,
+   "gzip": 10225,
+   "kind": "other"
+  },
+  {
+   "file": "product-373-DDuIufs5.jpg",
+   "bytes": 10070,
+   "gzip": 10070,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-400-normal-DJm9Ud5h.woff",
+   "bytes": 10032,
+   "gzip": 10032,
+   "kind": "other"
+  },
+  {
+   "file": "category-appeal-1-04-jsMtS.jpg",
+   "bytes": 10019,
+   "gzip": 10019,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-600-normal-BNF9LBpG.woff",
+   "bytes": 10012,
+   "gzip": 10012,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-700-normal-BWdBblwd.woff",
+   "bytes": 10004,
+   "gzip": 10004,
+   "kind": "other"
+  },
+  {
+   "file": "product-299-3XyK534B.jpg",
+   "bytes": 9948,
+   "gzip": 9948,
+   "kind": "other"
+  },
+  {
+   "file": "product-505-Glaczxtr.jpg",
+   "bytes": 9758,
+   "gzip": 9758,
+   "kind": "other"
+  },
+  {
+   "file": "product-050-rYrv6Va2.jpg",
+   "bytes": 9734,
+   "gzip": 9734,
+   "kind": "other"
+  },
+  {
+   "file": "product-041-BeSCS8aU.jpg",
+   "bytes": 9704,
+   "gzip": 9704,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-600-normal-BnFu5nHC.woff2",
+   "bytes": 9644,
+   "gzip": 9644,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-greek-700-normal-C5Ojiwey.woff",
+   "bytes": 9628,
+   "gzip": 9628,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-400-normal-DjhbW-4D.woff2",
+   "bytes": 9604,
+   "gzip": 9604,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-700-normal-CIuudVLB.woff2",
+   "bytes": 9604,
+   "gzip": 9604,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-greek-500-normal-z-Q6FFuG.woff",
+   "bytes": 9520,
+   "gzip": 9520,
+   "kind": "other"
+  },
+  {
+   "file": "product-600-DbLNfxRH.jpg",
+   "bytes": 9497,
+   "gzip": 9497,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-greek-600-normal-DhXQw1Kl.woff",
+   "bytes": 9480,
+   "gzip": 9480,
+   "kind": "other"
+  },
+  {
+   "file": "product-161-Bisjzvrz.jpg",
+   "bytes": 9423,
+   "gzip": 9423,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-greek-400-normal-BccYJ-vZ.woff",
+   "bytes": 9192,
+   "gzip": 9192,
+   "kind": "other"
+  },
+  {
+   "file": "product-340-4Hbrc79w.jpg",
+   "bytes": 9182,
+   "gzip": 9182,
+   "kind": "other"
+  },
+  {
+   "file": "category-discovery-by-us-ZKCEX_hB.jpg",
+   "bytes": 9155,
+   "gzip": 9155,
+   "kind": "other"
+  },
+  {
+   "file": "brand-observed-D01JGbgl.js",
+   "bytes": 41162,
+   "gzip": 9144,
+   "kind": "js"
+  },
+  {
+   "file": "kanban-DZTTT10C.js",
+   "bytes": 21709,
+   "gzip": 9139,
+   "kind": "js"
+  },
+  {
+   "file": "product-253-DU5uTCwB.jpg",
+   "bytes": 9105,
+   "gzip": 9105,
+   "kind": "other"
+  },
+  {
+   "file": "product-042-nHpQBSNw.jpg",
+   "bytes": 9020,
+   "gzip": 9020,
+   "kind": "other"
+  },
+  {
+   "file": "category-judgment-DzHDgkcS.jpg",
+   "bytes": 9003,
+   "gzip": 9003,
+   "kind": "other"
+  },
+  {
+   "file": "product-045-CuA5aLzF.jpg",
+   "bytes": 8951,
+   "gzip": 8951,
+   "kind": "other"
+  },
+  {
+   "file": "product-150-0FaPS0nx.jpg",
+   "bytes": 8914,
+   "gzip": 8914,
+   "kind": "other"
+  },
+  {
+   "file": "category-legal-kits-0THr-0oe.jpg",
+   "bytes": 8759,
+   "gzip": 8759,
+   "kind": "other"
+  },
+  {
+   "file": "product-040-DCNvp_j_.jpg",
+   "bytes": 8690,
+   "gzip": 8690,
+   "kind": "other"
+  },
+  {
+   "file": "category-trial-preparation-05Mlk02x.jpg",
+   "bytes": 8684,
+   "gzip": 8684,
+   "kind": "other"
+  },
+  {
+   "file": "bricolage-grotesque-vietnamese-wght-normal-BUzh504Q.woff2",
+   "bytes": 8608,
+   "gzip": 8608,
+   "kind": "other"
+  },
+  {
+   "file": "product-250-DPFj4Joq.jpg",
+   "bytes": 8426,
+   "gzip": 8426,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-greek-700-normal-BzuEQSqJ.woff2",
+   "bytes": 8408,
+   "gzip": 8408,
+   "kind": "other"
+  },
+  {
+   "file": "product-800-CFrnOemD.jpg",
+   "bytes": 8294,
+   "gzip": 8294,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-ext-500-normal-8-8HP2PF.woff",
+   "bytes": 8264,
+   "gzip": 8264,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-greek-500-normal-By8GFJzz.woff2",
+   "bytes": 8264,
+   "gzip": 8264,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-ext-700-normal-DsKdgJCr.woff",
+   "bytes": 8260,
+   "gzip": 8260,
+   "kind": "other"
+  },
+  {
+   "file": "category-discovery-by-them-1-CTNpWT-Q.jpg",
+   "bytes": 8228,
+   "gzip": 8228,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-ext-600-normal-DiT2IGQm.woff",
+   "bytes": 8228,
+   "gzip": 8228,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-vietnamese-400-normal-dYp9C364.woff",
+   "bytes": 8188,
+   "gzip": 8188,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-vietnamese-700-normal-BBU5i_d1.woff",
+   "bytes": 8172,
+   "gzip": 8172,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-vietnamese-600-normal-DpSexF-T.woff",
+   "bytes": 8168,
+   "gzip": 8168,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-vietnamese-700-normal-BHxM10oo.woff",
+   "bytes": 8160,
+   "gzip": 8160,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-vietnamese-600-normal-B0WJbuqT.woff",
+   "bytes": 8136,
+   "gzip": 8136,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-greek-600-normal-DdRkKr-1.woff2",
+   "bytes": 8132,
+   "gzip": 8132,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-vietnamese-500-normal-8N8MYVKB.woff",
+   "bytes": 8112,
+   "gzip": 8112,
+   "kind": "other"
+  },
+  {
+   "file": "firm-site-digest-BLFH4FHH.js",
+   "bytes": 17239,
+   "gzip": 8085,
+   "kind": "js"
+  },
+  {
+   "file": "source-serif-4-cyrillic-ext-400-normal-DLkyKLvH.woff",
+   "bytes": 8080,
+   "gzip": 8080,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-600-normal-BSO157bq.woff2",
+   "bytes": 8028,
+   "gzip": 8028,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-400-normal-DZReXJla.woff2",
+   "bytes": 8024,
+   "gzip": 8024,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-vietnamese-400-normal-DR1UuFon.woff",
+   "bytes": 8004,
+   "gzip": 8004,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-700-normal-C8Tp2qRF.woff2",
+   "bytes": 7984,
+   "gzip": 7984,
+   "kind": "other"
+  },
+  {
+   "file": "product-390-DE00M6vT.jpg",
+   "bytes": 7933,
+   "gzip": 7933,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-greek-400-normal-Cw5-AHNN.woff2",
+   "bytes": 7924,
+   "gzip": 7924,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-ext-600-normal-D7vJ4nVX.woff",
+   "bytes": 7912,
+   "gzip": 7912,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-ext-400-normal-BI1kUwmR.woff",
+   "bytes": 7896,
+   "gzip": 7896,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-ext-700-normal-C6ITAlBU.woff",
+   "bytes": 7880,
+   "gzip": 7880,
+   "kind": "other"
+  },
+  {
+   "file": "platform-principles-C49hs5By.js",
+   "bytes": 17671,
+   "gzip": 7803,
+   "kind": "js"
+  },
+  {
+   "file": "statute-index-BJtjUgxh.js",
+   "bytes": 24911,
+   "gzip": 7715,
+   "kind": "js"
+  },
+  {
+   "file": "0012-services-catalog-DWmPn9gR.js",
+   "bytes": 18594,
+   "gzip": 7599,
+   "kind": "js"
+  },
+  {
+   "file": "project-brief-D7-6vngH.js",
+   "bytes": 16396,
+   "gzip": 7540,
+   "kind": "js"
+  },
+  {
+   "file": "source-serif-4-cyrillic-ext-700-normal-B9R79AaY.woff2",
+   "bytes": 7448,
+   "gzip": 7448,
+   "kind": "other"
+  },
+  {
+   "file": "product-901-Bpkkcrzk.jpg",
+   "bytes": 7429,
+   "gzip": 7429,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-ext-500-normal-DaDZE_Na.woff2",
+   "bytes": 7320,
+   "gzip": 7320,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-ext-600-normal-D_E8FDgP.woff2",
+   "bytes": 7288,
+   "gzip": 7288,
+   "kind": "other"
+  },
+  {
+   "file": "product-160-BAPMSkQK.jpg",
+   "bytes": 7281,
+   "gzip": 7281,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-cyrillic-ext-400-normal-CWV284fw.woff2",
+   "bytes": 7148,
+   "gzip": 7148,
+   "kind": "other"
+  },
+  {
+   "file": "pipeline-DfM6LCgF.js",
+   "bytes": 17896,
+   "gzip": 7142,
+   "kind": "js"
+  },
+  {
+   "file": "source-sans-3-cyrillic-ext-400-normal-Cd63HKDh.woff",
+   "bytes": 7016,
+   "gzip": 7016,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-ext-600-normal-uAL1a5gb.woff",
+   "bytes": 6988,
+   "gzip": 6988,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-ext-700-normal-B6RPsSdD.woff",
+   "bytes": 6948,
+   "gzip": 6948,
+   "kind": "other"
+  },
+  {
+   "file": "pages-BNmqhhTK.js",
+   "bytes": 21190,
+   "gzip": 6682,
+   "kind": "js"
+  },
+  {
+   "file": "D-21-BazLxxcE.js",
+   "bytes": 16052,
+   "gzip": 6679,
+   "kind": "js"
+  },
+  {
+   "file": "design-system-DPFIWb8C.js",
+   "bytes": 14236,
+   "gzip": 6633,
+   "kind": "js"
+  },
+  {
+   "file": "source-serif-4-vietnamese-700-normal-CCAt8c4x.woff2",
+   "bytes": 6472,
+   "gzip": 6472,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-vietnamese-600-normal-CznyfUKR.woff2",
+   "bytes": 6444,
+   "gzip": 6444,
+   "kind": "other"
+  },
+  {
+   "file": "source-serif-4-vietnamese-500-normal-Bi3OSTTW.woff2",
+   "bytes": 6420,
+   "gzip": 6420,
+   "kind": "other"
+  },
+  {
+   "file": "verification-2026-09-20-D7frBN3S.js",
+   "bytes": 17065,
+   "gzip": 6410,
+   "kind": "js"
+  },
+  {
+   "file": "source-serif-4-vietnamese-400-normal-BbG3LG1A.woff2",
+   "bytes": 6236,
+   "gzip": 6236,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-vietnamese-600-normal-B2sTNYey.woff2",
+   "bytes": 6220,
+   "gzip": 6220,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-vietnamese-400-normal-CwtaIDr2.woff2",
+   "bytes": 6216,
+   "gzip": 6216,
+   "kind": "other"
+  },
+  {
+   "file": "product-385-BoTfn4Gz.jpg",
+   "bytes": 6183,
+   "gzip": 6183,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-vietnamese-700-normal-Bgamivog.woff2",
+   "bytes": 6136,
+   "gzip": 6136,
+   "kind": "other"
+  },
+  {
+   "file": "HUB-01-D_wbbzAk.js",
+   "bytes": 14135,
+   "gzip": 6050,
+   "kind": "js"
+  },
+  {
+   "file": "0010-pass-1-integration-and-release-0.1.0-D_OqIJjf.js",
+   "bytes": 13491,
+   "gzip": 6048,
+   "kind": "js"
+  },
+  {
+   "file": "source-sans-3-greek-ext-400-normal-CpIwTHMM.woff2",
+   "bytes": 6024,
+   "gzip": 6024,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-ext-700-normal-Dd6uIcuy.woff2",
+   "bytes": 6012,
+   "gzip": 6012,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-greek-ext-600-normal-DynePNDL.woff2",
+   "bytes": 5936,
+   "gzip": 5936,
+   "kind": "other"
+  },
+  {
+   "file": "drafting-BMxpXw2f.js",
+   "bytes": 13475,
+   "gzip": 5817,
+   "kind": "js"
+  },
+  {
+   "file": "0014-release-0.1.1-Df5XWouH.js",
+   "bytes": 12734,
+   "gzip": 5626,
+   "kind": "js"
+  },
+  {
+   "file": "source-sans-3-cyrillic-ext-400-normal-BwJdxs7r.woff2",
+   "bytes": 5576,
+   "gzip": 5576,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-ext-700-normal-BhUSqjb8.woff2",
+   "bytes": 5540,
+   "gzip": 5540,
+   "kind": "other"
+  },
+  {
+   "file": "source-sans-3-cyrillic-ext-600-normal-6AhwUnSr.woff2",
+   "bytes": 5524,
+   "gzip": 5524,
+   "kind": "other"
+  },
+  {
+   "file": "0006-game-board-BlwV5NtH.js",
+   "bytes": 13155,
+   "gzip": 5485,
+   "kind": "js"
+  },
+  {
+   "file": "product-201-t7LlpN7p.jpg",
+   "bytes": 5285,
+   "gzip": 5285,
+   "kind": "other"
+  },
+  {
+   "file": "category-free-resources-B_AzdQG7.jpg",
+   "bytes": 5159,
+   "gzip": 5159,
+   "kind": "other"
+  },
+  {
+   "file": "0001-ctl-os-brief-D3IeFKaE.js",
+   "bytes": 11530,
+   "gzip": 5149,
+   "kind": "js"
+  },
+  {
+   "file": "specs-Putbs0qB.js",
+   "bytes": 23565,
+   "gzip": 4999,
+   "kind": "js"
+  },
+  {
+   "file": "0007-role-homes-DTOfk4Pp.js",
+   "bytes": 11696,
+   "gzip": 4976,
+   "kind": "js"
+  },
+  {
+   "file": "0009-knowledge-DNGori5R.js",
+   "bytes": 10987,
+   "gzip": 4701,
+   "kind": "js"
+  },
+  {
+   "file": "0003-design-system-CBpjR97u.js",
+   "bytes": 9933,
+   "gzip": 4643,
+   "kind": "js"
+  },
+  {
+   "file": "hoy-petrock-patterns-BgwcmZoz.js",
+   "bytes": 9734,
+   "gzip": 4637,
+   "kind": "js"
+  },
+  {
+   "file": "S-22-qE6ESz-p.js",
+   "bytes": 10969,
+   "gzip": 4561,
+   "kind": "js"
+  },
+  {
+   "file": "product-010-Lh63Atg0.jpg",
+   "bytes": 4547,
+   "gzip": 4547,
+   "kind": "other"
+  },
+  {
+   "file": "category-scheduled-consultation-1-B3z1mnsb.jpg",
+   "bytes": 4539,
+   "gzip": 4539,
+   "kind": "other"
+  },
+  {
+   "file": "product-501-M3AkgaXX.jpg",
+   "bytes": 4507,
+   "gzip": 4507,
+   "kind": "other"
+  },
+  {
+   "file": "canvas-BsZTGv9r.js",
+   "bytes": 9767,
+   "gzip": 4491,
+   "kind": "js"
+  },
+  {
+   "file": "F-12-CNLnxOMX.js",
+   "bytes": 10721,
+   "gzip": 4490,
+   "kind": "js"
+  },
+  {
+   "file": "0013-live-scrape-CvYS4EPV.js",
+   "bytes": 9690,
+   "gzip": 4465,
+   "kind": "js"
+  },
+  {
+   "file": "product-110-D_1lOkWq.png",
+   "bytes": 4400,
+   "gzip": 4400,
+   "kind": "other"
+  },
+  {
+   "file": "D-22-CHrKpuam.js",
+   "bytes": 9839,
+   "gzip": 4309,
+   "kind": "js"
+  },
+  {
+   "file": "product-280-D2L8fIu0.jpg",
+   "bytes": 4239,
+   "gzip": 4239,
+   "kind": "other"
+  },
+  {
+   "file": "product-311-bbKbVYiA.jpg",
+   "bytes": 4185,
+   "gzip": 4185,
+   "kind": "other"
+  },
+  {
+   "file": "GB-01-BSPuOlxK.js",
+   "bytes": 9298,
+   "gzip": 4168,
+   "kind": "js"
+  },
+  {
+   "file": "product-103-pA3wecoF.jpg",
+   "bytes": 4161,
+   "gzip": 4161,
+   "kind": "other"
+  },
+  {
+   "file": "README-Gi5DMvS-.js",
+   "bytes": 8660,
+   "gzip": 4145,
+   "kind": "js"
+  },
+  {
+   "file": "category-answer-Ds-daj1P.jpg",
+   "bytes": 4123,
+   "gzip": 4123,
+   "kind": "other"
+  },
+  {
+   "file": "directions-_fSNie6d.js",
+   "bytes": 8191,
+   "gzip": 4102,
+   "kind": "js"
+  },
+  {
+   "file": "0008-showcase-BH-a8OCT.js",
+   "bytes": 9017,
+   "gzip": 4094,
+   "kind": "js"
+  },
+  {
+   "file": "foundation-2-plan-1QPX2Dyd.js",
+   "bytes": 8496,
+   "gzip": 3872,
+   "kind": "js"
+  },
+  {
+   "file": "0011-directions-BS2LNC7s.js",
+   "bytes": 8344,
+   "gzip": 3838,
+   "kind": "js"
+  },
+  {
+   "file": "drafting-CJCQw7QN.js",
+   "bytes": 8381,
+   "gzip": 3826,
+   "kind": "js"
+  },
+  {
+   "file": "frontdesk-Bh6-5zVD.js",
+   "bytes": 8553,
+   "gzip": 3763,
+   "kind": "js"
+  },
+  {
+   "file": "board-verify-D4GZuvfi.js",
+   "bytes": 8039,
+   "gzip": 3687,
+   "kind": "js"
+  },
+  {
+   "file": "P-01-COTpr5uF.js",
+   "bytes": 8210,
+   "gzip": 3602,
+   "kind": "js"
+  },
+  {
+   "file": "binder-nbydnYC4.js",
+   "bytes": 7965,
+   "gzip": 3597,
+   "kind": "js"
+  },
+  {
+   "file": "pipeline-CRh5m8a5.js",
+   "bytes": 7726,
+   "gzip": 3565,
+   "kind": "js"
+  },
+  {
+   "file": "README-5j0K2jse.js",
+   "bytes": 7633,
+   "gzip": 3522,
+   "kind": "js"
+  },
+  {
+   "file": "law-change-log-D04gI60j.js",
+   "bytes": 7897,
+   "gzip": 3455,
+   "kind": "js"
+  },
+  {
+   "file": "site-people-DGLjG5Lw.js",
+   "bytes": 7698,
+   "gzip": 3451,
+   "kind": "js"
+  },
+  {
+   "file": "hub-simulator-D71u0Nrv.js",
+   "bytes": 7609,
+   "gzip": 3445,
+   "kind": "js"
+  },
+  {
+   "file": "README-CNKuim59.js",
+   "bytes": 7277,
+   "gzip": 3444,
+   "kind": "js"
+  },
+  {
+   "file": "0003-looks-and-services-menu-h7NoVGYC.js",
+   "bytes": 6709,
+   "gzip": 3417,
+   "kind": "js"
+  },
+  {
+   "file": "GB-02-BRY7egHw.js",
+   "bytes": 7664,
+   "gzip": 3386,
+   "kind": "js"
+  },
+  {
+   "file": "learning-CzG45SAX.js",
+   "bytes": 7210,
+   "gzip": 3326,
+   "kind": "js"
+  },
+  {
+   "file": "0004-plan-viewer-ww-z_cF9.js",
+   "bytes": 7289,
+   "gzip": 3298,
+   "kind": "js"
+  },
+  {
+   "file": "P-13-B3ABn5Tf.js",
+   "bytes": 7390,
+   "gzip": 3294,
+   "kind": "js"
+  },
+  {
+   "file": "P-10-BpaOuV90.js",
+   "bytes": 7303,
+   "gzip": 3287,
+   "kind": "js"
+  },
+  {
+   "file": "0001-discovery-and-plan-CQT2_grF.js",
+   "bytes": 6960,
+   "gzip": 3177,
+   "kind": "js"
+  },
+  {
+   "file": "C-20-BvIy3zpv.js",
+   "bytes": 7295,
+   "gzip": 3177,
+   "kind": "js"
+  },
+  {
+   "file": "0005-site-and-proposal-BXQZOfUD.js",
+   "bytes": 7028,
+   "gzip": 3156,
+   "kind": "js"
+  },
+  {
+   "file": "foundation-2-domain-DPF1M-w1.js",
+   "bytes": 6552,
+   "gzip": 3121,
+   "kind": "js"
+  },
+  {
+   "file": "C-40-BxfLtCIZ.js",
+   "bytes": 6850,
+   "gzip": 3084,
+   "kind": "js"
+  },
+  {
+   "file": "F-01-Qfgf4xPs.js",
+   "bytes": 7096,
+   "gzip": 3065,
+   "kind": "js"
+  },
+  {
+   "file": "GB-03-Yrl69OpL.js",
+   "bytes": 6594,
+   "gzip": 3052,
+   "kind": "js"
+  },
+  {
+   "file": "F-15-CRGudA7P.js",
+   "bytes": 6711,
+   "gzip": 3039,
+   "kind": "js"
+  },
+  {
+   "file": "0015-hubfix-release-0.1.2-C9TQkoZS.js",
+   "bytes": 6335,
+   "gzip": 3038,
+   "kind": "js"
+  },
+  {
+   "file": "P-02-DzBFudEu.js",
+   "bytes": 6487,
+   "gzip": 3023,
+   "kind": "js"
+  },
+  {
+   "file": "L-13-BsBckIze.js",
+   "bytes": 6725,
+   "gzip": 2933,
+   "kind": "js"
+  },
+  {
+   "file": "graph-gallery-views-C_TeeXC-.js",
+   "bytes": 5920,
+   "gzip": 2926,
+   "kind": "js"
+  },
+  {
+   "file": "P-11-a48Nw1IJ.js",
+   "bytes": 6066,
+   "gzip": 2827,
+   "kind": "js"
+  },
+  {
+   "file": "L-31-CSzEyVUJ.js",
+   "bytes": 6518,
+   "gzip": 2806,
+   "kind": "js"
+  },
+  {
+   "file": "C-22-DUl2vkb0.js",
+   "bytes": 6354,
+   "gzip": 2803,
+   "kind": "js"
+  },
+  {
+   "file": "P-05-C0B_n-to.js",
+   "bytes": 5695,
+   "gzip": 2778,
+   "kind": "js"
+  },
+  {
+   "file": "L-14-BirKLB4S.js",
+   "bytes": 6880,
+   "gzip": 2759,
+   "kind": "js"
+  },
+  {
+   "file": "C-42-C0ACQwJ2.js",
+   "bytes": 6018,
+   "gzip": 2715,
+   "kind": "js"
+  },
+  {
+   "file": "P-06-CNwP7xCw.js",
+   "bytes": 5534,
+   "gzip": 2686,
+   "kind": "js"
+  },
+  {
+   "file": "S-10-D55q1hDk.js",
+   "bytes": 6976,
+   "gzip": 2659,
+   "kind": "js"
+  },
+  {
+   "file": "D-23--3vuii-F.js",
+   "bytes": 5388,
+   "gzip": 2645,
+   "kind": "js"
+  },
+  {
+   "file": "README-CU-rP5G_.js",
+   "bytes": 5427,
+   "gzip": 2627,
+   "kind": "js"
+  },
+  {
+   "file": "M-02-BnfZ6SR3.js",
+   "bytes": 5308,
+   "gzip": 2616,
+   "kind": "js"
+  },
+  {
+   "file": "A-10-CRhM07c3.js",
+   "bytes": 5612,
+   "gzip": 2575,
+   "kind": "js"
+  },
+  {
+   "file": "format-pass-DUvXmEHT.js",
+   "bytes": 5607,
+   "gzip": 2552,
+   "kind": "js"
+  },
+  {
+   "file": "PM-01-DglN0mmE.js",
+   "bytes": 5130,
+   "gzip": 2536,
+   "kind": "js"
+  },
+  {
+   "file": "C-11-BIldoKg9.js",
+   "bytes": 5557,
+   "gzip": 2531,
+   "kind": "js"
+  },
+  {
+   "file": "C-01-B4CHTTwU.js",
+   "bytes": 5293,
+   "gzip": 2515,
+   "kind": "js"
+  },
+  {
+   "file": "0002-foundation-C-RjMzZw.js",
+   "bytes": 4801,
+   "gzip": 2493,
+   "kind": "js"
+  },
+  {
+   "file": "company-os-DwQH75AS.js",
+   "bytes": 5067,
+   "gzip": 2455,
+   "kind": "js"
+  },
+  {
+   "file": "D-24-DoEvLWvd.js",
+   "bytes": 4614,
+   "gzip": 2343,
+   "kind": "js"
+  },
+  {
+   "file": "F-13-uJHan3Mh.js",
+   "bytes": 5059,
+   "gzip": 2332,
+   "kind": "js"
+  },
+  {
+   "file": "0004-rescrape-BSMQQLqi.js",
+   "bytes": 4368,
+   "gzip": 2322,
+   "kind": "js"
+  },
+  {
+   "file": "P-04-Cpmhv-0K.js",
+   "bytes": 4743,
+   "gzip": 2311,
+   "kind": "js"
+  },
+  {
+   "file": "scrape-2-CN-0U3GN.js",
+   "bytes": 5252,
+   "gzip": 2305,
+   "kind": "js"
+  },
+  {
+   "file": "K-01-C8rOyixs.js",
+   "bytes": 4517,
+   "gzip": 2299,
+   "kind": "js"
+  },
+  {
+   "file": "02-case-by-board-stage-DfjN-QMF.js",
+   "bytes": 4597,
+   "gzip": 2250,
+   "kind": "js"
+  },
+  {
+   "file": "S-21-DHkWiM7u.js",
+   "bytes": 5018,
+   "gzip": 2243,
+   "kind": "js"
+  },
+  {
+   "file": "F-14-BmOrLR2s.js",
+   "bytes": 4834,
+   "gzip": 2241,
+   "kind": "js"
+  },
+  {
+   "file": "C-21-xIP0nf6-.js",
+   "bytes": 4762,
+   "gzip": 2200,
+   "kind": "js"
+  },
+  {
+   "file": "PM-04-CPW0DRQo.js",
+   "bytes": 4423,
+   "gzip": 2200,
+   "kind": "js"
+  },
+  {
+   "file": "P-03-C1LOpigR.js",
+   "bytes": 4313,
+   "gzip": 2179,
+   "kind": "js"
+  },
+  {
+   "file": "02-case-by-board-stage-C_zzhnQx.js",
+   "bytes": 4382,
+   "gzip": 2122,
+   "kind": "js"
+  },
+  {
+   "file": "C-03-DgA8QpJF.js",
+   "bytes": 4241,
+   "gzip": 2105,
+   "kind": "js"
+  },
+  {
+   "file": "00-introduccion-C1cavw82.js",
+   "bytes": 4523,
+   "gzip": 2104,
+   "kind": "js"
+  },
+  {
+   "file": "00-introduction-B4URRNu4.js",
+   "bytes": 4439,
+   "gzip": 2096,
+   "kind": "js"
+  },
+  {
+   "file": "K-10-BV5SXYjd.js",
+   "bytes": 4158,
+   "gzip": 2083,
+   "kind": "js"
+  },
+  {
+   "file": "01-front-desk-day-BkeMVljz.js",
+   "bytes": 4338,
+   "gzip": 2080,
+   "kind": "js"
+  },
+  {
+   "file": "A-11-Z3Sa13ed.js",
+   "bytes": 4692,
+   "gzip": 2080,
+   "kind": "js"
+  },
+  {
+   "file": "L-40-BAjPxDg8.js",
+   "bytes": 4557,
+   "gzip": 2077,
+   "kind": "js"
+  },
+  {
+   "file": "L-01-DyOOyXZ1.js",
+   "bytes": 4403,
+   "gzip": 2044,
+   "kind": "js"
+  },
+  {
+   "file": "O-01-BFGEqMxM.js",
+   "bytes": 4366,
+   "gzip": 2038,
+   "kind": "js"
+  },
+  {
+   "file": "PM-03-BMXPKmpF.js",
+   "bytes": 3951,
+   "gzip": 2024,
+   "kind": "js"
+  },
+  {
+   "file": "09-using-ctl-os-B536Hhgn.js",
+   "bytes": 4060,
+   "gzip": 2009,
+   "kind": "js"
+  },
+  {
+   "file": "P-12-iiLcKs4f.js",
+   "bytes": 3984,
+   "gzip": 1993,
+   "kind": "js"
+  },
+  {
+   "file": "0005-homepage-thumbnails-D92iAzk4.js",
+   "bytes": 3665,
+   "gzip": 1930,
+   "kind": "js"
+  },
+  {
+   "file": "01-front-desk-day-Dv9t5V5l.js",
+   "bytes": 3960,
+   "gzip": 1919,
+   "kind": "js"
+  },
+  {
+   "file": "X-01-CFVarlLt.js",
+   "bytes": 4136,
+   "gzip": 1902,
+   "kind": "js"
+  },
+  {
+   "file": "A-05-CURipWex.js",
+   "bytes": 3879,
+   "gzip": 1900,
+   "kind": "js"
+  },
+  {
+   "file": "0006-pass-two-operations-AXuUqfE3.js",
+   "bytes": 3820,
+   "gzip": 1889,
+   "kind": "js"
+  },
+  {
+   "file": "C-41-BthpDNr_.js",
+   "bytes": 3835,
+   "gzip": 1889,
+   "kind": "js"
+  },
+  {
+   "file": "S-13-BFhGAeNt.js",
+   "bytes": 3859,
+   "gzip": 1849,
+   "kind": "js"
+  },
+  {
+   "file": "09-using-ctl-os-CzIWVd3L.js",
+   "bytes": 3793,
+   "gzip": 1832,
+   "kind": "js"
+  },
+  {
+   "file": "PM-05-CxRA8wWQ.js",
+   "bytes": 3676,
+   "gzip": 1778,
+   "kind": "js"
+  },
+  {
+   "file": "S-01-Dufa7kTI.js",
+   "bytes": 3677,
+   "gzip": 1732,
+   "kind": "js"
+  },
+  {
+   "file": "0002-make-it-gorgeous-BpYrPnED.js",
+   "bytes": 2993,
+   "gzip": 1717,
+   "kind": "js"
+  },
+  {
+   "file": "A-01-D4Chzn9y.js",
+   "bytes": 3637,
+   "gzip": 1707,
+   "kind": "js"
+  },
+  {
+   "file": "M-01-2WbeVk7z.js",
+   "bytes": 3364,
+   "gzip": 1699,
+   "kind": "js"
+  },
+  {
+   "file": "annotations-triage-DGlcTbbt.js",
+   "bytes": 3368,
+   "gzip": 1679,
+   "kind": "js"
+  },
+  {
+   "file": "K-02-6hz8cuhH.js",
+   "bytes": 3158,
+   "gzip": 1677,
+   "kind": "js"
+  },
+  {
+   "file": "K-03-BK32RZnw.js",
+   "bytes": 3087,
+   "gzip": 1610,
+   "kind": "js"
+  },
+  {
+   "file": "K-13-CQoTojZO.js",
+   "bytes": 2981,
+   "gzip": 1607,
+   "kind": "js"
+  },
+  {
+   "file": "C-02-CI_RGP41.js",
+   "bytes": 3000,
+   "gzip": 1564,
+   "kind": "js"
+  },
+  {
+   "file": "K-11-1X49ZoKP.js",
+   "bytes": 2870,
+   "gzip": 1539,
+   "kind": "js"
+  },
+  {
+   "file": "K-12-CTr4vjVc.js",
+   "bytes": 2765,
+   "gzip": 1529,
+   "kind": "js"
+  },
+  {
+   "file": "D-05-BZeOwO6m.js",
+   "bytes": 2824,
+   "gzip": 1504,
+   "kind": "js"
+  },
+  {
+   "file": "D-04-D6KzOeKI.js",
+   "bytes": 2842,
+   "gzip": 1496,
+   "kind": "js"
+  },
+  {
+   "file": "D-20-BpEghDPR.js",
+   "bytes": 2771,
+   "gzip": 1490,
+   "kind": "js"
+  },
+  {
+   "file": "PM-02-B1Z30BKo.js",
+   "bytes": 2901,
+   "gzip": 1437,
+   "kind": "js"
+  },
+  {
+   "file": "D-01-eSkSgkJk.js",
+   "bytes": 2637,
+   "gzip": 1422,
+   "kind": "js"
+  },
+  {
+   "file": "unlawful-detainer-procedure-TfwPjj7B.js",
+   "bytes": 2599,
+   "gzip": 1414,
+   "kind": "js"
+  },
+  {
+   "file": "C-04-BMaz3o77.js",
+   "bytes": 2465,
+   "gzip": 1371,
+   "kind": "js"
+  },
+  {
+   "file": "D-02-D0h5177F.js",
+   "bytes": 2396,
+   "gzip": 1296,
+   "kind": "js"
+  },
+  {
+   "file": "responsive-report-BzXBv9Wa.js",
+   "bytes": 7193,
+   "gzip": 1259,
+   "kind": "js"
+  },
+  {
+   "file": "M-03-XcFbuJn3.js",
+   "bytes": 2365,
+   "gzip": 1250,
+   "kind": "js"
+  },
+  {
+   "file": "spanish-2-D9PhbBMI.js",
+   "bytes": 2516,
+   "gzip": 1244,
+   "kind": "js"
+  },
+  {
+   "file": "D-03-BLGD3CqQ.js",
+   "bytes": 2212,
+   "gzip": 1218,
+   "kind": "js"
+  },
+  {
+   "file": "HUB-02-DLErbEex.js",
+   "bytes": 2078,
+   "gzip": 1196,
+   "kind": "js"
+  },
+  {
+   "file": "D-19-Bu2H9McE.js",
+   "bytes": 2221,
+   "gzip": 1194,
+   "kind": "js"
+  },
+  {
+   "file": "spanish-coverage-DcP7_ePt.js",
+   "bytes": 2317,
+   "gzip": 1186,
+   "kind": "js"
+  },
+  {
+   "file": "rent-control-ab1482-WSzVgmLP.js",
+   "bytes": 1827,
+   "gzip": 1069,
+   "kind": "js"
+  },
+  {
+   "file": "habitability-repairs-CxgrXKH9.js",
+   "bytes": 1814,
+   "gzip": 1040,
+   "kind": "js"
+  },
+  {
+   "file": "README-EFotgLYA.js",
+   "bytes": 1753,
+   "gzip": 1009,
+   "kind": "js"
+  },
+  {
+   "file": "security-deposits-C3GIpQzD.js",
+   "bytes": 1756,
+   "gzip": 993,
+   "kind": "js"
+  },
+  {
+   "file": "_TEMPLATE-DQ8WK7KJ.js",
+   "bytes": 1592,
+   "gzip": 899,
+   "kind": "js"
+  },
+  {
+   "file": "late-fees-DcV9za6H.js",
+   "bytes": 1458,
+   "gzip": 880,
+   "kind": "js"
+  },
+  {
+   "file": "retaliation-B3pcjf3P.js",
+   "bytes": 1507,
+   "gzip": 879,
+   "kind": "js"
+  },
+  {
+   "file": "commercial-BYfMWcdw.js",
+   "bytes": 1529,
+   "gzip": 873,
+   "kind": "js"
+  },
+  {
+   "file": "foreclosure-tenants-WHpcSBt0.js",
+   "bytes": 1454,
+   "gzip": 859,
+   "kind": "js"
+  },
+  {
+   "file": "mobilehome-BtEz03jk.js",
+   "bytes": 1410,
+   "gzip": 821,
+   "kind": "js"
+  },
+  {
+   "file": "entry-notice-CVWEcUje.js",
+   "bytes": 1359,
+   "gzip": 809,
+   "kind": "js"
+  },
+  {
+   "file": "README-D2Y3zVqP.js",
+   "bytes": 2228,
+   "gzip": 759,
+   "kind": "js"
+  },
+  {
+   "file": "README-RCTXHDt6.js",
+   "bytes": 594,
+   "gzip": 364,
+   "kind": "js"
+  }
+ ],
+ "totals": {
+  "js": 4463738,
+  "css": 329828,
+  "other": 70883822,
+  "jsGzip": 1497266,
+  "cssGzip": 54541,
+  "files": 585
+ },
+ "largest": {
+  "file": "index-DgF29xXs.js",
+  "gzip": 938265
+ },
+ "docsBytes": 1362902
+}

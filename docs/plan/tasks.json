@@ -1,6 +1,6 @@
 {
  "version": 2,
- "updated_at": "2026-09-20T21:30:00Z",
+ "updated_at": "2026-09-20T23:59:00Z",
  "units": "dependency ticks, not calendar days",
  "lanes": [
   "Foundation",
@@ -1214,7 +1214,7 @@
     "T-053"
    ],
    "model": "fable",
-   "status": "doing",
+   "status": "todo",
    "size": "L",
    "deliverables": [
     "src/data/schema/cases.ts",
@@ -1223,8 +1223,8 @@
     "docs/data-model.md"
    ],
    "acceptance": "One lifecycle function moves a case along the board; every write versioned; seed covers every board phase.",
-   "notes": "Architecture (Fable) before pages. Pass 2 wave A (prompt 0006): scoped this pass to unifying the demo case seeds (board positions and move histories for every ops case, one case id set, src/data/seed/board.ts) and adding the order pipeline (T-120). Full case lifecycle (matters, parties, people, roles-on-case, events) stays wave B.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Architecture (Fable) before pages. Pass 2 wave A (prompt 0006): scoped this pass to unifying the demo case seeds (board positions and move histories for every ops case, one case id set, src/data/seed/board.ts) and adding the order pipeline (T-120). Full case lifecycle (matters, parties, people, roles-on-case, events) stays wave B. Back to todo: wave A unified the demo case seeds (one case id set, board positions and move histories for every ops case) and added orders; the full case lifecycle (cases, matters, parties, events, assignments) is wave B.",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-055",
@@ -1399,7 +1399,7 @@
     "T-054"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "todo",
    "size": "M",
    "deliverables": [
     "src/modules/frontdesk/IntakePage.tsx",
@@ -1407,8 +1407,8 @@
     "docs/pages/F-10.md"
    ],
    "acceptance": "Form fields from the site's intake (as indexed); a copy is emailed (comms seam Pass 3, Placeholder now); convert creates a case.",
-   "notes": "Pass 2 wave A (prompt 0006): built now with the front desk call console and follow-ups (T-128); F-12 / F-13 land under T-128, intake queue F-10 here.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006): built now with the front desk call console and follow-ups (T-128); F-12 / F-13 land under T-128, intake queue F-10 here. Back to todo: wave B. Wave A shipped the call console instead (F-12 has a Start intake Placeholder pointing here).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-064",
@@ -1441,7 +1441,7 @@
     "T-054"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "S",
    "deliverables": [
     "src/modules/frontdesk/CallsPage.tsx",
@@ -1450,8 +1450,8 @@
     "docs/pages/F-13.md"
    ],
    "acceptance": "Calls are message_log rows (kind call); minutes and charges recorded; directory links to cases.",
-   "notes": "Pass 2 wave A (prompt 0006): built now with the front desk call console and follow-ups (T-128); F-12 / F-13 land under T-128, intake queue F-10 here.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006): built now with the front desk call console and follow-ups (T-128); F-12 / F-13 land under T-128, intake queue F-10 here. Wave A delivered F-12 (call console, hotline minutes logged per call) and F-13 (clients directory) in T-128; remainder: calls as message_log rows and click-to-call wait for the Pass 3 comms seam (T-089, T-091).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-066",
@@ -1525,15 +1525,15 @@
     "T-053"
    ],
    "model": "fable",
-   "status": "doing",
+   "status": "done",
    "size": "L",
    "deliverables": [
     "src/components/organism/PleadingEditor/",
     "scripts/test-pleading.mjs"
    ],
    "acceptance": "Line numbers align with California pleading paper (28 lines, rule-compliant margins) in PDF; DOCX opens in Word; component in D-02.",
-   "notes": "Fable. D-018 (proposed). Replaces WordPerfect. Pass 2 wave A (prompt 0006): the pleading-paper renderer feeds the drafting studio S-21 (T-129) and DocPreview (T-121).",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Fable. D-018 (proposed). Replaces WordPerfect. Pass 2 wave A (prompt 0006): the pleading-paper renderer feeds the drafting studio S-21 (T-129) and DocPreview (T-121). Wave A delivered the PleadingPaper organism (28 lines, caption, footer, print to PDF) inside the drafting studio (T-129); remainder: DOCX export and scripts/test-pleading.mjs, wave B / T-097.",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-070",
@@ -1545,7 +1545,7 @@
     "T-054"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "L",
    "deliverables": [
     "src/modules/binder/",
@@ -1553,8 +1553,8 @@
     "docs/pages/C-20.md"
    ],
    "acceptance": "Objects view with previews; missing items are requests; staff see the same binder (L-31).",
-   "notes": "Justin: \"helping the customers to keep track of all their documents and essentially their binder\". Pass 2 wave A (prompt 0006): built with T-131 (client binder and evidence).",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Justin: \"helping the customers to keep track of all their documents and essentially their binder\". Pass 2 wave A (prompt 0006): built with T-131 (client binder and evidence). Wave A delivered C-20 binder by phase with previews, missing-items strip, C-20a map, L-31 staff binder (T-131); remainder: three.js objects view (T-076), real file storage (T-072 Pass 3).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-071",
@@ -1566,15 +1566,15 @@
     "T-070"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "M",
    "deliverables": [
     "src/modules/binder/RequestsPage.tsx",
     "docs/pages/C-21.md"
    ],
    "acceptance": "Request -> upload -> accepted / rejected; camera upload on phone; progress on C-01.",
-   "notes": "Pass 2 wave A (prompt 0006): requests checklist C-21 built with T-131; the \"what we need from you\" list is the pipeline's waiting-on-client state (T-120).",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006): requests checklist C-21 built with T-131; the \"what we need from you\" list is the pipeline's waiting-on-client state (T-120). Wave A delivered C-21 requests checklist, upload answers the request, staff mark received (T-131); remainder: reminders through the comms seam (Pass 3).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-072",
@@ -1586,7 +1586,7 @@
     "T-070"
    ],
    "model": "fable",
-   "status": "doing",
+   "status": "done",
    "size": "M",
    "deliverables": [
     "src/data/schema/evidence.ts",
@@ -1594,8 +1594,8 @@
     "docs/reference/surfaces.md"
    ],
    "acceptance": "An imported message becomes an evidence row with source, hash, dates; tag to a board node; Pass 3 wires live channels.",
-   "notes": "Fable. Justin: \"connecting things like their email and their text messages for evidence\". Pass 2 wave A (prompt 0006): connect email / text / WhatsApp seam with mock import lands with T-131; live channels stay Pass 3.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Fable. Justin: \"connecting things like their email and their text messages for evidence\". Pass 2 wave A (prompt 0006): connect email / text / WhatsApp seam with mock import lands with T-131; live channels stay Pass 3. Wave A delivered the evidence schema (source, sha256, chain of custody), consent rows and mock importers for email / text / WhatsApp exports (T-131); remainder: live mailbox and SMS providers, forward-to address (Pass 3).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-073",
@@ -1718,7 +1718,7 @@
     "T-054"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "L",
    "deliverables": [
     "src/modules/learning/",
@@ -1727,8 +1727,8 @@
     "docs/pages/L-40.md"
    ],
    "acceptance": "Watched state persists per user; drip rule engine picks content by position; attorney sees completion before a consultation; TV-remote friendly player.",
-   "notes": "Justin: \"knowing what a customer has and has not watched\". Pass 2 wave A (prompt 0006): LMS built under T-130 (courses from videos.json, in-app player, journey, staff insight, LMS admin).",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Justin: \"knowing what a customer has and has not watched\". Pass 2 wave A (prompt 0006): LMS built under T-130 (courses from videos.json, in-app player, journey, staff insight, LMS admin). Wave A delivered C-40, C-41, C-42, L-40, A-11 with measured watched state and the click-to-play player (T-130); remainder: transcripts, ask-about (Pass 3).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-079",
@@ -1956,14 +1956,15 @@
     "T-135"
    ],
    "model": "fable",
-   "status": "todo",
+   "status": "done",
    "size": "S",
    "deliverables": [
-    "docs/changelog/00nn-release-0.2.0.md"
+    "docs/changelog/0029-release-0.2.0.md",
+    "package.json"
    ],
    "acceptance": "Deployed; release note with counts and open questions; prompt 0006 ## Response filled in.",
-   "notes": "Pass 2 wave B Pass 2 wave A (prompt 0006): release 0.2.0 = wave A (D-045); wave B releases as 0.2.1 (T-136). Changelog 0016.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006): release 0.2.0 = wave A (D-045); wave B releases as 0.2.1 (T-136).  Released 2026-09-20 as 0.2.0; changelog 0029 (not 0016: the module drafts took 0016-0028).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-089",
@@ -2614,7 +2615,7 @@
     "T-117"
    ],
    "model": "fable",
-   "status": "doing",
+   "status": "done",
    "size": "M",
    "deliverables": [
     "src/modules/frontdesk/specs.ts",
@@ -2627,8 +2628,8 @@
     "docs/pages/D-24.md"
    ],
    "acceptance": "Front desk sees no developer, docs, plan, legal memory or law-change pages; every role sees only its surfaces plus what D-048 grants; D-24 lists roles x routes with a menu preview per role; super admin viewing as a role is scoped like that role.",
-   "notes": "Pass 2 wave A (prompt 0006). Fable. D-048.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Fable. D-048. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-120",
@@ -2640,7 +2641,7 @@
     "T-054"
    ],
    "model": "fable",
-   "status": "doing",
+   "status": "done",
    "size": "L",
    "deliverables": [
     "src/domain/pipeline.ts",
@@ -2651,8 +2652,8 @@
     "docs/data-model.md"
    ],
    "acceptance": "One canonical stage list (D-047) with waits_on client / court / staff per stage; every order row carries stage, waiting_on, revision counter and stage events; seeds cover every stage including on hold and cancelled; every write versioned.",
-   "notes": "Pass 2 wave A (prompt 0006). Fable. D-047. Steps beyond Justin's list are proposed (needs Justin).",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Fable. D-047. Steps beyond Justin's list are proposed (needs Justin). Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-121",
@@ -2664,7 +2665,7 @@
     "T-117"
    ],
    "model": "fable",
-   "status": "doing",
+   "status": "done",
    "size": "M",
    "deliverables": [
     "src/components/organism/DocPreview/DocPreview.tsx",
@@ -2672,8 +2673,8 @@
     "src/components/organism/DocPreview/DocPreview.css"
    ],
    "acceptance": "Renders from metadata (kind, title, caption, pages, status) as SVG / CSS with no rasterisation; every kind has a distinct silhouette; meta with usages shows in D-02; legible at 360 and 3840; used by binder, pipeline, drafting and LMS lists.",
-   "notes": "Pass 2 wave A (prompt 0006). Fable. D-051.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Fable. D-051. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-122",
@@ -2686,7 +2687,7 @@
     "T-121"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "L",
    "deliverables": [
     "src/modules/showcase/CanvasPage.tsx",
@@ -2695,8 +2696,8 @@
     "docs/pages/D-21.md"
    ],
    "acceptance": "Every page is a browser-chrome window with adjustable width and height and a live frame; windows drag (keyboard and pointer, never drag-only); layouts save to page_layouts and reload; a flows layer draws what each role can do as connectors between windows (from src/flows/roleFlows.ts); zoom 0.05..1; readable at 360 (list fallback) and 3840.",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5. D-049 supersedes the shelf-packed viewer (T-025).",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. D-049 supersedes the shelf-packed viewer (T-025). Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-123",
@@ -2708,7 +2709,7 @@
     "T-119"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "S",
    "deliverables": [
     "src/modules/hub/HubPage.tsx",
@@ -2716,8 +2717,8 @@
     "docs/pages/HUB-01.md"
    ],
    "acceptance": "Order = what the firm owner cares about: staff work (front desk, attorneys, paralegals, owner) and the client app first, then site, board and tools, opposing-counsel portal near the bottom; every card lists only routes its role may open (D-048); previews still fill their frames (prompt 0005).",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-124",
@@ -2729,7 +2730,7 @@
     "T-117"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "M",
    "deliverables": [
     "src/modules/showcase/SimulatorPage.tsx",
@@ -2737,8 +2738,8 @@
     "docs/pages/D-22.md"
    ],
    "acceptance": "Picking a route picks the device from its surface (customer -> phone, owner dashboards -> TV, other staff -> desktop, D-050) unless overridden; phone, tablet, laptop and TV chrome differ visibly; the tour steps use the right device; state stays in the query string.",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5. D-050.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. D-050. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-125",
@@ -2751,7 +2752,7 @@
     "T-121"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "L",
    "deliverables": [
     "src/modules/pipeline/BoardPage.tsx",
@@ -2762,8 +2763,8 @@
     "docs/pages/S-13.md"
    ],
    "acceptance": "Kanban by stage with waiting-on badges (client / court / staff) and days waiting; order detail shows stage history, revision counter, client requests, DocPreview of the document and every action as a stage move through the domain function; paralegal queue lists what is on their desk by stage; keyboard move.",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-126",
@@ -2775,7 +2776,7 @@
     "T-120"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "M",
    "deliverables": [
     "src/modules/client/OrdersPage.tsx",
@@ -2783,8 +2784,8 @@
     "docs/pages/C-11.md"
    ],
    "acceptance": "Plain-language (en / es) stage names per order; a clear \"we are waiting on you\" block with the open requests; approve and request-changes actions write stage moves; no internal notes leak; phone first, 44 px targets.",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-127",
@@ -2796,15 +2797,15 @@
     "T-120"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "S",
    "deliverables": [
     "src/modules/frontdesk/StatusPage.tsx",
     "docs/pages/F-14.md"
    ],
    "acceptance": "Typing a name, phone or order id shows the order's stage, who has it, what it waits on and the next date in words the desk can read to a caller; links to the call console; no legal memory or developer pages in the desk menu (D-048).",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-128",
@@ -2816,7 +2817,7 @@
     "T-120"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "L",
    "deliverables": [
     "src/modules/frontdesk/CallsPage.tsx",
@@ -2827,8 +2828,8 @@
     "docs/pages/F-15.md"
    ],
    "acceptance": "An incoming call (mock) matches a client and lists their orders with stage and waiting-on; the desk logs notes and an outcome as calls rows; follow-ups list every due date and item needed from a client with a done action; the directory links people to their orders; 10-foot legible on the wall screen.",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Telephony itself stays Pass 3 (T-091).",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Telephony itself stays Pass 3 (T-091). Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-129",
@@ -2842,7 +2843,7 @@
     "T-069"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "XL",
    "deliverables": [
     "src/modules/drafting/StudioPage.tsx",
@@ -2853,8 +2854,8 @@
     "docs/pages/S-10.md"
    ],
    "acceptance": "Editing a document shows the pleading page with numbered lines and, beside it, the laws (from docs/legal rows, unverified flagged), precedent notes, recommendations and the client's details for the board node; \"ask the client\" creates client_requests the client sees in C-11 / C-21; templates browse by board node; every draft is a documents row with revision.",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Drafting assistant (agent proposes text) stays Pass 3 (T-095).",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Drafting assistant (agent proposes text) stays Pass 3 (T-095). Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-130",
@@ -2866,7 +2867,7 @@
     "T-077"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "L",
    "deliverables": [
     "src/modules/learning/CoursesPage.tsx",
@@ -2880,8 +2881,8 @@
     "docs/pages/A-11.md"
    ],
    "acceptance": "Courses group the 36 videos and the articles; the in-app player (YouTube embed, keyboard and remote friendly) writes lesson_progress; the journey picks what to watch next by board position; attorneys see what a client watched; admin reorders courses and lessons; Play is no longer a Placeholder.",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5. D-043.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. D-043. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-131",
@@ -2894,7 +2895,7 @@
     "T-121"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "L",
    "deliverables": [
     "src/modules/binder/BinderPage.tsx",
@@ -2908,8 +2909,8 @@
     "docs/pages/L-31.md"
    ],
    "acceptance": "Binder by board stage with DocPreview per item; upload (camera on phone) creates evidence rows with source, hash and dates; requests show what is missing and satisfy the pipeline's waiting-on-client state; connect page imports a mock email / text thread through the evidence seam; staff see the same binder.",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5. D-028.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. D-028. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-132",
@@ -2921,7 +2922,7 @@
     "T-037"
    ],
    "model": "opus-5",
-   "status": "doing",
+   "status": "done",
    "size": "M",
    "deliverables": [
     "docs/game-board/nodes.json",
@@ -2932,8 +2933,8 @@
     "docs/pages/GB-03.md"
    ],
    "acceptance": "Every square label and arrow checked against reference/game-board.pdf with a written diff; reconstructed edges listed; case mode uses the unified case ids; keyboard moves between connected squares; no console errors at any width.",
-   "notes": "Pass 2 wave A (prompt 0006). Opus 5.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-133",
@@ -2945,7 +2946,7 @@
     "T-114"
    ],
    "model": "sonnet-5",
-   "status": "doing",
+   "status": "done",
    "size": "S",
    "deliverables": [
     "docs/data/people.json",
@@ -2954,8 +2955,8 @@
     "src/data/seed/people.ts"
    ],
    "acceptance": "Every attorney portrait and any image the 2026-09-18 scrape missed is in reference/site-scrape/assets with a docs/data row (evidence scraped-live, verified false); people rows carry the names as shown on caltenantlaw.com badged unverified (D-046).",
-   "notes": "Pass 2 wave A (prompt 0006). Sonnet 5. D-046 supersedes the never-shown half of D-023 / D-044.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Sonnet 5. D-046 supersedes the never-shown half of D-023 / D-044. Shipped in release 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-134",
@@ -2978,18 +2979,18 @@
     "T-133"
    ],
    "model": "fable",
-   "status": "todo",
+   "status": "done",
    "size": "L",
    "deliverables": [
-    "docs/changelog/0016-release-0.2.0.md",
+    "docs/changelog/0016-foundation-2.md .. 0028-format-pass.md",
     "docs/data-model.md",
     "docs/specs.md",
     "src/styles/global.css",
     "src/components/template/DesktopShell/DesktopShell.css"
    ],
    "acceptance": "Build green; _pending changelogs merged; no duplicate routes or codes; one spacing rhythm (4-pt tokens) across shells, hub and every new page; every new page has a spec at 100 % and a page doc; surfaces.md current.",
-   "notes": "Pass 2 wave A (prompt 0006). Fable.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Fable. Done at 0.2.0: integration commit 27cd411, formatting pass df6b42c; changelogs 0016-0028 merged at release (0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-135",
@@ -3001,7 +3002,7 @@
     "T-134"
    ],
    "model": "sonnet-5",
-   "status": "todo",
+   "status": "done",
    "size": "M",
    "deliverables": [
     "docs/screenshots/**",
@@ -3009,8 +3010,8 @@
     "src/modules/*/strings.ts"
    ],
    "acceptance": "Every new page captured at 390 + 1280 (dark + 3840 for key pages); qa:responsive 0 failing at the seven widths; client surfaces 100 % es, staff >= 80 %.",
-   "notes": "Pass 2 wave A (prompt 0006). Sonnet 5.",
-   "updated_at": "2026-09-20T21:30:00Z"
+   "notes": "Pass 2 wave A (prompt 0006). Sonnet 5. Done at 0.2.0: screenshots for every code (390 + 1280, dark + 3840 for key pages), full responsive matrix in docs/qa/, Spanish audit docs/qa/spanish-coverage.md (2,310 keys, 100 % es).",
+   "updated_at": "2026-09-20T23:59:00Z"
   },
   {
    "id": "T-136",
@@ -3032,6 +3033,56 @@
    "acceptance": "Deployed; release note with counts and open questions; takes over T-088's old dependencies (T-086, T-087).",
    "notes": "Pass 2 wave B. Fable. D-045.",
    "updated_at": "2026-09-20T21:30:00Z"
+  },
+  {
+   "id": "T-137",
+   "code": "P-05",
+   "title": "P-05 P-06 Attorneys page and public video library (site)",
+   "lane": "Proposal & Site",
+   "pass": 2,
+   "depends_on": [
+    "T-133",
+    "T-130"
+   ],
+   "model": "opus-5",
+   "status": "done",
+   "size": "M",
+   "deliverables": [
+    "src/modules/site/AttorneysPage.tsx",
+    "src/modules/site/VideosPage.tsx",
+    "src/data/schema/people.ts",
+    "src/data/seed/people.ts",
+    "src/components/molecule/PersonCard/",
+    "docs/pages/P-05.md",
+    "docs/pages/P-06.md"
+   ],
+   "acceptance": "The eight attorneys as PersonCards badged 'as shown on caltenantlaw.com, unverified' (D-046), filter by office; the 36 videos as a public library with search and series; P-01 strips; plan links on the proposal only for roles that can open /plan (D-048).",
+   "notes": "Pass 2 wave A (prompt 0006). Opus 5. Recorded at release 0.2.0 (the site-people worker had no task row; changelog 0025).",
+   "updated_at": "2026-09-20T23:59:00Z"
+  },
+  {
+   "id": "T-138",
+   "code": "HUB-01",
+   "title": "HUB-01 Visual exploration links from the hub (prompt 0007)",
+   "lane": "Hub & Dev tools",
+   "pass": 2,
+   "depends_on": [
+    "T-123"
+   ],
+   "model": "fable",
+   "status": "done",
+   "size": "S",
+   "deliverables": [
+    "docs/data/visual-explorations.json",
+    "src/modules/hub/HubPage.tsx",
+    "src/modules/hub/strings.ts",
+    "src/modules/hub/specs.ts",
+    "docs/pages/HUB-01.md",
+    "docs/prompts/0007-visual-exploration-link.md"
+   ],
+   "acceptance": "A Visual explorations group after Build & review lists every row of docs/data/visual-explorations.json; each opens in a new tab (rel noopener noreferrer) with an External chip and an external-link icon; action hub.openVisualExploration(id); en / es; nothing external is embedded.",
+   "notes": "Prompt 0007 (Justin, 2026-09-20): cloudbreak-rights-command.jmassion.chatgpt.site. D-053. Fable. Shipped in 0.2.0 (changelog 0029).",
+   "updated_at": "2026-09-20T23:59:00Z"
   }
  ]
 }
