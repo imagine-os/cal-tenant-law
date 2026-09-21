@@ -1,0 +1,15 @@
+{
+ "version": 1,
+ "note": "External concept sites and visual explorations linked from the testing hub (HUB-01, Visual explorations group). Prompt 0007, D-053: items open in a new tab, are labelled External and are not part of the CTL OS build. Append rows; never delete (set `retired_on` instead).",
+ "items": [
+  {
+   "id": "cloudbreak-rights-command",
+   "title": "Cloudbreak Rights Command",
+   "url": "https://cloudbreak-rights-command.jmassion.chatgpt.site",
+   "author": "Justin Massion (ChatGPT site)",
+   "added_on": "2026-09-20",
+   "note": "Visual exploration; external concept site, not part of the CTL OS build",
+   "kind": "external"
+  }
+ ]
+}

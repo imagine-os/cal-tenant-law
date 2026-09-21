@@ -32,6 +32,7 @@ import { PhoneFrame } from '../../components/organism/PhoneFrame/PhoneFrame';
 import { DeviceFrame } from '../../components/organism/DeviceFrame/DeviceFrame';
 import { frameRoute, frameSrc, isFramed } from '../showcase/frameSession';
 import { tasks as planTasks } from '../../../docs/plan/tasks.json';
+import { items as visualExplorations } from '../../../docs/data/visual-explorations.json';
 import { hubSpec } from './specs';
 import './hub.css';
 
@@ -455,6 +456,49 @@ function TestingHub({ open }: { open: (tool: ToolCard) => boolean }) {
   );
 }
 
+/** Visual explorations (prompt 0007, D-053): external concept sites Justin points at for the look and feel. They live in docs/data/visual-explorations.json, open in a new tab and are labelled external; none of them is part of the CTL OS build. */
+export interface VisualExploration { id: string; title: string; url: string; author: string; added_on: string; note: string; kind: 'external' }
+export const VISUAL_EXPLORATIONS = visualExplorations as VisualExploration[];
+
+function VisualExplorations() {
+  const { t, lang } = useI18n();
+  if (VISUAL_EXPLORATIONS.length === 0) return null;
+  const host = (url: string) => { try { return new URL(url).host; } catch { return url; } };
+  const when = (iso: string) => new Date(`${iso}T12:00:00Z`).toLocaleDateString(lang === 'es' ? 'es-MX' : 'en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  return (
+    <section className="hub-group hub-group-explore" aria-labelledby="hub-group-explore">
+      <div className="container container-wide hub-group-inner">
+        <header className="hub-group-head">
+          <p className="eyebrow eyebrow-rule">{t('hub.group.explore')}</p>
+          <h2 className="hub-group-title" id="hub-group-explore">{t('hub.group.explore.title')}</h2>
+          <p className="hub-group-body">{t('hub.group.explore.body')}</p>
+        </header>
+        <ul className="hub-tools-grid hub-explore-grid" aria-label={t('hub.group.explore')}>
+          {VISUAL_EXPLORATIONS.map((x) => (
+            <li key={x.id}>
+              <Card padding="md" className="hub-tool hub-explore hub-hue-explore">
+                <span className="hub-medallion hub-medallion-sm"><Icon name="external" size={22} strokeWidth={1.75} /></span>
+                <span className="hub-tool-text">
+                  <span className="hub-explore-head">
+                    <strong>{x.title}</strong>
+                    <Badge tone="info" size="sm">{t('hub.explore.external')}</Badge>
+                  </span>
+                  <span className="hub-tool-body">{t('hub.explore.note', { note: x.note, author: x.author, date: when(x.added_on) })}</span>
+                  <a className="hub-explore-link" href={x.url} target="_blank" rel="noopener noreferrer" data-action="hub.openVisualExploration" data-id={x.id} aria-label={`${x.title} · ${t('hub.explore.opens')}`}>
+                    <span className="hub-explore-host">{host(x.url)}</span>
+                    <Icon name="external" size={16} />
+                    <span className="hub-explore-opens">{t('hub.explore.opens')}</span>
+                  </a>
+                </span>
+              </Card>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
 function Footer() {
   const { t } = useI18n();
   const routes = getRoutes();
@@ -517,6 +561,13 @@ export function HubPage() {
       if (!x) return { ok: false, message: `unknown tool ${String(tool)}; try ${TOOLS.map((y) => y.key).join(', ')}` };
       return openTool(x) ? { ok: true, message: `opened ${x.to}` } : { ok: false, message: `${x.to} is not built yet` };
     },
+    'hub.openVisualExploration': ({ id }) => {
+      const x = VISUAL_EXPLORATIONS.find((y) => y.id === id);
+      if (!x) return { ok: false, message: `unknown visual exploration ${String(id)}; try ${VISUAL_EXPLORATIONS.map((y) => y.id).join(', ')}` };
+      // with `noopener` the browser returns null even on success, so the result cannot report a blocked pop-up
+      window.open(x.url, '_blank', 'noopener,noreferrer');
+      return { ok: true, message: `opened ${x.url} in a new tab (external, not part of CTL OS)` };
+    },
     'hub.toggleDevMode': () => { if (!isSuperAdmin) return { ok: false, message: 'dev mode is super_admin only' }; setDevMode(!devMode); return { ok: true, message: `dev mode ${devMode ? 'off' : 'on'}` }; },
     'hub.setLang': ({ lang }) => { if (lang !== 'en' && lang !== 'es') return { ok: false, message: 'lang must be en or es' }; setLang(lang); return { ok: true, message: `language ${lang}` }; },
     'hub.toggleTheme': () => { toggleTheme(); return { ok: true, message: 'theme toggled' }; },
@@ -534,6 +585,7 @@ export function HubPage() {
       <main className="hub-main" id="main">
         <SurfaceGrid only={['run', 'clients']} enter={enter} openAs={openAs} live={live} register={register} stats={stats} />
         <TestingHub open={openTool} />
+        <VisualExplorations />
         <SurfaceGrid only={['outside']} enter={enter} openAs={openAs} live={live} register={register} stats={stats} />
         <Footer />
       </main>

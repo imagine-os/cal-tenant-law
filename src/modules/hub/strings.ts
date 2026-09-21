@@ -105,4 +105,12 @@ export const strings: StringTable = {
   'hub.navgroup.developer': { en: 'Developer', es: 'Desarrollo' },
   'hub.navgroup.docs': { en: 'Docs', es: 'Documentación' },
   'hub.navgroup.customer': { en: 'Client app', es: 'App del cliente' },
+
+  // prompt 0007 (2026-09-20): visual explorations linked from the hub (docs/data/visual-explorations.json, D-053)
+  'hub.group.explore': { en: 'Visual explorations', es: 'Exploraciones visuales' },
+  'hub.group.explore.title': { en: 'Looks and ideas we are pointing at', es: 'Estilos e ideas que tomamos como referencia' },
+  'hub.group.explore.body': { en: 'Concept sites made outside this codebase to explore how CTL OS could look. Each one opens in a new tab and is labelled external; nothing here is part of the build.', es: 'Sitios de concepto hechos fuera de este código para explorar cómo podría verse CTL OS. Cada uno se abre en una pestaña nueva y está marcado como externo; nada de esto forma parte de la construcción.' },
+  'hub.explore.external': { en: 'External', es: 'Externo' },
+  'hub.explore.opens': { en: 'Opens in a new tab', es: 'Se abre en una pestaña nueva' },
+  'hub.explore.note': { en: '{note}. Added {date} by {author}.', es: '{note}. Añadido el {date} por {author}.' },
 };

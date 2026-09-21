@@ -15,7 +15,7 @@ First screen for the team: open any surface family as the right demo role, switc
 
 Restyled by the design pass (`docs/design/design-system.md`, changelog 0003): ink hero band with the clearing-sky illustration, display headline, promise and tagline, a floating session bar, cards grouped by audience (Outside the firm / Firm staff / Build & test) with per-surface hue medallions, one Enter button per card, developer codes only in dev mode, and a stat-strip footer.
 
-Fixed in 0.1.2 (prompt 0005, `docs/changelog/_pending/hubfix.md`): Justin saw "a mobile thumbnail in a wide space" on a wide monitor in dark mode. The previews now render their page at a 1280 x 800 desktop viewport and fill a 16:10 frame edge to edge (`DeviceFrame` `viewport` / `aspect` / `edge`; the global `iframe { max-width: 100% }` had been shrinking the iframe into a phone layout), a not-live card shows a window wireframe in its hue instead of a lone icon, the session bar renders outside the ink band so it is never clipped, group heads are no longer sticky, and the client-app phone stays inside its card, cropped at the bottom only.
+Fixed in 0.1.2 (prompt 0005, `docs/changelog/0015-hubfix-release-0.1.2.md`): Justin saw "a mobile thumbnail in a wide space" on a wide monitor in dark mode. The previews now render their page at a 1280 x 800 desktop viewport and fill a 16:10 frame edge to edge (`DeviceFrame` `viewport` / `aspect` / `edge`; the global `iframe { max-width: 100% }` had been shrinking the iframe into a phone layout), a not-live card shows a window wireframe in its hue instead of a lone icon, the session bar renders outside the ink band so it is never clipped, group heads are no longer sticky, and the client-app phone stays inside its card, cropped at the bottom only.
 
 **Reordered and role-scoped in pass 2 wave A (T-123, prompt 0006).** Justin: "make sure the order of items is what the owner cares about … opposing counsel portal is toward the top, but other pages are more important", "make sure the roles actually see what's relevant to them" and "deep pass so spacing and formatting looks good, more user friendly". The page now reads **Start here → Run the firm → Clients → Build & review → Outside parties & marketing**, so the opposing-counsel portal is last instead of in the first band; every role card lists only the pages that role can actually open (derived from the route manifest, not hand-written), carries a one-line "what this role does" and, where the pipeline tables make it cheap, a live count of what is waiting.
 
@@ -37,8 +37,9 @@ Dark: `../screenshots/HUB-01/390-dark.jpg`, `../screenshots/HUB-01/1280-dark.jpg
 4. **Run the firm** - Attorneys, Assistants / paralegals, Front desk, Owner, Admin & settings
 5. **Clients** - Client (tenant) app (feature card, live phone preview), Public website, Game board, Learning (`/app/learn` as the client)
 6. **Build & review** (tinted band) - Plan, Proposal, Canvas, Demo simulator, Docs, Ops manual, Legal memory, Dev tools, Role matrix (`/dev/roles`), as compact interactive cards; a path with no route yet is a `Placeholder`
-7. **Outside parties & marketing** - Opposing counsel portal, Marketing engine
-8. Footer - stat strip: routes, built, tables, rules, components, actions, plan tasks done (of total, linking to /plan); mock-data note
+7. **Visual explorations** (prompt 0007, D-053) - one compact card per row of `docs/data/visual-explorations.json`: title, **External** chip, note with author and date, and a link showing the host with an external-link icon and "Opens in a new tab" (`target="_blank" rel="noopener noreferrer"`). External concept sites for the look and feel; none is part of the build and none is embedded in a frame. Today: Cloudbreak Rights Command (Justin, ChatGPT site, 2026-09-20)
+8. **Outside parties & marketing** - Opposing counsel portal, Marketing engine
+9. Footer - stat strip: routes, built, tables, rules, components, actions, plan tasks done (of total, linking to /plan); mock-data note
 
 A surface card, top to bottom: hue medallion, built / in-progress / planned chip from the manifest, "You are here" chip for the current role, name, the one-line **what this role does**, the feature card's longer body, the **live counts**, the live preview of the family home as its demo role, the **pages this role can open** (grouped by menu category, up to six, then "+N more" which opens the shell), and the footer with "Enter as <demo name>", the role, the path and, in dev mode, the code range.
 
@@ -55,7 +56,7 @@ A surface card, top to bottom: hue medallion, built / in-progress / planned chip
 
 Counts are live through `useTable`, so a change in the pipeline moves the hub without a reload.
 
-Plan counts come from `docs/plan/tasks.json`, imported as JSON at build time (not a table).
+Plan counts come from `docs/plan/tasks.json`, imported as JSON at build time (not a table). The Visual explorations group reads `docs/data/visual-explorations.json` the same way (`{ version, items: [{ id, title, url, author, added_on, note, kind }] }`; append rows, never delete, `retired_on` to retire).
 
 ## Rules
 
@@ -71,6 +72,7 @@ Plan counts come from `docs/plan/tasks.json`, imported as JSON at build time (no
 | `hub.openCanvas` | open the canvas with every page laid out | none | none | yes |
 | `hub.openSimulator` | open the demo simulator | none | none | yes |
 | `hub.openTool` | open one of the Build & review tools | none | `tool: enum:plan,proposal,canvas,simulator,docs,manual,legal,dev,roles` | yes |
+| `hub.openVisualExploration` | open one of the external visual-exploration sites in a new tab (labelled external; not part of CTL OS) | none | `id: string` | yes |
 | `hub.toggleDevMode` | turn the builder tool on or off | `dev.tools` | none | yes |
 | `hub.setLang` | switch the interface language | none | `lang: enum:en,es` | yes |
 | `hub.toggleTheme` | switch between light and dark | none | none | yes |
@@ -79,7 +81,8 @@ Plan counts come from `docs/plan/tasks.json`, imported as JSON at build time (no
 
 ## Logic
 
-- **Order** (prompt 0006): `HUB_GROUPS` is `run` -> `clients` -> `outside`, with the Build & review band rendered between `clients` and `outside`. The opposing-counsel portal and marketing are the last band on the page.
+- **Order** (prompt 0006): `HUB_GROUPS` is `run` -> `clients` -> `outside`, with the Build & review band and then the Visual explorations group rendered between `clients` and `outside`. The opposing-counsel portal and marketing are the last band on the page.
+- **Visual explorations** (prompt 0007, D-053): `VISUAL_EXPLORATIONS` is the JSON's `items`; the group renders nothing when the list is empty. Links are plain anchors (new tab, `noopener noreferrer`), so the browser's own gesture rules apply; `hub.openVisualExploration(id)` calls `window.open` with the same flags. `data-action` / `data-id` on the anchor name the row for the inspector.
 - `enter(surface)` = `switchUser(role)` then `navigate(to ?? ROLE_HOME[role])`; `openAs(role, path)` does the same for one page
 - **Per-role surfaces** (`cardEntries`): `getRoutes()` filtered by `r.nav && r.roles.includes(card.role)`, parameterised paths dropped, sorted by the card's own surface first, then menu-group order, then `nav.order`; the first six are grouped by menu category (one row per category, bilingual labels from `hub.navgroup.*` because `src/app/navGroups.ts` is shared and English-only) and the remainder becomes "+N more", which opens the shell. A card can therefore never advertise a page its role cannot open, and it follows D-048 automatically as other modules land
 - **Live counts** (`useHubStats`): one `useTable` per pipeline table at the page level, counted per card - attorney `orders.waiting_on = client`, paralegal `orders.waiting_on = paralegal`, front desk `calls.status in (missed, voicemail)` and `follow_ups.status = open`, client app `client_requests.status = open` for `usr_client`. A zero is shown greyed, never hidden
@@ -117,9 +120,10 @@ Keyboard: every control is a native button, link or select; the surface cards ar
 - `docs/changelog/0003-design-system.md` (visual redesign)
 - `docs/changelog/0008-showcase.md` (T-024 enrichment)
 - `docs/changelog/0010-pass-1-integration-and-release-0.1.0.md` (the two hub versions combined)
-- `docs/changelog/_pending/hubfix.md` (0.1.2: previews at a desktop viewport filling their frames, session bar unclipped, static tiles)
-- `docs/changelog/_pending/hub-simulator.md` (0.2.0-dev: hub order, per-role surfaces, live counts, Start here, Build & review band; simulator device chrome)
+- `docs/changelog/0015-hubfix-release-0.1.2.md` (0.1.2: previews at a desktop viewport filling their frames, session bar unclipped, static tiles)
+- `docs/changelog/0018-hub-simulator.md` (0.2.0: hub order, per-role surfaces, live counts, Start here, Build & review band; simulator device chrome)
+- `docs/changelog/0029-release-0.2.0.md` (0.2.0: Visual explorations group from `docs/data/visual-explorations.json`, prompt 0007, D-053)
 
 ## Resumen en español
 
-Pantalla inicial del equipo, ordenada por lo que le importa al titular: primero "Empieza aquí" (tres botones: abogado al flujo de documentos, recepción a una llamada, cliente a sus pedidos), luego **Operar el despacho** (abogados, asistentes, recepción, titular, administración), **Clientes** (app, sitio y tienda, tablero, aprendizaje), **Construir y revisar** (plan, propuesta, lienzo, simulador, documentación, manual, memoria legal, herramientas, matriz de roles) y al final **Terceros y marketing** (portal del abogado contrario, marketing). Cada tarjeta muestra una frase de lo que hace ese rol, cifras vivas de lo que está esperando y solo las páginas que ese rol puede abrir de verdad, leídas del manifiesto de rutas. No es una pantalla para clientes.
+Pantalla inicial del equipo, ordenada por lo que le importa al titular: primero "Empieza aquí" (tres botones: abogado al flujo de documentos, recepción a una llamada, cliente a sus pedidos), luego **Operar el despacho** (abogados, asistentes, recepción, titular, administración), **Clientes** (app, sitio y tienda, tablero, aprendizaje), **Construir y revisar** (plan, propuesta, lienzo, simulador, documentación, manual, memoria legal, herramientas, matriz de roles), **Exploraciones visuales** (sitios de concepto externos, marcados como externos y abiertos en una pestaña nueva; prompt 0007) y al final **Terceros y marketing** (portal del abogado contrario, marketing). Cada tarjeta muestra una frase de lo que hace ese rol, cifras vivas de lo que está esperando y solo las páginas que ese rol puede abrir de verdad, leídas del manifiesto de rutas. No es una pantalla para clientes.
