@@ -1,6 +1,17 @@
 .vplayer { display: grid; gap: var(--sp-3); }
 .vplayer-frame { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: var(--r-md); overflow: hidden; }
 .vplayer-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+/* click-to-play poster: the whole frame is one 44 px+ button; nothing from YouTube loads until it is pressed */
+.vplayer-poster { position: absolute; inset: 0; display: grid; place-items: center; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; background: #000; color: #fff; cursor: pointer; }
+.vplayer-poster:focus-visible { outline: none; box-shadow: inset 0 0 0 4px var(--color-focus), inset 0 0 0 7px var(--color-focus-halo); }
+.vplayer-poster-img, .vplayer-poster-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.vplayer-poster-art { display: flex; align-items: flex-end; padding: var(--sp-5); background: radial-gradient(120% 90% at 20% 0%, hsl(214 60% 38%), hsl(220 45% 12%) 70%); }
+.vplayer-poster-title { max-width: 70%; font-family: var(--font-display); font-size: var(--fs-lg); line-height: var(--lh-sm); color: hsl(214 60% 92%); text-align: left; }
+.vplayer-poster-play { position: relative; display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%; background: rgba(255, 255, 255, 0.92); color: hsl(220 45% 12%); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45); transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out); }
+.vplayer-poster-play .icon { margin-left: 4px; }
+.vplayer-poster:hover .vplayer-poster-play, .vplayer-poster:focus-visible .vplayer-poster-play { transform: scale(1.06); background: #fff; }
+.vplayer-poster-resume { position: absolute; right: var(--sp-3); bottom: var(--sp-3); padding: 2px 8px; border-radius: var(--r-sm); background: rgba(0, 0, 0, 0.7); color: #fff; font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+@media (min-width: 1920px) { .vplayer-poster-play { width: calc(112px * var(--scale)); height: calc(112px * var(--scale)); } .vplayer-poster-play .icon { width: 48px; height: 48px; } }
 .vplayer-controls { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center; }
 .vplayer-controls .btn { min-height: var(--target-min); }
 .vplayer-primary { flex: 1 1 10rem; }

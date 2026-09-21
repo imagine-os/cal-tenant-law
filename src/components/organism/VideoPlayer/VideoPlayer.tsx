@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Button } from '../../atom/Button/Button';
+import { Icon } from '../../atom/Icon/Icon';
 import { ProgressBar } from '../../atom/ProgressBar/ProgressBar';
 import './VideoPlayer.css';
 
@@ -21,6 +22,8 @@ export interface VideoPlayerProps {
   startSeconds?: number;
   /** Known length from the lessons table, so the bar and the clock read right before the first message arrives. */
   durationSeconds?: number | null;
+  /** Poster shown before the person presses Play (the lesson's real thumbnail); a drawn poster stands in when absent or broken. */
+  posterSrc?: string | null;
   /** Called about every ten seconds of playback and on pause / end: percentage, position and length. */
   onProgress?: (pct: number, seconds: number, duration: number) => void;
   onEnded?: () => void;
@@ -38,15 +41,21 @@ export interface VideoPlayerProps {
 interface Info { currentTime?: number; duration?: number; playerState?: number }
 
 /**
- * The in-app player (C-42). A youtube-nocookie iframe driven through the YouTube IFrame API's postMessage channel:
- * no third-party script is loaded, nothing autoplays, and the page is told how far the person actually watched so
+ * The in-app player (C-42). Click-to-play: until the person presses Play the component shows the lesson's poster and
+ * a large Play button and loads nothing from YouTube (no third-party frame, cookies, storage or console noise before
+ * intent; RULE-LEARN-05). Play creates a youtube-nocookie iframe driven through the YouTube IFrame API's postMessage
+ * channel: no third-party script is loaded and the page is told how far the person actually watched so
  * `lesson_progress` is real instead of a "mark as watched" checkbox. Built for a TV remote first: one primary
  * action, three big buttons, arrow keys for the previous / next lesson and Space for play / pause.
  */
 export function VideoPlayer({
-  youtubeId, title, startSeconds = 0, durationSeconds = null, onProgress, onEnded, onPrev, onNext, controls, labels, reportEvery = 10, className = '',
+  youtubeId, title, startSeconds = 0, durationSeconds = null, posterSrc = null, onProgress, onEnded, onPrev, onNext, controls, labels, reportEvery = 10, className = '',
 }: VideoPlayerProps) {
   const frame = useRef<HTMLIFrameElement>(null);
+  /** The iframe exists only after the person asked for the video (click-to-play). A new lesson starts on its poster again. */
+  const [armed, setArmed] = useState(false);
+  const [posterBroken, setPosterBroken] = useState(false);
+  useEffect(() => { setArmed(false); setPosterBroken(false); }, [youtubeId]);
   const [playing, setPlaying] = useState(false);
   const [seconds, setSeconds] = useState(startSeconds);
   const [duration, setDuration] = useState(durationSeconds ?? 0);
@@ -63,10 +72,11 @@ export function VideoPlayer({
   }, []);
 
   useEffect(() => {
+    if (!armed) return;
     const timer = window.setInterval(listen, 1000);
     window.setTimeout(() => window.clearInterval(timer), 8000);
     return () => window.clearInterval(timer);
-  }, [listen, youtubeId]);
+  }, [listen, youtubeId, armed]);
 
   useEffect(() => {
     const onMessage = (e: MessageEvent) => {
@@ -95,8 +105,16 @@ export function VideoPlayer({
     return () => window.removeEventListener('message', onMessage);
   }, [onEnded, onProgress, reportEvery]);
 
-  const toggle = useCallback(() => { command(playing ? 'pauseVideo' : 'playVideo'); setPlaying((p) => !p); }, [command, playing]);
-  const seek = useCallback((delta: number) => { command('seekTo', [Math.max(0, state.current.seconds + delta), true]); }, [command]);
+  /** First press: create the iframe with autoplay (a user gesture, so the browser allows it) and treat it as playing. */
+  const start = useCallback(() => { setArmed(true); setPlaying(true); }, []);
+  const toggle = useCallback(() => {
+    if (!armed) { start(); return; }
+    command(playing ? 'pauseVideo' : 'playVideo'); setPlaying((p) => !p);
+  }, [armed, start, command, playing]);
+  const seek = useCallback((delta: number) => {
+    if (!armed) { start(); return; }
+    command('seekTo', [Math.max(0, state.current.seconds + delta), true]);
+  }, [armed, start, command]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -111,17 +129,28 @@ export function VideoPlayer({
     return () => window.removeEventListener('keydown', onKey);
   }, [toggle, onNext, onPrev]);
 
-  const src = `${EMBED}/embed/${encodeURIComponent(youtubeId)}?enablejsapi=1&rel=0&modestbranding=1&playsinline=1&autoplay=0&cc_load_policy=1`
+  // autoplay=1 is only ever set after the person pressed Play (the gesture that allows it); the poster state loads nothing
+  const src = `${EMBED}/embed/${encodeURIComponent(youtubeId)}?enablejsapi=1&rel=0&modestbranding=1&playsinline=1&autoplay=1&cc_load_policy=1`
     + `&start=${Math.floor(startSeconds)}&origin=${encodeURIComponent(typeof window === 'undefined' ? '' : window.location.origin)}`;
 
   return (
-    <div className={`vplayer ${className}`}>
+    <div className={`vplayer ${className}`} data-armed={armed ? 'true' : 'false'}>
       <div className="vplayer-frame">
-        <iframe
-          ref={frame} src={src} title={title} loading="lazy" onLoad={listen}
-          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-          referrerPolicy="strict-origin-when-cross-origin"
-        />
+        {armed ? (
+          <iframe
+            ref={frame} src={src} title={title} onLoad={listen}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+            referrerPolicy="strict-origin-when-cross-origin"
+          />
+        ) : (
+          <button type="button" className="vplayer-poster" onClick={start} aria-label={`${labels.play}: ${title}`}>
+            {posterSrc && !posterBroken
+              ? <img className="vplayer-poster-img" src={posterSrc} alt="" decoding="async" onError={() => setPosterBroken(true)} />
+              : <span className="vplayer-poster-art" aria-hidden><span className="vplayer-poster-title">{title}</span></span>}
+            <span className="vplayer-poster-play" aria-hidden><Icon name="play" size={36} strokeWidth={2} /></span>
+            {startSeconds > 0 && <span className="vplayer-poster-resume">{clock(startSeconds)}</span>}
+          </button>
+        )}
       </div>
       <ProgressBar value={duration > 0 ? pctOf(seconds, duration) : 0} label={labels.progress} size="sm" showValue />
       <div className="vplayer-controls">

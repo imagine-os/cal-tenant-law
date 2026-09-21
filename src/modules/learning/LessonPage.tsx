@@ -141,7 +141,7 @@ export function ClientLessonPage() {
       ) : (
         <>
           <VideoPlayer
-            youtubeId={lesson.youtube_id!} title={lesson.title} startSeconds={startAt} durationSeconds={lesson.duration_seconds} onProgress={onProgress}
+            youtubeId={lesson.youtube_id!} title={lesson.title} startSeconds={startAt} durationSeconds={lesson.duration_seconds} posterSrc={thumb(lesson)} onProgress={onProgress}
             onPrev={prevId ? () => go(prevId) : undefined} onNext={nextId ? () => go(nextId) : undefined}
             labels={{ play: t('learning.play'), pause: t('learning.pause'), back: t('learning.back10'), forward: t('learning.forward10'), progress: t('learning.progressLabel'), captions: t('learning.captions') }}
             controls={<>{prevNext}<Button size="lg" variant="outline" icon="check" onClick={() => void markWatched()}>{t('learning.markWatched')}</Button></>}

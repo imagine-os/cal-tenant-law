@@ -80,12 +80,15 @@
   .drf-start { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* the FeedbackButton (fixed, bottom right) would sit on the sticky research pane: on the studio it moves to the sheet's corner instead */
-@media (min-width: 1024px) { .shell:has(.drf-studio.mode-document) .feedbackbtn { right: calc(21rem + var(--sp-8) + var(--sp-8)); } }
-@media (min-width: 1600px) { .shell:has(.drf-studio) .feedbackbtn { right: calc(23rem + var(--sp-8) + var(--sp-8)); } }
-@media (min-width: 1920px) { .shell:has(.drf-studio) .feedbackbtn { right: calc(23rem + var(--sp-12) + var(--sp-8)); } }
-@media (min-width: 2560px) { .shell:has(.drf-studio) .feedbackbtn { right: calc(32rem + var(--sp-12) + var(--sp-8)); } }
-@media (min-width: 3840px) { .shell:has(.drf-studio) .feedbackbtn { right: calc(40rem + var(--sp-12) + var(--sp-8)); } }
+/* the FeedbackButton (fixed, bottom right) would sit on the sticky research pane: the studio tells the shell how far to
+   move it left through --fab-right (FeedbackButton.css reads it) = the research pane's column width + the shell's right
+   padding (--sp-8 from 900 px, --sp-12 from 1920 px, DesktopShell.css) + a gap, so the button lands over the sheet's corner
+   and stays reachable. One selector shape at every width, so no media query outranks another by specificity. */
+@media (min-width: 1024px) { .shell:has(.drf-studio.mode-document) { --fab-right: calc(21rem + var(--sp-8) + var(--sp-4)); } }
+@media (min-width: 1600px) { .shell:has(.drf-studio[class*="mode-"]) { --fab-right: calc(23rem + var(--sp-8) + var(--sp-4)); } }
+@media (min-width: 1920px) { .shell:has(.drf-studio[class*="mode-"]) { --fab-right: calc(23rem + var(--sp-12) + var(--sp-4)); } }
+@media (min-width: 2560px) { .shell:has(.drf-studio[class*="mode-"]) { --fab-right: calc(32rem + var(--sp-12) + var(--sp-4)); } }
+@media (min-width: 3840px) { .shell:has(.drf-studio[class*="mode-"]) { --fab-right: calc(40rem + var(--sp-12) + var(--sp-4)); } }
 
 /* ---- S-10 ------------------------------------------------------------------------------------------------------ */
 .drf-tpl-editor { display: flex; flex-direction: column; gap: var(--sp-4); }
